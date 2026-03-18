@@ -20,16 +20,28 @@ const BackToTop = () => {
         const update = () => {
             const smoother = window.__smoother;
             const scrollY  = smoother ? smoother.scrollTop() : window.scrollY;
-            const total    = document.body.scrollHeight - window.innerHeight;
-            const pct      = total > 0 ? Math.min(1, scrollY / total) : 0;
+            // With ScrollSmoother the body doesn't scroll — use the content element
+            const contentEl = document.querySelector("#smooth-content");
+            const totalHeight = smoother && contentEl
+                ? contentEl.scrollHeight - window.innerHeight
+                : document.documentElement.scrollHeight - window.innerHeight;
+            const total = Math.max(totalHeight, 1);
+            const pct   = Math.min(1, scrollY / total);
 
             setProgress(pct);
             setVisible(scrollY > window.innerHeight * 0.4);
         };
 
         window.addEventListener("scroll", update, { passive: true });
+        // Also tick on RAF so ScrollSmoother's virtual scroll is captured
+        let rafId;
+        const tick = () => { update(); rafId = requestAnimationFrame(tick); };
+        rafId = requestAnimationFrame(tick);
         update();
-        return () => window.removeEventListener("scroll", update);
+        return () => {
+            window.removeEventListener("scroll", update);
+            cancelAnimationFrame(rafId);
+        };
     }, []);
 
     /* ── 2. Fade in / out ──────────────────────────────────────── */
@@ -75,7 +87,7 @@ const BackToTop = () => {
             {/* Progress track — vertical 1 px line */}
             <div style={{
                 width:    "1px",
-                height:   "64px",
+                height:   "44px",
                 background: "var(--border)",
                 position: "relative",
                 overflow: "hidden",
@@ -95,13 +107,13 @@ const BackToTop = () => {
             <div
                 style={{
                     fontFamily:  "var(--font-mono)",
-                    fontSize:    "9px",
+                    fontSize:    "7px",
                     letterSpacing: "3px",
                     color:       "var(--text-secondary)",
                     textTransform: "uppercase",
                     writingMode: "vertical-rl",
                     transform:   "rotate(180deg)",
-                    height:      "72px",
+                    height:      "52px",
                     display:     "flex",
                     alignItems:  "center",
                     transition:  "color var(--duration-mid) var(--ease-out-expo)",
@@ -115,11 +127,11 @@ const BackToTop = () => {
             {/* Brass dot */}
             <div
                 style={{
-                    width:        "6px",
-                    height:       "6px",
+                    width:        "5px",
+                    height:       "5px",
                     borderRadius: "50%",
                     background:   "var(--accent)",
-                    boxShadow:    "0 0 12px var(--accent-glow)",
+                    boxShadow:    "0 0 8px var(--accent-glow)",
                     transition:   "transform var(--duration-fast)",
                 }}
                 onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.8)"; }}
