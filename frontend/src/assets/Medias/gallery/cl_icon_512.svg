@@ -1,0 +1,40 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4A85C"/>
+      <stop offset="50%" stop-color="#B8924A"/>
+      <stop offset="100%" stop-color="#7A5F2E"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#B8924A" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#B8924A" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="rounded"><rect width="512" height="512" rx="115"/></clipPath>
+  </defs>
+  <g clip-path="url(#rounded)">
+    <rect width="512" height="512" fill="#0B0B0B"/>
+    <rect width="512" height="512" fill="url(#glow)"/>
+    <!-- Outer border -->
+    <rect x="2" y="2" width="508" height="508" rx="113" fill="none" stroke="#B8924A" stroke-width="2" opacity="0.2"/>
+    <!-- Corner accents -->
+    <line x1="40" y1="40" x2="100" y2="40" stroke="#D4A85C" stroke-width="4" opacity="0.6"/>
+    <line x1="40" y1="40" x2="40" y2="100" stroke="#D4A85C" stroke-width="4" opacity="0.6"/>
+    <line x1="472" y1="40" x2="412" y2="40" stroke="#D4A85C" stroke-width="4" opacity="0.6"/>
+    <line x1="472" y1="40" x2="472" y2="100" stroke="#D4A85C" stroke-width="4" opacity="0.6"/>
+    <line x1="40" y1="472" x2="100" y2="472" stroke="#D4A85C" stroke-width="4" opacity="0.6"/>
+    <line x1="40" y1="472" x2="40" y2="412" stroke="#D4A85C" stroke-width="4" opacity="0.6"/>
+    <line x1="472" y1="472" x2="412" y2="472" stroke="#D4A85C" stroke-width="4" opacity="0.6"/>
+    <line x1="472" y1="472" x2="472" y2="412" stroke="#D4A85C" stroke-width="4" opacity="0.6"/>
+    <!-- Square mark -->
+    <rect x="148" y="148" width="216" height="216" fill="none" stroke="url(#brass)" stroke-width="6"/>
+    <!-- Crosshair -->
+    <line x1="172" y1="256" x2="340" y2="256" stroke="#B8924A" stroke-width="2.5" opacity="0.4"/>
+    <line x1="256" y1="172" x2="256" y2="340" stroke="#B8924A" stroke-width="2.5" opacity="0.4"/>
+    <!-- Center dot -->
+    <circle cx="256" cy="256" r="6" fill="#B8924A" opacity="0.45"/>
+    <!-- CL text -->
+    <text x="256" y="261" text-anchor="middle" dominant-baseline="central"
+      font-family="'Courier New', Courier, monospace" font-size="86" font-weight="700"
+      fill="url(#brass)" letter-spacing="8">CL</text>
+  </g>
+</svg>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cristi Labs — Instagram Cover</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0A0A0A;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Courier New', monospace;
+    padding: 50px 20px;
+    gap: 28px;
+  }
+  .label {
+    color: #4a4540;
+    font-size: 8px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+  }
+  .wrapper {
+    width: 540px;
+    height: 540px;
+    box-shadow: 0 50px 120px rgba(0,0,0,0.9), 0 0 0 1px rgba(184,146,74,0.12);
+  }
+  button {
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #B8924A;
+    background: none;
+    border: 1px solid rgba(184,146,74,0.28);
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  button:hover { background: rgba(184,146,74,0.06); border-color: #B8924A; }
+</style>
+</head>
+<body>
+
+<div class="label">Instagram Cover · 1080 × 1080 px</div>
+
+<div class="wrapper">
+<svg id="cover" width="540" height="540" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <!-- ── GRADIENTS ── -->
+    <radialGradient id="bg-radial" cx="50%" cy="46%" r="62%">
+      <stop offset="0%"   stop-color="#141108"/>
+      <stop offset="60%"  stop-color="#0C0B08"/>
+      <stop offset="100%" stop-color="#060504"/>
+    </radialGradient>
+
+    <linearGradient id="brass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#F0CC72"/>
+      <stop offset="35%"  stop-color="#C8A04A"/>
+      <stop offset="75%"  stop-color="#9A7430"/>
+      <stop offset="100%" stop-color="#5C3E14"/>
+    </linearGradient>
+
+    <linearGradient id="brass-h" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#E8C468"/>
+      <stop offset="55%"  stop-color="#B89040"/>
+      <stop offset="100%" stop-color="#7A5C28"/>
+    </linearGradient>
+
+    <linearGradient id="brass-soft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#D4A85C" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#7A5F2E" stop-opacity="0.6"/>
+    </linearGradient>
+
+    <!-- Center glow -->
+    <radialGradient id="center-glow" cx="50%" cy="50%" r="38%">
+      <stop offset="0%"   stop-color="#C49A46" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#C49A46" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="72%">
+      <stop offset="45%"  stop-color="transparent"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.75)"/>
+    </radialGradient>
+
+    <!-- Diagonal hatch -->
+    <pattern id="hatch" width="60" height="60" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="60" stroke="#B8924A" stroke-width="0.4" opacity="0.035"/>
+    </pattern>
+
+    <clipPath id="main"><rect width="1080" height="1080"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#main)">
+
+    <!-- ── BACKGROUND ── -->
+    <rect width="1080" height="1080" fill="url(#bg-radial)"/>
+    <rect width="1080" height="1080" fill="url(#hatch)"/>
+    <rect width="1080" height="1080" fill="url(#center-glow)"/>
+
+    <!-- ── OUTER FRAME ── -->
+    <rect x="36" y="36" width="1008" height="1008"
+      fill="none" stroke="#B8924A" stroke-width="0.8" opacity="0.16"/>
+
+    <!-- ── CORNER BRACKETS — large, bold ── -->
+    <!-- TL -->
+    <line x1="36"  y1="36"  x2="160" y2="36"  stroke="#C8A04A" stroke-width="2" opacity="0.70"/>
+    <line x1="36"  y1="36"  x2="36"  y2="160" stroke="#C8A04A" stroke-width="2" opacity="0.70"/>
+    <!-- TR -->
+    <line x1="1044" y1="36"  x2="920"  y2="36"  stroke="#C8A04A" stroke-width="2" opacity="0.70"/>
+    <line x1="1044" y1="36"  x2="1044" y2="160" stroke="#C8A04A" stroke-width="2" opacity="0.70"/>
+    <!-- BL -->
+    <line x1="36"  y1="1044" x2="160" y2="1044" stroke="#C8A04A" stroke-width="2" opacity="0.70"/>
+    <line x1="36"  y1="1044" x2="36"  y2="920"  stroke="#C8A04A" stroke-width="2" opacity="0.70"/>
+    <!-- BR -->
+    <line x1="1044" y1="1044" x2="920"  y2="1044" stroke="#C8A04A" stroke-width="2" opacity="0.70"/>
+    <line x1="1044" y1="1044" x2="1044" y2="920"  stroke="#C8A04A" stroke-width="2" opacity="0.70"/>
+
+    <!-- ── HORIZONTAL RULE TOP ── -->
+    <line x1="36" y1="148" x2="1044" y2="148" stroke="#B8924A" stroke-width="0.6" opacity="0.18"/>
+    <!-- ── HORIZONTAL RULE BOTTOM ── -->
+    <line x1="36" y1="932" x2="1044" y2="932" stroke="#B8924A" stroke-width="0.6" opacity="0.18"/>
+
+    <!-- ── TOP LABEL ── -->
+    <text x="540" y="96"
+      text-anchor="middle" dominant-baseline="central"
+      font-family="'Courier New', Courier, monospace"
+      font-size="18" font-weight="400"
+      fill="#B8924A" letter-spacing="10" opacity="0.55">VENTURE STUDIO</text>
+
+    <!-- ── BOTTOM LABEL ── -->
+    <text x="540" y="988"
+      text-anchor="middle" dominant-baseline="central"
+      font-family="'Courier New', Courier, monospace"
+      font-size="14" font-weight="400"
+      fill="#5A4A38" letter-spacing="6">WYOMING · EST. 2024</text>
+
+    <!-- ── CENTER MARK ZONE ── -->
+
+    <!-- Outer circle ring -->
+    <circle cx="540" cy="520" r="310"
+      fill="none" stroke="#B8924A" stroke-width="0.7" opacity="0.12"/>
+    <!-- Dashed tick ring -->
+    <circle cx="540" cy="520" r="295"
+      fill="none" stroke="#C8A04A" stroke-width="0.7" opacity="0.12"
+      stroke-dasharray="3 28"/>
+    <!-- Inner circle -->
+    <circle cx="540" cy="520" r="260"
+      fill="none" stroke="#B8924A" stroke-width="0.5" opacity="0.08"/>
+
+    <!-- ── THE SQUARE MARK ── -->
+    <rect x="290" y="270" width="500" height="500"
+      fill="none" stroke="url(#brass)" stroke-width="3"/>
+
+    <!-- Square corner inner ticks -->
+    <line x1="290" y1="270" x2="340" y2="270" stroke="#D4A85C" stroke-width="1.6" opacity="0.45"/>
+    <line x1="290" y1="270" x2="290" y2="320" stroke="#D4A85C" stroke-width="1.6" opacity="0.45"/>
+    <line x1="790" y1="270" x2="740" y2="270" stroke="#D4A85C" stroke-width="1.6" opacity="0.45"/>
+    <line x1="790" y1="270" x2="790" y2="320" stroke="#D4A85C" stroke-width="1.6" opacity="0.45"/>
+    <line x1="290" y1="770" x2="340" y2="770" stroke="#D4A85C" stroke-width="1.6" opacity="0.45"/>
+    <line x1="290" y1="770" x2="290" y2="720" stroke="#D4A85C" stroke-width="1.6" opacity="0.45"/>
+    <line x1="790" y1="770" x2="740" y2="770" stroke="#D4A85C" stroke-width="1.6" opacity="0.45"/>
+    <line x1="790" y1="770" x2="790" y2="720" stroke="#D4A85C" stroke-width="1.6" opacity="0.45"/>
+
+    <!-- Crosshairs -->
+    <line x1="310" y1="520" x2="770" y2="520" stroke="#B8924A" stroke-width="1" opacity="0.22"/>
+    <line x1="540" y1="290" x2="540" y2="750" stroke="#B8924A" stroke-width="1" opacity="0.22"/>
+
+    <!-- Center micro ring -->
+    <circle cx="540" cy="520" r="18"
+      fill="none" stroke="#B8924A" stroke-width="0.8" opacity="0.22"/>
+    <!-- Center dot -->
+    <circle cx="540" cy="520" r="5" fill="#C49A46" opacity="0.50"/>
+
+    <!-- ── CL MONOGRAM — dominant ── -->
+    <text x="540" y="528"
+      text-anchor="middle" dominant-baseline="central"
+      font-family="'Courier New', Courier, monospace"
+      font-size="220" font-weight="700"
+      fill="url(#brass)" letter-spacing="18">CL</text>
+
+    <!-- ── WORDMARK BELOW MARK ── -->
+    <!-- Rule above wordmark -->
+    <line x1="340" y1="840" x2="740" y2="840" stroke="#B8924A" stroke-width="0.7" opacity="0.30"/>
+
+    <text x="540" y="882"
+      text-anchor="middle" dominant-baseline="central"
+      font-family="'Arial Black', Impact, sans-serif"
+      font-size="52" font-weight="900"
+      fill="#EDEAE4" letter-spacing="18">CRISTI</text>
+
+    <!-- Vignette -->
+    <rect width="1080" height="1080" fill="url(#vignette)"/>
+
+  </g>
+</svg>
+</div>
+
+<div class="label">1080 × 1080 — Instagram square post / highlight cover</div>
+<button onclick="dl()">↓ Download SVG</button>
+
+<script>
+function dl() {
+  const svg = document.getElementById('cover');
+  const clone = svg.cloneNode(true);
+  clone.setAttribute('width','1080');
+  clone.setAttribute('height','1080');
+  const blob = new Blob([new XMLSerializer().serializeToString(clone)],{type:'image/svg+xml'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'cristi_labs_instagram_cover.svg';
+  a.click();
+}
+</script>
+</body>
+</html>

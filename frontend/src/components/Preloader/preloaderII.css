@@ -1,0 +1,139 @@
+/* Preloader — Production-grade, 2025 trending UI/UX */
+
+.preloader-progress,
+.preloader-mask,
+.preloader-content {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100svh;
+    pointer-events: none;
+}
+
+.preloader-progress {
+    background: linear-gradient(
+        180deg,
+        #0c0c0c 0%,
+        #0f0f0f 50%,
+        #0c0c0c 100%
+    );
+    z-index: 1;
+}
+
+.preloader-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    will-change: transform;
+    background: linear-gradient(
+        90deg,
+        var(--accent-dim),
+        var(--accent),
+        var(--accent-dim)
+    );
+    background-size: 200% 100%;
+}
+
+.preloader-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 100vw;
+    text-align: center;
+    z-index: 2;
+    overflow: visible;
+    padding: 0 3rem;
+    box-sizing: border-box;
+}
+
+.preloader-logo h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    color: var(--text-primary);
+    line-height: 1;
+    display: inline-block;
+}
+
+.preloader-logo .char {
+    display: inline-block;
+    overflow: visible;
+}
+
+/* Ensure SplitText wrappers don't clip the last char (S) */
+.preloader-logo h1,
+.preloader-logo h1 > * {
+    overflow: visible !important;
+}
+
+.preloader-mask {
+    background: linear-gradient(
+        180deg,
+        #0c0c0c 0%,
+        #0f0f0f 100%
+    );
+    mask:
+        linear-gradient(#fafafa, #fafafa),
+        url("../../../public/preloader-bg.svg") center/40% no-repeat;
+    mask-composite: subtract;
+    will-change: transform;
+    z-index: 1;
+}
+
+.preloader-content {
+    z-index: 3;
+}
+
+.preloader-footer {
+    position: absolute;
+    bottom: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(90%, 480px);
+    text-align: center;
+}
+
+.preloader-footer p,
+.preloader-tagline,
+.preloader-footer .line {
+    font-family: var(--font-mono);
+    font-size: clamp(0.6875rem, 1.5vw, 0.8125rem);
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .preloader-logo h1 {
+        letter-spacing: 0.2em;
+    }
+    .preloader-footer {
+        bottom: 4rem;
+    }
+    .preloader-tagline,
+    .preloader-footer .line {
+        font-size: 0.625rem;
+        letter-spacing: 0.2em;
+    }
+}
+
+.preloader-footer .line {
+    overflow: visible;
+}
+
+.line,
+.char {
+    position: relative;
+    padding-bottom: 0.2rem;
+    margin-bottom: -0.2rem;
+    will-change: transform;
+}

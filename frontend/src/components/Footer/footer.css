@@ -1,0 +1,295 @@
+/* Live Data Ticker — Full width, infinite marquee */
+
+.live-ticker-wrapper {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.live-ticker {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    position: relative;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.3rem 0.5rem 0.3rem 0.65rem;
+    overflow: hidden;
+}
+
+.live-ticker::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1.5px;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        var(--accent) 50%,
+        transparent 100%
+    );
+    opacity: 0.6;
+}
+
+.live-ticker-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+}
+
+.live-ticker-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent-glow);
+    animation: live-ticker-pulse 2s ease-in-out infinite;
+}
+
+@keyframes live-ticker-pulse {
+    0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 8px var(--accent-glow);
+    }
+    50% {
+        opacity: 0.7;
+        box-shadow: 0 0 14px var(--accent-glow);
+    }
+}
+
+.live-ticker-label {
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-family: var(--font-mono);
+}
+
+.live-ticker-marquee {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.live-ticker-track {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    animation: live-ticker-march 30s linear infinite;
+}
+
+.live-ticker-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes live-ticker-march {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-25%);
+    }
+}
+
+.live-ticker-hub {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    flex-shrink: 0;
+}
+
+.live-ticker-city {
+    font-size: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #52525b;
+}
+
+.live-ticker-time {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Footer Brand — Premium, industrial, brass edition */
+
+.footer-brand {
+    max-width: 100%;
+}
+
+.footer-brand-card {
+    position: relative;
+    padding: 2.5rem 2.25rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color var(--duration-mid) var(--ease-out-expo);
+}
+
+.footer-brand-card:hover {
+    border-color: var(--border-strong);
+}
+
+.footer-brand-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--accent-dim) 30%,
+        var(--accent) 50%,
+        var(--accent-dim) 70%,
+        transparent 100%
+    );
+    opacity: 0.7;
+}
+
+.footer-brand-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--border) 50%,
+        transparent 100%
+    );
+}
+
+.footer-brand-title-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: nowrap;
+    min-width: 0;
+}
+
+.footer-brand-title {
+    font-family: var(--font-display);
+    color: var(--text-primary);
+    font-size: clamp(1.875rem, 4.5vw, 2.75rem);
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: color var(--duration-mid) var(--ease-out-expo);
+}
+
+.footer-brand-card:hover .footer-brand-title {
+    color: var(--text-primary);
+}
+
+.footer-brand-title-accent {
+    color: var(--accent);
+    transition: color var(--duration-mid) var(--ease-out-expo);
+}
+
+.footer-brand-card:hover .footer-brand-title-accent {
+    color: var(--accent);
+}
+
+.footer-brand-char {
+    display: inline-block;
+    will-change: transform, opacity;
+}
+
+.footer-brand-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 0.95em;
+    background: var(--accent);
+    margin-left: 3px;
+    vertical-align: text-bottom;
+    flex-shrink: 0;
+    animation: footer-brand-cursor-blink 1s step-end infinite;
+}
+
+@keyframes footer-brand-cursor-blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.footer-brand-tagline {
+    margin-top: 1.125rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    line-height: 1.5;
+    white-space: nowrap;
+    transition: color var(--duration-mid) var(--ease-out-expo);
+}
+
+.footer-brand-card:hover .footer-brand-tagline {
+    color: var(--text-primary);
+}
+
+.footer-brand-accent {
+    margin-top: 1.5rem;
+    height: 1px;
+    width: 48px;
+    background: linear-gradient(
+        90deg,
+        var(--accent) 0%,
+        var(--accent-dim) 60%,
+        transparent 100%
+    );
+}
+
+.footer-brand-corner {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    width: 20px;
+    height: 20px;
+    border-right: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border-strong);
+}
+
+/* Footer Location — Production-grade, minimal, premium */
+.footer-location {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.footer-location-label {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    padding: 0.25rem 0.5rem;
+    background: var(--accent-ghost);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+}
+
+.footer-location-value {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+}

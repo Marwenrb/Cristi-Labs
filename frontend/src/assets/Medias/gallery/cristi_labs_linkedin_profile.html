@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cristi Labs — LinkedIn Profile Picture</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0A0A0A;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Courier New', monospace;
+    padding: 60px 20px;
+    gap: 44px;
+  }
+  .label {
+    color: #4a4540;
+    font-size: 8px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+  }
+
+  .preview-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 64px;
+  }
+  .preview-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .size-tag {
+    font-size: 8px;
+    letter-spacing: 3px;
+    color: #2e2b26;
+    text-transform: uppercase;
+  }
+  .circle {
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 0 2px rgba(184,146,74,0.20), 0 20px 60px rgba(0,0,0,0.85);
+  }
+
+  /* LinkedIn mock */
+  .li-mock {
+    background: #1B1B1B;
+    border: 1px solid #222;
+    border-radius: 10px;
+    width: 440px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.85);
+  }
+  .li-banner {
+    width: 440px;
+    height: 110px;
+    background: linear-gradient(135deg, #080706 0%, #111008 60%, #0F0D09 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .li-banner-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.25;
+  }
+  .li-avatar-row {
+    padding: 0 20px 16px;
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    margin-top: -44px;
+    position: relative;
+  }
+  .li-avatar-border {
+    border-radius: 50%;
+    border: 3px solid #1B1B1B;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 1.5px rgba(184,146,74,0.28);
+    overflow: hidden;
+  }
+  .li-info { padding-bottom: 4px; }
+  .li-name {
+    color: #E4E0D8;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Arial Black', sans-serif;
+    letter-spacing: 2px;
+  }
+  .li-title { color: #5A5248; font-size: 9px; letter-spacing: 3px; margin-top: 4px; }
+  .li-loc   { color: #3A3530; font-size: 8px; letter-spacing: 2px; margin-top: 3px; }
+  .li-divider { height: 1px; background: #222; margin: 0 20px; }
+  .li-stats {
+    display: flex;
+    gap: 0;
+    padding: 12px 20px 16px;
+  }
+  .li-stat { flex: 1; }
+  .li-stat-n { color: #C09848; font-size: 13px; font-weight: 700; font-family: 'Arial Black', sans-serif; }
+  .li-stat-l { color: #3A3530; font-size: 8px; letter-spacing: 2px; margin-top: 2px; }
+
+  .note { color: #2e2a25; font-size: 8px; letter-spacing: 3px; text-transform: uppercase; }
+  button {
+    font-family: 'Courier New', monospace; font-size: 9px; letter-spacing: 3px;
+    text-transform: uppercase; color: #B8924A; background: none;
+    border: 1px solid rgba(184,146,74,0.28); padding: 10px 22px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  button:hover { background: rgba(184,146,74,0.06); border-color: #B8924A; }
+</style>
+</head>
+<body>
+
+<div class="label">LinkedIn Profile Picture — 400 × 400 px</div>
+
+<!-- SIZE PREVIEWS -->
+<div class="preview-row">
+
+  <!-- 200px — profile page -->
+  <div class="preview-item">
+    <div class="circle" style="width:200px;height:200px;">
+      <svg width="200" height="200" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" id="main-svg">
+        <defs>
+          <radialGradient id="bg-a" cx="42%" cy="38%" r="70%">
+            <stop offset="0%"   stop-color="#161210"/>
+            <stop offset="65%"  stop-color="#0D0B08"/>
+            <stop offset="100%" stop-color="#070604"/>
+          </radialGradient>
+          <linearGradient id="br-a" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#F2D080"/>
+            <stop offset="30%"  stop-color="#D4A84E"/>
+            <stop offset="68%"  stop-color="#A07830"/>
+            <stop offset="100%" stop-color="#5E4018"/>
+          </linearGradient>
+          <linearGradient id="br-soft-a" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#D4A85C" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#7A5F2E" stop-opacity="0.2"/>
+          </linearGradient>
+          <radialGradient id="halo-a" cx="50%" cy="50%" r="55%">
+            <stop offset="0%"   stop-color="#C49A46" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="#C49A46" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="shine-a" cx="32%" cy="28%" r="45%">
+            <stop offset="0%"   stop-color="#F2D080" stop-opacity="0.10"/>
+            <stop offset="100%" stop-color="#F2D080" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="vign-a" cx="50%" cy="50%" r="65%">
+            <stop offset="40%"  stop-color="transparent"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0.60)"/>
+          </radialGradient>
+          <!-- LinkedIn blue accent ring — very subtle -->
+          <linearGradient id="li-ring" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#0A66C2" stop-opacity="0.40"/>
+            <stop offset="50%"  stop-color="#0A66C2" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#0A66C2" stop-opacity="0.05"/>
+          </linearGradient>
+          <clipPath id="cl-a"><circle cx="200" cy="200" r="200"/></clipPath>
+          <clipPath id="inner-a"><circle cx="200" cy="200" r="185"/></clipPath>
+        </defs>
+        <g clip-path="url(#cl-a)">
+
+          <!-- LinkedIn blue outer ring hint -->
+          <circle cx="200" cy="200" r="198" fill="none" stroke="url(#li-ring)" stroke-width="4"/>
+
+          <g clip-path="url(#inner-a)">
+            <rect width="400" height="400" fill="url(#bg-a)"/>
+            <rect width="400" height="400" fill="url(#halo-a)"/>
+            <rect width="400" height="400" fill="url(#shine-a)"/>
+
+            <!-- Subtle diagonal hatching -->
+            <line x1="0"   y1="400" x2="400" y2="0"   stroke="#B8924A" stroke-width="0.35" opacity="0.045"/>
+            <line x1="-60" y1="400" x2="340" y2="0"   stroke="#B8924A" stroke-width="0.35" opacity="0.030"/>
+            <line x1="60"  y1="400" x2="460" y2="0"   stroke="#B8924A" stroke-width="0.35" opacity="0.030"/>
+
+            <!-- Concentric rings -->
+            <circle cx="200" cy="200" r="170" fill="none" stroke="#B8924A" stroke-width="0.7" opacity="0.18"/>
+            <circle cx="200" cy="200" r="154" fill="none" stroke="#B8924A" stroke-width="0.4" opacity="0.09"/>
+            <!-- Dashed precision tick ring -->
+            <circle cx="200" cy="200" r="162" fill="none" stroke="#C8A04A"
+              stroke-width="0.7" opacity="0.14" stroke-dasharray="3 24"/>
+
+            <!-- Corner brackets (inside circle) -->
+            <line x1="62"  y1="58"  x2="86"  y2="58"  stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="62"  y1="58"  x2="62"  y2="82"  stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="338" y1="58"  x2="314" y2="58"  stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="338" y1="58"  x2="338" y2="82"  stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="62"  y1="342" x2="86"  y2="342" stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="62"  y1="342" x2="62"  y2="318" stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="338" y1="342" x2="314" y2="342" stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="338" y1="342" x2="338" y2="318" stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+
+            <!-- Square mark -->
+            <rect x="96" y="96" width="208" height="208"
+              fill="none" stroke="url(#br-a)" stroke-width="2.2"/>
+
+            <!-- Square inner corner ticks -->
+            <line x1="96"  y1="96"  x2="120" y2="96"  stroke="#D4A85C" stroke-width="1.2" opacity="0.38"/>
+            <line x1="96"  y1="96"  x2="96"  y2="120" stroke="#D4A85C" stroke-width="1.2" opacity="0.38"/>
+            <line x1="304" y1="96"  x2="280" y2="96"  stroke="#D4A85C" stroke-width="1.2" opacity="0.38"/>
+            <line x1="304" y1="96"  x2="304" y2="120" stroke="#D4A85C" stroke-width="1.2" opacity="0.38"/>
+            <line x1="96"  y1="304" x2="120" y2="304" stroke="#D4A85C" stroke-width="1.2" opacity="0.38"/>
+            <line x1="96"  y1="304" x2="96"  y2="280" stroke="#D4A85C" stroke-width="1.2" opacity="0.38"/>
+            <line x1="304" y1="304" x2="280" y2="304" stroke="#D4A85C" stroke-width="1.2" opacity="0.38"/>
+            <line x1="304" y1="304" x2="304" y2="280" stroke="#D4A85C" stroke-width="1.2" opacity="0.38"/>
+
+            <!-- Crosshairs -->
+            <line x1="110" y1="200" x2="290" y2="200" stroke="#B8924A" stroke-width="0.9" opacity="0.26"/>
+            <line x1="200" y1="110" x2="200" y2="290" stroke="#B8924A" stroke-width="0.9" opacity="0.26"/>
+
+            <!-- Center micro ring + dot -->
+            <circle cx="200" cy="200" r="13" fill="none" stroke="#B8924A" stroke-width="0.6" opacity="0.22"/>
+            <circle cx="200" cy="200" r="4"  fill="#C49A46" opacity="0.48"/>
+
+            <!-- CL -->
+            <text x="200" y="204"
+              text-anchor="middle" dominant-baseline="central"
+              font-family="'Courier New', Courier, monospace"
+              font-size="88" font-weight="700"
+              fill="url(#br-a)" letter-spacing="5">CL</text>
+
+            <rect width="400" height="400" fill="url(#vign-a)"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="size-tag">200px — profile</div>
+  </div>
+
+  <!-- 96px — connection -->
+  <div class="preview-item">
+    <div class="circle" style="width:96px;height:96px;">
+      <svg width="96" height="96" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="bg-b" cx="42%" cy="38%" r="70%">
+            <stop offset="0%" stop-color="#161210"/>
+            <stop offset="100%" stop-color="#070604"/>
+          </radialGradient>
+          <linearGradient id="br-b" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#F2D080"/>
+            <stop offset="35%"  stop-color="#D4A84E"/>
+            <stop offset="100%" stop-color="#5E4018"/>
+          </linearGradient>
+          <radialGradient id="halo-b" cx="50%" cy="50%" r="55%">
+            <stop offset="0%"   stop-color="#C49A46" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="#C49A46" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="li-ring-b" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#0A66C2" stop-opacity="0.40"/>
+            <stop offset="100%" stop-color="#0A66C2" stop-opacity="0.05"/>
+          </linearGradient>
+          <clipPath id="cl-b"><circle cx="200" cy="200" r="200"/></clipPath>
+          <clipPath id="inner-b"><circle cx="200" cy="200" r="185"/></clipPath>
+        </defs>
+        <g clip-path="url(#cl-b)">
+          <circle cx="200" cy="200" r="198" fill="none" stroke="url(#li-ring-b)" stroke-width="4"/>
+          <g clip-path="url(#inner-b)">
+            <rect width="400" height="400" fill="url(#bg-b)"/>
+            <rect width="400" height="400" fill="url(#halo-b)"/>
+            <circle cx="200" cy="200" r="170" fill="none" stroke="#B8924A" stroke-width="0.9" opacity="0.18"/>
+            <line x1="62"  y1="58"  x2="86"  y2="58"  stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="62"  y1="58"  x2="62"  y2="82"  stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="338" y1="58"  x2="314" y2="58"  stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="338" y1="58"  x2="338" y2="82"  stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="62"  y1="342" x2="86"  y2="342" stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="62"  y1="342" x2="62"  y2="318" stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="338" y1="342" x2="314" y2="342" stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="338" y1="342" x2="338" y2="318" stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <rect x="96" y="96" width="208" height="208" fill="none" stroke="url(#br-b)" stroke-width="2.5"/>
+            <line x1="110" y1="200" x2="290" y2="200" stroke="#B8924A" stroke-width="1" opacity="0.26"/>
+            <line x1="200" y1="110" x2="200" y2="290" stroke="#B8924A" stroke-width="1" opacity="0.26"/>
+            <circle cx="200" cy="200" r="4" fill="#C49A46" opacity="0.48"/>
+            <text x="200" y="204" text-anchor="middle" dominant-baseline="central"
+              font-family="'Courier New', Courier, monospace"
+              font-size="88" font-weight="700" fill="url(#br-b)" letter-spacing="5">CL</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="size-tag">96px — feed</div>
+  </div>
+
+  <!-- 40px — notification -->
+  <div class="preview-item">
+    <div class="circle" style="width:40px;height:40px;">
+      <svg width="40" height="40" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="br-c" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#F2D080"/>
+            <stop offset="100%" stop-color="#5E4018"/>
+          </linearGradient>
+          <clipPath id="cl-c"><circle cx="200" cy="200" r="200"/></clipPath>
+          <clipPath id="inner-c"><circle cx="200" cy="200" r="185"/></clipPath>
+        </defs>
+        <g clip-path="url(#cl-c)">
+          <g clip-path="url(#inner-c)">
+            <rect width="400" height="400" fill="#0D0B08"/>
+            <rect x="96" y="96" width="208" height="208" fill="none" stroke="url(#br-c)" stroke-width="3"/>
+            <line x1="110" y1="200" x2="290" y2="200" stroke="#B8924A" stroke-width="1.2" opacity="0.26"/>
+            <line x1="200" y1="110" x2="200" y2="290" stroke="#B8924A" stroke-width="1.2" opacity="0.26"/>
+            <text x="200" y="204" text-anchor="middle" dominant-baseline="central"
+              font-family="'Courier New', Courier, monospace"
+              font-size="88" font-weight="700" fill="url(#br-c)" letter-spacing="5">CL</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="size-tag">40px — notif</div>
+  </div>
+
+</div>
+
+<!-- LINKEDIN PROFILE MOCKUP -->
+<div class="label">↳ LinkedIn Profile Preview</div>
+<div class="li-mock">
+
+  <!-- Banner with brand pattern -->
+  <div class="li-banner">
+    <div class="li-banner-inner">
+      <svg width="440" height="110" viewBox="0 0 820 312" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="bgbm" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#080706"/>
+            <stop offset="100%" stop-color="#0F0D09"/>
+          </linearGradient>
+          <linearGradient id="brbm" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#E0B46A"/>
+            <stop offset="100%" stop-color="#6A5022"/>
+          </linearGradient>
+          <linearGradient id="tfbm" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#F0ECE4"/>
+            <stop offset="100%" stop-color="#A09880"/>
+          </linearGradient>
+        </defs>
+        <rect width="820" height="312" fill="url(#bgbm)"/>
+        <polyline points="14,58 14,14 58,14" fill="none" stroke="#D4A85C" stroke-width="2" opacity="0.6"/>
+        <polyline points="762,14 806,14 806,58" fill="none" stroke="#D4A85C" stroke-width="2" opacity="0.6"/>
+        <polyline points="14,254 14,298 58,298" fill="none" stroke="#D4A85C" stroke-width="2" opacity="0.6"/>
+        <polyline points="762,298 806,298 806,254" fill="none" stroke="#D4A85C" stroke-width="2" opacity="0.6"/>
+        <rect x="82" y="70" width="172" height="172" fill="none" stroke="url(#brbm)" stroke-width="2.5"/>
+        <line x1="96" y1="156" x2="240" y2="156" stroke="#B8924A" stroke-width="1" opacity="0.28"/>
+        <line x1="168" y1="84" x2="168" y2="228" stroke="#B8924A" stroke-width="1" opacity="0.28"/>
+        <text x="168" y="160" text-anchor="middle" dominant-baseline="central"
+          font-family="'Courier New', Courier, monospace" font-size="58" font-weight="700"
+          fill="url(#brbm)">CL</text>
+        <text x="376" y="152" dominant-baseline="auto"
+          font-family="'Arial Black', Impact, sans-serif" font-size="106" font-weight="900"
+          fill="url(#tfbm)" letter-spacing="8">CRISTI</text>
+        <text x="380" y="196" dominant-baseline="auto"
+          font-family="'Courier New', Courier, monospace" font-size="20"
+          fill="#B8924A" letter-spacing="14">LABS LLC</text>
+        <text x="380" y="235" dominant-baseline="auto"
+          font-family="'Courier New', Courier, monospace" font-size="10.5"
+          fill="#5A5248" letter-spacing="5">VENTURE STUDIO · WYOMING · EST. 2024</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="li-avatar-row">
+    <div class="li-avatar-border">
+      <svg width="82" height="82" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="bg-m" cx="42%" cy="38%" r="70%">
+            <stop offset="0%" stop-color="#161210"/>
+            <stop offset="100%" stop-color="#070604"/>
+          </radialGradient>
+          <linearGradient id="br-m" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#F2D080"/>
+            <stop offset="35%"  stop-color="#D4A84E"/>
+            <stop offset="100%" stop-color="#5E4018"/>
+          </linearGradient>
+          <radialGradient id="halo-m" cx="50%" cy="50%" r="55%">
+            <stop offset="0%"   stop-color="#C49A46" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="#C49A46" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="li-ring-m" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#0A66C2" stop-opacity="0.40"/>
+            <stop offset="100%" stop-color="#0A66C2" stop-opacity="0.05"/>
+          </linearGradient>
+          <clipPath id="cl-m"><circle cx="200" cy="200" r="200"/></clipPath>
+          <clipPath id="inner-m"><circle cx="200" cy="200" r="185"/></clipPath>
+        </defs>
+        <g clip-path="url(#cl-m)">
+          <circle cx="200" cy="200" r="198" fill="none" stroke="url(#li-ring-m)" stroke-width="4"/>
+          <g clip-path="url(#inner-m)">
+            <rect width="400" height="400" fill="url(#bg-m)"/>
+            <rect width="400" height="400" fill="url(#halo-m)"/>
+            <circle cx="200" cy="200" r="170" fill="none" stroke="#B8924A" stroke-width="0.9" opacity="0.18"/>
+            <line x1="62"  y1="58"  x2="86"  y2="58"  stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="62"  y1="58"  x2="62"  y2="82"  stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="338" y1="58"  x2="314" y2="58"  stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="338" y1="58"  x2="338" y2="82"  stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="62"  y1="342" x2="86"  y2="342" stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="62"  y1="342" x2="62"  y2="318" stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="338" y1="342" x2="314" y2="342" stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <line x1="338" y1="342" x2="338" y2="318" stroke="#D4A85C" stroke-width="1.8" opacity="0.62"/>
+            <rect x="96" y="96" width="208" height="208" fill="none" stroke="url(#br-m)" stroke-width="2.5"/>
+            <line x1="110" y1="200" x2="290" y2="200" stroke="#B8924A" stroke-width="1" opacity="0.26"/>
+            <line x1="200" y1="110" x2="200" y2="290" stroke="#B8924A" stroke-width="1" opacity="0.26"/>
+            <circle cx="200" cy="200" r="13" fill="none" stroke="#B8924A" stroke-width="0.6" opacity="0.22"/>
+            <circle cx="200" cy="200" r="4"  fill="#C49A46" opacity="0.48"/>
+            <text x="200" y="204" text-anchor="middle" dominant-baseline="central"
+              font-family="'Courier New', Courier, monospace"
+              font-size="88" font-weight="700" fill="url(#br-m)" letter-spacing="5">CL</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="li-info">
+      <div class="li-name">Cristi Labs</div>
+      <div class="li-title">VENTURE STUDIO · WYOMING</div>
+      <div class="li-loc">EST. 2024 · cristilabs.com</div>
+    </div>
+  </div>
+
+  <div class="li-divider"></div>
+  <div class="li-stats">
+    <div class="li-stat">
+      <div class="li-stat-n">—</div>
+      <div class="li-stat-l">FOLLOWERS</div>
+    </div>
+    <div class="li-stat">
+      <div class="li-stat-n">—</div>
+      <div class="li-stat-l">CONNECTIONS</div>
+    </div>
+    <div class="li-stat">
+      <div class="li-stat-n">WY</div>
+      <div class="li-stat-l">LOCATION</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="note">Upload 400 × 400 — LinkedIn displays at 200px on profile, 48px in feed</div>
+<button onclick="dl()">↓ Download SVG (400 × 400)</button>
+
+<script>
+function dl() {
+  const svg = document.getElementById('main-svg');
+  const clone = svg.cloneNode(true);
+  clone.setAttribute('width','400');
+  clone.setAttribute('height','400');
+  const blob = new Blob([new XMLSerializer().serializeToString(clone)],{type:'image/svg+xml'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'cristi_labs_linkedin_profile.svg';
+  a.click();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<svg width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="70%">
+      <stop offset="0%"   stop-color="#1A1408"/>
+      <stop offset="55%"  stop-color="#0A0906"/>
+      <stop offset="100%" stop-color="#040302"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="32%" r="55%">
+      <stop offset="0%"   stop-color="#C49840" stop-opacity=".16"/>
+      <stop offset="100%" stop-color="#C49840" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="brass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#F5D878"/>
+      <stop offset="40%"  stop-color="#C49840"/>
+      <stop offset="100%" stop-color="#5A3E12"/>
+    </linearGradient>
+    <linearGradient id="title" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#F4F0E8"/>
+      <stop offset="100%" stop-color="#B0A890"/>
+    </linearGradient>
+    <radialGradient id="vign" cx="50%" cy="50%" r="75%">
+      <stop offset="40%"  stop-color="transparent"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,.78)"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C49840" stop-opacity=".22"/>
+      <stop offset="100%" stop-color="#C49840" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="90" height="90" patternUnits="userSpaceOnUse">
+      <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#C49840" stroke-width=".4" opacity=".065"/>
+    </pattern>
+    <clipPath id="circle-clip"><circle cx="540" cy="420" r="300"/></clipPath>
+    <clipPath id="main"><rect width="1080" height="1920"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#main)">
+    <rect width="1080" height="1920" fill="url(#bg)"/>
+    <rect width="1080" height="1920" fill="url(#grid)"/>
+    <rect width="1080" height="1920" fill="url(#glow)"/>
+
+    <!-- Frame -->
+    <rect x="32" y="32" width="1016" height="1856" fill="none" stroke="#B8924A" stroke-width="1" opacity=".14"/>
+
+    <!-- Corner brackets -->
+    <line x1="32"  y1="32"   x2="130"  y2="32"   stroke="#D4A85C" stroke-width="2.4" opacity=".68"/>
+    <line x1="32"  y1="32"   x2="32"   y2="130"  stroke="#D4A85C" stroke-width="2.4" opacity=".68"/>
+    <line x1="1048" y1="32"  x2="950"  y2="32"   stroke="#D4A85C" stroke-width="2.4" opacity=".68"/>
+    <line x1="1048" y1="32"  x2="1048" y2="130"  stroke="#D4A85C" stroke-width="2.4" opacity=".68"/>
+    <line x1="32"  y1="1888" x2="130"  y2="1888" stroke="#D4A85C" stroke-width="2.4" opacity=".68"/>
+    <line x1="32"  y1="1888" x2="32"   y2="1790" stroke="#D4A85C" stroke-width="2.4" opacity=".68"/>
+    <line x1="1048" y1="1888" x2="950"  y2="1888" stroke="#D4A85C" stroke-width="2.4" opacity=".68"/>
+    <line x1="1048" y1="1888" x2="1048" y2="1790" stroke="#D4A85C" stroke-width="2.4" opacity=".68"/>
+
+    <!-- CL Mark — centered top third -->
+    <g>
+      <rect width="1080" height="1920" fill="url(#halo)" x="0" y="0"/>
+      <circle cx="540" cy="420" r="290" fill="none" stroke="#C49840" stroke-width=".8" opacity=".18"/>
+      <circle cx="540" cy="420" r="265" fill="none" stroke="#C49840" stroke-width=".6" stroke-dasharray="4 30" opacity=".12"/>
+      <rect x="330" y="210" width="420" height="420" fill="none" stroke="url(#brass)" stroke-width="3.5"/>
+      <!-- Corner ticks -->
+      <line x1="330" y1="210" x2="378" y2="210" stroke="#D4A85C" stroke-width="2" opacity=".48"/>
+      <line x1="330" y1="210" x2="330" y2="258" stroke="#D4A85C" stroke-width="2" opacity=".48"/>
+      <line x1="750" y1="210" x2="702" y2="210" stroke="#D4A85C" stroke-width="2" opacity=".48"/>
+      <line x1="750" y1="210" x2="750" y2="258" stroke="#D4A85C" stroke-width="2" opacity=".48"/>
+      <line x1="330" y1="630" x2="378" y2="630" stroke="#D4A85C" stroke-width="2" opacity=".48"/>
+      <line x1="330" y1="630" x2="330" y2="582" stroke="#D4A85C" stroke-width="2" opacity=".48"/>
+      <line x1="750" y1="630" x2="702" y2="630" stroke="#D4A85C" stroke-width="2" opacity=".48"/>
+      <line x1="750" y1="630" x2="750" y2="582" stroke="#D4A85C" stroke-width="2" opacity=".48"/>
+      <!-- Crosshairs -->
+      <line x1="356" y1="420" x2="724" y2="420" stroke="#C49840" stroke-width="1.2" opacity=".24"/>
+      <line x1="540" y1="236" x2="540" y2="604" stroke="#C49840" stroke-width="1.2" opacity=".24"/>
+      <!-- Center -->
+      <circle cx="540" cy="420" r="18" fill="none" stroke="#C49840" stroke-width=".8" opacity=".20"/>
+      <circle cx="540" cy="420" r="6"  fill="#C49840" opacity=".52"/>
+      <!-- CL -->
+      <text x="540" y="428" text-anchor="middle" dominant-baseline="central"
+        font-family="'Courier New',Courier,monospace" font-size="168" font-weight="700"
+        fill="url(#brass)" letter-spacing="12">CL</text>
+    </g>
+
+    <!-- Divider line -->
+    <line x1="80" y1="760" x2="1000" y2="760" stroke="#B8924A" stroke-width=".8" opacity=".16"/>
+
+    <!-- Eyebrow -->
+    <text x="80" y="832" font-family="'Courier New',Courier,monospace"
+      font-size="22" fill="#C49840" letter-spacing="10" opacity=".60">CRISTI LABS LLC</text>
+
+    <!-- Headline -->
+    <text x="80" y="970" font-family="Georgia,'Times New Roman',serif"
+      font-size="120" font-weight="300" fill="url(#title)" letter-spacing="-2">Excellence</text>
+    <text x="80" y="1090" font-family="Georgia,'Times New Roman',serif"
+      font-size="120" font-weight="300" fill="url(#title)" letter-spacing="-2">in</text>
+    <text x="80" y="1210" font-family="Georgia,'Times New Roman',serif"
+      font-size="120" font-weight="300" font-style="italic"
+      fill="#D4A84E" letter-spacing="-2">digital</text>
+    <text x="80" y="1330" font-family="Georgia,'Times New Roman',serif"
+      font-size="100" font-weight="300" fill="#A89880" letter-spacing="-1">experiences.</text>
+
+    <!-- Rule -->
+    <line x1="80" y1="1380" x2="210" y2="1380" stroke="#C49840" stroke-width="1.2" opacity=".50"/>
+
+    <!-- Body -->
+    <text x="80" y="1440" font-family="Georgia,serif" font-size="36" fill="#6A5E4A" letter-spacing=".5">A corporate vision built on</text>
+    <text x="80" y="1488" font-family="Georgia,serif" font-size="36" fill="#6A5E4A" letter-spacing=".5">innovation and integrity.</text>
+
+    <!-- Tag -->
+    <text x="80" y="1600" font-family="'Courier New',Courier,monospace"
+      font-size="20" fill="#C49840" letter-spacing="6" opacity=".55">— Venture Studio · Wyoming</text>
+
+    <!-- Bottom stamp -->
+    <text x="540" y="1848" text-anchor="middle" font-family="'Courier New',Courier,monospace"
+      font-size="18" fill="#2A2418" letter-spacing="4">CL · EXCELLENCE · 01</text>
+
+    <rect width="1080" height="1920" fill="url(#vign)"/>
+  </g>
+</svg>

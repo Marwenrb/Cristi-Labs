@@ -1,0 +1,86 @@
+<svg width="820" height="312" viewBox="0 0 820 312" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#080706"/>
+      <stop offset="60%"  stop-color="#0B0A08"/>
+      <stop offset="100%" stop-color="#0F0D09"/>
+    </linearGradient>
+    <linearGradient id="brass-d" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#E0B46A"/>
+      <stop offset="40%"  stop-color="#C09848"/>
+      <stop offset="100%" stop-color="#6A5022"/>
+    </linearGradient>
+    <linearGradient id="brass-h" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#DEB060"/>
+      <stop offset="50%"  stop-color="#B8924A"/>
+      <stop offset="100%" stop-color="#8A6E32"/>
+    </linearGradient>
+    <linearGradient id="title-fade" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#F0ECE4"/>
+      <stop offset="70%"  stop-color="#DEDAD2"/>
+      <stop offset="100%" stop-color="#A09880"/>
+    </linearGradient>
+    <linearGradient id="fade-right" x1="60%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#0B0A08" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0B0A08" stop-opacity="0.7"/>
+    </linearGradient>
+    <radialGradient id="mark-halo" cx="26%" cy="50%" r="30%">
+      <stop offset="0%"   stop-color="#C09848" stop-opacity="0.13"/>
+      <stop offset="100%" stop-color="#C09848" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="55%"  stop-color="transparent"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.65)"/>
+    </radialGradient>
+    <pattern id="hatch" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="40" stroke="#B8924A" stroke-width="0.3" opacity="0.04"/>
+    </pattern>
+    <clipPath id="clip"><rect width="820" height="312"/></clipPath>
+  </defs>
+  <g clip-path="url(#clip)">
+    <rect width="820" height="312" fill="url(#bg)"/>
+    <rect width="820" height="312" fill="url(#hatch)"/>
+    <rect width="820" height="312" fill="url(#mark-halo)"/>
+    <line x1="0" y1="38" x2="820" y2="38" stroke="#B8924A" stroke-width="0.5" opacity="0.10"/>
+    <line x1="0" y1="274" x2="820" y2="274" stroke="#B8924A" stroke-width="0.5" opacity="0.10"/>
+    <line x1="348" y1="38" x2="348" y2="274" stroke="#B8924A" stroke-width="0.5" opacity="0.18"/>
+    <rect x="14" y="14" width="792" height="284" fill="none" stroke="#B8924A" stroke-width="0.7" opacity="0.16"/>
+    <polyline points="14,58 14,14 58,14"    fill="none" stroke="#D4A85C" stroke-width="1.6" opacity="0.65"/>
+    <polyline points="762,14 806,14 806,58"  fill="none" stroke="#D4A85C" stroke-width="1.6" opacity="0.65"/>
+    <polyline points="14,254 14,298 58,298"  fill="none" stroke="#D4A85C" stroke-width="1.6" opacity="0.65"/>
+    <polyline points="762,298 806,298 806,254" fill="none" stroke="#D4A85C" stroke-width="1.6" opacity="0.65"/>
+    <rect x="82" y="70" width="172" height="172" fill="none" stroke="url(#brass-d)" stroke-width="2"/>
+    <line x1="96"  y1="156" x2="240" y2="156" stroke="#B8924A" stroke-width="0.9" opacity="0.30"/>
+    <line x1="168" y1="84"  x2="168" y2="228" stroke="#B8924A" stroke-width="0.9" opacity="0.30"/>
+    <line x1="82"  y1="70"  x2="104" y2="70"  stroke="#DEB060" stroke-width="1.2" opacity="0.55"/>
+    <line x1="82"  y1="70"  x2="82"  y2="92"  stroke="#DEB060" stroke-width="1.2" opacity="0.55"/>
+    <line x1="254" y1="70"  x2="232" y2="70"  stroke="#DEB060" stroke-width="1.2" opacity="0.55"/>
+    <line x1="254" y1="70"  x2="254" y2="92"  stroke="#DEB060" stroke-width="1.2" opacity="0.55"/>
+    <line x1="82"  y1="242" x2="104" y2="242" stroke="#DEB060" stroke-width="1.2" opacity="0.55"/>
+    <line x1="82"  y1="242" x2="82"  y2="220" stroke="#DEB060" stroke-width="1.2" opacity="0.55"/>
+    <line x1="254" y1="242" x2="232" y2="242" stroke="#DEB060" stroke-width="1.2" opacity="0.55"/>
+    <line x1="254" y1="242" x2="254" y2="220" stroke="#DEB060" stroke-width="1.2" opacity="0.55"/>
+    <circle cx="168" cy="156" r="3" fill="#B8924A" opacity="0.38"/>
+    <text x="168" y="160" text-anchor="middle" dominant-baseline="central"
+      font-family="'Courier New', Courier, monospace" font-size="58" font-weight="700"
+      fill="url(#brass-d)" letter-spacing="4">CL</text>
+    <text x="376" y="152" dominant-baseline="auto"
+      font-family="'Arial Black', Impact, sans-serif" font-size="106" font-weight="900"
+      fill="url(#title-fade)" letter-spacing="8">CRISTI</text>
+    <line x1="378" y1="170" x2="790" y2="170" stroke="#B8924A" stroke-width="0.7" opacity="0.30"/>
+    <text x="380" y="196" dominant-baseline="auto"
+      font-family="'Courier New', Courier, monospace" font-size="20" font-weight="500"
+      fill="url(#brass-h)" letter-spacing="14">LABS LLC</text>
+    <line x1="378" y1="212" x2="790" y2="212" stroke="#B8924A" stroke-width="0.4" opacity="0.18"/>
+    <text x="380" y="235" dominant-baseline="auto"
+      font-family="'Courier New', Courier, monospace" font-size="10.5" font-weight="400"
+      fill="#5A5248" letter-spacing="5">VENTURE STUDIO · WYOMING · EST. 2024</text>
+    <circle cx="380" cy="256" r="1.5" fill="#B8924A" opacity="0.40"/>
+    <circle cx="392" cy="256" r="1.5" fill="#B8924A" opacity="0.28"/>
+    <circle cx="404" cy="256" r="1.5" fill="#B8924A" opacity="0.16"/>
+    <text x="792" y="286" text-anchor="end"
+      font-family="'Courier New', Courier, monospace" font-size="8" fill="#2E2B25" letter-spacing="2">CL·FB·2024</text>
+    <rect width="820" height="312" fill="url(#fade-right)"/>
+    <rect width="820" height="312" fill="url(#vignette)"/>
+  </g>
+</svg>

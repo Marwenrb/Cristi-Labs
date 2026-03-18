@@ -1,0 +1,45 @@
+/* Connect Button — Cristi Labs Brass Edition */
+
+.connect-btn {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    background: var(--bg-void);
+    border: 1px solid var(--border-strong);
+    transition:
+        border-color var(--duration-mid) var(--ease-out-expo),
+        background var(--duration-mid) var(--ease-out-expo);
+}
+
+.connect-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent-ghost);
+}
+
+.connect-btn .rev-link {
+    color: var(--text-primary);
+}
+
+.connect-btn:hover .rev-link {
+    color: var(--accent);
+}
+
+.connect-btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: var(--bg-void);
+    border-radius: 50%;
+    padding: 0.4rem;
+    transition: transform var(--duration-fast) var(--ease-out-expo);
+}
+
+.connect-btn:hover .connect-btn-icon {
+    transform: translate(2px, -2px);
+}
+
+.rev-link {
+    display: block;
+    transition: color var(--duration-mid) var(--ease-out-expo);
+}

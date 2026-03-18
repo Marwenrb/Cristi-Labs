@@ -1,0 +1,467 @@
+@import "tailwindcss";
+
+/* ================================================================
+   CRISTI LABS — DESIGN TOKENS v2
+   Identity: Heavy Industry × Surgical Precision
+   ================================================================ */
+
+:root {
+  /* ── BACKGROUNDS ── */
+  --bg-void:      #0B0B0B;
+  --bg-surface:   #111214;
+  --bg-elevated:  #1A1C1F;
+  --bg-invert:    #F0EDE8;
+
+  /* ── THE SIGNATURE ACCENT — METALLIC GOLD ── */
+  --accent:       #D4AF37;   /* ISO metallic gold — HSL 46°, 66%, 52% */
+  --accent-light: #F0CE5E;   /* Polished highlight — bright warm shimmer */
+  --accent-dim:   #8B6914;   /* Deep aged-gold shadow */
+  --accent-ghost: rgba(212, 175, 55, 0.07);  /* Atmospheric fill */
+  --accent-glow:  rgba(212, 175, 55, 0.25);  /* Hover glow */
+
+  /* ── TEXT ── */
+  --text-primary:   #EDEAE4;
+  --text-secondary: #7A7670;
+  --text-tertiary:  #3D3B38;
+  --text-invert:    #0B0B0B;
+
+  /* ── FUNCTIONAL ── */
+  --border:         rgba(212, 175, 55, 0.15);
+  --border-strong:  rgba(212, 175, 55, 0.38);
+  --error:          #C0392B;
+  --success:        #2D6A4F;
+
+  /* ── TYPOGRAPHY ── */
+  --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-body:    'Sora', 'DM Sans', sans-serif;
+  --font-mono:    'Geist Mono', 'JetBrains Mono', monospace;
+
+  /* ── SPACING RHYTHM ── */
+  --space-unit: 8px;
+
+  /* ── MOTION ── */
+  --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:     cubic-bezier(0.87, 0, 0.13, 1);
+  --duration-fast:   180ms;
+  --duration-mid:    340ms;
+  --duration-slow:   600ms;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--bg-void);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.6;
+  font-feature-settings: 'kern' 1, 'liga' 1;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-dim) var(--bg-void);
+  scrollbar-gutter: stable;
+}
+
+body {
+  background-color: var(--bg-void);
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Selection — branded */
+::selection {
+  background: var(--accent);
+  color: var(--bg-void);
+}
+
+/* Premium typography rendering — every glyph precision-set */
+h1, h2, h3, h4, h5, h6 {
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'kern' 1;
+  -webkit-font-smoothing: antialiased;
+}
+p, li {
+  text-rendering: geometricPrecision;
+  letter-spacing: 0.01em;
+}
+
+/* Scrollbar — minimal, brass */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg-void); }
+::-webkit-scrollbar-thumb { background: var(--accent-dim); border-radius: 0; }
+
+/* Logo tagline — desktop only */
+@media (min-width: 768px) {
+  .logo-tagline {
+    display: block !important;
+  }
+}
+
+
+/* ----------------- Preloader Styles ---------------- */
+/* .preloader-progress,
+.preloader-mask,
+.preloader-content {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100svh;
+	pointer-events: none;
+	overflow: hidden;
+}
+
+.preloader-progress {
+	background-color: var(--base-200);
+	z-index: 1;
+	will-change: opacity;
+}
+
+.preloader-progress-bar {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%) scaleX(0);
+	width: 55%;
+	height: 100%;
+	background-color: var(--base-300);
+	transform-origin: left;
+	will-change: transform;
+}
+
+.preloader-logo {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	mix-blend-mode: difference;
+	z-index: 2;
+}
+
+.preloader-logo .logo-text {
+	position: relative;
+	color: var(--base-300);
+	font-size: 3rem;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.preloader-mask {
+	background-color: var(--base-100);
+	mask: linear-gradient(var(--base-300), var(--base-300)), url("./../public/preloader-bg.svg") center/40% no-repeat;
+	-webkit-mask-composite: source-out;
+	mask-composite: subtract;
+	will-change: transform;
+	z-index: 1;
+}
+
+.preloader-content {
+	z-index: 2;
+}
+
+.preloader-footer {
+	position: absolute;
+	bottom: 4rem;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 30%;
+	text-align: center;
+}
+
+.preloader-footer p {
+	color: var(--base-300);
+	opacity: 0.5;
+}
+
+.preloader-logo h1 .char2 {
+	position: relative;
+	transform: translateX(0%);
+	display: inline-block;
+	overflow-x: hidden;
+	will-change: transform;
+}
+
+.line,
+.char2 {
+	display: inline-block;
+	position: relative;
+	transform: translateY(0%);
+	padding-bottom: 0.2em;
+	margin-bottom: -0.2em;
+	will-change: transform;
+	overflow: hidden;
+
+} */
+
+/* Glassmorphism card effect */
+.glassEffect {
+	-webkit-backdrop-filter: blur(5px) saturate(100%);
+	backdrop-filter: blur(5px) saturate(100%);
+	background-color: rgba(237, 240, 245, 0.2);
+	border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.hero-bg-img {
+	background-image: url("./assets/Medias/hero/hero-bg.png");
+	background-repeat: no-repeat;
+	object-fit: cover;
+}
+
+/* Hero video — responsive, fills container on all devices */
+.hero-video-wrap {
+	position: absolute;
+	inset: 0;
+	background: var(--bg-void);
+}
+
+.hero-video-wrap .hero-video {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
+@media (max-width: 768px) {
+	.hero-video-wrap {
+		min-height: 100%;
+	}
+	.hero-video-wrap .hero-video {
+		width: 100%;
+		height: 100%;
+		min-height: 100%;
+		object-fit: cover;
+		object-position: 50% 30%;
+	}
+}
+
+/* --------------- Welcome Section Styles -------------- */
+
+.text-darkBrown {
+	color: var(--bg-void);
+	position: relative;
+	display: inline-block;
+	overflow: hidden;
+	line-height: 1.05;
+}
+
+.clip-text-welcome {
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	color: var(--text-primary);
+	clip-path: inset(0 0 100% 0);
+	white-space: nowrap;
+	transition: none;
+}
+
+@media (max-width: 768px) {
+	.responsive-mobile {
+		position: absolute;
+		top: 33%;
+	}
+
+}
+
+/* -------------- Choose Section Styles ----------------- */
+.choose-section {
+	background: linear-gradient(to bottom,
+			var(--bg-void) 0%,
+			var(--bg-void) 50%,
+			var(--bg-surface) 65%,
+			var(--bg-surface) 75%,
+			var(--bg-surface) 85%,
+			var(--bg-surface) 90%,
+			var(--bg-elevated) 100%);
+}
+
+.choose-title-break {
+	color: var(--bg-void);
+	position: relative;
+	display: inline-block;
+	overflow: hidden;
+}
+
+.choose-title-clip {
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	color: var(--text-primary);
+	clip-path: inset(100% 0 0 0);
+	white-space: wrap;
+	transition: none;
+	z-index: 100;
+}
+
+.title-part {
+	overflow: hidden;
+}
+
+@media (max-width: 768px) {
+	.choose-section .title-part {
+		max-height: 28vh;
+	}
+}
+
+/* ------------------ Sticky Section Style ------------------- */
+.sticky-cols {
+	padding: 0rem;
+
+	/* .sticky-cols-wrapper {
+		position: relative;
+		width: 100%;
+		height: 100vh;
+	} */
+
+	.col {
+		position: absolute;
+		width: 50%;
+		height: 100%;
+		will-change: transform;
+	}
+
+	.col h1 {
+		color: var(--accent);
+		width: 60%;
+	}
+
+	.col p {
+		color: var(--text-secondary);
+		width: auto;
+	}
+
+	.col-2 {
+		scale: 1;
+		transform: translateX(100%);
+	}
+
+	.col .col-img img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.col-content,
+	.col-img {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		padding: 0.5rem;
+	}
+
+	.col-3 {
+		transform: translateX(100%) translateY(100%);
+		padding: 0.5rem;
+	}
+
+	.col-4 {
+		transform: translateX(100%) translateY(100%);
+	}
+
+	.col-content-wrapper {
+		padding: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.col-content-wrapper,
+	.col-img-wrapper {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-color: var(--bg-void);
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		overflow: hidden;
+	}
+
+	.col-content-wrapper-2 {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		padding: 2.5rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.col-img-1,
+	.col-img-2 {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.col-img-2 {
+		clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+	}
+
+	.col-img-2 {
+		transform: scale(1);
+	}
+
+	.line {
+		overflow: hidden;
+	}
+
+	.line span {
+		display: block;
+		will-change: transform;
+	}
+}
+
+/* StickyCols responsive */
+@media (max-width: 768px) {
+	.sticky-cols .col h1 {
+		font-size: 1.125rem;
+		width: 95%;
+	}
+
+	.sticky-cols .col p {
+		font-size: 0.65rem;
+	}
+
+	.sticky-cols .col-content-wrapper,
+	.sticky-cols .col-content-wrapper-2 {
+		padding: 1rem;
+	}
+}
+
+@media(max-width: 800px) {
+	.preloader-progress-bar {
+		left: 0%;
+		width: 100%;
+		transform: translateX(0%) scale(0);
+	}
+
+	.preloader-logo .logo-text {
+		font-size: 2rem;
+	}
+
+	.preloader-mask {
+		mask: linear-gradient(var(--base-300), var(--base-300)), url("./../public/preloader-bg.svg") center/90% no-repeat;
+		-webkit-mask-composite: source-out;
+		mask-composite: subtract;
+	}
+
+	.preloader-footer {
+		width: 75%;
+	}
+}

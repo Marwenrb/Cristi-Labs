@@ -1,0 +1,102 @@
+<svg width="320" height="320" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Instagram official gradient ring -->
+    <linearGradient id="ig-ring" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#FEDA77"/>
+      <stop offset="20%"  stop-color="#F58529"/>
+      <stop offset="45%"  stop-color="#DD2A7B"/>
+      <stop offset="70%"  stop-color="#8134AF"/>
+      <stop offset="100%" stop-color="#515BD4"/>
+    </linearGradient>
+
+    <!-- Avatar background -->
+    <radialGradient id="bg" cx="40%" cy="38%" r="68%">
+      <stop offset="0%"   stop-color="#141210"/>
+      <stop offset="100%" stop-color="#080705"/>
+    </radialGradient>
+
+    <!-- Brass mark gradient -->
+    <linearGradient id="brass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#EEC86E"/>
+      <stop offset="42%"  stop-color="#C49A46"/>
+      <stop offset="100%" stop-color="#6E5224"/>
+    </linearGradient>
+
+    <!-- Inner warm glow -->
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C49A46" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#C49A46" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Top-left shine -->
+    <radialGradient id="shine" cx="34%" cy="30%" r="42%">
+      <stop offset="0%"   stop-color="#EEC86E" stop-opacity="0.09"/>
+      <stop offset="100%" stop-color="#EEC86E" stop-opacity="0"/>
+    </radialGradient>
+
+    <clipPath id="avatar-clip"><circle cx="200" cy="200" r="152"/></clipPath>
+    <clipPath id="full-clip"><circle cx="200" cy="200" r="200"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#full-clip)">
+
+    <!-- ── IG GRADIENT RING ── -->
+    <circle cx="200" cy="200" r="198" fill="url(#ig-ring)"/>
+    <!-- Dark separator gap -->
+    <circle cx="200" cy="200" r="167" fill="#0D0D0D"/>
+
+    <!-- ── AVATAR ── -->
+    <g clip-path="url(#avatar-clip)">
+      <rect x="48" y="48" width="304" height="304" fill="url(#bg)"/>
+      <rect x="48" y="48" width="304" height="304" fill="url(#halo)"/>
+      <rect x="48" y="48" width="304" height="304" fill="url(#shine)"/>
+
+      <!-- Dashed radial tick ring -->
+      <circle cx="200" cy="200" r="143" fill="none" stroke="#C49A46"
+        stroke-width="0.8" opacity="0.18" stroke-dasharray="2.5 20"/>
+
+      <!-- Concentric rings -->
+      <circle cx="200" cy="200" r="136" fill="none" stroke="#B8924A" stroke-width="0.8" opacity="0.22"/>
+      <circle cx="200" cy="200" r="122" fill="none" stroke="#B8924A" stroke-width="0.4" opacity="0.10"/>
+
+      <!-- Corner brackets -->
+      <line x1="82"  y1="76"  x2="106" y2="76"  stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+      <line x1="82"  y1="76"  x2="82"  y2="100" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+      <line x1="318" y1="76"  x2="294" y2="76"  stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+      <line x1="318" y1="76"  x2="318" y2="100" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+      <line x1="82"  y1="324" x2="106" y2="324" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+      <line x1="82"  y1="324" x2="82"  y2="300" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+      <line x1="318" y1="324" x2="294" y2="324" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+      <line x1="318" y1="324" x2="318" y2="300" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+
+      <!-- Square mark -->
+      <rect x="102" y="102" width="196" height="196" fill="none" stroke="url(#brass)" stroke-width="2.4"/>
+
+      <!-- Square inner corner ticks -->
+      <line x1="102" y1="102" x2="126" y2="102" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+      <line x1="102" y1="102" x2="102" y2="126" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+      <line x1="298" y1="102" x2="274" y2="102" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+      <line x1="298" y1="102" x2="298" y2="126" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+      <line x1="102" y1="298" x2="126" y2="298" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+      <line x1="102" y1="298" x2="102" y2="274" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+      <line x1="298" y1="298" x2="274" y2="298" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+      <line x1="298" y1="298" x2="298" y2="274" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+
+      <!-- Crosshairs -->
+      <line x1="116" y1="200" x2="284" y2="200" stroke="#B8924A" stroke-width="1" opacity="0.28"/>
+      <line x1="200" y1="116" x2="200" y2="284" stroke="#B8924A" stroke-width="1" opacity="0.28"/>
+
+      <!-- Center micro ring + dot -->
+      <circle cx="200" cy="200" r="11" fill="none" stroke="#B8924A" stroke-width="0.6" opacity="0.20"/>
+      <circle cx="200" cy="200" r="4"  fill="#B8924A" opacity="0.45"/>
+
+      <!-- CL -->
+      <text x="200" y="204"
+        text-anchor="middle" dominant-baseline="central"
+        font-family="'Courier New', Courier, monospace"
+        font-size="82" font-weight="700"
+        fill="url(#brass)" letter-spacing="5">CL</text>
+    </g>
+
+  </g>
+</svg>

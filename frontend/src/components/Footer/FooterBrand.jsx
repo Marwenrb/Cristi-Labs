@@ -1,0 +1,116 @@
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import SplitText from "gsap/SplitText";
+
+gsap.registerPlugin(SplitText);
+
+const TYPING_SPEED = 0.06;
+
+const FooterBrand = () => {
+    const brandRef = useRef(null);
+    const titleRef = useRef(null);
+    const cursorRef = useRef(null);
+    const taglineRef = useRef(null);
+    const hasAnimatedRef = useRef(false);
+
+    // IntersectionObserver — reliable trigger with ScrollSmoother
+    useEffect(() => {
+        const el = brandRef.current;
+        if (!el) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (hasAnimatedRef.current) return;
+                const entry = entries[0];
+                if (!entry.isIntersecting) return;
+
+                hasAnimatedRef.current = true;
+                observer.disconnect();
+
+                const titleEl = titleRef.current;
+                const cursorEl = cursorRef.current;
+                const taglineEl = taglineRef.current;
+                if (!titleEl || !taglineEl) return;
+
+                let titleSplit;
+                let taglineSplit;
+
+                try {
+                    titleSplit = new SplitText(titleEl, {
+                        type: "chars",
+                        charsClass: "footer-brand-char",
+                    });
+                    taglineSplit = new SplitText(taglineEl, {
+                        type: "words",
+                        wordsClass: "footer-brand-word",
+                    });
+                } catch {
+                    return;
+                }
+
+                gsap.set(titleSplit.chars, {
+                    opacity: 0,
+                    scaleX: 0,
+                    transformOrigin: "left center",
+                });
+                cursorEl && gsap.set(cursorEl, { opacity: 0 });
+                gsap.set(taglineSplit.words, { y: 16, opacity: 0 });
+
+                const tl = gsap.timeline();
+
+                tl.to(titleSplit.chars, {
+                    opacity: 1,
+                    scaleX: 1,
+                    stagger: TYPING_SPEED,
+                    duration: 0.3,
+                    ease: "power2.out",
+                });
+                if (cursorEl) {
+                    tl.to(cursorEl, { opacity: 1, duration: 0.05 }, `-=${TYPING_SPEED}`);
+                }
+                tl.to(
+                    taglineSplit.words,
+                    {
+                        y: 0,
+                        opacity: 1,
+                        stagger: 0.04,
+                        duration: 0.45,
+                        ease: "power2.out",
+                    },
+                    "-=0.15"
+                );
+            },
+            { threshold: 0.2, rootMargin: "0px 0px -50px 0px" }
+        );
+
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <div ref={brandRef} className="footer-brand">
+            <div className="footer-brand-card">
+                <div className="footer-brand-title-row">
+                    <h2 ref={titleRef} className="footer-brand-title">
+                        CRISTI <span className="footer-brand-title-accent">LABS</span>
+                    </h2>
+                    <span
+                        ref={cursorRef}
+                        className="footer-brand-cursor"
+                        aria-hidden="true"
+                    />
+                </div>
+
+                <p ref={taglineRef} className="footer-brand-tagline">
+                    Code the Impossible. Trade the World.
+                </p>
+
+                <div className="footer-brand-accent" />
+
+                <div className="footer-brand-corner" aria-hidden="true" />
+            </div>
+        </div>
+    );
+};
+
+export default FooterBrand;

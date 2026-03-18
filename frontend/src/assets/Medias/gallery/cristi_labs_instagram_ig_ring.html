@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cristi Labs — Instagram Profile Picture</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0D0D0D;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Courier New', monospace;
+    padding: 60px 20px;
+    gap: 40px;
+  }
+  .label {
+    color: #6B6355;
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+  .preview-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+  }
+  .preview-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .size-tag {
+    font-size: 8px;
+    letter-spacing: 3px;
+    color: #3d3830;
+    text-transform: uppercase;
+  }
+
+  /* IG mock */
+  .ig-mock {
+    background: #0D0D0D;
+    border: 1px solid #1e1e1e;
+    border-radius: 12px;
+    width: 380px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+  }
+  .ig-header {
+    padding: 16px 16px 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .ig-username { color: #E4E0D8; font-size:13px; font-weight:700; letter-spacing:2px; font-family:'Arial Black',sans-serif; }
+  .ig-sub { color:#4a4540; font-size:8px; letter-spacing:3px; margin-top:3px; }
+  .ig-stats { display:flex; gap:24px; padding:14px 16px; border-bottom:1px solid #1a1a1a; }
+  .ig-stat { text-align:center; }
+  .ig-stat-n { color:#E4E0D8; font-size:14px; font-weight:700; font-family:'Arial Black',sans-serif; }
+  .ig-stat-l { color:#4a4540; font-size:8px; letter-spacing:2px; margin-top:2px; }
+  .ig-bio { padding:12px 16px 16px; }
+  .ig-bio-title { color:#C09848; font-size:10px; letter-spacing:3px; margin-bottom:4px; }
+  .ig-bio-text { color:#5A5248; font-size:9px; letter-spacing:2px; line-height:1.6; }
+
+  .note { color:#3a3530; font-size:8px; letter-spacing:3px; text-transform:uppercase; }
+  button {
+    font-family:'Courier New',monospace; font-size:9px; letter-spacing:3px;
+    text-transform:uppercase; color:#B8924A; background:none;
+    border:1px solid rgba(184,146,74,0.3); padding:10px 22px; cursor:pointer; transition:all 0.2s;
+  }
+  button:hover { background:rgba(184,146,74,0.07); border-color:#B8924A; }
+</style>
+</head>
+<body>
+
+<div class="label">Instagram Profile Picture — with IG gradient ring</div>
+
+<div class="preview-row">
+
+  <!-- 320px — full -->
+  <div class="preview-item">
+    <svg width="200" height="200" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" id="main-svg">
+      <defs>
+        <!-- Instagram official gradient: yellow → orange → pink → purple -->
+        <linearGradient id="ig-ring-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#FEDA77"/>
+          <stop offset="20%"  stop-color="#F58529"/>
+          <stop offset="45%"  stop-color="#DD2A7B"/>
+          <stop offset="70%"  stop-color="#8134AF"/>
+          <stop offset="100%" stop-color="#515BD4"/>
+        </linearGradient>
+
+        <!-- Dark background for gap between ring and avatar -->
+        <radialGradient id="bg-inner" cx="40%" cy="38%" r="68%">
+          <stop offset="0%"   stop-color="#141210"/>
+          <stop offset="100%" stop-color="#080705"/>
+        </radialGradient>
+        <linearGradient id="brass" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#EEC86E"/>
+          <stop offset="42%"  stop-color="#C49A46"/>
+          <stop offset="100%" stop-color="#6E5224"/>
+        </linearGradient>
+        <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#C49A46" stop-opacity="0.20"/>
+          <stop offset="100%" stop-color="#C49A46" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="shine" cx="34%" cy="30%" r="42%">
+          <stop offset="0%"   stop-color="#EEC86E" stop-opacity="0.09"/>
+          <stop offset="100%" stop-color="#EEC86E" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- Clip to avatar circle (slightly inset from ring) -->
+        <clipPath id="avatar-clip"><circle cx="200" cy="200" r="152"/></clipPath>
+        <!-- Full circle clip -->
+        <clipPath id="full-clip"><circle cx="200" cy="200" r="200"/></clipPath>
+      </defs>
+
+      <g clip-path="url(#full-clip)">
+
+        <!-- ── IG GRADIENT RING ── -->
+        <!-- Outer ring disc -->
+        <circle cx="200" cy="200" r="198" fill="url(#ig-ring-grad)"/>
+        <!-- Dark gap (simulates the white/dark separator) -->
+        <circle cx="200" cy="200" r="167" fill="#0D0D0D"/>
+
+        <!-- ── AVATAR AREA ── -->
+        <g clip-path="url(#avatar-clip)">
+          <!-- Background -->
+          <rect x="48" y="48" width="304" height="304" fill="url(#bg-inner)"/>
+          <rect x="48" y="48" width="304" height="304" fill="url(#halo)"/>
+          <rect x="48" y="48" width="304" height="304" fill="url(#shine)"/>
+
+          <!-- Radial dashed tick ring -->
+          <circle cx="200" cy="200" r="143" fill="none" stroke="#C49A46"
+            stroke-width="0.8" opacity="0.18" stroke-dasharray="2.5 20"/>
+
+          <!-- Outer ring -->
+          <circle cx="200" cy="200" r="136" fill="none" stroke="#B8924A" stroke-width="0.8" opacity="0.22"/>
+          <!-- Mid ring -->
+          <circle cx="200" cy="200" r="122" fill="none" stroke="#B8924A" stroke-width="0.4" opacity="0.10"/>
+
+          <!-- Corner brackets -->
+          <line x1="82"  y1="76"  x2="106" y2="76"  stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="82"  y1="76"  x2="82"  y2="100" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="318" y1="76"  x2="294" y2="76"  stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="318" y1="76"  x2="318" y2="100" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="82"  y1="324" x2="106" y2="324" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="82"  y1="324" x2="82"  y2="300" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="318" y1="324" x2="294" y2="324" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="318" y1="324" x2="318" y2="300" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+
+          <!-- Square mark -->
+          <rect x="102" y="102" width="196" height="196" fill="none" stroke="url(#brass)" stroke-width="2.4"/>
+
+          <!-- Square inner corner ticks -->
+          <line x1="102" y1="102" x2="126" y2="102" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+          <line x1="102" y1="102" x2="102" y2="126" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+          <line x1="298" y1="102" x2="274" y2="102" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+          <line x1="298" y1="102" x2="298" y2="126" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+          <line x1="102" y1="298" x2="126" y2="298" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+          <line x1="102" y1="298" x2="102" y2="274" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+          <line x1="298" y1="298" x2="274" y2="298" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+          <line x1="298" y1="298" x2="298" y2="274" stroke="#D4A85C" stroke-width="1.2" opacity="0.40"/>
+
+          <!-- Crosshairs -->
+          <line x1="116" y1="200" x2="284" y2="200" stroke="#B8924A" stroke-width="1" opacity="0.28"/>
+          <line x1="200" y1="116" x2="200" y2="284" stroke="#B8924A" stroke-width="1" opacity="0.28"/>
+
+          <!-- Center micro ring + dot -->
+          <circle cx="200" cy="200" r="11" fill="none" stroke="#B8924A" stroke-width="0.6" opacity="0.20"/>
+          <circle cx="200" cy="200" r="4"  fill="#B8924A" opacity="0.45"/>
+
+          <!-- CL text -->
+          <text x="200" y="204"
+            text-anchor="middle" dominant-baseline="central"
+            font-family="'Courier New', Courier, monospace"
+            font-size="82" font-weight="700"
+            fill="url(#brass)" letter-spacing="5">CL</text>
+        </g>
+
+      </g>
+    </svg>
+    <div class="size-tag">320 × 320 — full</div>
+  </div>
+
+  <!-- 80px preview -->
+  <div class="preview-item">
+    <svg width="80" height="80" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ig2" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#FEDA77"/>
+          <stop offset="20%"  stop-color="#F58529"/>
+          <stop offset="45%"  stop-color="#DD2A7B"/>
+          <stop offset="70%"  stop-color="#8134AF"/>
+          <stop offset="100%" stop-color="#515BD4"/>
+        </linearGradient>
+        <linearGradient id="br2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#EEC86E"/>
+          <stop offset="42%"  stop-color="#C49A46"/>
+          <stop offset="100%" stop-color="#6E5224"/>
+        </linearGradient>
+        <radialGradient id="bg2" cx="40%" cy="38%" r="68%">
+          <stop offset="0%" stop-color="#141210"/>
+          <stop offset="100%" stop-color="#080705"/>
+        </radialGradient>
+        <clipPath id="av2"><circle cx="200" cy="200" r="152"/></clipPath>
+        <clipPath id="fc2"><circle cx="200" cy="200" r="200"/></clipPath>
+      </defs>
+      <g clip-path="url(#fc2)">
+        <circle cx="200" cy="200" r="198" fill="url(#ig2)"/>
+        <circle cx="200" cy="200" r="167" fill="#0D0D0D"/>
+        <g clip-path="url(#av2)">
+          <rect x="48" y="48" width="304" height="304" fill="url(#bg2)"/>
+          <circle cx="200" cy="200" r="136" fill="none" stroke="#B8924A" stroke-width="1" opacity="0.22"/>
+          <line x1="82"  y1="76"  x2="106" y2="76"  stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="82"  y1="76"  x2="82"  y2="100" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="318" y1="76"  x2="294" y2="76"  stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="318" y1="76"  x2="318" y2="100" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="82"  y1="324" x2="106" y2="324" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="82"  y1="324" x2="82"  y2="300" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="318" y1="324" x2="294" y2="324" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="318" y1="324" x2="318" y2="300" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <rect x="102" y="102" width="196" height="196" fill="none" stroke="url(#br2)" stroke-width="2.5"/>
+          <line x1="116" y1="200" x2="284" y2="200" stroke="#B8924A" stroke-width="1" opacity="0.28"/>
+          <line x1="200" y1="116" x2="200" y2="284" stroke="#B8924A" stroke-width="1" opacity="0.28"/>
+          <circle cx="200" cy="200" r="4" fill="#B8924A" opacity="0.45"/>
+          <text x="200" y="204" text-anchor="middle" dominant-baseline="central"
+            font-family="'Courier New', Courier, monospace"
+            font-size="82" font-weight="700" fill="url(#br2)" letter-spacing="5">CL</text>
+        </g>
+      </g>
+    </svg>
+    <div class="size-tag">80px — feed</div>
+  </div>
+
+  <!-- 40px preview -->
+  <div class="preview-item">
+    <svg width="40" height="40" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ig3" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#FEDA77"/>
+          <stop offset="20%"  stop-color="#F58529"/>
+          <stop offset="45%"  stop-color="#DD2A7B"/>
+          <stop offset="70%"  stop-color="#8134AF"/>
+          <stop offset="100%" stop-color="#515BD4"/>
+        </linearGradient>
+        <linearGradient id="br3" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#EEC86E"/>
+          <stop offset="100%" stop-color="#6E5224"/>
+        </linearGradient>
+        <clipPath id="av3"><circle cx="200" cy="200" r="152"/></clipPath>
+        <clipPath id="fc3"><circle cx="200" cy="200" r="200"/></clipPath>
+      </defs>
+      <g clip-path="url(#fc3)">
+        <circle cx="200" cy="200" r="198" fill="url(#ig3)"/>
+        <circle cx="200" cy="200" r="167" fill="#0D0D0D"/>
+        <g clip-path="url(#av3)">
+          <rect x="48" y="48" width="304" height="304" fill="#100E0A"/>
+          <rect x="102" y="102" width="196" height="196" fill="none" stroke="url(#br3)" stroke-width="3"/>
+          <line x1="116" y1="200" x2="284" y2="200" stroke="#B8924A" stroke-width="1.2" opacity="0.30"/>
+          <line x1="200" y1="116" x2="200" y2="284" stroke="#B8924A" stroke-width="1.2" opacity="0.30"/>
+          <text x="200" y="204" text-anchor="middle" dominant-baseline="central"
+            font-family="'Courier New', Courier, monospace"
+            font-size="82" font-weight="700" fill="url(#br3)" letter-spacing="5">CL</text>
+        </g>
+      </g>
+    </svg>
+    <div class="size-tag">40px — comment</div>
+  </div>
+
+</div>
+
+<!-- INSTAGRAM PROFILE MOCKUP -->
+<div class="label">↳ Profile Preview</div>
+<div class="ig-mock">
+  <div class="ig-header">
+    <svg width="68" height="68" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+      <defs>
+        <linearGradient id="ig-m" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#FEDA77"/>
+          <stop offset="20%"  stop-color="#F58529"/>
+          <stop offset="45%"  stop-color="#DD2A7B"/>
+          <stop offset="70%"  stop-color="#8134AF"/>
+          <stop offset="100%" stop-color="#515BD4"/>
+        </linearGradient>
+        <linearGradient id="br-m" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#EEC86E"/>
+          <stop offset="42%"  stop-color="#C49A46"/>
+          <stop offset="100%" stop-color="#6E5224"/>
+        </linearGradient>
+        <radialGradient id="bg-m" cx="40%" cy="38%" r="68%">
+          <stop offset="0%" stop-color="#141210"/>
+          <stop offset="100%" stop-color="#080705"/>
+        </radialGradient>
+        <radialGradient id="halo-m" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#C49A46" stop-opacity="0.20"/>
+          <stop offset="100%" stop-color="#C49A46" stop-opacity="0"/>
+        </radialGradient>
+        <clipPath id="av-m"><circle cx="200" cy="200" r="152"/></clipPath>
+        <clipPath id="fc-m"><circle cx="200" cy="200" r="200"/></clipPath>
+      </defs>
+      <g clip-path="url(#fc-m)">
+        <circle cx="200" cy="200" r="198" fill="url(#ig-m)"/>
+        <circle cx="200" cy="200" r="167" fill="#0D0D0D"/>
+        <g clip-path="url(#av-m)">
+          <rect x="48" y="48" width="304" height="304" fill="url(#bg-m)"/>
+          <rect x="48" y="48" width="304" height="304" fill="url(#halo-m)"/>
+          <circle cx="200" cy="200" r="136" fill="none" stroke="#B8924A" stroke-width="1" opacity="0.22"/>
+          <line x1="82"  y1="76"  x2="106" y2="76"  stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="82"  y1="76"  x2="82"  y2="100" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="318" y1="76"  x2="294" y2="76"  stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="318" y1="76"  x2="318" y2="100" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="82"  y1="324" x2="106" y2="324" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="82"  y1="324" x2="82"  y2="300" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="318" y1="324" x2="294" y2="324" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <line x1="318" y1="324" x2="318" y2="300" stroke="#D4A85C" stroke-width="1.8" opacity="0.65"/>
+          <rect x="102" y="102" width="196" height="196" fill="none" stroke="url(#br-m)" stroke-width="2.4"/>
+          <line x1="116" y1="200" x2="284" y2="200" stroke="#B8924A" stroke-width="1" opacity="0.28"/>
+          <line x1="200" y1="116" x2="200" y2="284" stroke="#B8924A" stroke-width="1" opacity="0.28"/>
+          <circle cx="200" cy="200" r="11" fill="none" stroke="#B8924A" stroke-width="0.6" opacity="0.20"/>
+          <circle cx="200" cy="200" r="4"  fill="#B8924A" opacity="0.45"/>
+          <text x="200" y="204" text-anchor="middle" dominant-baseline="central"
+            font-family="'Courier New', Courier, monospace"
+            font-size="82" font-weight="700" fill="url(#br-m)" letter-spacing="5">CL</text>
+        </g>
+      </g>
+    </svg>
+    <div>
+      <div class="ig-username">cristilabs</div>
+      <div class="ig-sub">VENTURE STUDIO · WYOMING</div>
+    </div>
+  </div>
+  <div class="ig-stats">
+    <div class="ig-stat"><div class="ig-stat-n">—</div><div class="ig-stat-l">POSTS</div></div>
+    <div class="ig-stat"><div class="ig-stat-n">—</div><div class="ig-stat-l">FOLLOWERS</div></div>
+    <div class="ig-stat"><div class="ig-stat-n">—</div><div class="ig-stat-l">FOLLOWING</div></div>
+  </div>
+  <div class="ig-bio">
+    <div class="ig-bio-title">CRISTI LABS LLC</div>
+    <div class="ig-bio-text">Venture Studio · Wyoming<br>Building from scratch.<br><span style="color:#7A6040;">cristilabs.com</span></div>
+  </div>
+</div>
+
+<div class="note">Upload 320 × 320 — gradient ring is cosmetic, Instagram adds its own on-platform</div>
+<button onclick="downloadSVG()">↓ Download SVG (320 × 320)</button>
+
+<script>
+function downloadSVG() {
+  const svg = document.getElementById('main-svg');
+  const clone = svg.cloneNode(true);
+  clone.setAttribute('width','320');
+  clone.setAttribute('height','320');
+  const blob = new Blob([new XMLSerializer().serializeToString(clone)],{type:'image/svg+xml'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'cristi_labs_instagram_profile_ig.svg';
+  a.click();
+}
+</script>
+</body>
+</html>
