@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter, FaYoutube, FaTiktok } from "react-icons/fa6";
 import { useFooterGSAP } from "../../hooks/useFooterGSAP";
 import FooterBrand from "./FooterBrand";
 import "./footer.css";
@@ -199,40 +200,27 @@ const Footer = () => {
                                     <p className="text-[0.65rem] text-zinc-600 uppercase tracking-[0.25em] pt-4 mt-6">
                                         Social
                                     </p>
-                                    <div className="flex flex-col gap-8">
-                                        <a
-                                            href="#"
-                                            ref={(el) => {
-                                                linkRefs.current[FOOTER_LINKS.length + 2] = el;
-                                            }}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="footer-magnetic-link inline-block text-zinc-500 text-sm tracking-wider hover:text-[var(--accent)] transition-colors duration-300 cursor-pointer will-change-transform"
-                                        >
-                                            Facebook
-                                        </a>
-                                        <a
-                                            href="#"
-                                            ref={(el) => {
-                                                linkRefs.current[FOOTER_LINKS.length + 3] = el;
-                                            }}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="footer-magnetic-link inline-block text-zinc-500 text-sm tracking-wider hover:text-[var(--accent)] transition-colors duration-300 cursor-pointer will-change-transform"
-                                        >
-                                            Instagram
-                                        </a>
-                                        <a
-                                            href="#"
-                                            ref={(el) => {
-                                                linkRefs.current[FOOTER_LINKS.length + 4] = el;
-                                            }}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="footer-magnetic-link inline-block text-zinc-500 text-sm tracking-wider hover:text-[var(--accent)] transition-colors duration-300 cursor-pointer will-change-transform"
-                                        >
-                                            LinkedIn
-                                        </a>
+                                    <div className="flex flex-col gap-6">
+                                        {[
+                                            { href: "#", icon: <FaFacebookF size={13} />, label: "Facebook" },
+                                            { href: "#", icon: <FaInstagram size={13} />, label: "Instagram" },
+                                            { href: "#", icon: <FaLinkedinIn size={13} />, label: "LinkedIn" },
+                                            { href: "#", icon: <FaXTwitter size={13} />, label: "X / Twitter" },
+                                            { href: "#", icon: <FaYoutube size={13} />, label: "YouTube" },
+                                            { href: "#", icon: <FaTiktok size={13} />, label: "TikTok" },
+                                        ].map((s, i) => (
+                                            <a
+                                                key={s.label}
+                                                href={s.href}
+                                                ref={(el) => { linkRefs.current[FOOTER_LINKS.length + 2 + i] = el; }}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="footer-magnetic-link inline-flex items-center gap-2.5 text-zinc-500 text-sm tracking-wider hover:text-[var(--accent)] transition-colors duration-300 cursor-pointer will-change-transform"
+                                            >
+                                                <span className="opacity-70">{s.icon}</span>
+                                                {s.label}
+                                            </a>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
