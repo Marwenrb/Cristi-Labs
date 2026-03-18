@@ -9,7 +9,6 @@ import PreloaderII from "../components/Preloader/PreloaderII";
 import ReserveBtn from "../components/Buttons/ReserveBtn";
 import Logo from "../components/Buttons/Logo";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
-import ScrollReturn from "../components/ScrollReturn/ScrollReturn";
 import { initLenis } from "../lib/lenis";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -65,7 +64,6 @@ const MainLayout = () => {
             <Logo />
             <ReserveBtn />
             <Navbar />
-            <ScrollReturn />
             <div id="smooth-wrapper">
                 <div id="smooth-content">
                     <main>
