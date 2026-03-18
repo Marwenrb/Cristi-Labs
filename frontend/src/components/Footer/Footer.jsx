@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter, FaYoutube, FaTiktok } from "react-icons/fa6";
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { useFooterGSAP } from "../../hooks/useFooterGSAP";
 import FooterBrand from "./FooterBrand";
 import "./footer.css";
@@ -205,9 +205,6 @@ const Footer = () => {
                                             { href: "#", icon: <FaFacebookF size={13} />, label: "Facebook" },
                                             { href: "#", icon: <FaInstagram size={13} />, label: "Instagram" },
                                             { href: "#", icon: <FaLinkedinIn size={13} />, label: "LinkedIn" },
-                                            { href: "#", icon: <FaXTwitter size={13} />, label: "X / Twitter" },
-                                            { href: "#", icon: <FaYoutube size={13} />, label: "YouTube" },
-                                            { href: "#", icon: <FaTiktok size={13} />, label: "TikTok" },
                                         ].map((s, i) => (
                                             <a
                                                 key={s.label}

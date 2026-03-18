@@ -188,8 +188,8 @@ const BackToTop = () => {
                     relative flex items-center justify-center
                     w-16 h-16 cursor-pointer will-change-transform
                     focus:outline-none focus-visible:ring-2
-                    focus-visible:ring-[#00d4ff] focus-visible:ring-offset-2
-                    focus-visible:ring-offset-[#181717]
+                    focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2
+                    focus-visible:ring-offset-[var(--bg-void)]
                 "
                 style={{ background: "none", border: "none" }}
             >
@@ -212,14 +212,13 @@ const BackToTop = () => {
                     <circle
                         cx="32" cy="32" r={R}
                         fill="none"
-                        stroke="#00d4ff"
+                        stroke="var(--accent)"
                         strokeWidth="2.5"
                         strokeLinecap="round"
                         strokeDasharray={CIRCUM}
                         strokeDashoffset={dashOffset}
                         style={{
-                            /* Layered drop-shadow recreates neon bloom */
-                            filter:     "drop-shadow(0 0 3px rgba(0,212,255,1)) drop-shadow(0 0 8px rgba(0,212,255,0.65)) drop-shadow(0 0 16px rgba(0,212,255,0.35))",
+                            filter:     "drop-shadow(0 0 3px rgba(184,146,74,0.9)) drop-shadow(0 0 8px rgba(184,146,74,0.5)) drop-shadow(0 0 16px rgba(184,146,74,0.25))",
                             transition: "stroke-dashoffset 0.08s linear",
                         }}
                     />
@@ -229,8 +228,8 @@ const BackToTop = () => {
                             cx={32 + R * Math.cos(progress * 2 * Math.PI)}
                             cy={32 + R * Math.sin(progress * 2 * Math.PI)}
                             r="2.5"
-                            fill="#00d4ff"
-                            style={{ filter: "drop-shadow(0 0 5px rgba(0,212,255,1))" }}
+                            fill="var(--accent)"
+                            style={{ filter: "drop-shadow(0 0 5px rgba(184,146,74,0.9))" }}
                         />
                     )}
                 </svg>
@@ -242,15 +241,15 @@ const BackToTop = () => {
                         flex items-center justify-center overflow-hidden
                     "
                     style={{
-                        background: "linear-gradient(145deg, rgba(0,212,255,0.11) 0%, rgba(24,23,23,0.93) 52%)",
+                        background: "linear-gradient(145deg, rgba(184,146,74,0.10) 0%, rgba(11,11,11,0.93) 52%)",
                         backdropFilter:       "blur(20px) saturate(1.9)",
                         WebkitBackdropFilter: "blur(20px) saturate(1.9)",
-                        border:    "1px solid rgba(0,212,255,0.42)",
+                        border:    "1px solid rgba(184,146,74,0.40)",
                         boxShadow: [
-                            "0 0  18px rgba(0,212,255,0.22)",
-                            "0 0  40px rgba(0,212,255,0.10)",
-                            "inset 0 1px 0 rgba(255,255,255,0.09)",
-                            "inset 0 -1px 0 rgba(0,212,255,0.06)",
+                            "0 0  18px rgba(184,146,74,0.18)",
+                            "0 0  40px rgba(184,146,74,0.08)",
+                            "inset 0 1px 0 rgba(255,255,255,0.07)",
+                            "inset 0 -1px 0 rgba(184,146,74,0.06)",
                             "0 8px 28px rgba(0,0,0,0.55)",
                         ].join(", "),
                     }}
@@ -261,7 +260,7 @@ const BackToTop = () => {
                         className="absolute inset-0 rounded-full pointer-events-none"
                         aria-hidden="true"
                         style={{
-                            background: "radial-gradient(circle at 50% 38%, rgba(0,212,255,0.26) 0%, transparent 68%)",
+                            background: "radial-gradient(circle at 50% 38%, rgba(184,146,74,0.22) 0%, transparent 68%)",
                             opacity:    0.35,
                         }}
                     />
@@ -271,7 +270,7 @@ const BackToTop = () => {
                         className="absolute top-0 left-0 right-0 h-px rounded-t-full pointer-events-none"
                         aria-hidden="true"
                         style={{
-                            background: "linear-gradient(90deg, transparent 10%, rgba(0,212,255,0.55) 50%, transparent 90%)",
+                            background: "linear-gradient(90deg, transparent 10%, rgba(184,146,74,0.50) 50%, transparent 90%)",
                         }}
                     />
 
@@ -283,7 +282,7 @@ const BackToTop = () => {
                         <svg
                             viewBox="0 0 24 24"
                             fill="none"
-                            stroke="#00d4ff"
+                            stroke="var(--accent)"
                             strokeWidth="2.5"
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -292,8 +291,8 @@ const BackToTop = () => {
                             aria-hidden="true"
                             style={{
                                 filter: [
-                                    "drop-shadow(0 0 3px rgba(0,212,255,1))",
-                                    "drop-shadow(0 0 7px rgba(0,212,255,0.7))",
+                                    "drop-shadow(0 0 3px rgba(184,146,74,0.95))",
+                                    "drop-shadow(0 0 7px rgba(184,146,74,0.6))",
                                 ].join(" "),
                             }}
                         >
