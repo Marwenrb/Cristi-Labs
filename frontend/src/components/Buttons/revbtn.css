@@ -1,47 +1,169 @@
-/* Connect Button — Cristi Labs Brass Edition */
+/* ============================================================
+   CONNECT BUTTON — Cristi Labs Signature CTA
+   Heavy Industry × Surgical Precision × Metallic Gold
+   ============================================================ */
 
+/* Houdini custom property for animatable conic-gradient angle */
+@property --bscan {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes border-scan {
+    to { --bscan: 360deg; }
+}
+
+/* ── Base ──────────────────────────────────────────────────── */
 .connect-btn {
-    font-family: var(--font-mono);
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    background: var(--bg-void);
-    border: 1px solid var(--border-strong);
-    transition:
-        border-color var(--duration-mid) var(--ease-out-expo),
-        background var(--duration-mid) var(--ease-out-expo);
-}
-
-.connect-btn:hover {
-    border-color: var(--accent);
-    background: var(--accent-ghost);
-}
-
-.connect-btn .rev-link {
-    color: var(--text-primary);
-}
-
-.connect-btn:hover .rev-link {
-    color: var(--accent);
-}
-
-.connect-btn-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--accent);
-    color: var(--bg-void);
-    border-radius: 50%;
-    padding: 0.4rem;
-    transition: transform var(--duration-fast) var(--ease-out-expo);
-}
-
-.connect-btn:hover .connect-btn-icon {
-    transform: translate(2px, -2px);
-}
-
-.rev-link {
+    /* Layout — CSS owns everything, no Tailwind flex on this element */
+    position: relative;
     display: inline-flex;
     align-items: center;
+    gap: 10px;
+
+    /* Shape */
+    padding: 10px 12px 10px 18px;
+    border-radius: 100px;
+
+    /* Typography */
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+
+    /* Color */
+    color: var(--text-primary);
+
+    /* Animated scanning gradient border
+       padding-box  → solid dark fill for the content area
+       border-box   → rotating gold spotlight on the 1px border ring */
+    background:
+        linear-gradient(var(--bg-void), var(--bg-void)) padding-box,
+        conic-gradient(
+            from var(--bscan),
+            rgba(212, 175, 55, 0.06)  0%,
+            rgba(212, 175, 55, 0.55) 10%,
+            rgba(212, 175, 55, 0.06) 22%,
+            rgba(212, 175, 55, 0.06) 100%
+        ) border-box;
+    border: 1px solid transparent;
+
+    /* Run the border scan continuously */
+    animation: border-scan 10s linear infinite;
+
+    /* Contain the shimmer sweep inside the pill */
+    overflow: hidden;
+
+    /* GPU composite layer for magnetic transform */
+    will-change: transform;
+    -webkit-font-smoothing: antialiased;
+
+    /* Transitions — transform handled by JS for magnetic effect */
+    transition:
+        color          340ms var(--ease-out-expo),
+        box-shadow     400ms var(--ease-out-expo),
+        letter-spacing 500ms var(--ease-out-expo);
+}
+
+/* ── Shimmer sweep — slides left→right on hover ────────────── */
+.connect-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -80%;
+    width: 50%;
+    background: linear-gradient(
+        90deg,
+        transparent               0%,
+        rgba(212, 175, 55, 0.22) 50%,
+        transparent              100%
+    );
+    pointer-events: none;
+    z-index: 0;
+    transition: left 650ms var(--ease-out-expo);
+}
+
+.connect-btn:hover::before {
+    left: 140%;
+}
+
+/* ── Radial ambient fill on hover ──────────────────────────── */
+.connect-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+        ellipse 90% 100% at 25% 50%,
+        rgba(212, 175, 55, 0.07) 0%,
+        transparent              100%
+    );
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 400ms var(--ease-out-expo);
+}
+
+.connect-btn:hover::after {
+    opacity: 1;
+}
+
+/* ── Hover state ───────────────────────────────────────────── */
+.connect-btn:hover {
+    color: var(--accent);
+    box-shadow:
+        0 0 24px rgba(212, 175, 55, 0.18),
+        0 0 64px rgba(212, 175, 55, 0.06);
+    letter-spacing: 0.24em;
+}
+
+/* ── Label ─────────────────────────────────────────────────── */
+.connect-btn__label {
+    position: relative;
+    z-index: 1;
     line-height: 1;
-    transition: color var(--duration-mid) var(--ease-out-expo);
+}
+
+/* ── Icon circle ───────────────────────────────────────────── */
+.connect-btn__icon {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--bg-void);
+    transition:
+        transform  360ms var(--ease-out-expo),
+        background 340ms var(--ease-out-expo);
+}
+
+.connect-btn__icon svg {
+    width: 11px;
+    height: 11px;
+    display: block;
+}
+
+.connect-btn:hover .connect-btn__icon {
+    transform: rotate(45deg) scale(1.1);
+    background: var(--accent-light);
+}
+
+/* ── Accessibility: respect reduced-motion ─────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .connect-btn {
+        animation: none;
+    }
+    .connect-btn::before {
+        display: none;
+    }
 }
