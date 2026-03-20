@@ -225,11 +225,21 @@ export default function ApexTransit() {
   useEffect(() => {
     const el = headlineRef.current;
     if (!el) return;
+    const lines = el.querySelectorAll('[data-title-line]');
 
     el.style.opacity = '0';
-    el.style.transform = 'translateY(48px)';
+    el.style.transform = 'translateY(52px)';
     el.style.filter = 'blur(8px)';
     el.style.transition = 'none';
+
+    lines.forEach(line => {
+      line.style.opacity = '0';
+      line.style.transform = 'translateY(36px)';
+      line.style.letterSpacing = '0.12em';
+      line.style.transition = 'none';
+    });
+
+    let timeouts = [];
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -246,6 +256,20 @@ export default function ApexTransit() {
             el.style.opacity = '1';
             el.style.transform = 'translateY(0)';
             el.style.filter = 'blur(0px)';
+
+            lines.forEach((line, index) => {
+              const id = window.setTimeout(() => {
+                line.style.transition = [
+                  'opacity 0.85s ease',
+                  'transform 1s cubic-bezier(0.16, 1, 0.3, 1)',
+                  'letter-spacing 1.1s cubic-bezier(0.16, 1, 0.3, 1)',
+                ].join(', ');
+                line.style.opacity = '1';
+                line.style.transform = 'translateY(0)';
+                line.style.letterSpacing = '0.03em';
+              }, index * 170);
+              timeouts.push(id);
+            });
           });
         });
       },
@@ -256,7 +280,11 @@ export default function ApexTransit() {
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      timeouts.forEach(id => window.clearTimeout(id));
+      timeouts = [];
+    };
   }, []);
 
   useEffect(() => {
@@ -393,11 +421,28 @@ export default function ApexTransit() {
             color: 'var(--text-primary)',
             textTransform: 'uppercase',
             marginBottom: '1.25rem',
+            textWrap: 'balance',
           }}
         >
-          Above<br />
-          <span style={{ WebkitTextStroke: '1px var(--accent)', color: 'transparent' }}>
-            Every Border.
+          <span
+            data-title-line
+            style={{
+              display: 'block',
+              textShadow: '0 16px 36px rgba(0, 0, 0, 0.45)',
+            }}
+          >
+            Command
+          </span>
+          <span
+            data-title-line
+            style={{
+              display: 'block',
+              WebkitTextStroke: '1px var(--accent)',
+              color: 'transparent',
+              textShadow: '0 0 24px rgba(184, 146, 74, 0.2)',
+            }}
+          >
+            The Horizon.
           </span>
         </h2>
 
