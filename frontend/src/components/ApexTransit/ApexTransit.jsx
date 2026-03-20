@@ -273,31 +273,67 @@ export default function ApexTransit() {
     return () => headlineObserver.disconnect();
   }, []);
 
-  // ── GSAP ANIMATIONS — matchMedia separates desktop / mobile ──────────
+  // ── ROUTE ROWS + SPEC CARDS: IntersectionObserver (reliable, no stuck opacity) ──
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    // Route rows — slide in from left
+    const routeRows = section.querySelectorAll('.apex-route-row');
+    routeRows.forEach(row => {
+      row.style.opacity = '0';
+      row.style.transform = 'translateX(-40px)';
+      row.style.transition = 'none';
+    });
+
+    const routesContainer = section.querySelector('.apex-routes');
+    if (routesContainer) {
+      const routeObserver = new IntersectionObserver(([entry]) => {
+        if (!entry.isIntersecting) return;
+        routeObserver.disconnect();
+        routeRows.forEach((row, i) => {
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            row.style.transition = `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${i * 0.06}s, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${i * 0.06}s`;
+            row.style.opacity = '1';
+            row.style.transform = 'translateX(0)';
+          }));
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+      routeObserver.observe(routesContainer);
+    }
+
+    // Spec cards — fade up
+    const specCards = section.querySelectorAll('.apex-spec-card');
+    specCards.forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(35px)';
+      card.style.transition = 'none';
+    });
+
+    const specsGrid = section.querySelector('.apex-specs-grid');
+    if (specsGrid) {
+      const specObserver = new IntersectionObserver(([entry]) => {
+        if (!entry.isIntersecting) return;
+        specObserver.disconnect();
+        specCards.forEach((card, i) => {
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            card.style.transition = `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 0.07}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 0.07}s`;
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }));
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      specObserver.observe(specsGrid);
+    }
+
+    return () => {};
+  }, []);
+
+  // ── GSAP ANIMATIONS — matchMedia for canvas parallax + label ──────────
   useGSAP(() => {
     const mm = gsap.matchMedia();
 
     mm.add('(min-width: 769px)', () => {
-      // Spec cards stagger
-      gsap.from('.apex-spec-card', {
-        opacity: 0,
-        y: 35,
-        stagger: 0.07,
-        duration: 0.7,
-        ease: 'expo.out',
-        scrollTrigger: { trigger: '.apex-specs-grid', start: 'top 85%', once: true },
-      });
-
-      // Route rows slide from left
-      gsap.from('.apex-route-row', {
-        opacity: 0,
-        x: -40,
-        stagger: 0.06,
-        duration: 0.6,
-        ease: 'expo.out',
-        scrollTrigger: { trigger: '.apex-routes', start: 'top 80%', once: true },
-      });
-
       // Canvas parallax
       gsap.to('.apex-canvas-wrap', {
         yPercent: -8,

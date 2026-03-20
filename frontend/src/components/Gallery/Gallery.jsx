@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
 import './gallery.css';
 
 import gallery3 from '../../assets/Medias/gallery/gallery-3.png';
@@ -110,38 +109,39 @@ const Gallery = () => {
         return () => { tl4.scrollTrigger?.kill(); tl4.kill(); };
     }, [isMobile]);
 
-    // Mobile: per-card entrance (once) + vertical parallax on inner image
-    useGSAP(() => {
+    // Mobile: per-card IntersectionObserver entrance (reliable, no stuck opacity)
+    useEffect(() => {
         if (!isMobile) return;
 
         const cards = cardRefs.current.filter(Boolean);
         if (!cards.length) return;
 
-        // 3D flip entrance — fires once on scroll-into-view
+        // Set initial hidden state
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(40px) scale(0.92)';
+            card.style.filter = 'blur(6px)';
+            card.style.transition = 'none';
+        });
+
+        const observers = [];
         cards.forEach((card, i) => {
-            gsap.fromTo(card,
-                { opacity: 0, y: 60, rotateX: 25, scale: 0.85, filter: 'blur(8px)' },
-                {
-                    opacity: 1, y: 0, rotateX: 0, scale: 1, filter: 'blur(0px)',
-                    duration: 0.9, ease: 'expo.out', delay: i * 0.06,
-                    scrollTrigger: { trigger: card, start: 'top 92%', once: true },
-                }
-            );
+            const observer = new IntersectionObserver(([entry]) => {
+                if (!entry.isIntersecting) return;
+                observer.disconnect();
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    card.style.transition = `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${i * 0.06}s, transform 0.9s cubic-bezier(0.16,1,0.3,1) ${i * 0.06}s, filter 0.7s ease ${i * 0.06}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) scale(1)';
+                    card.style.filter = 'blur(0px)';
+                }));
+            }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+            observer.observe(card);
+            observers.push(observer);
         });
 
-        // Image parallax — lighter on mobile for smoother scroll feel
-        cards.forEach((card) => {
-            const img = card.querySelector('img');
-            if (!img) return;
-            gsap.to(img, {
-                yPercent: -8, ease: 'none',
-                scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 0 },
-            });
-        });
-
-        // Scoped cleanup — only kill triggers created in this scope
-        return () => { /* useGSAP auto-reverts context scope */ };
-    }, { scope: mobileRef, dependencies: [isMobile] });
+        return () => observers.forEach(o => o.disconnect());
+    }, [isMobile]);
 
     // Mobile: horizontal swipe velocity → rotateY card tilt
     useEffect(() => {
