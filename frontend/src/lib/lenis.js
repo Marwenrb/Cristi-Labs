@@ -5,12 +5,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 export const initLenis = () => {
     gsap.registerPlugin(ScrollTrigger);
 
+    const isMobile = window.innerWidth < 768;
+
     const lenis = new Lenis({
-        duration: 1.4,
+        duration: isMobile ? 0.8 : 1.4,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
-        smoothTouch: true,
-        touchMultiplier: 1.5,
+        smoothTouch: false,
+        touchMultiplier: isMobile ? 1.2 : 1.5,
     });
 
     // Keep GSAP ScrollTrigger in sync with Lenis scroll position

@@ -28,6 +28,9 @@ export function useFooterGSAP() {
             const footerEl = footerInnerRef.current;
             if (!triggerEl || !footerEl) return;
 
+            // Mobile: skip pinned reveal — Lenis handles scroll naturally
+            if (window.innerWidth < 768) return;
+
             // 1. Kinetic Footer Reveal — pinned section where footer slides in from below
             const tl = gsap.timeline({
                 scrollTrigger: {

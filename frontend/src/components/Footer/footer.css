@@ -1,4 +1,4 @@
-/* Live Data Ticker — Full width, infinite marquee */
+/* Live Data Ticker — Premium 42px dark bar with CSS marquee */
 
 .live-ticker-wrapper {
     margin-bottom: 1rem;
@@ -7,74 +7,57 @@
 }
 
 .live-ticker {
+    position: relative;
+    width: 100%;
+    background: rgba(184, 146, 74, 0.04);
+    border-top: 1px solid rgba(184, 146, 74, 0.12);
+    border-bottom: 1px solid rgba(184, 146, 74, 0.12);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    width: 100%;
-    position: relative;
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 0.3rem 0.5rem 0.3rem 0.65rem;
+    height: 42px;
     overflow: hidden;
 }
 
-.live-ticker::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 1.5px;
-    background: linear-gradient(
-        180deg,
-        transparent 0%,
-        var(--accent) 50%,
-        transparent 100%
-    );
-    opacity: 0.6;
-}
-
 .live-ticker-badge {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 7px;
+    padding: 0 20px;
+    border-right: 1px solid rgba(184, 146, 74, 0.12);
+    height: 100%;
     flex-shrink: 0;
+    background: rgba(184, 146, 74, 0.04);
+    white-space: nowrap;
 }
 
 .live-ticker-dot {
-    width: 3px;
-    height: 3px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 8px var(--accent-glow);
-    animation: live-ticker-pulse 2s ease-in-out infinite;
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+    animation: tickerPulse 1.5s ease infinite;
+    flex-shrink: 0;
 }
 
-@keyframes live-ticker-pulse {
-    0%, 100% {
-        opacity: 1;
-        box-shadow: 0 0 8px var(--accent-glow);
-    }
-    50% {
-        opacity: 0.7;
-        box-shadow: 0 0 14px var(--accent-glow);
-    }
+@keyframes tickerPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
 }
 
 .live-ticker-label {
-    font-size: 0.5rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--accent);
-    font-family: var(--font-mono);
 }
 
 .live-ticker-marquee {
     flex: 1;
-    min-width: 0;
     overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
     display: flex;
     align-items: center;
 }
@@ -82,44 +65,43 @@
 .live-ticker-track {
     display: flex;
     align-items: center;
-    gap: 0.875rem;
-    animation: live-ticker-march 30s linear infinite;
+    gap: 0;
+    animation: tickerScroll 30s linear infinite;
+    width: max-content;
 }
 
 .live-ticker-track:hover {
     animation-play-state: paused;
 }
 
-@keyframes live-ticker-march {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-25%);
-    }
+@keyframes tickerScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-25%); }
 }
 
 .live-ticker-hub {
     display: flex;
-    align-items: baseline;
-    gap: 0.25rem;
-    flex-shrink: 0;
+    align-items: center;
+    gap: 8px;
+    padding: 0 24px;
+    border-right: 1px solid rgba(184, 146, 74, 0.08);
+    height: 42px;
 }
 
 .live-ticker-city {
-    font-size: 0.5rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    color: var(--accent);
     text-transform: uppercase;
-    color: #52525b;
 }
 
 .live-ticker-time {
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    color: var(--accent);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: 0.06em;
     font-variant-numeric: tabular-nums;
 }
 

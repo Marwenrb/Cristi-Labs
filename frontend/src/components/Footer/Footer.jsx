@@ -115,7 +115,7 @@ const Footer = () => {
                 ref={footerInnerRef}
                 className="footer-inner absolute bottom-0 left-0 right-0 w-full will-change-transform"
             >
-                <div className="relative w-full overflow-hidden">
+                <div className="relative w-full overflow-visible">
                     {/* Base dark layer */}
                     <div className="absolute inset-0 bg-[var(--bg-void)]/95 backdrop-blur-xl" />
 

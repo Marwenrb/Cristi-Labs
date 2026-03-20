@@ -2,7 +2,10 @@ import { useRef, useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SplitText } from 'gsap/SplitText';
+
+import heroBg from '../../assets/Medias/hero/hero-bg.png';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // ── ROUTE DATA ────────────────────────────────────────────────────────────
 const AIR_ROUTES = [
@@ -23,6 +26,8 @@ const FLEET_SPECS = [
   { label: 'CARBON', value: '0', unit: 'direct emissions' },
 ];
 
+const DESCRIPTOR_TAGS = ['eVTOL Networks', 'AI Orchestration', '47 Countries', 'Zero Emissions', 'Executive Transit'];
+
 // ── CANVAS: CITY GRID AIR CORRIDOR VISUALIZATION ──────────────────────────
 function AirCorridorCanvas() {
   const canvasRef = useRef(null);
@@ -32,11 +37,13 @@ function AirCorridorCanvas() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    const mobile = window.innerWidth < 768;
 
     const resize = () => {
-      canvas.width = canvas.offsetWidth * (window.devicePixelRatio || 1);
-      canvas.height = canvas.offsetHeight * (window.devicePixelRatio || 1);
-      ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = canvas.offsetWidth * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
     window.addEventListener('resize', resize);
@@ -44,9 +51,9 @@ function AirCorridorCanvas() {
     const W = () => canvas.offsetWidth;
     const H = () => canvas.offsetHeight;
 
-    // City grid nodes
     const NODES = [];
-    const GRID_X = 8, GRID_Y = 6;
+    const GRID_X = mobile ? 5 : 8;
+    const GRID_Y = mobile ? 4 : 6;
     const initNodes = () => {
       NODES.length = 0;
       for (let x = 0; x < GRID_X; x++) {
@@ -64,9 +71,8 @@ function AirCorridorCanvas() {
     };
     initNodes();
 
-    // Moving pods (aircraft)
-    const PODS = Array.from({ length: 6 }, (_, i) => ({
-      progress: i / 6,
+    const PODS = Array.from({ length: mobile ? 3 : 6 }, (_, i) => ({
+      progress: i / (mobile ? 3 : 6),
       speed: 0.0008 + Math.random() * 0.0006,
       fromNode: Math.floor(Math.random() * NODES.length),
       toNode: Math.floor(Math.random() * NODES.length),
@@ -79,11 +85,9 @@ function AirCorridorCanvas() {
       const w = W(), h = H();
       ctx.clearRect(0, 0, w, h);
 
-      // Dark base
       ctx.fillStyle = 'rgba(11, 11, 11, 0.92)';
       ctx.fillRect(0, 0, w, h);
 
-      // Draw grid connections
       NODES.forEach((node, i) => {
         NODES.forEach((other, j) => {
           if (j <= i) return;
@@ -99,7 +103,6 @@ function AirCorridorCanvas() {
         });
       });
 
-      // Animate pods along routes
       PODS.forEach(pod => {
         pod.progress += pod.speed;
         if (pod.progress >= 1) {
@@ -116,11 +119,9 @@ function AirCorridorCanvas() {
         const px = from.x + (to.x - from.x) * pod.progress;
         const py = from.y + (to.y - from.y) * pod.progress;
 
-        // Trail
-        pod.trail.push({ x: px, y: py, t: pod.progress });
+        pod.trail.push({ x: px, y: py });
         if (pod.trail.length > 20) pod.trail.shift();
 
-        // Draw trail
         pod.trail.forEach((pt, ti) => {
           const alpha = (ti / pod.trail.length) * 0.5;
           ctx.beginPath();
@@ -129,7 +130,6 @@ function AirCorridorCanvas() {
           ctx.fill();
         });
 
-        // Draw pod
         const glowAlpha = 0.7 + Math.sin(t * 4 + pod.fromNode) * 0.3;
         ctx.shadowBlur = 12;
         ctx.shadowColor = 'rgba(184, 146, 74, 0.8)';
@@ -140,7 +140,6 @@ function AirCorridorCanvas() {
         ctx.shadowBlur = 0;
       });
 
-      // Pulse rings on active nodes
       NODES.forEach(node => {
         if (!node.active) return;
         node.pulse += 0.04;
@@ -154,7 +153,6 @@ function AirCorridorCanvas() {
         ctx.lineWidth = 1;
         ctx.stroke();
 
-        // Node dot
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.size, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(184, 146, 74, 0.8)';
@@ -174,15 +172,44 @@ function AirCorridorCanvas() {
   return (
     <canvas
       ref={canvasRef}
-      style={{
-        position: 'absolute',
-        inset: 0,
-        width: '100%',
-        height: '100%',
-        pointerEvents: 'none',
-      }}
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
       aria-hidden="true"
     />
+  );
+}
+
+// ── MOBILE REVEAL WRAPPER ─────────────────────────────────────────────────
+function MobileReveal({ children, delay = 0, style = {}, className = '' }) {
+  const ref = useRef(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.innerWidth >= 768) { setRevealed(true); return; }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setRevealed(true); observer.unobserve(el); } },
+      { threshold: 0.1, rootMargin: '0px 0px -5% 0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        ...style,
+        opacity: revealed ? 1 : 0,
+        transform: revealed ? 'translateY(0)' : 'translateY(24px)',
+        transition: `opacity 0.6s ease ${delay}s, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay}s`,
+        willChange: revealed ? 'auto' : 'transform, opacity',
+      }}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -191,97 +218,105 @@ export default function ApexTransit() {
   const sectionRef = useRef(null);
   const headlineRef = useRef(null);
   const [activeRoute, setActiveRoute] = useState(0);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-  // ── GSAP ANIMATIONS (Lenis-safe: NO pin, NO ScrollSmoother conflict) ────
+  // ── HEADLINE: IntersectionObserver + CSS transition (double-rAF) ──────
+  useEffect(() => {
+    const el = headlineRef.current;
+    if (!el) return;
+
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(32px)';
+    el.style.filter = 'blur(6px)';
+    el.style.transition = 'none';
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          el.style.transition = 'opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1.1s cubic-bezier(0.16,1,0.3,1), filter 0.9s ease';
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+          el.style.filter = 'blur(0px)';
+        });
+      });
+    }, { threshold: 0.2 });
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // ── GSAP ANIMATIONS — matchMedia separates desktop / mobile ──────────
   useGSAP(() => {
-    document.fonts.ready.then(() => {
-      if (!headlineRef.current) return;
+    const mm = gsap.matchMedia();
 
-      const split = new SplitText(headlineRef.current, { type: 'chars, words' });
-
-      // Headline char reveal
-      gsap.from(split.chars, {
+    mm.add('(min-width: 769px)', () => {
+      // Spec cards stagger
+      gsap.from('.apex-spec-card', {
         opacity: 0,
-        yPercent: 110,
-        rotateX: -80,
-        stagger: { amount: 0.8, ease: 'power2.in' },
+        y: 35,
+        stagger: 0.07,
         duration: 0.7,
-        ease: 'back.out(2)',
+        ease: 'expo.out',
+        scrollTrigger: { trigger: '.apex-specs-grid', start: 'top 85%', once: true },
+      });
+
+      // Route rows slide from left
+      gsap.from('.apex-route-row', {
+        opacity: 0,
+        x: -40,
+        stagger: 0.06,
+        duration: 0.6,
+        ease: 'expo.out',
+        scrollTrigger: { trigger: '.apex-routes', start: 'top 80%', once: true },
+      });
+
+      // Canvas parallax
+      gsap.to('.apex-canvas-wrap', {
+        yPercent: -8,
+        ease: 'none',
         scrollTrigger: {
-          trigger: headlineRef.current,
-          start: 'top 82%',
-          once: true,
+          trigger: sectionRef.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 2,
         },
-        onComplete: () => split.revert(),
+      });
+
+      // Division label
+      gsap.from('.apex-division-label', {
+        opacity: 0,
+        letterSpacing: '0.6em',
+        duration: 1.2,
+        ease: 'expo.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true },
       });
     });
 
-    // ── Spec cards stagger in ──────────────────────────────
-    gsap.from('.apex-spec-card', {
-      opacity: 0,
-      y: 35,
-      stagger: 0.07,
-      duration: 0.7,
-      ease: 'expo.out',
-      scrollTrigger: {
-        trigger: '.apex-specs-grid',
-        start: 'top 85%',
-        once: true,
-      },
+    mm.add('(max-width: 768px)', () => {
+      // Label fade
+      gsap.from('.apex-division-label', {
+        opacity: 0,
+        y: 16,
+        duration: 0.6,
+        ease: 'expo.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 85%', once: true },
+      });
     });
 
-    // ── Route rows slide in from left ──────────────────────
-    gsap.from('.apex-route-row', {
-      opacity: 0,
-      x: -40,
-      stagger: 0.06,
-      duration: 0.6,
-      ease: 'expo.out',
-      scrollTrigger: {
-        trigger: '.apex-routes',
-        start: 'top 80%',
-        once: true,
-      },
-    });
-
-    // ── Canvas section parallax (no pin — Lenis safe) ──────
-    gsap.to('.apex-canvas-wrap', {
-      yPercent: -8,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 2,
-      },
-    });
-
-    // ── Floating label ──────────────────────────────────────
-    gsap.from('.apex-division-label', {
-      opacity: 0,
-      letterSpacing: '0.6em',
-      duration: 1.2,
-      ease: 'expo.out',
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top 75%',
-        once: true,
-      },
-    });
-
-    return () => ScrollTrigger.getAll()
-      .filter(t => t.vars?.trigger?.closest?.('#apex-transit'))
-      .forEach(t => t.kill());
-
+    return () => mm.revert();
   }, { scope: sectionRef });
 
-  // ── Route auto-cycle ────────────────────────────────────────────────────
+  // ── Route auto-cycle ─────────────────────────────────────────────────
   useEffect(() => {
-    const id = setInterval(() => {
-      setActiveRoute(r => (r + 1) % AIR_ROUTES.length);
-    }, 2800);
+    const id = setInterval(() => setActiveRoute(r => (r + 1) % AIR_ROUTES.length), 2800);
     return () => clearInterval(id);
   }, []);
+
+  // Mobile: show top 3 routes only, compact specs grid
+  const displayRoutes = isMobile ? AIR_ROUTES.slice(0, 3) : AIR_ROUTES;
 
   return (
     <section
@@ -291,62 +326,89 @@ export default function ApexTransit() {
         background: 'var(--bg-void)',
         position: 'relative',
         overflow: 'hidden',
-        padding: '6rem 0 0',
+        padding: 'clamp(3rem, 8vw, 6rem) 0 0',
       }}
     >
-      {/* ── DIVISION LABEL ─────────────────────────────────────────────── */}
-      <div className="apex-division-label" style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '16px',
-        padding: '0 clamp(1.25rem, 6vw, 6rem)',
-        marginBottom: '4rem',
-      }}>
-        <span style={{ display: 'inline-block', width: '28px', height: '1px', background: 'var(--accent)' }} />
-        <span style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '0.5625rem',
-          letterSpacing: '0.32em',
-          textTransform: 'uppercase',
-          color: 'var(--accent)',
+      {/* ── SECTION IDENTIFIER + LIVE STATUS ─────────────────────────────── */}
+      <div style={{ padding: '0 clamp(1.25rem, 6vw, 6rem)', marginBottom: '2rem' }}>
+        <div className="apex-division-label" style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          marginBottom: '2rem',
         }}>
-          Cristi Labs · Apex Transit Division · Est. 2026
-        </span>
-      </div>
+          <div style={{ width: '28px', height: '1px', background: 'var(--accent)' }} />
+          <span style={{
+            fontFamily: 'var(--font-mono)', fontSize: '0.55rem',
+            letterSpacing: '0.34em', textTransform: 'uppercase', color: 'var(--accent)',
+          }}>
+            Cristi Labs · Apex Transit Division · UAM Network
+          </span>
+          {/* Live status pill */}
+          <div style={{
+            marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '6px',
+            background: 'rgba(11,11,11,0.9)', border: '1px solid rgba(34,197,94,0.3)',
+            borderRadius: '999px', padding: '4px 10px',
+          }}>
+            <span style={{
+              width: '5px', height: '5px', borderRadius: '50%',
+              background: '#22c55e', boxShadow: '0 0 8px #22c55e',
+              animation: 'apexPulse 1.5s ease infinite',
+            }} />
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.22em', color: '#22c55e' }}>
+              LIVE
+            </span>
+          </div>
+        </div>
 
-      {/* ── HEADLINE BLOCK ─────────────────────────────────────────────── */}
-      <div style={{ padding: '0 clamp(1.25rem, 6vw, 6rem)', marginBottom: '3rem' }}>
+        {/* ── HEADLINE ─────────────────────────────────────────────────────── */}
         <h2
           ref={headlineRef}
           style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(3.5rem, 10vw, 9rem)',
-            lineHeight: 0.92,
+            fontSize: 'clamp(3rem, 9vw, 8rem)',
+            lineHeight: 0.9,
             color: 'var(--text-primary)',
             textTransform: 'uppercase',
-            marginBottom: '1.5rem',
+            marginBottom: '1.25rem',
+            opacity: 0,
           }}
         >
           The Sky<br />
-          <span style={{
-            WebkitTextStroke: '1px var(--accent)',
-            color: 'transparent',
-          }}>
+          <span style={{ WebkitTextStroke: '1px var(--accent)', color: 'transparent' }}>
             Is The Network.
           </span>
         </h2>
 
+        {/* ── DESCRIPTOR TAGS ──────────────────────────────────────────────── */}
+        <div style={{
+          display: 'flex', flexWrap: 'wrap', gap: '0',
+          borderTop: '1px solid rgba(184,146,74,0.1)',
+          borderBottom: '1px solid rgba(184,146,74,0.1)',
+          margin: '1.5rem 0',
+        }}>
+          {DESCRIPTOR_TAGS.map((tag, i) => (
+            <span key={i} style={{
+              fontFamily: 'var(--font-mono)', fontSize: '7px',
+              letterSpacing: '0.22em', textTransform: 'uppercase',
+              color: 'var(--text-secondary)', padding: '10px 16px',
+              borderRight: i < DESCRIPTOR_TAGS.length - 1 ? '1px solid rgba(184,146,74,0.1)' : 'none',
+            }}>
+              {tag}
+            </span>
+          ))}
+        </div>
+
         <p style={{
           fontFamily: 'var(--font-body)',
-          fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
-          lineHeight: 1.75,
-          color: 'var(--text-secondary)',
-          maxWidth: '540px',
+          fontSize: 'clamp(0.78rem, 1.8vw, 0.95rem)',
+          lineHeight: 1.75, color: 'var(--text-secondary)',
+          maxWidth: '480px',
         }}>
-          Cristi Labs Apex Transit operates the world's first AI-orchestrated
-          urban air mobility network — eVTOL corridors connecting financial
-          districts, logistics hubs, and executive terminals across 47 countries.
-          Ground transit is a relic. The next infrastructure layer is vertical.
+          The world's first AI-orchestrated urban air mobility network.
+          eVTOL corridors connecting financial districts, logistics hubs,
+          and executive terminals across 47 countries. The next infrastructure
+          layer is vertical.
         </p>
       </div>
 
@@ -354,82 +416,65 @@ export default function ApexTransit() {
       <div className="apex-canvas-wrap" style={{
         position: 'relative',
         width: '100%',
-        height: 'clamp(240px, 45vw, 520px)',
-        margin: '0 0 0rem',
+        height: isMobile ? 'clamp(160px, 55vw, 280px)' : 'clamp(180px, 35vw, 460px)',
         overflow: 'hidden',
       }}>
         <AirCorridorCanvas />
 
-        {/* Overlay gradient for text legibility */}
         <div style={{
-          position: 'absolute',
-          inset: 0,
+          position: 'absolute', inset: 0,
           background: 'linear-gradient(to right, var(--bg-void) 0%, transparent 30%, transparent 70%, var(--bg-void) 100%)',
           pointerEvents: 'none',
         }} />
         <div style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: '40%',
+          position: 'absolute', bottom: 0, left: 0, right: 0, height: '40%',
           background: 'linear-gradient(to top, var(--bg-void), transparent)',
           pointerEvents: 'none',
         }} />
 
-        {/* Live badge overlay */}
+        {/* Live badge */}
         <div style={{
           position: 'absolute',
-          top: '1.25rem',
-          right: 'clamp(1.25rem, 4vw, 3rem)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
+          top: '1rem',
+          right: 'clamp(1rem, 4vw, 3rem)',
+          display: 'flex', alignItems: 'center', gap: '8px',
           background: 'rgba(11,11,11,0.85)',
           border: '1px solid rgba(184,146,74,0.25)',
           backdropFilter: 'blur(12px)',
           borderRadius: '999px',
-          padding: '6px 14px',
+          padding: '5px 12px',
         }}>
           <span style={{
-            width: '6px', height: '6px',
-            borderRadius: '50%',
-            background: '#22c55e',
-            boxShadow: '0 0 8px #22c55e',
-            animation: 'apexPulse 1.5s ease infinite',
-            display: 'inline-block',
+            width: '6px', height: '6px', borderRadius: '50%',
+            background: '#22c55e', boxShadow: '0 0 8px #22c55e',
+            animation: 'apexPulse 1.5s ease infinite', display: 'inline-block',
           }} />
-          <span style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '9px',
-            letterSpacing: '0.25em',
-            color: 'var(--text-secondary)',
-          }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.25em', color: 'var(--text-secondary)' }}>
             LIVE NETWORK
           </span>
         </div>
 
-        {/* Active route display overlay */}
+        {/* Active route overlay */}
         <div style={{
           position: 'absolute',
-          bottom: '2rem',
-          left: 'clamp(1.25rem, 4vw, 3rem)',
+          bottom: 'clamp(1rem, 3vw, 2rem)',
+          left: 'clamp(1rem, 4vw, 3rem)',
           background: 'rgba(11,11,11,0.8)',
           border: '1px solid rgba(184,146,74,0.2)',
           backdropFilter: 'blur(16px)',
           borderRadius: '12px',
-          padding: '1rem 1.5rem',
-          minWidth: '220px',
+          padding: 'clamp(0.75rem, 2vw, 1rem) clamp(1rem, 2vw, 1.5rem)',
+          minWidth: '180px',
         }}>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.3em', color: 'var(--accent)', marginBottom: '8px' }}>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.3em', color: 'var(--accent)', marginBottom: '6px' }}>
             ACTIVE ROUTE
           </p>
-          <p style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', color: 'var(--text-primary)', lineHeight: 1.1 }}>
+          <p style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', color: 'var(--text-primary)', lineHeight: 1.1 }}>
             {AIR_ROUTES[activeRoute].from} → {AIR_ROUTES[activeRoute].to}
           </p>
-          <div style={{ display: 'flex', gap: '1rem', marginTop: '8px' }}>
+          <div style={{ display: 'flex', gap: '0.75rem', marginTop: '6px' }}>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-secondary)' }}>
-              ⏱ {AIR_ROUTES[activeRoute].time}
+              {AIR_ROUTES[activeRoute].time}
             </span>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--accent)' }}>
               {AIR_ROUTES[activeRoute].status}
@@ -439,168 +484,168 @@ export default function ApexTransit() {
       </div>
 
       {/* ── FLEET SPECS GRID ────────────────────────────────────────────── */}
-      <div className="apex-specs-grid" style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-        gap: '1px',
-        background: 'rgba(184,146,74,0.08)',
-        borderTop: '1px solid rgba(184,146,74,0.1)',
-        borderBottom: '1px solid rgba(184,146,74,0.1)',
-        margin: '0 0 4rem',
-      }}>
-        {FLEET_SPECS.map((spec, i) => (
-          <div
-            key={i}
-            className="apex-spec-card"
-            style={{
-              background: 'var(--bg-void)',
-              padding: 'clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2vw, 2rem)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '6px',
-              position: 'relative',
-              overflow: 'hidden',
-              cursor: 'default',
-              transition: 'background 0.3s',
-            }}
-            onMouseEnter={e => e.currentTarget.style.background = 'rgba(184,146,74,0.04)'}
-            onMouseLeave={e => e.currentTarget.style.background = 'var(--bg-void)'}
-          >
-            <span style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '8px',
-              letterSpacing: '0.25em',
-              color: 'var(--accent)',
-              textTransform: 'uppercase',
-            }}>
-              {spec.label}
-            </span>
-            <span style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2rem, 4vw, 3rem)',
-              color: 'var(--text-primary)',
-              lineHeight: 1,
-            }}>
-              {spec.value}
-            </span>
-            <span style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '9px',
-              color: 'var(--text-secondary)',
-              letterSpacing: '0.1em',
-            }}>
-              {spec.unit}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      {/* ── ROUTES TABLE + PHOTO ────────────────────────────────────────── */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 400px), 1fr))',
-        gap: 0,
-        margin: '0 clamp(1.25rem, 6vw, 6rem) 0',
-        border: '1px solid rgba(184,146,74,0.1)',
-        borderRadius: '1.5rem',
-        overflow: 'hidden',
-      }}>
-        {/* Routes list */}
-        <div className="apex-routes" style={{ padding: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.3em', color: 'var(--accent)', marginBottom: '1.5rem' }}>
-            ACTIVE CORRIDORS · 2026
-          </p>
-          {AIR_ROUTES.map((route, i) => (
+      <MobileReveal delay={0.1}>
+        <div className="apex-specs-grid" style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile
+            ? 'repeat(3, 1fr)'
+            : 'repeat(auto-fit, minmax(140px, 1fr))',
+          gap: '1px',
+          background: 'rgba(184,146,74,0.08)',
+          borderTop: '1px solid rgba(184,146,74,0.1)',
+          borderBottom: '1px solid rgba(184,146,74,0.1)',
+          margin: '0 0 clamp(2rem, 5vw, 4rem)',
+        }}>
+          {FLEET_SPECS.map((spec, i) => (
             <div
               key={i}
-              className="apex-route-row"
-              onClick={() => setActiveRoute(i)}
+              className="apex-spec-card"
               style={{
+                background: 'var(--bg-void)',
+                padding: 'clamp(1rem, 3vw, 2.5rem) clamp(0.75rem, 2vw, 2rem)',
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '0.875rem 0',
-                borderBottom: '1px solid rgba(184,146,74,0.07)',
-                cursor: 'pointer',
-                background: activeRoute === i ? 'rgba(184,146,74,0.04)' : 'transparent',
-                borderLeft: activeRoute === i ? '2px solid var(--accent)' : '2px solid transparent',
-                paddingLeft: activeRoute === i ? '12px' : '0',
-                transition: 'all 0.3s ease',
+                flexDirection: 'column',
+                gap: '4px',
+                position: 'relative',
+                overflow: 'hidden',
+                cursor: 'default',
+                transition: 'background 0.3s',
               }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(184,146,74,0.04)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'var(--bg-void)'}
             >
-              <div>
-                <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.8rem', color: 'var(--text-primary)', marginBottom: '3px' }}>
-                  {route.from} <span style={{ color: 'var(--accent)' }}>→</span> {route.to}
-                </p>
-                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-secondary)', letterSpacing: '0.1em' }}>
-                  {route.distance}
-                </p>
-              </div>
-              <div style={{ textAlign: 'right' }}>
-                <p style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', color: 'var(--text-primary)' }}>
-                  {route.time}
-                </p>
-                <span style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '8px',
-                  letterSpacing: '0.2em',
-                  color: route.status === 'LIVE' ? '#22c55e' : 'var(--text-secondary)',
-                  display: 'flex',
+              <span style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: 'clamp(7px, 1.5vw, 8px)',
+                letterSpacing: '0.25em',
+                color: 'var(--accent)',
+                textTransform: 'uppercase',
+              }}>
+                {spec.label}
+              </span>
+              <span style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(1.6rem, 4vw, 3rem)',
+                color: 'var(--text-primary)',
+                lineHeight: 1,
+              }}>
+                {spec.value}
+              </span>
+              <span style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '9px',
+                color: 'var(--text-secondary)',
+                letterSpacing: '0.1em',
+              }}>
+                {spec.unit}
+              </span>
+            </div>
+          ))}
+        </div>
+      </MobileReveal>
+
+      {/* ── ROUTES TABLE + PHOTO — ENGINEERING TERMINAL LAYOUT ──────────── */}
+      <MobileReveal delay={0.15}>
+        <div style={{
+          margin: '0 clamp(1.25rem, 6vw, 6rem)',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))',
+          border: '1px solid rgba(184,146,74,0.08)',
+          borderRadius: '1rem',
+          overflow: 'hidden',
+        }}>
+          {/* Left: Routes as terminal/data table */}
+          <div className="apex-routes" style={{ padding: 'clamp(1.25rem, 3vw, 2rem)' }}>
+            {/* Table header */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr auto auto auto',
+              gap: '8px',
+              paddingBottom: '10px',
+              borderBottom: '1px solid rgba(184,146,74,0.1)',
+              marginBottom: '4px',
+            }}>
+              {['CORRIDOR', 'TIME', 'KM', 'STATUS'].map(h => (
+                <span key={h} style={{
+                  fontFamily: 'var(--font-mono)', fontSize: '7px',
+                  letterSpacing: '0.22em', color: 'rgba(184,146,74,0.35)',
+                  textTransform: 'uppercase',
+                }}>{h}</span>
+              ))}
+            </div>
+
+            {/* Route rows */}
+            {displayRoutes.map((route, i) => (
+              <div
+                key={i}
+                className="apex-route-row"
+                onClick={() => setActiveRoute(i)}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr auto auto auto',
+                  gap: '8px',
+                  padding: '10px 0',
+                  borderBottom: '1px solid rgba(184,146,74,0.05)',
+                  cursor: 'pointer',
+                  borderLeft: activeRoute === i ? '2px solid var(--accent)' : '2px solid transparent',
+                  paddingLeft: activeRoute === i ? '10px' : '0',
+                  background: activeRoute === i ? 'rgba(184,146,74,0.03)' : 'transparent',
+                  transition: 'all 0.25s ease',
                   alignItems: 'center',
-                  gap: '4px',
-                  justifyContent: 'flex-end',
+                }}
+              >
+                <span style={{
+                  fontFamily: 'var(--font-body)', fontSize: '0.78rem',
+                  color: activeRoute === i ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  transition: 'color 0.25s',
+                }}>
+                  {route.from} <span style={{ color: 'var(--accent)', margin: '0 2px' }}>→</span> {route.to}
+                </span>
+                <span style={{ fontFamily: 'var(--font-display)', fontSize: '1rem', color: 'var(--text-primary)' }}>
+                  {route.time}
+                </span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'var(--text-secondary)' }}>
+                  {route.distance}
+                </span>
+                <span style={{
+                  fontFamily: 'var(--font-mono)', fontSize: '8px',
+                  letterSpacing: '0.15em',
+                  color: route.status === 'LIVE' ? '#22c55e' : 'var(--text-secondary)',
+                  display: 'flex', alignItems: 'center', gap: '4px',
                 }}>
                   {route.status === 'LIVE' && (
                     <span style={{
-                      display: 'inline-block',
-                      width: '5px', height: '5px',
-                      borderRadius: '50%',
-                      background: '#22c55e',
+                      width: '4px', height: '4px', borderRadius: '50%',
+                      background: '#22c55e', display: 'inline-block',
                       animation: 'apexPulse 1.5s ease infinite',
                     }} />
                   )}
                   {route.status}
                 </span>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        {/* Image panel */}
-        <div style={{ position: 'relative', minHeight: '320px', overflow: 'hidden' }}>
-          <img
-            src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=95&fm=webp"
-            alt="Aerial city view at night — Apex Transit corridors"
-            loading="lazy"
-            decoding="async"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'center',
-              display: 'block',
-            }}
-          />
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(to right, var(--bg-void) 0%, rgba(11,11,11,0.3) 40%, transparent 100%)',
-          }} />
-          <div style={{
-            position: 'absolute',
-            bottom: '2rem',
-            right: '2rem',
-            textAlign: 'right',
-          }}>
-            <p style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', color: 'var(--text-primary)', lineHeight: 1 }}>
-              47+
-            </p>
-            <p style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.2em', color: 'var(--accent)' }}>
-              COUNTRIES
-            </p>
+          {/* Right: Image with data overlay */}
+          <div style={{ position: 'relative', minHeight: '280px', overflow: 'hidden' }}>
+            <img
+              src={heroBg}
+              alt="Apex Transit — aerial city corridors"
+              loading="lazy"
+              decoding="async"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+            />
+            <div style={{
+              position: 'absolute', inset: 0,
+              background: 'linear-gradient(to right, var(--bg-void) 0%, rgba(11,11,11,0.2) 50%, transparent 100%)',
+            }} />
+            <div style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', textAlign: 'right' }}>
+              <p style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', color: 'var(--text-primary)', lineHeight: 1 }}>47+</p>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.2em', color: 'var(--accent)' }}>COUNTRIES</p>
+            </div>
           </div>
         </div>
-      </div>
+      </MobileReveal>
 
       {/* ── BOTTOM CTA BAR ──────────────────────────────────────────────── */}
       <div style={{
@@ -610,12 +655,18 @@ export default function ApexTransit() {
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: '1.5rem',
-        padding: '3rem clamp(1.25rem, 6vw, 6rem) 5rem',
+        padding: 'clamp(2rem, 4vw, 3rem) clamp(1.25rem, 6vw, 6rem) clamp(3rem, 6vw, 5rem)',
         borderTop: '1px solid rgba(184,146,74,0.08)',
-        marginTop: '4rem',
+        marginTop: 'clamp(2rem, 5vw, 4rem)',
       }}>
         <div>
-          <p style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', color: 'var(--text-primary)', lineHeight: 1, marginBottom: '0.5rem' }}>
+          <p style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(1.3rem, 4vw, 2.5rem)',
+            color: 'var(--text-primary)',
+            lineHeight: 1,
+            marginBottom: '0.5rem',
+          }}>
             Request Executive Access
           </p>
           <p style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.2em', color: 'var(--text-secondary)' }}>
@@ -628,11 +679,11 @@ export default function ApexTransit() {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '12px',
-            padding: '1rem 2rem',
+            padding: 'clamp(0.75rem, 2vw, 1rem) clamp(1.25rem, 3vw, 2rem)',
             border: '1px solid var(--accent)',
             color: 'var(--accent)',
             fontFamily: 'var(--font-mono)',
-            fontSize: '11px',
+            fontSize: 'clamp(9px, 1.8vw, 11px)',
             letterSpacing: '0.25em',
             textTransform: 'uppercase',
             textDecoration: 'none',
@@ -646,7 +697,7 @@ export default function ApexTransit() {
         </a>
       </div>
 
-      {/* ── ANIMATIONS CSS ──────────────────────────────────────────────── */}
+      {/* ── KEYFRAMES ──────────────────────────────────────────────────── */}
       <style>{`
         @keyframes apexPulse {
           0%, 100% { opacity: 1; transform: scale(1); }

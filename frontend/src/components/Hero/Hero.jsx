@@ -51,74 +51,51 @@ const Hero = () => {
           .from(sublineRef.current, { opacity: 0, y: 20, duration: 0.8, ease: 'expo.out' }, 1.1);
     }, [isMobile]);
 
-    // Mobile: CSS transition-based entrance — zero GSAP/SplitText dependency
-    // Uses double-rAF to guarantee first paint, then CSS transitions self-terminate
+    // Mobile: CSS transition-based entrance — zero GSAP dependency
     useEffect(() => {
         if (typeof window === 'undefined' || window.innerWidth >= 768) return;
 
         const el = mobileRef.current;
         if (!el) return;
 
-        const words = el.querySelectorAll('.hero-word-m');
         const label = el.querySelector('.hero-label-m');
+        const typeBlock = el.querySelector('.hero-type-m');
         const sub   = el.querySelector('.hero-sub-m');
 
-        if (!words.length) return;
-
-        // Force reset — nuke any leftover inline styles from prior runs
-        [label, sub, ...words].forEach(node => {
+        // Set start state — hidden
+        [label, typeBlock, sub].forEach(node => {
             if (!node) return;
-            node.removeAttribute('style');
+            node.style.opacity = '0';
+            node.style.transform = 'translateY(20px)';
+            node.style.transition = 'none';
         });
+        if (sub) sub.style.filter = 'blur(6px)';
 
-        // Set start state
-        words.forEach((w, i) => {
-            const isGold = i % 2 === 0;
-            w.style.cssText = `
-                font-family: var(--font-display);
-                font-size: clamp(2.8rem, 13.5vw, 4.2rem);
-                line-height: 0.88;
-                letter-spacing: 0.04em;
-                display: block;
-                opacity: 0;
-                transform: translateY(40px);
-                transition: none;
-                color: ${isGold ? 'var(--accent-gold)' : 'var(--text-primary)'};
-                ${isGold ? 'text-shadow: rgba(201, 168, 76, 0.28) 0px 0px 32px;' : ''}
-            `;
-        });
-
-        if (label) label.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:1rem;opacity:0;transform:translateY(10px);transition:none;';
-        if (sub) sub.style.cssText = 'margin-top:1.25rem;display:flex;align-items:flex-start;gap:12px;opacity:0;transform:translateY(16px);filter:blur(6px);transition:none;';
-
-        // Animate via double-rAF — browser has painted at least one frame
+        // Double-rAF then CSS transitions
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-                // Label
                 if (label) {
                     label.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                     label.style.opacity = '1';
                     label.style.transform = 'translateY(0)';
                 }
 
-                // Words — staggered via setTimeout
-                words.forEach((w, i) => {
-                    setTimeout(() => {
-                        w.style.transition = 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
-                        w.style.opacity = '1';
-                        w.style.transform = 'translateY(0)';
-                    }, 100 + i * 120);
-                });
+                setTimeout(() => {
+                    if (typeBlock) {
+                        typeBlock.style.transition = 'opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
+                        typeBlock.style.opacity = '1';
+                        typeBlock.style.transform = 'translateY(0)';
+                    }
+                }, 200);
 
-                // Subtitle
-                if (sub) {
-                    setTimeout(() => {
+                setTimeout(() => {
+                    if (sub) {
                         sub.style.transition = 'opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease';
                         sub.style.opacity = '1';
                         sub.style.transform = 'translateY(0)';
                         sub.style.filter = 'blur(0px)';
-                    }, 100 + words.length * 120 + 100);
-                }
+                    }
+                }, 600);
             });
         });
     }, []); // eslint-disable-line
@@ -167,7 +144,7 @@ const Hero = () => {
                 {/* Content */}
                 <div className="absolute inset-0 z-10">
 
-                    {/* ── MOBILE layout: bottom-anchored ── */}
+                    {/* ── MOBILE layout: bottom-anchored with TypeWriter ── */}
                     <div
                         ref={mobileRef}
                         className="absolute bottom-8 left-5 right-5 md:hidden"
@@ -188,12 +165,33 @@ const Hero = () => {
                             </span>
                         </div>
 
-                        {/* Display lines */}
-                        {['Code the', 'Impossible.', 'Trade the', 'World.'].map((text, i) => (
-                            <div key={i} style={{ overflow: 'hidden', marginTop: i === 2 ? '0.5rem' : '0' }}>
-                                <p className="hero-word-m" aria-label={text}>{text}</p>
-                            </div>
-                        ))}
+                        {/* Typewriter headline — mobile */}
+                        <div className="hero-type-m" style={{ minHeight: '4.4rem' }}>
+                            <p style={{
+                                fontFamily: 'var(--font-display)',
+                                fontSize: 'clamp(2.4rem, 12vw, 3.5rem)',
+                                lineHeight: 0.92,
+                                letterSpacing: '0.04em',
+                                color: 'var(--accent-gold)',
+                                textShadow: '0 0 32px rgba(201,168,76,0.28)',
+                                textTransform: 'uppercase',
+                            }}>
+                                <TypeWriter
+                                    text={[
+                                        "CODE THE IMPOSSIBLE.",
+                                        "TRADE THE WORLD.",
+                                        "BUILD THE FUTURE.",
+                                        "DOMINATE THE MARKET.",
+                                    ]}
+                                    speed={50}
+                                    variance={20}
+                                    loop={true}
+                                    loopDelay={2500}
+                                    showCursor={true}
+                                    delay={800}
+                                />
+                            </p>
+                        </div>
 
                         {/* Descriptor */}
                         <div className="hero-sub-m" style={{

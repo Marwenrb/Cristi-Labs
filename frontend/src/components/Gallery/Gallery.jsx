@@ -5,39 +5,40 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import './gallery.css';
 
+import gallery1 from '../../assets/Medias/gallery/gallery-1.png';
+import gallery2 from '../../assets/Medias/gallery/gallery-2.png';
+import gallery3 from '../../assets/Medias/gallery/gallery-3.png';
+import galleryHq from '../../assets/Medias/gallery/Cristi Labs Hq.png';
+import galleryTrade from '../../assets/Medias/gallery/global trade.png';
+
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-// Premium Unsplash images — cinematic, dark-toned, 4K
+// Local gallery images — cinematic, dark-toned
 const GALLERY_IMAGES = [
     {
-        src: "https://images.unsplash.com/photo-1494412574643-ff11b0a5716d",
-        params: "?w=2560&q=95&fm=webp",
+        src: gallery1,
         alt: "Aerial view of freight terminal at dusk — Cristi Labs logistics network",
         label: "GLOBAL INFRASTRUCTURE",
     },
     {
-        src: "https://images.unsplash.com/photo-1518770660439-4636190af475",
-        params: "?w=2560&q=95&fm=webp",
+        src: gallery2,
         alt: "Circuit board macro — Cristi Labs precision technology",
         label: "TECHNOLOGY PRECISION",
     },
     {
-        src: "https://images.unsplash.com/photo-1451187580459-43490279c0fa",
-        params: "?w=2560&q=95&fm=webp",
+        src: gallery3,
         alt: "Earth from orbit — Cristi Labs worldwide operations",
         label: "GLOBAL REACH",
     },
     {
-        src: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3",
-        params: "?w=2560&q=95&fm=webp",
-        alt: "Multiple trading screens with financial data — Wall Street energy",
+        src: galleryTrade,
+        alt: "Global trade operations — Cristi Labs financial intelligence",
         label: "FINANCIAL INTELLIGENCE",
     },
     {
-        src: "https://images.unsplash.com/photo-1486325212027-8081e485255e",
-        params: "?w=2560&q=95&fm=webp",
-        alt: "Ultra-modern glass corporate building — power and scale",
+        src: galleryHq,
+        alt: "Cristi Labs corporate headquarters — power and scale",
         label: "EXECUTIVE SPACES",
     },
 ];
@@ -108,7 +109,7 @@ const Gallery = () => {
             else img.addEventListener('load', tryRefresh, { once: true });
         });
 
-        return () => { ScrollTrigger.getAll().forEach(t => t.kill()); };
+        return () => { tl4.scrollTrigger?.kill(); tl4.kill(); };
     }, [isMobile]);
 
     // Mobile: per-card entrance (once) + vertical parallax on inner image
@@ -140,7 +141,8 @@ const Gallery = () => {
             });
         });
 
-        return () => ScrollTrigger.getAll().forEach(t => t.kill());
+        // Scoped cleanup — only kill triggers created in this scope
+        return () => { /* useGSAP auto-reverts context scope */ };
     }, { scope: mobileRef, dependencies: [isMobile] });
 
     // Mobile: horizontal swipe velocity → rotateY card tilt
@@ -225,16 +227,13 @@ const Gallery = () => {
                                 transformStyle: 'preserve-3d', willChange: 'transform, opacity',
                             }}
                         >
-                            <picture>
-                                <source srcSet={`${img.src}${img.params}&w=1280`} media="(min-width: 640px)" />
-                                <img
-                                    src={`${img.src}${img.params}&w=640`}
+                            <img
+                                    src={img.src}
                                     alt={img.alt}
                                     style={{ width: '100%', height: '110%', objectFit: 'cover', objectPosition: 'center center' }}
                                     loading={i === 0 ? 'eager' : 'lazy'}
                                     decoding="async"
                                 />
-                            </picture>
                             {/* Gradient overlay */}
                             <div style={{
                                 position: 'absolute', inset: 0,
@@ -270,7 +269,7 @@ const Gallery = () => {
 
             <div className="gallery-background">
                 <img
-                    src={`${GALLERY_IMAGES[0].src}${GALLERY_IMAGES[0].params}&w=1920`}
+                    src={GALLERY_IMAGES[0].src}
                     alt={GALLERY_IMAGES[0].alt} loading="eager" decoding="async"
                 />
                 <div className="gallery-topText"><h4>Digital Entertainment</h4></div>
@@ -281,7 +280,7 @@ const Gallery = () => {
 
             <div id="gallery-second" className="gallery-background2">
                 <img
-                    src={`${GALLERY_IMAGES[1].src}${GALLERY_IMAGES[1].params}&w=1920`}
+                    src={GALLERY_IMAGES[1].src}
                     alt={GALLERY_IMAGES[1].alt} loading="lazy" decoding="async"
                 />
                 <div className="gallery-topText"><h4>International Trade</h4></div>
@@ -292,7 +291,7 @@ const Gallery = () => {
 
             <div id="gallery-third" className="gallery-background2">
                 <img
-                    src={`${GALLERY_IMAGES[2].src}${GALLERY_IMAGES[2].params}&w=1920`}
+                    src={GALLERY_IMAGES[2].src}
                     alt={GALLERY_IMAGES[2].alt} loading="lazy" decoding="async"
                 />
                 <div className="gallery-topText"><h4>Strategic Vision</h4></div>

@@ -897,7 +897,7 @@ p, li {
 }
 
 /* ================================================================
-   HERO MOBILE FALLBACK — if JS fails, text still appears after 3s
+   HERO MOBILE FALLBACK — if JS fails, content still appears after 3s
    ================================================================ */
 
 @keyframes fallbackReveal {
@@ -905,14 +905,8 @@ p, li {
   to   { opacity: 1; }
 }
 
-.hero-word-m {
-  animation: fallbackReveal 0.1s ease 3s forwards;
-}
-
-.hero-label-m {
-  animation: fallbackReveal 0.1s ease 2.8s forwards;
-}
-
+.hero-label-m,
+.hero-type-m,
 .hero-sub-m {
-  animation: fallbackReveal 0.1s ease 3.5s forwards;
+  animation: fallbackReveal 0.1s ease 3s forwards;
 }

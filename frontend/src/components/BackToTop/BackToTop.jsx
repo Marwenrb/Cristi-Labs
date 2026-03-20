@@ -8,6 +8,7 @@ import { useFooterBounds } from "../../hooks/useFooterBounds";
  *  Vertical ticker-tape — fixed bottom-right, above footer/nav.
  *  Progress line + rotated "RETURN" label + brass dot.
  *  Appears after 40 % of the page has been scrolled.
+ *  Works on both desktop (ScrollSmoother) and mobile (Lenis/native).
  * ───────────────────────────────────────────────────────────────── */
 const BackToTop = () => {
     const containerRef = useRef(null);
@@ -16,7 +17,7 @@ const BackToTop = () => {
     const [progress, setProgress] = useState(0);
     const bottomPx = useFooterBounds();
 
-    /* ── 1. Scroll tracker ─────────────────────────────────────── */
+    /* ── 1. Scroll tracker (desktop + mobile unified) ───────────── */
     useEffect(() => {
         const update = () => {
             const smoother = window.__smoother;
@@ -32,14 +33,16 @@ const BackToTop = () => {
             setVisible(scrollY > window.innerHeight * 0.4);
         };
 
+        // Native scroll event (fires on both desktop + mobile)
         window.addEventListener("scroll", update, { passive: true });
-        let rafId;
-        const tick = () => { update(); rafId = requestAnimationFrame(tick); };
-        rafId = requestAnimationFrame(tick);
+
+        // Also hook into GSAP ticker for ScrollSmoother sync
+        gsap.ticker.add(update);
         update();
+
         return () => {
             window.removeEventListener("scroll", update);
-            cancelAnimationFrame(rafId);
+            gsap.ticker.remove(update);
         };
     }, []);
 
@@ -83,7 +86,7 @@ const BackToTop = () => {
             onClick={handleClick}
             style={{
                 position:      "fixed",
-                right:         "40px",
+                right:         "clamp(16px, 4vw, 40px)",
                 bottom:        `${bottomPx + 16}px`,
                 transition:    "bottom 0.35s ease",
                 zIndex:        90,

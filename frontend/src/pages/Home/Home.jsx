@@ -11,11 +11,12 @@ import StickyCols from '../../components/StickyCols/StickyCols'
 import Footer from '../../components/Footer/Footer'
 
 const Home = () => {
-  // Double refresh: catches initial render (200ms) and late font/image loads (800ms)
+  // Triple refresh: catches initial render (200ms), late font/image loads (800ms), and all pin spacers settled (1500ms)
   useEffect(() => {
     const t1 = setTimeout(() => ScrollTrigger.refresh(true), 200);
     const t2 = setTimeout(() => ScrollTrigger.refresh(true), 800);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    const t3 = setTimeout(() => ScrollTrigger.refresh(true), 1500);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, []);
 
   return (

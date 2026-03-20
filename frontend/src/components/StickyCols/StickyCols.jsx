@@ -4,21 +4,22 @@ import { useMediaQuery } from "react-responsive";
 import { useState, useEffect, useRef } from "react";
 import { waitForFonts } from "../../lib/fontLoader";
 
-// Premium Unsplash images — cinematic, matching each phase
+import sticky1 from "../../assets/Medias/sticky/sticky-1.png";
+import sticky2 from "../../assets/Medias/sticky/sticky-2.png";
+import sticky3 from "../../assets/Medias/sticky/sticky-3.png";
+
+// Local images — cinematic, matching each phase
 const STICKY_IMAGES = [
     {
-        src: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d",
-        params: "?w=2560&q=95&fm=webp",
+        src: sticky1,
         alt: "Aerial view of container port with cranes — logistics and global trade",
     },
     {
-        src: "https://images.unsplash.com/photo-1542751371-adc38448a05e",
-        params: "?w=2560&q=95&fm=webp",
+        src: sticky2,
         alt: "Dark esports arena with screens and RGB — digital entertainment",
     },
     {
-        src: "https://images.unsplash.com/photo-1451187580459-43490279c0fa",
-        params: "?w=2560&q=95&fm=webp",
+        src: sticky3,
         alt: "Earth from space with city lights — global technological reach",
     },
 ];
@@ -54,7 +55,7 @@ const MobileFeatureCard = ({ card, index }) => {
         >
             <div style={{ height: '56vw', maxHeight: '260px', overflow: 'hidden', position: 'relative' }}>
                 <img
-                    src={`${card.img.src}${card.img.params}&w=800`}
+                    src={card.img.src}
                     alt={card.img.alt}
                     loading={index === 0 ? 'eager' : 'lazy'}
                     decoding="async"
@@ -173,8 +174,8 @@ const StickyCols = () => {
 
         return () => {
             mounted = false;
+            tl?.scrollTrigger?.kill();
             tl?.kill();
-            ScrollTrigger.getAll().forEach((st) => st.kill());
         };
     }, [isMobile]);
 
@@ -255,12 +256,12 @@ const StickyCols = () => {
                 <div className="col col-2">
                     <div className="col-img col-img-1">
                         <div className="col-img-wrapper">
-                            <img src={`${STICKY_IMAGES[0].src}${STICKY_IMAGES[0].params}`} alt="Cristi Labs — Phygital Economy Architecture" />
+                            <img src={STICKY_IMAGES[0].src} alt="Cristi Labs — Phygital Economy Architecture" />
                         </div>
                     </div>
                     <div className="col col-img-2 p-2">
                         <div className="col-img-wrapper">
-                            <img src={`${STICKY_IMAGES[1].src}${STICKY_IMAGES[1].params}`} alt="Cristi Labs — Ghost Logistics & Trade" />
+                            <img src={STICKY_IMAGES[1].src} alt="Cristi Labs — Ghost Logistics & Trade" />
                         </div>
                     </div>
                 </div>
@@ -302,7 +303,7 @@ const StickyCols = () => {
                 <div className="col col-4">
                     <div className="col-img col-img-1">
                         <div className="col-img-wrapper">
-                            <img src={`${STICKY_IMAGES[2].src}${STICKY_IMAGES[2].params}`} alt="Cristi Labs — The Aura Protocol" />
+                            <img src={STICKY_IMAGES[2].src} alt="Cristi Labs — The Aura Protocol" />
                         </div>
                     </div>
                 </div>

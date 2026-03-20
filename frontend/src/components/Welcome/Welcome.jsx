@@ -6,6 +6,9 @@ import { useMediaQuery } from "react-responsive";
 import { welcomeLinesLG, welcomeLinesSM } from "../../constants/welcome";
 import SectionDivider from "../SectionDivider/SectionDivider";
 
+import welcome1 from "../../assets/Medias/welcome/welcome-1.png";
+import welcome2 from "../../assets/Medias/welcome/welcome-2.png";
+
 gsap.registerPlugin(ScrollTrigger);
 
 const STATS = [
@@ -73,20 +76,14 @@ const Welcome = () => {
             <div className="flex md:flex-row flex-col justify-between items-center md:p-4 md:mt-20 mt-10">
                 <div className="flex flex-row justify-center items-center gap-1">
                     <div style={{ position: 'relative', display: 'inline-block' }}>
-                        <picture>
-                            <source
-                                media="(min-width: 768px)"
-                                srcSet="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&q=92&fm=webp"
-                            />
-                            <img
-                                src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=400&q=90&fm=webp"
-                                alt="Container port at golden hour — Cristi Labs global trade infrastructure"
-                                className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44"
-                                loading="lazy"
-                                decoding="async"
-                                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                            />
-                        </picture>
+                        <img
+                            src={welcome1}
+                            alt="Container port at golden hour — Cristi Labs global trade infrastructure"
+                            className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44"
+                            loading="lazy"
+                            decoding="async"
+                            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                        />
                         <div style={{
                             position: 'absolute', inset: 0,
                             background: 'linear-gradient(135deg, rgba(11,11,11,0.25) 0%, rgba(184,146,74,0.08) 100%)',
@@ -94,20 +91,14 @@ const Welcome = () => {
                         }} />
                     </div>
                     <div style={{ position: 'relative', display: 'inline-block' }}>
-                        <picture>
-                            <source
-                                media="(min-width: 768px)"
-                                srcSet="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=92&fm=webp"
-                            />
-                            <img
-                                src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=90&fm=webp"
-                                alt="Futuristic corporate tower at night — Cristi Labs digital venture studio"
-                                className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44"
-                                loading="lazy"
-                                decoding="async"
-                                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                            />
-                        </picture>
+                        <img
+                            src={welcome2}
+                            alt="Futuristic corporate tower at night — Cristi Labs digital venture studio"
+                            className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44"
+                            loading="lazy"
+                            decoding="async"
+                            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                        />
                         <div style={{
                             position: 'absolute', inset: 0,
                             background: 'linear-gradient(135deg, rgba(11,11,11,0.25) 0%, rgba(184,146,74,0.08) 100%)',
