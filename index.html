@@ -5,66 +5,68 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Performance -->
-  <meta name="color-scheme" content="dark" />
-  <style>
-    * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-    html { scroll-behavior: auto; } /* Lenis handles smooth scroll — disable native */
-    img, video { content-visibility: auto; }
-  </style>
-
-  <!-- Security -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com; media-src 'self' data: blob:; connect-src 'self' ws: wss:;" />
+  <!-- Security meta tags -->
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
 
-  <!-- Icons & PWA -->
+  <!-- PWA + Icons -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#0B0B0B" />
   <meta name="msapplication-TileColor" content="#B8924A" />
+  <meta name="color-scheme" content="dark" />
 
-  <!-- Primary meta -->
-  <title>Cristi Labs | Digital Entertainment & International Trade</title>
-  <meta name="description" content="A venture studio at the intersection of global trade infrastructure and immersive digital technology." />
+  <!-- SEO -->
+  <title>Cristi Labs | Digital Entertainment &amp; International Trade</title>
+  <meta name="description" content="A venture studio at the intersection of global trade infrastructure and immersive digital technology. Apex Transit · Digital Entertainment · International Trade." />
   <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://cristilabs.net" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Cristi Labs | Digital Entertainment & International Trade" />
+  <meta property="og:title" content="Cristi Labs | Digital Entertainment &amp; International Trade" />
   <meta property="og:description" content="A venture studio at the intersection of global trade infrastructure and immersive digital technology." />
-  <meta property="og:image" content="/og-image.jpg" />
+  <meta property="og:image" content="https://cristilabs.net/og-image.jpg" />
   <meta property="og:url" content="https://cristilabs.net" />
   <meta property="og:site_name" content="Cristi Labs" />
+  <meta property="og:locale" content="en_US" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Cristi Labs | Digital Entertainment & International Trade" />
+  <meta name="twitter:title" content="Cristi Labs | Digital Entertainment &amp; International Trade" />
   <meta name="twitter:description" content="A venture studio at the intersection of global trade infrastructure and immersive digital technology." />
-  <meta name="twitter:image" content="/og-image.jpg" />
+  <meta name="twitter:image" content="https://cristilabs.net/og-image.jpg" />
 
-  <!-- DNS prefetch for external resources -->
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-  <link rel="dns-prefetch" href="https://images.unsplash.com" />
-
-  <!-- Fonts: preconnect (Google Fonts CSS handles font loading with display=swap) -->
+  <!-- Fonts: non-blocking -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap"
-    rel="stylesheet"
-  />
-  <script type="module" crossorigin src="/assets/js/index-DMBFnwIt.js"></script>
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@300;400;500&family=Geist+Mono:wght@400;500&display=swap"
+    onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@300;400;500&family=Geist+Mono:wght@400;500&display=swap" />
+  </noscript>
+
+  <!-- Performance hints -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+  <style>
+    * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    html { scroll-behavior: auto; }
+    img, video { content-visibility: auto; }
+  </style>
+  <script type="module" crossorigin src="/assets/js/index-7vTcVemY.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/js/react-core-BdIgl1Fy.js">
   <link rel="modulepreload" crossorigin href="/assets/js/react-dom-BTjRPQML.js">
   <link rel="modulepreload" crossorigin href="/assets/js/router-DfRk54p6.js">
   <link rel="modulepreload" crossorigin href="/assets/js/gsap-Do8WOVkd.js">
   <link rel="modulepreload" crossorigin href="/assets/js/gsap-react-CJgCfyxZ.js">
   <link rel="modulepreload" crossorigin href="/assets/js/lenis-BbENNM21.js">
-  <link rel="stylesheet" crossorigin href="/assets/css/index-njLtHPL0.css">
+  <link rel="stylesheet" crossorigin href="/assets/css/index-B7wDWVFa.css">
 </head>
 
 <body>
