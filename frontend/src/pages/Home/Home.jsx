@@ -11,6 +11,10 @@ import StickyCols from '../../components/StickyCols/StickyCols'
 import Footer from '../../components/Footer/Footer'
 
 const Home = () => {
+  useEffect(() => {
+    document.title = 'Cristi Labs | Digital Entertainment & International Trade';
+  }, []);
+
   // Triple refresh: catches initial render (200ms), late font/image loads (800ms), and all pin spacers settled (1500ms)
   useEffect(() => {
     const t1 = setTimeout(() => ScrollTrigger.refresh(true), 200);

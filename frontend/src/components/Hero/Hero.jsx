@@ -98,7 +98,7 @@ const Hero = () => {
                 }, 600);
             });
         });
-    }, []); // eslint-disable-line
+    }, []);
 
     return (
         <section className="hero-section w-dvw md:h-dvh min-h-[100dvh] md:p-2 p-2.5 mb-20">

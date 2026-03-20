@@ -24,9 +24,7 @@ export const waitForFonts = () => {
   }
 
   const fontPromises = REQUIRED_FONTS.map(({ family, weight }) =>
-    document.fonts.load(`${weight} 16px "${family}"`).catch(() => {
-      console.warn(`[fontLoader] Failed to load: ${family} ${weight}`);
-    })
+    document.fonts.load(`${weight} 16px "${family}"`).catch(() => {})
   );
 
   return Promise.all([document.fonts.ready, ...fontPromises]);

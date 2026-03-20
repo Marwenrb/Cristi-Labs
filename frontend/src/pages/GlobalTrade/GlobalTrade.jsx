@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import gsap from "gsap/all";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -9,6 +10,10 @@ import GlobalReach from "../../components/GlobalReach/GlobalReach";
 gsap.registerPlugin(ScrollTrigger);
 
 const GlobalTrade = () => {
+    useEffect(() => {
+        document.title = 'Global Trade | Cristi Labs';
+    }, []);
+
     useGSAP(() => {
         gsap.utils.toArray(".trade-block").forEach((block) => {
             gsap.from(block, {

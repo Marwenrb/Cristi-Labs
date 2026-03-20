@@ -11,35 +11,36 @@ const Vision      = lazy(() => import('../pages/Vision/Vision'));
 const Store       = lazy(() => import('../pages/Store/Store'));
 const Contact     = lazy(() => import('../pages/Contact/Contact'));
 
-// Minimal fallback — no layout shift
 const PageLoader = () => (
   <div style={{
     width: '100vw',
     height: '100vh',
-    background: 'var(--bg-void)',
+    background: '#0B0B0B',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   }}>
     <div style={{
-      width: '32px',
+      width: '40px',
       height: '1px',
-      background: 'var(--accent)',
+      background: '#B8924A',
+      animation: 'loaderPulse 1.4s ease infinite',
     }} />
   </div>
 );
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: '/',
         element: <MainLayout />,
         children: [
-            { path: "",            element: <Suspense fallback={<PageLoader />}><Home /></Suspense> },
-            { path: "ventures",    element: <Suspense fallback={<PageLoader />}><Ventures /></Suspense> },
-            { path: "global-trade",element: <Suspense fallback={<PageLoader />}><GlobalTrade /></Suspense> },
-            { path: "vision",      element: <Suspense fallback={<PageLoader />}><Vision /></Suspense> },
-            { path: "store",       element: <Suspense fallback={<PageLoader />}><Store /></Suspense> },
-            { path: "contact",     element: <Suspense fallback={<PageLoader />}><Contact /></Suspense> },
+            { path: '',             element: <Suspense fallback={<PageLoader />}><Home /></Suspense> },
+            { path: 'ventures',    element: <Suspense fallback={<PageLoader />}><Ventures /></Suspense> },
+            { path: 'global-trade',element: <Suspense fallback={<PageLoader />}><GlobalTrade /></Suspense> },
+            { path: 'vision',      element: <Suspense fallback={<PageLoader />}><Vision /></Suspense> },
+            { path: 'store',       element: <Suspense fallback={<PageLoader />}><Store /></Suspense> },
+            { path: 'contact',     element: <Suspense fallback={<PageLoader />}><Contact /></Suspense> },
+            { path: '*',           element: <Suspense fallback={<PageLoader />}><Home /></Suspense> },
         ],
     },
 ]);

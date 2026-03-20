@@ -256,12 +256,12 @@ const StickyCols = () => {
                 <div className="col col-2">
                     <div className="col-img col-img-1">
                         <div className="col-img-wrapper">
-                            <img src={STICKY_IMAGES[0].src} alt="Cristi Labs — Phygital Economy Architecture" />
+                            <img src={STICKY_IMAGES[0].src} alt="Cristi Labs — Phygital Economy Architecture" loading="lazy" decoding="async" />
                         </div>
                     </div>
                     <div className="col col-img-2 p-2">
                         <div className="col-img-wrapper">
-                            <img src={STICKY_IMAGES[1].src} alt="Cristi Labs — Ghost Logistics & Trade" />
+                            <img src={STICKY_IMAGES[1].src} alt="Cristi Labs — Ghost Logistics & Trade" loading="lazy" decoding="async" />
                         </div>
                     </div>
                 </div>
@@ -303,7 +303,7 @@ const StickyCols = () => {
                 <div className="col col-4">
                     <div className="col-img col-img-1">
                         <div className="col-img-wrapper">
-                            <img src={STICKY_IMAGES[2].src} alt="Cristi Labs — The Aura Protocol" />
+                            <img src={STICKY_IMAGES[2].src} alt="Cristi Labs — The Aura Protocol" loading="lazy" decoding="async" />
                         </div>
                     </div>
                 </div>

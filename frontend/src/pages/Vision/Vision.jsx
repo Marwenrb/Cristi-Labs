@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import gsap from "gsap/all";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -8,6 +9,10 @@ import SectionDivider from "../../components/SectionDivider/SectionDivider";
 gsap.registerPlugin(ScrollTrigger);
 
 const Vision = () => {
+    useEffect(() => {
+        document.title = 'Vision | Cristi Labs';
+    }, []);
+
     useGSAP(() => {
         gsap.utils.toArray(".manifesto-line").forEach((line) => {
             gsap.from(line, {

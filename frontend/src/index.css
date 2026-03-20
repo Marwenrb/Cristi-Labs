@@ -97,7 +97,7 @@ html {
   background: var(--bg-void);
   color: var(--text-primary);
   font-family: var(--font-body);
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -797,6 +797,37 @@ p, li {
   backdrop-filter: blur(24px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
   border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+/* ================================================================
+   PERFORMANCE & ACCESSIBILITY
+   ================================================================ */
+
+/* GPU acceleration for animated elements — auto when not animating */
+.hero-title,
+.hero-word-m,
+.gallery-mobile-card,
+.metric-card,
+[data-animate] {
+  will-change: auto;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Loader animation for lazy route fallback */
+@keyframes loaderPulse {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.5); }
+  50%       { opacity: 1;   transform: scaleX(1); }
+}
+
+/* Reduced motion — respect user accessibility settings */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ================================================================

@@ -142,7 +142,10 @@ const Contact = () => {
     const formRef = useRef(null);
     const successRef = useRef(null);
     const submitBtnRef = useRef(null);
-
+    /* ── Document Title ──────────────────────────────────── */
+    useEffect(() => {
+        document.title = 'Contact | Cristi Labs';
+    }, []);
     /* ── Live Clock (Mountain Time — Sheridan, WY) ──────────── */
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);

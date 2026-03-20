@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import gsap from "gsap/all";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -51,6 +52,10 @@ const ventures = [
 ];
 
 const Ventures = () => {
+    useEffect(() => {
+        document.title = 'Ventures | Cristi Labs';
+    }, []);
+
     useGSAP(() => {
         ventures.forEach((_, i) => {
             gsap.from(`.venture-item-${i}`, {

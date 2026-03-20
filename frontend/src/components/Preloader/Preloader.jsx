@@ -1,6 +1,5 @@
 import React, { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/SplitText";
 
 gsap.registerPlugin(SplitText);
@@ -13,7 +12,7 @@ const Preloader = () => {
 
         const ctx = gsap.context(() => {
             document.fonts.ready.then(() => {
-                if (!preloaderLogoRef) console.log("null");
+                if (!preloaderLogoRef) return;
 
                 // --------- SPLIT TEXT CREATION ----------
                 // const logoEl = document.querySelector(".preloader-logo .logo-text");
@@ -78,10 +77,7 @@ const Preloader = () => {
                     ease: "power4.inOut",
                 })
                     .add(animateProgress(), "<")
-                    .to
-                    (
-                        splits.footerLines.lines,
-                        {
+                    .to(splits.footerLines.lines, {
                             yPercent: 0,
                             stagger: 0.1,
                             duration: 0.8,
@@ -97,10 +93,7 @@ const Preloader = () => {
                         ease: "power4.inOut",
                     }, "-=0.5")
                     .set(logoSplit.chars, { overflow: "hidden" }, "<")
-                    .to
-                    (
-                        splits.footerLines.lines,
-                        {
+                    .to(splits.footerLines.lines, {
                             yPercent: -100,
                             stagger: 0.1,
                             duration: 0.8,

@@ -220,7 +220,6 @@ export default function ApexTransit() {
   const paragraphRef = useRef(null);
   const gallery3ImgRef = useRef(null);
   const [activeRoute, setActiveRoute] = useState(0);
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   // ── HEADLINE + PARAGRAPH: IntersectionObserver — works everywhere ─────
   useEffect(() => {
