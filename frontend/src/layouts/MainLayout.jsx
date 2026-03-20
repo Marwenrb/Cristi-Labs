@@ -44,9 +44,12 @@ const MainLayout = () => {
         }
     });
 
-    // On route change, force scroll to top and refresh triggers
+    // On route change, force scroll to top, kill stale triggers, and refresh
     useEffect(() => {
         const smoother = ScrollSmoother.get();
+
+        // Kill all stale ScrollTrigger instances from previous route
+        ScrollTrigger.getAll().forEach(t => t.kill());
 
         if (smoother) {
             smoother.scrollTo(0, true);

@@ -5,6 +5,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Performance -->
+  <meta name="color-scheme" content="dark" />
+  <style>
+    * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    html { scroll-behavior: auto; } /* Lenis handles smooth scroll — disable native */
+    img, video { content-visibility: auto; }
+  </style>
+
   <!-- Security -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com; media-src 'self' data: blob:; connect-src 'self' ws: wss:;" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />

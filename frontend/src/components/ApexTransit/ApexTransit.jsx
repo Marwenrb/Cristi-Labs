@@ -218,102 +218,60 @@ export default function ApexTransit() {
   const sectionRef = useRef(null);
   const headlineRef = useRef(null);
   const paragraphRef = useRef(null);
+  const gallery3ImgRef = useRef(null);
   const [activeRoute, setActiveRoute] = useState(0);
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-  // ── HEADLINE REVEAL: desktop + mobile via IntersectionObserver ───────
+  // ── HEADLINE + PARAGRAPH: IntersectionObserver — works everywhere ─────
   useEffect(() => {
-    const el = headlineRef.current;
-    if (!el) return;
-    const lines = el.querySelectorAll('[data-title-line]');
+    const headline = headlineRef.current;
+    if (!headline) return;
 
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(52px)';
-    el.style.filter = 'blur(8px)';
-    el.style.transition = 'none';
+    // Set initial HIDDEN state before first paint via cssText
+    headline.style.cssText = `
+      opacity: 0;
+      transform: translateY(60px) skewY(2deg);
+      filter: blur(12px);
+      transition: none;
+    `;
 
-    lines.forEach(line => {
-      line.style.opacity = '0';
-      line.style.transform = 'translateY(36px)';
-      line.style.letterSpacing = '0.12em';
-      line.style.transition = 'none';
-    });
+    const headlineObserver = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      headlineObserver.disconnect();
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        headline.style.transition = [
+          'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+          'transform 1.4s cubic-bezier(0.16, 1, 0.3, 1)',
+          'filter 1.1s ease',
+        ].join(', ');
+        headline.style.opacity = '1';
+        headline.style.transform = 'translateY(0) skewY(0)';
+        headline.style.filter = 'blur(0px)';
+      }));
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
-    let timeouts = [];
+    headlineObserver.observe(headline);
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        observer.disconnect();
+    const para = paragraphRef.current;
+    if (para) {
+      para.style.cssText = 'opacity: 0; transform: translateY(30px); transition: none;';
 
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            el.style.transition = [
-              'opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1)',
-              'transform 1.3s cubic-bezier(0.16, 1, 0.3, 1)',
-              'filter 1s ease',
-            ].join(', ');
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-            el.style.filter = 'blur(0px)';
+      const paraObserver = new IntersectionObserver(([e]) => {
+        if (!e.isIntersecting) return;
+        paraObserver.disconnect();
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          setTimeout(() => {
+            para.style.transition = 'opacity 0.9s ease 0.1s, transform 1s cubic-bezier(0.16,1,0.3,1) 0.1s';
+            para.style.opacity = '1';
+            para.style.transform = 'translateY(0)';
+          }, 300);
+        }));
+      }, { threshold: 0.1 });
 
-            lines.forEach((line, index) => {
-              const id = window.setTimeout(() => {
-                line.style.transition = [
-                  'opacity 0.85s ease',
-                  'transform 1s cubic-bezier(0.16, 1, 0.3, 1)',
-                  'letter-spacing 1.1s cubic-bezier(0.16, 1, 0.3, 1)',
-                ].join(', ');
-                line.style.opacity = '1';
-                line.style.transform = 'translateY(0)';
-                line.style.letterSpacing = '0.03em';
-              }, index * 170);
-              timeouts.push(id);
-            });
-          });
-        });
-      },
-      {
-        threshold: 0.15,
-        rootMargin: '0px 0px -40px 0px',
-      }
-    );
-
-    observer.observe(el);
-    return () => {
-      observer.disconnect();
-      timeouts.forEach(id => window.clearTimeout(id));
-      timeouts = [];
-    };
-  }, []);
-
-  useEffect(() => {
-    const el = paragraphRef.current;
-    if (!el) return;
-
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(28px)';
-    el.style.transition = 'none';
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        observer.disconnect();
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            setTimeout(() => {
-              el.style.transition = 'opacity 0.9s ease, transform 1s cubic-bezier(0.16,1,0.3,1)';
-              el.style.opacity = '1';
-              el.style.transform = 'translateY(0)';
-            }, 200);
-          });
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
+      paraObserver.observe(para);
+      return () => { headlineObserver.disconnect(); paraObserver.disconnect(); };
+    }
+    return () => headlineObserver.disconnect();
   }, []);
 
   // ── GSAP ANIMATIONS — matchMedia separates desktop / mobile ──────────
@@ -412,53 +370,48 @@ export default function ApexTransit() {
         </div>
 
         {/* ── HEADLINE ─────────────────────────────────────────────────────── */}
-        <h2
-          ref={headlineRef}
-          style={{
+        <div ref={headlineRef} style={{ marginBottom: '0.5rem' }}>
+          <div style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(3rem, 9vw, 8rem)',
-            lineHeight: 0.9,
+            fontSize: 'clamp(4rem, 11vw, 10rem)',
+            lineHeight: 0.84,
             color: 'var(--text-primary)',
             textTransform: 'uppercase',
-            marginBottom: '1.25rem',
-            textWrap: 'balance',
-          }}
-        >
-          <span
-            data-title-line
-            style={{
-              display: 'block',
-              textShadow: '0 16px 36px rgba(0, 0, 0, 0.45)',
-            }}
-          >
+            letterSpacing: '-0.01em',
+          }}>
             Command
-          </span>
-          <span
-            data-title-line
-            style={{
-              display: 'block',
-              WebkitTextStroke: '1px var(--accent)',
-              color: 'transparent',
-              textShadow: '0 0 24px rgba(184, 146, 74, 0.2)',
-            }}
-          >
+          </div>
+          <div style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(4rem, 11vw, 10rem)',
+            lineHeight: 0.84,
+            textTransform: 'uppercase',
+            letterSpacing: '-0.01em',
+            WebkitTextStroke: '1px var(--accent)',
+            color: 'transparent',
+          }}>
             The Horizon.
-          </span>
-        </h2>
+          </div>
+        </div>
 
         {/* ── DESCRIPTOR TAGS ──────────────────────────────────────────────── */}
         <div style={{
-          display: 'flex', flexWrap: 'wrap', gap: '0',
+          display: 'flex',
+          flexWrap: 'wrap',
           borderTop: '1px solid rgba(184,146,74,0.1)',
           borderBottom: '1px solid rgba(184,146,74,0.1)',
-          margin: '1.5rem 0 2rem',
+          margin: '2rem 0',
         }}>
-          {DESCRIPTOR_TAGS.map((tag, i) => (
+          {['eVTOL Networks', 'AI Air Corridors', '47 Countries', 'Zero Emissions', 'Executive Transit'].map((tag, i, arr) => (
             <span key={i} style={{
-              fontFamily: 'var(--font-mono)', fontSize: '7px',
-              letterSpacing: '0.22em', textTransform: 'uppercase',
-              color: 'var(--text-secondary)', padding: '10px 18px',
-              borderRight: i < DESCRIPTOR_TAGS.length - 1 ? '1px solid rgba(184,146,74,0.08)' : 'none',
+              fontFamily: 'var(--font-mono)',
+              fontSize: '7.5px',
+              letterSpacing: '0.24em',
+              textTransform: 'uppercase',
+              color: 'var(--text-secondary)',
+              padding: '11px 20px',
+              borderRight: i < arr.length - 1 ? '1px solid rgba(184,146,74,0.08)' : 'none',
+              whiteSpace: 'nowrap',
             }}>
               {tag}
             </span>
@@ -467,16 +420,15 @@ export default function ApexTransit() {
 
         <p ref={paragraphRef} style={{
           fontFamily: 'var(--font-body)',
-          fontSize: 'clamp(0.78rem, 1.8vw, 0.95rem)',
-          lineHeight: 1.78,
+          fontSize: 'clamp(0.8rem, 1.8vw, 1rem)',
+          lineHeight: 1.82,
           color: 'var(--text-secondary)',
-          maxWidth: '480px',
+          maxWidth: '500px',
         }}>
-          Cristi Labs Apex Transit is redefining how power moves -
-          AI-orchestrated eVTOL corridors connecting financial capitals,
-          executive terminals, and logistics hubs across 47 countries.
-          When ground infrastructure fails, we fly. The next infrastructure
-          layer is vertical, silent, and already operational.
+          The world's first AI-orchestrated urban air mobility network.
+          Silent eVTOL corridors connecting financial capitals, executive
+          terminals, and logistics hubs across 47 countries. When ground
+          infrastructure reaches its limit — we command the horizon.
         </p>
       </div>
 
@@ -503,14 +455,14 @@ export default function ApexTransit() {
         {/* Network badge */}
         <div style={{
           position: 'absolute',
-          top: '1rem',
+          top: '1.25rem',
           right: 'clamp(1rem, 4vw, 3rem)',
           display: 'flex', alignItems: 'center', gap: '8px',
-          background: 'rgba(11,11,11,0.85)',
-          border: '1px solid rgba(184,146,74,0.2)',
-          backdropFilter: 'blur(12px)',
-          borderRadius: '3px',
-          padding: '5px 14px',
+          background: 'rgba(11,11,11,0.9)',
+          border: '1px solid rgba(184,146,74,0.22)',
+          backdropFilter: 'blur(16px)',
+          padding: '6px 16px',
+          borderRadius: '2px',
         }}>
           <span style={{
             width: '4px',
@@ -535,205 +487,213 @@ export default function ApexTransit() {
           position: 'absolute',
           bottom: 'clamp(1rem, 3vw, 2rem)',
           left: 'clamp(1rem, 4vw, 3rem)',
-          background: 'rgba(11,11,11,0.8)',
-          border: '1px solid rgba(184,146,74,0.2)',
-          backdropFilter: 'blur(16px)',
-          borderRadius: '12px',
-          padding: 'clamp(0.75rem, 2vw, 1rem) clamp(1rem, 2vw, 1.5rem)',
-          minWidth: '180px',
+          background: 'rgba(11,11,11,0.85)',
+          border: '1px solid rgba(184,146,74,0.18)',
+          backdropFilter: 'blur(20px)',
+          borderRadius: '2px',
+          padding: '12px 18px',
+          minWidth: '200px',
         }}>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.3em', color: 'var(--accent)', marginBottom: '6px' }}>
-            ACTIVE ROUTE
+          <p style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '7px',
+            letterSpacing: '0.32em',
+            color: 'var(--accent)',
+            marginBottom: '6px',
+            textTransform: 'uppercase',
+          }}>
+            Active Route
           </p>
-          <p style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', color: 'var(--text-primary)', lineHeight: 1.1 }}>
+          <p style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+            color: 'var(--text-primary)',
+            lineHeight: 1.15,
+          }}>
             {AIR_ROUTES[activeRoute].from} → {AIR_ROUTES[activeRoute].to}
           </p>
-          <div style={{ display: 'flex', gap: '0.75rem', marginTop: '6px' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-secondary)' }}>
-              {AIR_ROUTES[activeRoute].time}
+          <div style={{ display: 'flex', gap: '1rem', marginTop: '6px' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-secondary)' }}>
+              ⏱ {AIR_ROUTES[activeRoute].time}
             </span>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--accent)' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--accent)', letterSpacing: '0.1em' }}>
               {AIR_ROUTES[activeRoute].status}
             </span>
           </div>
         </div>
       </div>
 
-      {/* ── FLEET SPECS GRID ────────────────────────────────────────────── */}
-      <MobileReveal delay={0.1}>
-        <div className="apex-specs-grid" style={{
-          display: 'grid',
-          gridTemplateColumns: isMobile
-            ? 'repeat(3, 1fr)'
-            : 'repeat(auto-fit, minmax(140px, 1fr))',
-          gap: '1px',
-          background: 'rgba(184,146,74,0.08)',
-          borderTop: '1px solid rgba(184,146,74,0.1)',
-          borderBottom: '1px solid rgba(184,146,74,0.1)',
-          margin: '0 0 clamp(2rem, 5vw, 4rem)',
-        }}>
-          {FLEET_SPECS.map((spec, i) => (
-            <div
-              key={i}
-              className="apex-spec-card"
-              style={{
-                background: 'var(--bg-void)',
-                padding: 'clamp(1rem, 3vw, 2.5rem) clamp(0.75rem, 2vw, 2rem)',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '4px',
-                position: 'relative',
-                overflow: 'hidden',
-                cursor: 'default',
-                transition: 'background 0.3s',
-              }}
-              onMouseEnter={e => e.currentTarget.style.background = 'rgba(184,146,74,0.04)'}
-              onMouseLeave={e => e.currentTarget.style.background = 'var(--bg-void)'}
-            >
-              <span style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: 'clamp(7px, 1.5vw, 8px)',
-                letterSpacing: '0.25em',
-                color: 'var(--accent)',
-                textTransform: 'uppercase',
-              }}>
-                {spec.label}
-              </span>
-              <span style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(1.6rem, 4vw, 3rem)',
-                color: 'var(--text-primary)',
-                lineHeight: 1,
-              }}>
-                {spec.value}
-              </span>
-              <span style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '9px',
-                color: 'var(--text-secondary)',
-                letterSpacing: '0.1em',
-              }}>
-                {spec.unit}
-              </span>
-            </div>
-          ))}
-        </div>
-      </MobileReveal>
+      {/* ── FLEET SPECS: ENGINEERING DATA STRIP ────────────────────────── */}
+      <div className="apex-specs-grid" style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(6, 1fr)',
+        gap: '1px',
+        background: 'rgba(184,146,74,0.06)',
+        borderTop: '1px solid rgba(184,146,74,0.08)',
+        borderBottom: '1px solid rgba(184,146,74,0.08)',
+        overflowX: 'auto',
+        marginBottom: 'clamp(2rem, 5vw, 4rem)',
+      }}>
+        {[
+          { label: 'Altitude', value: '1,500', unit: 'ft' },
+          { label: 'Speed', value: '320', unit: 'km/h' },
+          { label: 'Range', value: '250', unit: 'km' },
+          { label: 'Capacity', value: '6', unit: 'seats' },
+          { label: 'Noise', value: '45', unit: 'dB' },
+          { label: 'Emissions', value: '0', unit: 'CO₂' },
+        ].map((spec, i) => (
+          <div key={i} className="apex-spec-card" style={{
+            background: 'var(--bg-void)',
+            padding: 'clamp(1.25rem, 2.5vw, 2rem)',
+            minWidth: '100px',
+          }}>
+            <div style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '7px',
+              letterSpacing: '0.22em',
+              textTransform: 'uppercase',
+              color: 'rgba(184,146,74,0.4)',
+              marginBottom: '8px',
+            }}>{spec.label}</div>
+            <div style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
+              color: 'var(--text-primary)',
+              lineHeight: 1,
+              marginBottom: '3px',
+            }}>{spec.value}</div>
+            <div style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '8px',
+              color: 'var(--text-secondary)',
+              letterSpacing: '0.1em',
+            }}>{spec.unit}</div>
+          </div>
+        ))}
+      </div>
 
-      {/* ── ROUTES TABLE + PHOTO — ENGINEERING TERMINAL LAYOUT ──────────── */}
+      {/* ── ROUTES TABLE + PHOTO ──────────────────────────────────────── */}
       <MobileReveal delay={0.15}>
-        <div style={{ padding: '0 clamp(1.25rem, 6vw, 6rem)', marginBottom: 0 }}>
+        <div style={{ padding: '0 clamp(1.25rem, 6vw, 6rem)' }}>
           <div style={{
+            border: '1px solid rgba(184,146,74,0.08)',
+            borderRadius: '4px',
+            overflow: 'hidden',
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))',
-            border: '1px solid rgba(184,146,74,0.08)',
-            borderRadius: '0.75rem',
-            overflow: 'hidden',
           }}>
-          {/* Left: Routes as terminal/data table */}
-          <div className="apex-routes" style={{ padding: 'clamp(1.25rem, 3vw, 2rem)' }}>
-            {/* Table header */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 56px 52px 72px',
-              gap: '8px',
-              paddingBottom: '10px',
-              marginBottom: '4px',
-              borderBottom: '1px solid rgba(184,146,74,0.08)',
-            }}>
-              {['CORRIDOR', 'TIME', 'KM', 'STATUS'].map(h => (
-                <span key={h} style={{
-                  fontFamily: 'var(--font-mono)', fontSize: '7px',
-                  letterSpacing: '0.22em', color: 'rgba(184,146,74,0.3)',
-                  textTransform: 'uppercase',
-                }}>{h}</span>
+
+            {/* Routes panel */}
+            <div className="apex-routes">
+              {/* Column headers */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 60px 52px 80px',
+                gap: '8px',
+                padding: '10px 20px',
+                background: 'rgba(184,146,74,0.03)',
+                borderBottom: '1px solid rgba(184,146,74,0.08)',
+              }}>
+                {['CORRIDOR', 'ETA', 'KM', 'STATUS'].map(h => (
+                  <span key={h} style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '7px',
+                    letterSpacing: '0.24em',
+                    color: 'rgba(184,146,74,0.3)',
+                    textTransform: 'uppercase',
+                  }}>{h}</span>
+                ))}
+              </div>
+
+              {/* Route rows */}
+              {AIR_ROUTES.map((route, i) => (
+                <div
+                  key={i}
+                  className="apex-route-row"
+                  onClick={() => setActiveRoute(i)}
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 60px 52px 80px',
+                    gap: '8px',
+                    padding: '11px 20px',
+                    borderBottom: '1px solid rgba(184,146,74,0.04)',
+                    cursor: 'pointer',
+                    background: activeRoute === i ? 'rgba(184,146,74,0.03)' : 'transparent',
+                    borderLeft: `2px solid ${activeRoute === i ? 'var(--accent)' : 'transparent'}`,
+                    transition: 'all 0.2s ease',
+                    alignItems: 'center',
+                  }}
+                >
+                  <span style={{
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '0.78rem',
+                    color: activeRoute === i ? 'var(--text-primary)' : 'var(--text-secondary)',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}>
+                    {route.from}
+                    <span style={{ color: 'var(--accent)', margin: '0 5px', fontSize: '0.7rem' }}>›</span>
+                    {route.to}
+                  </span>
+                  <span style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: '0.95rem',
+                    color: 'var(--text-primary)',
+                  }}>{route.time}</span>
+                  <span style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '7.5px',
+                    color: 'var(--text-secondary)',
+                  }}>{route.distance}</span>
+                  <span style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '7.5px',
+                    letterSpacing: '0.12em',
+                    color: route.status === 'LIVE' ? 'var(--accent)' : 'rgba(184,146,74,0.4)',
+                    textTransform: 'uppercase',
+                  }}>{route.status}</span>
+                </div>
               ))}
             </div>
 
-            {/* Route rows */}
-            {AIR_ROUTES.map((route, i) => (
-              <div
-                key={i}
-                className="apex-route-row"
-                onClick={() => setActiveRoute(i)}
+            {/* Image panel */}
+            <div style={{ position: 'relative', minHeight: '280px', overflow: 'hidden' }}>
+              <img
+                ref={gallery3ImgRef}
+                src={gallery3Img}
+                alt="Apex Transit aerial city network — Cristi Labs"
+                loading="lazy"
+                decoding="async"
                 style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 56px 52px 72px',
-                  gap: '8px',
-                  padding: '10px 0',
-                  borderBottom: '1px solid rgba(184,146,74,0.04)',
-                  cursor: 'pointer',
-                  borderLeft: activeRoute === i ? '2px solid var(--accent)' : '2px solid transparent',
-                  paddingLeft: activeRoute === i ? '10px' : '0',
-                  background: activeRoute === i ? 'rgba(184,146,74,0.025)' : 'transparent',
-                  transition: 'all 0.25s ease',
-                  alignItems: 'center',
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'center center',
+                  display: 'block',
                 }}
-              >
-                <span style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '0.75rem',
-                  color: activeRoute === i ? 'var(--text-primary)' : 'var(--text-secondary)',
-                  transition: 'color 0.25s',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}>
-                  {route.from}
-                  <span style={{ color: 'var(--accent)', margin: '0 4px' }}>→</span>
-                  {route.to}
-                </span>
-                <span style={{
+              />
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to right, var(--bg-void) 0%, rgba(11,11,11,0.1) 60%, transparent 100%)',
+              }} />
+              <div style={{
+                position: 'absolute',
+                bottom: '1.5rem',
+                right: '1.5rem',
+                textAlign: 'right',
+              }}>
+                <p style={{
                   fontFamily: 'var(--font-display)',
-                  fontSize: '0.9rem',
+                  fontSize: '3rem',
                   color: 'var(--text-primary)',
-                }}>
-                  {route.time}
-                </span>
-                <span style={{
+                  lineHeight: 1,
+                }}>47+</p>
+                <p style={{
                   fontFamily: 'var(--font-mono)',
                   fontSize: '7.5px',
-                  color: 'var(--text-secondary)',
-                }}>
-                  {route.distance}
-                </span>
-                <span style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '7.5px',
-                  letterSpacing: '0.12em',
-                  color: route.status === 'LIVE' ? 'var(--accent)' : 'var(--text-secondary)',
-                }}>
-                  {route.status}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* Right: Image with data overlay */}
-          <div style={{ position: 'relative', minHeight: '260px', overflow: 'hidden' }}>
-            <img
-              src={gallery3Img}
-              alt="Apex Transit eVTOL network — Cristi Labs vertical infrastructure"
-              loading="lazy"
-              decoding="async"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center center',
-                display: 'block',
-              }}
-            />
-            <div style={{
-              position: 'absolute', inset: 0,
-              background: 'linear-gradient(to right, var(--bg-void) 0%, rgba(11,11,11,0.1) 50%, transparent 100%)',
-            }} />
-            <div style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', textAlign: 'right' }}>
-              <p style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', color: 'var(--text-primary)', lineHeight: 1 }}>47+</p>
-              <p style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '7.5px',
-                letterSpacing: '0.22em',
+                  letterSpacing: '0.24em',
                 color: 'var(--accent)',
                 textTransform: 'uppercase',
               }}>Countries</p>

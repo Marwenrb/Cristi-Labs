@@ -33,6 +33,7 @@ export default defineConfig({
           if (id.includes('node_modules/react-icons')) return 'icons';
           if (id.includes('node_modules/@gsap')) return 'gsap-react';
           if (id.includes('node_modules/react-responsive')) return 'react-responsive';
+          if (id.includes('node_modules/@studio-freight/lenis') || id.includes('node_modules/lenis')) return 'lenis';
         },
         // Consistent naming for long-term HTTP cache control
         assetFileNames: 'assets/[ext]/[name]-[hash][extname]',

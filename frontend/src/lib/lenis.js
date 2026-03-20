@@ -10,8 +10,8 @@ export const initLenis = () => {
     const lenis = new Lenis({
         duration: isMobile ? 0.8 : 1.4,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-        smoothTouch: false,
+        smoothWheel: !isMobile,   // disable on mobile — browser handles touch natively
+        smoothTouch: false,        // ALWAYS false — never hijack touch scroll
         touchMultiplier: isMobile ? 1.2 : 1.5,
     });
 
