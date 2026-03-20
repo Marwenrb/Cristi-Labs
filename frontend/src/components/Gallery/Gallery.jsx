@@ -5,8 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import './gallery.css';
 
-import gallery1 from '../../assets/Medias/gallery/gallery-1.png';
-import gallery2 from '../../assets/Medias/gallery/gallery-2.png';
 import gallery3 from '../../assets/Medias/gallery/gallery-3.png';
 import galleryHq from '../../assets/Medias/gallery/Cristi Labs Hq.png';
 import galleryTrade from '../../assets/Medias/gallery/global trade.png';
@@ -17,13 +15,13 @@ gsap.registerPlugin(ScrollTrigger);
 // Local gallery images — cinematic, dark-toned
 const GALLERY_IMAGES = [
     {
-        src: gallery1,
-        alt: "Aerial view of freight terminal at dusk — Cristi Labs logistics network",
+        src: gallery3,
+        alt: "Global logistics network — Cristi Labs trade infrastructure",
         label: "GLOBAL INFRASTRUCTURE",
     },
     {
-        src: gallery2,
-        alt: "Circuit board macro — Cristi Labs precision technology",
+        src: galleryTrade,
+        alt: "Global trade infrastructure — Cristi Labs international operations",
         label: "TECHNOLOGY PRECISION",
     },
     {

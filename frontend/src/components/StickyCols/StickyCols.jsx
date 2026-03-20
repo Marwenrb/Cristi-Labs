@@ -6,7 +6,7 @@ import { waitForFonts } from "../../lib/fontLoader";
 
 import sticky1 from "../../assets/Medias/sticky/sticky-1.png";
 import sticky2 from "../../assets/Medias/sticky/sticky-2.png";
-import sticky3 from "../../assets/Medias/sticky/sticky-3.png";
+import auraProtocol from "../../assets/Medias/gallery/The Aura Protocol.png";
 
 // Local images — cinematic, matching each phase
 const STICKY_IMAGES = [
@@ -19,8 +19,8 @@ const STICKY_IMAGES = [
         alt: "Dark esports arena with screens and RGB — digital entertainment",
     },
     {
-        src: sticky3,
-        alt: "Earth from space with city lights — global technological reach",
+        src: auraProtocol,
+        alt: "The Aura Protocol — Cristi Labs digital identity platform",
     },
 ];
 
@@ -303,7 +303,7 @@ const StickyCols = () => {
                 <div className="col col-4">
                     <div className="col-img col-img-1">
                         <div className="col-img-wrapper">
-                            <img src={STICKY_IMAGES[2].src} alt="Cristi Labs — The Aura Protocol" loading="lazy" decoding="async" />
+                            <img src={STICKY_IMAGES[2].src} alt="The Aura Protocol — Cristi Labs digital identity platform" loading="lazy" decoding="async" />
                         </div>
                     </div>
                 </div>
