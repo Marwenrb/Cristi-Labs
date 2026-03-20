@@ -1,10 +1,21 @@
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import SplitText from "gsap/SplitText";
 import "./preloaderII.css";
 
 gsap.registerPlugin(SplitText);
+
+const PRELOADER_LINES = [
+    'Initializing global trade infrastructure...',
+    'Calibrating digital venture systems...',
+    'Establishing 47-country network links...',
+    'Cristi Labs · Coming Online.',
+];
+
 export default function PreloaderII() {
+    const preloaderRef = useRef(null);
+
     useGSAP(() => {
         function createSplitTexts(elements) {
             const splits = {};
@@ -37,6 +48,24 @@ export default function PreloaderII() {
                     ease: "power2.inOut",
                 });
                 return tl;
+            }
+
+            // Rotating preloader lines
+            const lines = PRELOADER_LINES.map((_, i) =>
+                preloaderRef.current?.querySelector(`.preloader-line-${i}`)
+            ).filter(Boolean);
+
+            if (lines.length) {
+                const linesTl = gsap.timeline({ delay: 0.5 });
+                lines.forEach((line, i) => {
+                    const dur = 0.4;
+                    const hold = 0.7;
+                    const t = i * (dur + hold);
+                    linesTl.to(line, { opacity: 1, y: '-50%', x: '-50%', duration: dur, ease: 'expo.out' }, t);
+                    if (i < lines.length - 1) {
+                        linesTl.to(line, { opacity: 0, y: '-150%', duration: dur * 0.8, ease: 'expo.in' }, t + dur + hold);
+                    }
+                });
             }
 
             const tl = gsap.timeline({ delay: 0.3 });
@@ -101,14 +130,51 @@ export default function PreloaderII() {
                     "<"
                 );
         });
-    }, []);
+    }, { scope: preloaderRef });
 
     return (
-        <div className="size-full fixed z-[9999] overflow-hidden pointer-events-none">
+        <div ref={preloaderRef} className="size-full fixed z-[9999] overflow-hidden pointer-events-none">
             <div className="preloader-progress">
                 <div className="preloader-progress-bar"></div>
                 <div className="preloader-logo">
                     <h1>Cristi Labs</h1>
+                </div>
+
+                {/* Rotating status lines */}
+                <div
+                    className="preloader-lines"
+                    style={{
+                        position: 'absolute',
+                        bottom: '8rem',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: 'clamp(0.55rem, 1.5vw, 0.7rem)',
+                        letterSpacing: '0.2em',
+                        textTransform: 'uppercase',
+                        color: 'var(--text-secondary)',
+                        height: '1.2em',
+                        overflow: 'hidden',
+                        minWidth: '280px',
+                        textAlign: 'center',
+                    }}
+                >
+                    {PRELOADER_LINES.map((line, i) => (
+                        <span
+                            key={i}
+                            className={`preloader-line-${i}`}
+                            style={{
+                                display: 'block',
+                                position: 'absolute',
+                                left: '50%',
+                                transform: 'translateX(-50%) translateY(100%)',
+                                opacity: 0,
+                                whiteSpace: 'nowrap',
+                            }}
+                        >
+                            {line}
+                        </span>
+                    ))}
                 </div>
             </div>
 

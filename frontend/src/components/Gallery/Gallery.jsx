@@ -11,22 +11,22 @@ gsap.registerPlugin(ScrollTrigger);
 // Premium Unsplash images — cinematic, dark-toned, 4K
 const GALLERY_IMAGES = [
     {
-        src: "https://images.unsplash.com/photo-1578575437130-527eed3abbec",
+        src: "https://images.unsplash.com/photo-1494412574643-ff11b0a5716d",
         params: "?w=2560&q=95&fm=webp",
-        alt: "Container ship at dramatic golden hour — global trade at scale",
+        alt: "Aerial view of freight terminal at dusk — Cristi Labs logistics network",
         label: "GLOBAL INFRASTRUCTURE",
     },
     {
         src: "https://images.unsplash.com/photo-1518770660439-4636190af475",
         params: "?w=2560&q=95&fm=webp",
-        alt: "Circuit board extreme close-up — precision technology",
+        alt: "Circuit board macro — Cristi Labs precision technology",
         label: "TECHNOLOGY PRECISION",
     },
     {
-        src: "https://images.unsplash.com/photo-1550745165-9bc0b252726f",
+        src: "https://images.unsplash.com/photo-1451187580459-43490279c0fa",
         params: "?w=2560&q=95&fm=webp",
-        alt: "Gaming setup with RGB lighting — immersive digital entertainment",
-        label: "DIGITAL ENTERTAINMENT",
+        alt: "Earth from orbit — Cristi Labs worldwide operations",
+        label: "GLOBAL REACH",
     },
     {
         src: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3",
@@ -130,13 +130,13 @@ const Gallery = () => {
             );
         });
 
-        // Image parallax — image moves slower than card while page scrolls
+        // Image parallax — lighter on mobile for smoother scroll feel
         cards.forEach((card) => {
             const img = card.querySelector('img');
             if (!img) return;
             gsap.to(img, {
-                yPercent: -12, ease: 'none',
-                scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 1.5 },
+                yPercent: -8, ease: 'none',
+                scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 0 },
             });
         });
 

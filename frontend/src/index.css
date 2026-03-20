@@ -864,3 +864,55 @@ p, li {
     transform: none !important;
   }
 }
+
+/* ================================================================
+   MOBILE GLOBAL SAFETY
+   ================================================================ */
+
+@media (max-width: 767px) {
+  /* Sections must never collapse on mobile */
+  section {
+    min-height: auto;
+  }
+
+  /* Images inside sections must never collapse */
+  section img {
+    min-height: 200px;
+    display: block;
+  }
+}
+
+/* ================================================================
+   MARQUEE CSS FALLBACK — if GSAP doesn't animate on mobile
+   ================================================================ */
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes marqueeScrollReverse {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* ================================================================
+   HERO MOBILE FALLBACK — if JS fails, text still appears after 3s
+   ================================================================ */
+
+@keyframes fallbackReveal {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.hero-word-m {
+  animation: fallbackReveal 0.1s ease 3s forwards;
+}
+
+.hero-label-m {
+  animation: fallbackReveal 0.1s ease 2.8s forwards;
+}
+
+.hero-sub-m {
+  animation: fallbackReveal 0.1s ease 3.5s forwards;
+}

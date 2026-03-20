@@ -49,7 +49,9 @@
         var(--accent-gold-dim)
     );
     background-size: 200% 100%;
-    box-shadow: 0 0 12px rgba(201, 168, 76, 0.5);
+    box-shadow:
+        0 0 12px rgba(201, 168, 76, 0.8),
+        0 0 24px rgba(201, 168, 76, 0.3);
 }
 
 /* ── Logo ── */
