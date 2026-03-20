@@ -11,7 +11,8 @@ import { useFooterBounds } from "../../hooks/useFooterBounds";
  * ───────────────────────────────────────────────────────────────── */
 const BackToTop = () => {
     const containerRef = useRef(null);
-    const [visible,  setVisible]  = useState(false);
+    const [visible,    setVisible]    = useState(false);
+    const [nearBottom, setNearBottom] = useState(false);
     const [progress, setProgress] = useState(0);
     const bottomPx = useFooterBounds();
 
@@ -20,7 +21,6 @@ const BackToTop = () => {
         const update = () => {
             const smoother = window.__smoother;
             const scrollY  = smoother ? smoother.scrollTop() : window.scrollY;
-            // With ScrollSmoother the body doesn't scroll — use the content element
             const contentEl = document.querySelector("#smooth-content");
             const totalHeight = smoother && contentEl
                 ? contentEl.scrollHeight - window.innerHeight
@@ -33,7 +33,6 @@ const BackToTop = () => {
         };
 
         window.addEventListener("scroll", update, { passive: true });
-        // Also tick on RAF so ScrollSmoother's virtual scroll is captured
         let rafId;
         const tick = () => { update(); rafId = requestAnimationFrame(tick); };
         rafId = requestAnimationFrame(tick);
@@ -44,18 +43,31 @@ const BackToTop = () => {
         };
     }, []);
 
-    /* ── 2. Fade in / out ──────────────────────────────────────── */
+    /* ── 2. Hide when footer is in view ────────────────────────── */
+    useEffect(() => {
+        const footer = document.querySelector('footer');
+        if (!footer) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => setNearBottom(entry.isIntersecting),
+            { threshold: 0.05 }
+        );
+        observer.observe(footer);
+        return () => observer.disconnect();
+    }, []);
+
+    /* ── 3. Fade in / out ──────────────────────────────────────── */
     useEffect(() => {
         if (!containerRef.current) return;
+        const show = visible && !nearBottom;
         gsap.to(containerRef.current, {
-            opacity:  visible ? 1 : 0,
-            y:        visible ? 0 : 16,
+            opacity:  show ? 1 : 0,
+            y:        show ? 0 : 16,
             duration: 0.4,
             ease:     "power3.out",
         });
-    }, [visible]);
+    }, [visible, nearBottom]);
 
-    /* ── 3. Click — scroll to top ──────────────────────────────── */
+    /* ── 4. Click — scroll to top ──────────────────────────────── */
     const handleClick = () => {
         const smoother = ScrollSmoother.get();
         if (smoother) {

@@ -22,88 +22,85 @@ export default function PreloaderII() {
             { key: "footerLines", selector: ".preloader-footer p", type: "lines" },
         ];
 
-        const splits = createSplitTexts(splitElements);
+        // Gate SplitText behind font readiness to prevent wrong measurements
+        document.fonts.ready.then(() => {
+            const splits = createSplitTexts(splitElements);
 
-        gsap.set(splits.logoChars.chars, { x: "100%" });
+            gsap.set(splits.logoChars.chars, { x: "100%" });
+            gsap.set([splits.footerLines.lines], { y: "100%" });
 
-        gsap.set(
-            [
-                splits.footerLines.lines,
-            ],
-            { y: "100%" }
-        );
+            function animateProgress(duration = 3.5) {
+                const tl = gsap.timeline();
+                tl.to(".preloader-progress-bar", {
+                    scaleX: 1,
+                    duration,
+                    ease: "power2.inOut",
+                });
+                return tl;
+            }
 
-        function animateProgress(duration = 3.5) {
-            const tl = gsap.timeline();
-            tl.to(".preloader-progress-bar", {
-                scaleX: 1,
-                duration,
-                ease: "power2.inOut",
-            });
-            return tl;
-        }
-
-        const tl = gsap.timeline({ delay: 0.5 });
-        tl.to(splits.logoChars.chars, {
-            x: "0%",
-            stagger: 0.05,
-            duration: 1,
-            ease: "power4.inOut",
-        })
-            .to(
-                splits.footerLines.lines,
-                {
-                    y: "0%",
-                    stagger: 0.1,
-                    duration: 1,
-                    ease: "power4.inOut",
-                },
-                "0.25"
-            )
-            .add(animateProgress(), "<")
-            .to(
-                splits.logoChars.chars,
-                {
-                    x: "-100%",
-                    stagger: 0.05,
-                    duration: 1,
-                    ease: "power4.inOut",
-                },
-                "-=0.5"
-            )
-            .to(splits.footerLines.lines, {
-                y: "-100%",
-                stagger: 0.1,
+            const tl = gsap.timeline({ delay: 0.3 });
+            tl.to(splits.logoChars.chars, {
+                x: "0%",
+                stagger: 0.05,
                 duration: 1,
                 ease: "power4.inOut",
             })
-            .to(
-                ".preloader-progress",
-                {
-                    opacity: 0,
-                    duration: 0.7,
-                    ease: "power3.out",
-                },
-                "-=0.25"
-            )
-            .to(
-                ".preloader-mask",
-                {
-                    scale: 5,
-                    duration: 5,
-                    ease: "power3.out",
-                },
-                "<"
-            )
-            .to(
-                ".preloader-mask",
-                {
-                    delay: 1,
-                    opacity: 0,
-                    display: "none",
-                },
-                "<"
-            );
+                .to(
+                    splits.footerLines.lines,
+                    {
+                        y: "0%",
+                        stagger: 0.1,
+                        duration: 1,
+                        ease: "power4.inOut",
+                    },
+                    "0.25"
+                )
+                .add(animateProgress(), "<")
+                .to(
+                    splits.logoChars.chars,
+                    {
+                        x: "-100%",
+                        stagger: 0.05,
+                        duration: 1,
+                        ease: "power4.inOut",
+                    },
+                    "-=0.5"
+                )
+                .to(splits.footerLines.lines, {
+                    y: "-100%",
+                    stagger: 0.1,
+                    duration: 1,
+                    ease: "power4.inOut",
+                })
+                .to(
+                    ".preloader-progress",
+                    {
+                        opacity: 0,
+                        duration: 0.7,
+                        ease: "power3.out",
+                    },
+                    "-=0.25"
+                )
+                .to(
+                    ".preloader-mask",
+                    {
+                        scale: 5,
+                        duration: 5,
+                        ease: "power3.out",
+                    },
+                    "<"
+                )
+                .to(
+                    ".preloader-mask",
+                    {
+                        delay: 1,
+                        opacity: 0,
+                        display: "none",
+                    },
+                    "<"
+                );
+        });
     }, []);
 
     return (

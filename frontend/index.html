@@ -3,12 +3,53 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="./src/assets/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+
+  <!-- Icons & PWA -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#0B0B0B" />
+  <meta name="msapplication-TileColor" content="#B8924A" />
+
+  <!-- Primary meta -->
   <title>Cristi Labs | Digital Entertainment & International Trade</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta name="description" content="A venture studio at the intersection of global trade infrastructure and immersive digital technology." />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Cristi Labs | Digital Entertainment & International Trade" />
+  <meta property="og:description" content="A venture studio at the intersection of global trade infrastructure and immersive digital technology." />
+  <meta property="og:image" content="/og-image.jpg" />
+  <meta property="og:url" content="https://cristilabs.net" />
+  <meta property="og:site_name" content="Cristi Labs" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Cristi Labs | Digital Entertainment & International Trade" />
+  <meta name="twitter:description" content="A venture studio at the intersection of global trade infrastructure and immersive digital technology." />
+  <meta name="twitter:image" content="/og-image.jpg" />
+
+  <!-- DNS prefetch for external resources -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+  <link rel="dns-prefetch" href="https://images.unsplash.com" />
+
+  <!-- Fonts: preconnect (Google Fonts CSS handles font loading with display=swap) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
 </head>
 
 <body>

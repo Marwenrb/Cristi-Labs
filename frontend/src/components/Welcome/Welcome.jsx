@@ -1,16 +1,25 @@
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap/all";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useMediaQuery } from "react-responsive";
 import { welcomeLinesLG, welcomeLinesSM } from "../../constants/welcome";
-import w1 from "../../assets/Medias/welcome/welcome-1.png"
-import w2 from "../../assets/Medias/welcome/welcome-2.png"
+import SectionDivider from "../SectionDivider/SectionDivider";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const STATS = [
+    { value: 2.4, suffix: "B+", prefix: "$", label: "Global Trade Volume" },
+    { value: 47,  suffix: "",   prefix: "",  label: "Countries" },
+];
 
 const Welcome = () => {
-
-    const isMobile = useMediaQuery({ maxWidth: 768 });
+    const isMobile    = useMediaQuery({ maxWidth: 768 });
     const welcomeLines = isMobile ? welcomeLinesSM : welcomeLinesLG;
+    const statsRefs   = useRef([]);
 
     useGSAP(() => {
+        // Clip-path text reveal (existing)
         const lines = gsap.utils.toArray(".clip-text-welcome");
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -18,23 +27,36 @@ const Welcome = () => {
                 start: "top 75%",
                 end: "bottom 75%",
                 scrub: true,
-                // markers: true
             },
         });
-
         lines.forEach((line) => {
-            tl.to(line, {
-                clipPath: "inset(0% 0% 0% 0%)",
-                ease: "none",
-                stagger: 0.2,
-                duration: 1,
-            });
+            tl.to(line, { clipPath: "inset(0% 0% 0% 0%)", ease: "none", stagger: 0.2, duration: 1 });
         });
 
+        // Stat counter animation
+        STATS.forEach((stat, i) => {
+            const el = statsRefs.current[i];
+            if (!el) return;
+            const obj = { val: 0 };
+            gsap.to(obj, {
+                val: stat.value,
+                duration: 2,
+                ease: "power2.out",
+                onUpdate: () => {
+                    const isDecimal = stat.value % 1 !== 0;
+                    el.textContent = stat.prefix + (isDecimal ? obj.val.toFixed(1) : Math.floor(obj.val)) + stat.suffix;
+                },
+                scrollTrigger: {
+                    trigger: ".welcome-stats",
+                    start: "top 85%",
+                    once: true,
+                },
+            });
+        });
     });
 
     return (
-        <div className='welcome-section w-full h-[120vh] text-[#2A2725]  md:px-7 px-6 '>
+        <div className='welcome-section w-full h-auto text-[#2A2725] md:px-7 px-6'>
             <div className='flex flex-col gap-2 tracking-[-4] leading-2'>
                 <div className="w-full md:w-[86%] md:text-[64px] text-[34px] welcome-line md:pt-20">
                     <div className="w-full welcome-text flex flex-col justify-center items-start">
@@ -47,10 +69,51 @@ const Welcome = () => {
                     </div>
                 </div>
             </div>
+
             <div className="flex md:flex-row flex-col justify-between items-center md:p-4 md:mt-20 mt-10">
                 <div className="flex flex-row justify-center items-center gap-1">
-                    <img src={w1} alt="Cristi Labs — Digital Innovation" className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44" />
-                    <img src={w2} alt="Cristi Labs — Global Commerce" className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44" />
+                    <div style={{ position: 'relative', display: 'inline-block' }}>
+                        <picture>
+                            <source
+                                media="(min-width: 768px)"
+                                srcSet="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&q=92&fm=webp"
+                            />
+                            <img
+                                src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=400&q=90&fm=webp"
+                                alt="Container port at golden hour — Cristi Labs global trade infrastructure"
+                                className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44"
+                                loading="lazy"
+                                decoding="async"
+                                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                            />
+                        </picture>
+                        <div style={{
+                            position: 'absolute', inset: 0,
+                            background: 'linear-gradient(135deg, rgba(11,11,11,0.25) 0%, rgba(184,146,74,0.08) 100%)',
+                            borderRadius: 'inherit', pointerEvents: 'none',
+                        }} />
+                    </div>
+                    <div style={{ position: 'relative', display: 'inline-block' }}>
+                        <picture>
+                            <source
+                                media="(min-width: 768px)"
+                                srcSet="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=92&fm=webp"
+                            />
+                            <img
+                                src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=90&fm=webp"
+                                alt="Futuristic corporate tower at night — Cristi Labs digital venture studio"
+                                className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44"
+                                loading="lazy"
+                                decoding="async"
+                                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                            />
+                        </picture>
+                        <div style={{
+                            position: 'absolute', inset: 0,
+                            background: 'linear-gradient(135deg, rgba(11,11,11,0.25) 0%, rgba(184,146,74,0.08) 100%)',
+                            borderRadius: 'inherit', pointerEvents: 'none',
+                        }} />
+                    </div>
                 </div>
                 <div className="md:w-1/2 w-full md:mt-0 mt-10">
                     <p className="md:text-[2rem] text-[1.4rem] text-[var(--text-secondary)] md:leading-[1.1] md:pr-24 font-light leading-[26px] tracking-[-0.2px]">
@@ -59,6 +122,23 @@ const Welcome = () => {
                     </p>
                 </div>
             </div>
+
+            {/* Stats Row */}
+            <div className="welcome-stats" style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid var(--border-subtle)', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '2rem' }}>
+                {STATS.map((stat, i) => (
+                    <div key={stat.label} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        <span
+                            ref={(el) => { statsRefs.current[i] = el; }}
+                            className="welcome-stat__value"
+                        >
+                            {stat.prefix}0{stat.suffix}
+                        </span>
+                        <span className="welcome-stat__label">{stat.label}</span>
+                    </div>
+                ))}
+            </div>
+
+            <SectionDivider index={1} total={5} />
         </div>
     );
 };

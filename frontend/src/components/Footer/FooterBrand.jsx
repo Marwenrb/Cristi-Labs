@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import SplitText from "gsap/SplitText";
+import { waitForFonts } from "../../lib/fontLoader";
 
 gsap.registerPlugin(SplitText);
 
@@ -32,6 +33,8 @@ const FooterBrand = () => {
                 const taglineEl = taglineRef.current;
                 if (!titleEl || !taglineEl) return;
 
+                // Wait for fonts before SplitText measures characters
+                waitForFonts().then(() => {
                 let titleSplit;
                 let taglineSplit;
 
@@ -79,6 +82,7 @@ const FooterBrand = () => {
                     },
                     "-=0.15"
                 );
+                }); // end waitForFonts
             },
             { threshold: 0.2, rootMargin: "0px 0px -50px 0px" }
         );

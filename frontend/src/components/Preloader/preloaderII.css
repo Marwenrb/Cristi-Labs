@@ -1,4 +1,4 @@
-/* Preloader — Production-grade, 2025 trending UI/UX */
+/* Preloader — Presidential Dark Luxury Edition */
 
 .preloader-progress,
 .preloader-mask,
@@ -10,16 +10,29 @@
     pointer-events: none;
 }
 
+/* ── Main background with scanline overlay ── */
 .preloader-progress {
-    background: linear-gradient(
-        180deg,
-        #0c0c0c 0%,
-        #0f0f0f 50%,
-        #0c0c0c 100%
-    );
+    background: #050507;
     z-index: 1;
 }
 
+/* CRT scanline effect over the preloader */
+.preloader-progress::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.04) 2px,
+        rgba(0, 0, 0, 0.04) 4px
+    );
+}
+
+/* ── Progress bar ── */
 .preloader-progress-bar {
     position: absolute;
     bottom: 0;
@@ -31,13 +44,15 @@
     will-change: transform;
     background: linear-gradient(
         90deg,
-        var(--accent-dim),
-        var(--accent),
-        var(--accent-dim)
+        var(--accent-gold-dim),
+        var(--accent-gold),
+        var(--accent-gold-dim)
     );
     background-size: 200% 100%;
+    box-shadow: 0 0 12px rgba(201, 168, 76, 0.5);
 }
 
+/* ── Logo ── */
 .preloader-logo {
     position: absolute;
     top: 50%;
@@ -67,18 +82,14 @@
     overflow: visible;
 }
 
-/* Ensure SplitText wrappers don't clip the last char (S) */
 .preloader-logo h1,
 .preloader-logo h1 > * {
     overflow: visible !important;
 }
 
+/* ── Mask ── */
 .preloader-mask {
-    background: linear-gradient(
-        180deg,
-        #0c0c0c 0%,
-        #0f0f0f 100%
-    );
+    background: #050507;
     mask:
         linear-gradient(#fafafa, #fafafa),
         url("../../../public/preloader-bg.svg") center/40% no-repeat;
@@ -87,6 +98,7 @@
     z-index: 1;
 }
 
+/* ── Content ── */
 .preloader-content {
     z-index: 3;
 }
@@ -112,6 +124,17 @@
     line-height: 1.6;
 }
 
+/* ── "EST. 2026" badge ── */
+.preloader-est {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: clamp(0.5rem, 1.2vw, 0.6rem);
+    letter-spacing: 0.5em;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    margin-top: 0.75rem;
+}
+
 @media (max-width: 768px) {
     .preloader-logo h1 {
         letter-spacing: 0.2em;
@@ -123,6 +146,12 @@
     .preloader-footer .line {
         font-size: 0.625rem;
         letter-spacing: 0.2em;
+    }
+    .preloader-mask {
+        mask:
+            linear-gradient(#fafafa, #fafafa),
+            url("../../../public/preloader-bg.svg") center/90% no-repeat;
+        mask-composite: subtract;
     }
 }
 

@@ -60,12 +60,12 @@ const Choose = () => {
     });
 
     return (
-        <section className="choose-section w-full min-h-dvh md:h-dvh p-4 md:p-8 pt-6 md:pt-10 pb-8 md:pb-10">
+        <section className="choose-section w-full min-h-dvh md:h-dvh p-4 md:p-8 pt-0 md:pt-10 pb-8 md:pb-10">
             <p className='text-[.65rem] md:text-[.7rem] text-[var(--accent)] choose-subtitle' style={{ fontFamily: 'var(--font-mono)' }}>Our Core Capabilities</p>
             <div className="lg:mt-10 mt-4 md:mt-7 title-part origin-bottom">
                 {
                     chooseLines.map((line, index) => (
-                        <h1 key={index} className={`choose-heading text-[var(--text-primary)] lg:text-[9.5rem] text-2xl sm:text-3xl leading-[0.9]`} font-medium tracking-tighter choose-title>
+                        <h1 key={index} className={`choose-heading font-medium tracking-tighter text-[var(--text-primary)] lg:text-[9.5rem] text-2xl sm:text-3xl leading-[0.9]`}>
                             <span className={`choose-title-break ${index == 1 ? "lg:pb-3 pb-1 md:pb-2" : ""}`}>{line}<span className={`choose-title-clip ${index == 1 ? "lg:pb-3 pb-1 md:pb-2" : ""}`}>{line}</span></span>
                         </h1>
                     ))

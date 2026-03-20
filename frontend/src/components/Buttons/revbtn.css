@@ -1,6 +1,6 @@
 /* ============================================================
    CONNECT BUTTON — Cristi Labs Signature CTA
-   Heavy Industry × Surgical Precision × Metallic Gold
+   Heavy Industry × Surgical Precision × Sovereign Gold
    ============================================================ */
 
 /* Houdini custom property for animatable conic-gradient angle */
@@ -16,7 +16,6 @@
 
 /* ── Base ──────────────────────────────────────────────────── */
 .connect-btn {
-    /* Layout — CSS owns everything, no Tailwind flex on this element */
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -38,38 +37,34 @@
     /* Color */
     color: var(--text-primary);
 
-    /* Animated scanning gradient border
-       padding-box  → solid dark fill for the content area
-       border-box   → rotating gold spotlight on the 1px border ring */
+    /* Animated scanning gradient border */
     background:
         linear-gradient(var(--bg-void), var(--bg-void)) padding-box,
         conic-gradient(
             from var(--bscan),
-            rgba(212, 175, 55, 0.06)  0%,
-            rgba(212, 175, 55, 0.55) 10%,
-            rgba(212, 175, 55, 0.06) 22%,
-            rgba(212, 175, 55, 0.06) 100%
+            rgba(201, 168, 76, 0.06)  0%,
+            rgba(201, 168, 76, 0.55) 10%,
+            rgba(201, 168, 76, 0.06) 22%,
+            rgba(201, 168, 76, 0.06) 100%
         ) border-box;
     border: 1px solid transparent;
 
-    /* Run the border scan continuously */
-    animation: border-scan 10s linear infinite;
+    /* Scanning border + delayed pulse ring */
+    animation:
+        border-scan 10s linear infinite,
+        pulse-ring 2.5s ease-in-out 4s infinite;
 
-    /* Contain the shimmer sweep inside the pill */
     overflow: hidden;
-
-    /* GPU composite layer for magnetic transform */
     will-change: transform;
     -webkit-font-smoothing: antialiased;
 
-    /* Transitions — transform handled by JS for magnetic effect */
     transition:
         color          340ms var(--ease-out-expo),
         box-shadow     400ms var(--ease-out-expo),
         letter-spacing 500ms var(--ease-out-expo);
 }
 
-/* ── Shimmer sweep — slides left→right on hover ────────────── */
+/* ── Shimmer sweep ─────────────────────────────────────────── */
 .connect-btn::before {
     content: '';
     position: absolute;
@@ -80,7 +75,7 @@
     background: linear-gradient(
         90deg,
         transparent               0%,
-        rgba(212, 175, 55, 0.22) 50%,
+        rgba(201, 168, 76, 0.22) 50%,
         transparent              100%
     );
     pointer-events: none;
@@ -92,7 +87,7 @@
     left: 140%;
 }
 
-/* ── Radial ambient fill on hover ──────────────────────────── */
+/* ── Radial ambient fill ───────────────────────────────────── */
 .connect-btn::after {
     content: '';
     position: absolute;
@@ -100,7 +95,7 @@
     border-radius: inherit;
     background: radial-gradient(
         ellipse 90% 100% at 25% 50%,
-        rgba(212, 175, 55, 0.07) 0%,
+        rgba(201, 168, 76, 0.07) 0%,
         transparent              100%
     );
     opacity: 0;
@@ -113,13 +108,14 @@
     opacity: 1;
 }
 
-/* ── Hover state ───────────────────────────────────────────── */
+/* ── Hover ─────────────────────────────────────────────────── */
 .connect-btn:hover {
-    color: var(--accent);
+    color: var(--accent-gold);
     box-shadow:
-        0 0 24px rgba(212, 175, 55, 0.18),
-        0 0 64px rgba(212, 175, 55, 0.06);
+        0 0 24px rgba(201, 168, 76, 0.18),
+        0 0 64px rgba(201, 168, 76, 0.06);
     letter-spacing: 0.24em;
+    animation: border-scan 10s linear infinite;
 }
 
 /* ── Label ─────────────────────────────────────────────────── */
@@ -140,7 +136,7 @@
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    background: var(--accent);
+    background: var(--accent-gold);
     color: var(--bg-void);
     transition:
         transform  360ms var(--ease-out-expo),
@@ -155,10 +151,10 @@
 
 .connect-btn:hover .connect-btn__icon {
     transform: rotate(45deg) scale(1.1);
-    background: var(--accent-light);
+    background: var(--accent-gold-bright);
 }
 
-/* ── Accessibility: respect reduced-motion ─────────────────── */
+/* ── Reduced motion ────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
     .connect-btn {
         animation: none;

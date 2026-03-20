@@ -1,17 +1,18 @@
-/* Navbar Menu Button — Cristi Labs Brass Edition */
+/* Navbar — Cristi Labs Premium Edition */
 
+/* ── Menu Button ── */
 .nav-menu-btn {
     background: var(--bg-void);
-    border: 1px solid var(--border-strong);
+    border: 1px solid var(--border-default);
     min-width: 44px;
     min-height: 44px;
     transition:
-        border-color var(--duration-mid) var(--ease-out-expo),
-        background var(--duration-mid) var(--ease-out-expo);
+        border-color var(--duration-fast) var(--ease-out-expo),
+        background var(--duration-fast) var(--ease-out-expo);
 }
 
 .nav-menu-btn:hover {
-    border-color: var(--accent);
+    border-color: var(--accent-gold);
     background: var(--accent-ghost);
 }
 
@@ -23,11 +24,11 @@
 }
 
 .nav-menu-btn:hover .rev-link {
-    color: var(--accent);
+    color: var(--accent-gold);
 }
 
 .nav-menu-icon {
-    background: var(--accent);
+    background: var(--accent-gold);
     border-radius: 50%;
     padding: 0.5rem;
     transition: transform var(--duration-fast) var(--ease-out-expo);
@@ -42,4 +43,40 @@
 
 .nav-menu-btn:hover .nav-menu-icon {
     transform: rotate(90deg);
+}
+
+/* ── Overlay nav link — golden animated underline ── */
+.nav-overlay-link {
+    position: relative;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-overlay-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 0;
+    height: 1px;
+    background: var(--accent-gold);
+    box-shadow: 0 0 8px var(--accent-gold-glow);
+    transition: width 0.35s var(--ease-expo);
+}
+
+.nav-overlay-link:hover {
+    color: var(--accent-gold);
+}
+
+.nav-overlay-link:hover::before {
+    width: 100%;
+}
+
+.nav-overlay-link--active {
+    color: var(--accent-gold);
+}
+
+.nav-overlay-link--active::before {
+    width: 100%;
 }

@@ -3,6 +3,8 @@ import gsap from "gsap/all";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Footer from "../../components/Footer/Footer";
+import TypeWriter from "../../components/TypeWriter/TypeWriter";
+import SectionDivider from "../../components/SectionDivider/SectionDivider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -363,6 +365,7 @@ const Contact = () => {
             </section>
 
             {/* ═══ Two-Column Grid ════════════════════════════════ */}
+            <SectionDivider index={2} total={3} />
             <section className="contact-grid w-full px-6 md:px-12 lg:px-16 py-16 md:py-24">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
                     {/* ── LEFT: Corporate Info ─────────────────── */}
@@ -419,13 +422,30 @@ const Contact = () => {
                         </div>
 
                         <div className="contact-info-item">
-                            <p className="text-[.7rem] text-[var(--accent)] uppercase tracking-[0.25em] mb-4">
+                            <p className="text-[.7rem] text-[var(--accent-gold)] uppercase tracking-[0.25em] mb-4">
                                 Response Protocol
                             </p>
                             <p className="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed max-w-sm">
                                 All inquiries are reviewed by our executive team. Expect a
                                 response within 24–48 business hours.
                             </p>
+                        </div>
+
+                        <div className="contact-info-item">
+                            <p className="text-[.7rem] text-[var(--accent-gold)] uppercase tracking-[0.25em] mb-4" style={{ fontFamily: 'var(--font-mono)' }}>
+                                Coordinates
+                            </p>
+                            <div className="flex flex-col gap-1">
+                                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-secondary)', letterSpacing: '0.08em' }}>
+                                    44.7966° N, 106.9562° W
+                                </p>
+                                <div className="flex items-center gap-2 mt-1">
+                                    <span className="contact-coordinates-dot" />
+                                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent-ice)', letterSpacing: '0.3em', textTransform: 'uppercase' }}>
+                                        ONLINE
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -436,8 +456,13 @@ const Contact = () => {
                             ref={formRef}
                             className={`contact-form-area ${isSuccess ? "pointer-events-none" : ""}`}
                         >
-                            <p className="text-[.7rem] text-[var(--accent)] uppercase tracking-[0.25em] mb-10">
-                                Transmit Your Inquiry
+                            <p className="text-[.7rem] text-[var(--accent-gold)] uppercase tracking-[0.25em] mb-10" style={{ fontFamily: 'var(--font-mono)' }}>
+                                <TypeWriter
+                                    text="INITIATE CONTACT PROTOCOL."
+                                    speed={55}
+                                    delay={600}
+                                    showCursor={true}
+                                />
                             </p>
 
                             <form onSubmit={handleSubmit} noValidate>

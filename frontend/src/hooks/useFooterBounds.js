@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 const DEFAULT_BOTTOM = 32; // bottom-8 = 2rem = 32px
 const GAP = 12;            // breathing room above the footer row
+const MIN_BOTTOM_MOBILE = 72; // extra clearance so menu btn never overlaps footer text
 
 /**
  * Returns a `bottomPx` value that pushes fixed buttons up
@@ -16,19 +17,21 @@ export function useFooterBounds() {
 
     useEffect(() => {
         let rafId = null;
+        const isMobile = () => window.innerWidth < 768;
 
         const readRect = () => {
+            const base = isMobile() ? MIN_BOTTOM_MOBILE : DEFAULT_BOTTOM;
             const el = document.getElementById("footer-copyright");
             if (!el) {
-                setBottomPx(DEFAULT_BOTTOM);
+                setBottomPx(base);
                 return;
             }
             const { top } = el.getBoundingClientRect();
             const overlap = window.innerHeight - top;
             setBottomPx(
                 overlap > 0
-                    ? DEFAULT_BOTTOM + overlap + GAP
-                    : DEFAULT_BOTTOM
+                    ? base + overlap + GAP
+                    : base
             );
         };
 

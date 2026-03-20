@@ -2,6 +2,9 @@ import gsap from "gsap/all";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Footer from "../../components/Footer/Footer";
+import TypeWriter from "../../components/TypeWriter/TypeWriter";
+import SectionDivider from "../../components/SectionDivider/SectionDivider";
+import GlobalReach from "../../components/GlobalReach/GlobalReach";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -57,8 +60,13 @@ const GlobalTrade = () => {
                 <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden bg-[var(--bg-void)]">
                     <div className="p-4 flex flex-col md:justify-center">
                         <div className="relative h-dvh">
-                            <p className="text-[.7rem] text-[var(--accent)] uppercase tracking-[0.25em] pt-8 pl-2" style={{ fontFamily: 'var(--font-mono)' }}>
-                                Global Trade Division
+                            <p className="text-[.7rem] text-[var(--accent-gold)] uppercase tracking-[0.25em] pt-8 pl-2" style={{ fontFamily: 'var(--font-mono)' }}>
+                                <TypeWriter
+                                    text="GLOBAL TRADE INFRASTRUCTURE"
+                                    speed={70}
+                                    showCursor={false}
+                                    delay={300}
+                                />
                             </p>
                             <h1
                                 className="text-[var(--text-primary)] text-start text-6xl md:text-9xl tracking-wider lg:absolute lg:left-2 lg:top-16 mt-4"
@@ -84,6 +92,9 @@ const GlobalTrade = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Global Reach — interactive world presence */}
+            <GlobalReach />
 
             {/* Content Sections — mirrors Choose/Welcome section layout */}
             <section className="w-full px-6 md:px-12 py-24">
@@ -142,7 +153,8 @@ const GlobalTrade = () => {
                 </div>
             </section>
 
-            {/* Stats Section — mirrors Gallery/StickyCols visual impact */}
+            {/* Stats Section */}
+            <SectionDivider index={2} total={4} />
             <section className="trade-stats w-full px-6 md:px-12 py-24 bg-[var(--bg-void)]">
                 <div className="max-w-7xl mx-auto">
                     <p className="text-[.7rem] text-[var(--accent)] uppercase tracking-wider mb-16" style={{ fontFamily: 'var(--font-mono)' }}>

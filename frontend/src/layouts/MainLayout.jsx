@@ -10,6 +10,7 @@ import ReserveBtn from "../components/Buttons/ReserveBtn";
 import Logo from "../components/Buttons/Logo";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 import BackToTop from "../components/BackToTop/BackToTop";
+import Cursor from "../components/Cursor/Cursor";
 import { initLenis } from "../lib/lenis";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -61,6 +62,7 @@ const MainLayout = () => {
     return (
         <>
             <ScrollToTop />
+            <Cursor />
             <PreloaderII />
             <Logo />
             <ReserveBtn />

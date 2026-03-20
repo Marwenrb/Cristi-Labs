@@ -2,23 +2,70 @@ import React, { useEffect, useRef } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import './gallery.css';
-
-import gbg1 from '../../assets/Medias/gallery/gallery-1.png';
-import gbg2 from '../../assets/Medias/gallery/gallery-2.png';
-import gbg3 from '../../assets/Medias/gallery/gallery-3.png';
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-const Gallery = () => {
-    const pageRef = useRef(null);
-    const mobileRef = useRef(null);
-    const isMobile = useMediaQuery({ maxWidth: 768 });
+// Premium Unsplash images — cinematic, dark-toned, 4K
+const GALLERY_IMAGES = [
+    {
+        src: "https://images.unsplash.com/photo-1578575437130-527eed3abbec",
+        params: "?w=2560&q=95&fm=webp",
+        alt: "Container ship at dramatic golden hour — global trade at scale",
+        label: "GLOBAL INFRASTRUCTURE",
+    },
+    {
+        src: "https://images.unsplash.com/photo-1518770660439-4636190af475",
+        params: "?w=2560&q=95&fm=webp",
+        alt: "Circuit board extreme close-up — precision technology",
+        label: "TECHNOLOGY PRECISION",
+    },
+    {
+        src: "https://images.unsplash.com/photo-1550745165-9bc0b252726f",
+        params: "?w=2560&q=95&fm=webp",
+        alt: "Gaming setup with RGB lighting — immersive digital entertainment",
+        label: "DIGITAL ENTERTAINMENT",
+    },
+    {
+        src: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3",
+        params: "?w=2560&q=95&fm=webp",
+        alt: "Multiple trading screens with financial data — Wall Street energy",
+        label: "FINANCIAL INTELLIGENCE",
+    },
+    {
+        src: "https://images.unsplash.com/photo-1486325212027-8081e485255e",
+        params: "?w=2560&q=95&fm=webp",
+        alt: "Ultra-modern glass corporate building — power and scale",
+        label: "EXECUTIVE SPACES",
+    },
+];
 
+// Swipe hint — persistent pulse (no fade-out)
+const SwipeHint = () => (
+    <div style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        gap: '8px', marginTop: '16px',
+        pointerEvents: 'none',
+        animation: 'swipePulse 2s ease-in-out infinite',
+    }}>
+        <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', fontSize: '10px', letterSpacing: '0.3em' }}>SWIPE</span>
+        <span style={{ color: 'var(--accent-gold)', fontSize: '14px' }}>→</span>
+    </div>
+);
+
+const Gallery = () => {
+    const pageRef            = useRef(null);
+    const mobileRef          = useRef(null);
+    const scrollContainerRef = useRef(null);
+    const cardRefs           = useRef([]);
+    const isMobile           = useMediaQuery({ maxWidth: 768 });
+
+    // Desktop: pinned scroll gallery with anticipatePin fix
     useEffect(() => {
         if (isMobile) return;
-        // Create new timeline
+
         const tl4 = gsap.timeline({
             scrollTrigger: {
                 trigger: ".gallery-page4",
@@ -26,126 +73,111 @@ const Gallery = () => {
                 end: "220% 30%",
                 scrub: 1,
                 pin: true,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
             }
         });
 
-        // Add background color animation
-        tl4.to(".gallery-page4", {
-            backgroundColor: "var(--bg-void)",
-        }, 'start');
+        tl4.to(".gallery-page4", { backgroundColor: "var(--bg-void)" }, 'start');
+        gsap.set(".gallery-topText h4, .gallery-topText h3, .gallery-bottomText h3", { opacity: 1, x: 0 });
 
-        gsap.set(".gallery-topText h4, .gallery-topText h3, .gallery-bottomText h3", {
-            opacity: 1,
-            x: 0
-        });
-
-        // Animation sequence
-        tl4.to(".gallery-box h3", {
-            opacity: 0,
-        }, 'a')
+        tl4.to(".gallery-box h3", { opacity: 0 }, 'a')
             .to(".gallery-page4 .gallery-background", {
-                width: "calc(100vw - 1rem)",
-                height: "calc(100vh - 1rem)",
-                borderRadius: "3.5rem",
-                y: -40,
+                width: "calc(100vw - 1rem)", height: "calc(100vh - 1rem)",
+                borderRadius: "3.5rem", y: -40,
             }, 'a')
-            .to(".gallery-page4 .gallery-background img", {
-                transform: "scale(1)",
-            }, 'a')
-            .from(".gallery-background .gallery-topText h4, .gallery-background .gallery-topText h3, .gallery-background .gallery-bottomText h3", {
-                opacity: 0,
-                x: 50,
-            })
+            .to(".gallery-page4 .gallery-background img", { transform: "scale(1)" }, 'a')
+            .from(".gallery-background .gallery-topText h4, .gallery-background .gallery-topText h3, .gallery-background .gallery-bottomText h3", { opacity: 0, x: 50 })
             .to({}, { duration: 0.4 }, "+=0")
-
-            .to("#gallery-second", {
-                transform: "translate(-50%, -56%)",
-            }, 'b')
-            .to("#gallery-second img", {
-                transform: "scale(1)",
-            }, 'b')
-            .to(".gallery-page4 .gallery-background", {
-                scale: 0.9,
-                opacity: 0,
-                y: -50
-            }, 'b')
-            .from("#gallery-second .gallery-topText h4, #gallery-second .gallery-topText h3, #gallery-second .gallery-bottomText h3", {
-                opacity: 0,
-                x: 50,
-            })
+            .to("#gallery-second", { transform: "translate(-50%, -56%)" }, 'b')
+            .to("#gallery-second img", { transform: "scale(1)" }, 'b')
+            .to(".gallery-page4 .gallery-background", { scale: 0.9, opacity: 0, y: -50 }, 'b')
+            .from("#gallery-second .gallery-topText h4, #gallery-second .gallery-topText h3, #gallery-second .gallery-bottomText h3", { opacity: 0, x: 50 })
             .to({}, { duration: 0.4 }, "+=0")
-            .to("#gallery-third", {
-                transform: "translate(-50%, -56%)",
-            }, 'c')
-            .to("#gallery-third img", {
-                transform: "scale(1)",
-            }, 'c')
-            .to("#gallery-second", {
-                scale: 0.9,
-                opacity: 0,
-            }, 'c')
-            .from("#gallery-third .gallery-topText h4, #gallery-third .gallery-topText h3, #gallery-third .gallery-bottomText h3", {
-                opacity: 0,
-                x: 50,
-            })
+            .to("#gallery-third", { transform: "translate(-50%, -56%)" }, 'c')
+            .to("#gallery-third img", { transform: "scale(1)" }, 'c')
+            .to("#gallery-second", { scale: 0.9, opacity: 0 }, 'c')
+            .from("#gallery-third .gallery-topText h4, #gallery-third .gallery-topText h3, #gallery-third .gallery-bottomText h3", { opacity: 0, x: 50 })
             .to({}, { duration: 0.4 }, "+=0");
 
-        // Clean up function
-        return () => {
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-        };
+        const images = pageRef.current?.querySelectorAll('img') ?? [];
+        let loaded = 0;
+        const tryRefresh = () => { loaded++; if (loaded === images.length) ScrollTrigger.refresh(); };
+        images.forEach(img => {
+            if (img.complete) tryRefresh();
+            else img.addEventListener('load', tryRefresh, { once: true });
+        });
+
+        return () => { ScrollTrigger.getAll().forEach(t => t.kill()); };
     }, [isMobile]);
 
-    // Mobile — GSAP ScrollTrigger scroll-reveal + image parallax
+    // Mobile: per-card entrance (once) + vertical parallax on inner image
+    useGSAP(() => {
+        if (!isMobile) return;
+
+        const cards = cardRefs.current.filter(Boolean);
+        if (!cards.length) return;
+
+        // 3D flip entrance — fires once on scroll-into-view
+        cards.forEach((card, i) => {
+            gsap.fromTo(card,
+                { opacity: 0, y: 60, rotateX: 25, scale: 0.85, filter: 'blur(8px)' },
+                {
+                    opacity: 1, y: 0, rotateX: 0, scale: 1, filter: 'blur(0px)',
+                    duration: 0.9, ease: 'expo.out', delay: i * 0.06,
+                    scrollTrigger: { trigger: card, start: 'top 92%', once: true },
+                }
+            );
+        });
+
+        // Image parallax — image moves slower than card while page scrolls
+        cards.forEach((card) => {
+            const img = card.querySelector('img');
+            if (!img) return;
+            gsap.to(img, {
+                yPercent: -12, ease: 'none',
+                scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 1.5 },
+            });
+        });
+
+        return () => ScrollTrigger.getAll().forEach(t => t.kill());
+    }, { scope: mobileRef, dependencies: [isMobile] });
+
+    // Mobile: horizontal swipe velocity → rotateY card tilt
     useEffect(() => {
         if (!isMobile) return;
-        gsap.registerPlugin(ScrollTrigger);
+        const container = scrollContainerRef.current;
+        if (!container) return;
 
-        const allTriggers = [];
+        let lastScrollLeft = 0;
+        let rafId;
 
-        const timer = setTimeout(() => {
-            const cards = document.querySelectorAll('.gallery-mobile-card');
-            if (!cards.length) return;
+        const trackVelocity = () => {
+            const currentScrollLeft = container.scrollLeft;
+            const velocity = (currentScrollLeft - lastScrollLeft) * 0.08;
+            lastScrollLeft = currentScrollLeft;
 
-            cards.forEach((card, i) => {
-                const img = card.querySelector('img');
-
-                gsap.set(card, { opacity: 0, y: 52, scale: 0.96 });
-
-                const st = ScrollTrigger.create({
-                    trigger: card,
-                    start: 'top 88%',
-                    onEnter: () => {
-                        gsap.to(card, {
-                            opacity: 1, y: 0, scale: 1,
-                            duration: 0.85,
-                            ease: 'power3.out',
-                            delay: i * 0.07,
-                        });
-                    },
-                    once: true,
+            cardRefs.current.filter(Boolean).forEach(card => {
+                gsap.to(card, {
+                    rotateY:  -velocity * 0.6,
+                    skewY:     velocity * 0.15,
+                    duration: 0.5,
+                    ease:     'power3.out',
+                    overwrite: 'auto',
                 });
-                allTriggers.push(st);
-
-                if (img) {
-                    const anim = gsap.to(img, {
-                        yPercent: 10,
-                        ease: 'none',
-                        scrollTrigger: {
-                            trigger: card,
-                            start: 'top bottom',
-                            end: 'bottom top',
-                            scrub: 1.5,
-                        },
-                    });
-                    if (anim.scrollTrigger) allTriggers.push(anim.scrollTrigger);
-                }
             });
-        }, 120);
+            rafId = requestAnimationFrame(trackVelocity);
+        };
 
+        const handleScroll = () => {
+            cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(trackVelocity);
+        };
+
+        container.addEventListener('scroll', handleScroll, { passive: true });
         return () => {
-            clearTimeout(timer);
-            allTriggers.forEach(t => t?.kill?.());
+            cancelAnimationFrame(rafId);
+            container.removeEventListener('scroll', handleScroll);
         };
     }, [isMobile]);
 
@@ -153,97 +185,117 @@ const Gallery = () => {
         const elements = [];
         for (let i = 1; i <= quantity; i++) {
             elements.push(
-                <h3 key={i} style={{ "--index": i }} className='tracking-tighter'>
-                    Cristi Labs
-                </h3>
+                <h3 key={i} style={{ "--index": i }} className='tracking-tighter'>Cristi Labs</h3>
             );
         }
         return elements;
     };
 
-    // Mobile — marquee always visible + 3 static image cards
+    // Mobile — horizontal swipe with snap scrolling
     if (isMobile) {
-        const cards = [
-            { img: gbg1, label: 'Digital Entertainment', caption: 'Premium content and experiences delivered with refined craft and modern vision.' },
-            { img: gbg2, label: 'International Trade', caption: 'Cross-border commerce and strategic partnerships at the heart of global markets.' },
-            { img: gbg3, label: 'Strategic Vision', caption: 'Innovation meets integrity — where digital media and commerce converge.' },
-        ];
         return (
-            <section ref={mobileRef} style={{ background: 'var(--bg-void)', padding: '3rem 1rem 4rem' }}>
-                {/* Marquee — always visible on mobile */}
-                <div style={{ overflow: 'hidden', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: '1.25rem 0', marginBottom: '2rem' }}>
-                    <div className="gallery-marquee-mobile">
-                        {[...Array(12)].map((_, i) => (
-                            <span key={i} style={{
-                                fontFamily: 'var(--font-display)',
-                                fontSize: '2.25rem',
-                                color: 'var(--text-tertiary)',
-                                letterSpacing: '0.04em',
-                                flexShrink: 0,
-                                paddingRight: '2.5rem',
-                            }}>
-                                Cristi Labs
-                            </span>
-                        ))}
-                    </div>
-                </div>
-                {/* Image cards — vertical */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    {cards.map((card, i) => (
-                        <div key={i} className="gallery-mobile-card" style={{ position: 'relative', borderRadius: '1.25rem', overflow: 'hidden', height: '62vw' }}>
-                            <img src={card.img} alt={card.label} style={{ width: '100%', height: '110%', objectFit: 'cover', objectPosition: 'center top' }} />
-                            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(11,11,11,0.96) 0%, rgba(11,11,11,0.35) 55%, transparent 100%)', zIndex: 1 }} />
-                            <div style={{ position: 'absolute', bottom: '1.25rem', left: '1.25rem', right: '1.25rem', zIndex: 2 }}>
-                                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '6px' }}>
-                                    {card.label}
+            <section
+                ref={mobileRef}
+                style={{ background: 'var(--bg-void)', padding: '3rem 0 4rem', perspective: '1200px' }}
+            >
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5625rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '2rem', paddingLeft: '1rem' }}>
+                    § PORTFOLIO
+                </p>
+
+                {/* Horizontal swipe container */}
+                <div
+                    ref={scrollContainerRef}
+                    style={{
+                        display: 'flex', gap: '1rem', padding: '0 1rem 0.5rem',
+                        overflowX: 'auto', scrollSnapType: 'x mandatory',
+                        WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none',
+                    }}
+                >
+                    {GALLERY_IMAGES.map((img, i) => (
+                        <div
+                            key={i}
+                            className="gallery-mobile-card"
+                            ref={el => { cardRefs.current[i] = el; }}
+                            style={{
+                                scrollSnapAlign: 'start', flex: '0 0 82vw',
+                                height: '60vw', maxHeight: '420px',
+                                borderRadius: '1.25rem', overflow: 'hidden',
+                                border: '1px solid var(--border-subtle)',
+                                position: 'relative', flexShrink: 0,
+                                transformStyle: 'preserve-3d', willChange: 'transform, opacity',
+                            }}
+                        >
+                            <picture>
+                                <source srcSet={`${img.src}${img.params}&w=1280`} media="(min-width: 640px)" />
+                                <img
+                                    src={`${img.src}${img.params}&w=640`}
+                                    alt={img.alt}
+                                    style={{ width: '100%', height: '110%', objectFit: 'cover', objectPosition: 'center center' }}
+                                    loading={i === 0 ? 'eager' : 'lazy'}
+                                    decoding="async"
+                                />
+                            </picture>
+                            {/* Gradient overlay */}
+                            <div style={{
+                                position: 'absolute', inset: 0,
+                                background: 'linear-gradient(to top, rgba(5,5,7,0.9) 0%, rgba(5,5,7,0.3) 55%, transparent 100%)',
+                                pointerEvents: 'none',
+                            }} />
+                            {/* Card label */}
+                            <div style={{ position: 'absolute', bottom: '20px', left: '20px' }}>
+                                <p style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-gold)', fontSize: '9px', letterSpacing: '0.4em', textTransform: 'uppercase', marginBottom: '6px' }}>
+                                    {String(i + 1).padStart(2, '0')} / {String(GALLERY_IMAGES.length).padStart(2, '0')}
                                 </p>
-                                <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.8rem', color: 'var(--text-primary)', lineHeight: 1.45 }}>
-                                    {card.caption}
+                                <p style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)', fontSize: '1.25rem', lineHeight: 1 }}>
+                                    {img.label}
                                 </p>
                             </div>
                         </div>
                     ))}
                 </div>
+
+                {/* Swipe hint — permanent pulse */}
+                <SwipeHint />
             </section>
         );
     }
 
     return (
-        <section className="gallery-page4 " ref={pageRef}>
+        <section className="gallery-page4" ref={pageRef}>
             <div className="gallery-slider">
-                <div
-                    className="gallery-box"
-                    style={{ "--time": "40s", "--quantity": 6 }}
-                >
+                <div className="gallery-box" style={{ "--time": "40s", "--quantity": 6 }}>
                     {generateBrandElements(6)}
                 </div>
             </div>
 
             <div className="gallery-background">
-                <img src={gbg1} alt="Cristi Labs — Digital Entertainment Division" />
-                <div className="gallery-topText">
-                    <h4>Digital Entertainment</h4>
-                </div>
+                <img
+                    src={`${GALLERY_IMAGES[0].src}${GALLERY_IMAGES[0].params}&w=1920`}
+                    alt={GALLERY_IMAGES[0].alt} loading="eager" decoding="async"
+                />
+                <div className="gallery-topText"><h4>Digital Entertainment</h4></div>
                 <div className="gallery-bottomText">
                     <h3>Premium content and experiences delivered with refined craft and modern vision.</h3>
                 </div>
             </div>
 
             <div id="gallery-second" className="gallery-background2">
-                <img src={gbg2} alt="Cristi Labs — International Trade Operations" />
-                <div className="gallery-topText">
-                    <h4>International Trade</h4>
-                </div>
+                <img
+                    src={`${GALLERY_IMAGES[1].src}${GALLERY_IMAGES[1].params}&w=1920`}
+                    alt={GALLERY_IMAGES[1].alt} loading="lazy" decoding="async"
+                />
+                <div className="gallery-topText"><h4>International Trade</h4></div>
                 <div className="gallery-bottomText">
                     <h3>Cross-border commerce and strategic partnerships at the heart of global markets.</h3>
                 </div>
             </div>
 
             <div id="gallery-third" className="gallery-background2">
-                <img src={gbg3} alt="Cristi Labs — Strategic Vision & Innovation" />
-                <div className="gallery-topText">
-                    <h4>Strategic Vision</h4>
-                </div>
+                <img
+                    src={`${GALLERY_IMAGES[2].src}${GALLERY_IMAGES[2].params}&w=1920`}
+                    alt={GALLERY_IMAGES[2].alt} loading="lazy" decoding="async"
+                />
+                <div className="gallery-topText"><h4>Strategic Vision</h4></div>
                 <div className="gallery-bottomText">
                     <h3>Innovation meets integrity—where digital media and commerce converge.</h3>
                 </div>

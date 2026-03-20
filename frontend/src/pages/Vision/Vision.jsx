@@ -2,6 +2,8 @@ import gsap from "gsap/all";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Footer from "../../components/Footer/Footer";
+import TypeWriter from "../../components/TypeWriter/TypeWriter";
+import SectionDivider from "../../components/SectionDivider/SectionDivider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -71,8 +73,13 @@ const Vision = () => {
                             {/* Label — top left, generous breathing room */}
                             <div className="flex items-center gap-4 pt-20 md:pt-28">
                                 <div style={{ width: '24px', height: '1px', background: 'var(--accent)' }} />
-                                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.28em', color: 'var(--accent)', textTransform: 'uppercase' }}>
-                                    Corporate Philosophy
+                                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.28em', color: 'var(--accent-gold)', textTransform: 'uppercase' }}>
+                                    <TypeWriter
+                                        text="CORPORATE PHILOSOPHY"
+                                        speed={80}
+                                        showCursor={false}
+                                        delay={500}
+                                    />
                                 </p>
                             </div>
 
@@ -133,10 +140,16 @@ const Vision = () => {
             </section>
 
             {/* Foundational Pillars Section */}
+            <SectionDivider index={2} total={4} />
             <section className="w-full px-6 md:px-12 py-28 md:py-36 bg-[var(--bg-void)]">
                 <div className="max-w-7xl mx-auto">
-                    <p className="text-[0.65rem] text-[var(--accent)] uppercase tracking-[0.3em] mb-16" style={{ fontFamily: 'var(--font-mono)' }}>
-                        Foundational Pillars
+                    <p className="text-[0.65rem] text-[var(--accent-gold)] uppercase tracking-[0.3em] mb-16" style={{ fontFamily: 'var(--font-mono)' }}>
+                        <TypeWriter
+                            text="FOUNDATIONAL PILLARS"
+                            speed={80}
+                            triggerOnScroll={true}
+                            showCursor={false}
+                        />
                     </p>
                     <div className="vision-values-grid grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
                         <div className="vision-value">
@@ -240,8 +253,19 @@ const Vision = () => {
             </section>
 
             {/* Closing Statement */}
+            <SectionDivider index={4} total={4} />
             <section className="vision-closing w-full px-6 md:px-12 py-32">
                 <div className="max-w-5xl mx-auto text-center">
+                    {/* Rotating headline */}
+                    <p style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 7vw, 6rem)', color: 'var(--accent-gold)', lineHeight: 1, minHeight: '1.1em', letterSpacing: '0.04em', marginBottom: '1rem' }}>
+                        <TypeWriter
+                            text={["THE VISION.", "THE MISSION.", "THE FUTURE."]}
+                            speed={80}
+                            loop={true}
+                            loopDelay={2000}
+                            showCursor={true}
+                        />
+                    </p>
                     <h2 className="text-[var(--text-primary)] text-4xl md:text-7xl tracking-wider leading-[0.95]" style={{ fontFamily: 'var(--font-display)' }}>
                         The future is not arriving.
                         <br />

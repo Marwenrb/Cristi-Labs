@@ -1,0 +1,12 @@
+{
+  "name": "Cristi Labs LLC",
+  "short_name": "Cristi Labs",
+  "description": "Digital Entertainment & International Trade",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0B0B",
+  "theme_color": "#B8924A",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

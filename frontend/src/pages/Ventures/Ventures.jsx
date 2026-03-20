@@ -2,6 +2,8 @@ import gsap from "gsap/all";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Footer from "../../components/Footer/Footer";
+import TypeWriter from "../../components/TypeWriter/TypeWriter";
+import SectionDivider from "../../components/SectionDivider/SectionDivider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -88,8 +90,14 @@ const Ventures = () => {
                 <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden bg-[var(--bg-void)]">
                     <div className="p-4 flex flex-col md:justify-center">
                         <div className="relative h-dvh">
-                            <p className="text-[.7rem] text-[var(--accent)] uppercase tracking-[0.25em] pt-8 pl-2" style={{ fontFamily: 'var(--font-mono)' }}>
-                                Our Ventures
+                            <p className="text-[.7rem] text-[var(--accent-gold)] uppercase tracking-[0.25em] pt-8 pl-2" style={{ fontFamily: 'var(--font-mono)' }}>
+                                <TypeWriter
+                                    text="VENTURE DIVISIONS"
+                                    speed={90}
+                                    triggerOnScroll={false}
+                                    showCursor={false}
+                                    delay={300}
+                                />
                             </p>
                             <h1
                                 className="text-[var(--text-primary)] text-start text-6xl md:text-9xl tracking-wider lg:absolute lg:left-2 lg:top-16 mt-4"
@@ -116,11 +124,17 @@ const Ventures = () => {
                 </div>
             </section>
 
-            {/* Ventures Showcase — mirrors Choose/Gallery section feel */}
+            {/* Ventures Showcase */}
+            <SectionDivider index={1} total={3} />
             <section className="w-full px-6 md:px-12 py-16">
                 <div className="max-w-7xl mx-auto">
-                    <p className="text-[.7rem] text-[var(--accent)] uppercase tracking-wider mb-16" style={{ fontFamily: 'var(--font-mono)' }}>
-                        Portfolio of Ventures
+                    <p className="text-[.7rem] text-[var(--accent-gold)] uppercase tracking-wider mb-16" style={{ fontFamily: 'var(--font-mono)' }}>
+                        <TypeWriter
+                            text="PORTFOLIO OF VENTURES"
+                            speed={70}
+                            triggerOnScroll={true}
+                            showCursor={false}
+                        />
                     </p>
                     {ventures.map((venture, index) => (
                         <div
@@ -152,7 +166,8 @@ const Ventures = () => {
                 </div>
             </section>
 
-            {/* Closing Manifesto — mirrors Welcome section feel */}
+            {/* Closing Manifesto */}
+            <SectionDivider index={2} total={3} />
             <section className="ventures-closing w-full px-6 md:px-12 py-32 bg-[var(--bg-void)]">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-[var(--text-primary)] text-4xl md:text-7xl tracking-wider leading-[0.95]" style={{ fontFamily: 'var(--font-display)' }}>

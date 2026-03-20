@@ -1,10 +1,90 @@
 import gsap, { ScrollTrigger, SplitText } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import { useMediaQuery } from "react-responsive";
-import colimg1 from "../../assets/Medias/sticky/sticky-1.png";
-import colimg2 from "../../assets/Medias/sticky/sticky-2.png";
-import colimg3 from "../../assets/Medias/sticky/sticky-3.png";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { waitForFonts } from "../../lib/fontLoader";
+
+// Premium Unsplash images — cinematic, matching each phase
+const STICKY_IMAGES = [
+    {
+        src: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d",
+        params: "?w=2560&q=95&fm=webp",
+        alt: "Aerial view of container port with cranes — logistics and global trade",
+    },
+    {
+        src: "https://images.unsplash.com/photo-1542751371-adc38448a05e",
+        params: "?w=2560&q=95&fm=webp",
+        alt: "Dark esports arena with screens and RGB — digital entertainment",
+    },
+    {
+        src: "https://images.unsplash.com/photo-1451187580459-43490279c0fa",
+        params: "?w=2560&q=95&fm=webp",
+        alt: "Earth from space with city lights — global technological reach",
+    },
+];
+
+// Mobile card with CSS transition reveal animation
+const MobileFeatureCard = ({ card, index }) => {
+    const cardRef = useRef(null);
+    const [revealed, setRevealed] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => { if (entry.isIntersecting) setRevealed(true); },
+            { threshold: 0.1, rootMargin: '0px 0px -5% 0px' }
+        );
+        if (cardRef.current) observer.observe(cardRef.current);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <div
+            ref={cardRef}
+            className="sticky-mobile-card"
+            style={{
+                border: '1px solid var(--border)',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                background: 'var(--bg-void)',
+                opacity: revealed ? 1 : 0,
+                transform: revealed ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.97)',
+                transition: `opacity 0.7s ease ${index * 0.15}s, transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.15}s`,
+                willChange: revealed ? 'auto' : 'transform, opacity',
+            }}
+        >
+            <div style={{ height: '56vw', maxHeight: '260px', overflow: 'hidden', position: 'relative' }}>
+                <img
+                    src={`${card.img.src}${card.img.params}&w=800`}
+                    alt={card.img.alt}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    decoding="async"
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        transform: revealed ? 'scale(1)' : 'scale(1.05)',
+                        transition: 'transform 1s ease',
+                    }}
+                />
+                <div style={{
+                    position: 'absolute', inset: 0,
+                    background: 'linear-gradient(to top, var(--bg-void) 0%, transparent 60%)',
+                }} />
+            </div>
+            <div style={{ padding: '1.25rem' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: 'var(--accent)', textTransform: 'uppercase' }}>
+                    {card.num} / 03
+                </span>
+                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', lineHeight: 1.05, color: card.accentTitle ? 'var(--accent)' : 'var(--text-primary)', marginTop: '0.625rem' }}>
+                    {card.title}
+                </h2>
+                <p style={{ fontSize: '0.75rem', lineHeight: 1.65, color: 'var(--text-secondary)', marginTop: '0.625rem' }}>
+                    {card.body}
+                </p>
+            </div>
+        </div>
+    );
+};
 
 const StickyCols = () => {
 
@@ -16,126 +96,119 @@ const StickyCols = () => {
 
         gsap.registerPlugin(ScrollTrigger, SplitText);
 
-        // 1️⃣ Split text lines once DOM ready
-        const textElements = document.querySelectorAll(".col-3 h1, .col-3 p");
-        textElements.forEach((element) => {
-            const split = new SplitText(element, { type: "lines", linesClass: "line" });
-            split.lines.forEach((line) => {
-                line.innerHTML = `<span>${line.textContent}</span>`;
+        let tl;
+        let mounted = true;
+
+        // Wait for fonts before SplitText (fixes character measurement issues)
+        waitForFonts().then(() => {
+            // Guard: bail if component unmounted or DOM nodes gone
+            if (!mounted) return;
+            if (!document.querySelector('.sticky-cols')) return;
+
+            // 1️⃣ Split text lines once fonts ready
+            const textElements = document.querySelectorAll(".col-3 h1, .col-3 p");
+            textElements.forEach((element) => {
+                if (!document.body.contains(element)) return;
+                const split = new SplitText(element, { type: "lines", linesClass: "line" });
+                split.lines.forEach((line) => {
+                    line.innerHTML = `<span>${line.textContent}</span>`;
+                });
             });
+
+            // Refresh ScrollTrigger after split
+            ScrollTrigger.refresh();
+
+            if (!mounted) return;
+
+            // 2️⃣ Initial state — GSAP owns all transforms (no CSS translate conflict)
+            gsap.set(".col-2", { xPercent: 100 });
+            gsap.set(".col-3", { xPercent: 100, yPercent: 100 });
+            gsap.set(".col-4", { xPercent: 0, yPercent: 100 });
+            gsap.set(".col-3 .col-content-wrapper .line span", { yPercent: 0 });
+            gsap.set(".col-3 .col-content-wrapper-2 .line span", { yPercent: -125 });
+
+            // 3️⃣ Controlled phase logic using timeline
+            // end = 2.5× VH — enough for 3 phases; pinSpacing inserts this as spacer
+            // after the section so footer is reachable immediately after
+            tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".sticky-cols",
+                    start: "top top",
+                    end: () => `+=${window.innerHeight * 2.5}`,
+                    pin: true,
+                    pinSpacing: true,
+                    anticipatePin: 1,
+                    scrub: 1.2,
+                    invalidateOnRefresh: true,
+                },
+            });
+            tl.add(() => setReveal(false));
+            // PHASE 1: Reveal col-2, hide col-1
+            tl.to(".col-1", { opacity: 0, scale: 0.8, duration: 0.8 })
+                .to(".col-2", { xPercent: 0, duration: 0.8 }, "<")
+                .to(".col-3", { yPercent: 0, duration: 0.8 }, "<")
+                .to(".col-img-1 img", { scale: 1, duration: 0.8 }, "<")
+                .to(".col-img-2", {
+                    clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+                    duration: 0.8,
+                }, "<")
+                .to(".col-img-2 img", { scale: 1.6, duration: 0.8 }, "<");
+
+            tl.add(() => setReveal(false));
+            tl.add(() => setReveal(true));
+            // PHASE 2: Switch col-2 -> col-3 content
+            tl.to(".col-2", { opacity: 0, scale: 0.8, duration: 0.8 })
+                .to(".col-3 .col-content-wrapper .line span", {
+                    yPercent: -125,
+                    duration: 0.8,
+                }, "<");
+            tl.to(".col-3", { xPercent: 0, duration: 0.8 }, "-=0.8")
+                .to(".col-4", { yPercent: 0, duration: 0.8 }, "<")
+                .to(".col-3 .col-content-wrapper-2 .line span", {
+                    yPercent: 0,
+                    delay: 0.4,
+                    duration: 0.8,
+                }, "<");
         });
-
-        // Refresh ScrollTrigger after split
-        ScrollTrigger.refresh();
-
-        // 2️⃣ Initial state
-        gsap.set(".col-3 .col-content-wrapper .line span", { yPercent: 0 });
-        gsap.set(".col-3 .col-content-wrapper-2 .line span", { yPercent: -125 });
-
-        // 3️⃣ Controlled phase logic using timeline (simpler and stable)
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".sticky-cols",
-                start: "top top",
-                end: "+=90%",
-                pin: true,
-                scrub: 1,
-                // markers: true,
-            },
-        });
-        tl.add(() => setReveal(false));
-        // PHASE 1: Reveal col-2, hide col-1
-        tl.to(".col-1", { opacity: 0, scale: 0.8, duration: 0.8 })
-            .to(".col-2", { x: "0%", duration: 0.8 }, "<")
-            .to(".col-3", { y: "0%", duration: 0.8 }, "<")
-            .to(".col-img-1 img", { scale: 1, duration: 0.8 }, "<")
-            .to(".col-img-2", {
-                clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-                duration: 0.8,
-            }, "<")
-            .to(".col-img-2 img", { scale: 1.6, duration: 0.8 }, "<")
-
-        tl.add(() => setReveal(false));
-        tl.add(() => setReveal(true));
-        // PHASE 2: Switch col-2 -> col-3 content
-        tl.to(".col-2", { opacity: 0, scale: 0.8, duration: 0.8 })
-            .to(".col-3 .col-content-wrapper .line span", {
-                yPercent: -125,
-                duration: 0.8,
-            }, "<")
-        tl.to(".col-3", { x: "0%", duration: 0.8 }, "-=0.8")
-            .to(".col-4", { y: "0%", duration: 0.8 }, "<")
-            .to(".col-3 .col-content-wrapper-2 .line span", {
-                yPercent: 0,
-                delay: 0.4,
-                duration: 0.8,
-            }, "<");
 
         return () => {
+            mounted = false;
+            tl?.kill();
             ScrollTrigger.getAll().forEach((st) => st.kill());
-            tl.kill();
         };
     }, [isMobile]);
 
-    // Mobile — GSAP ScrollTrigger scroll-reveal + image parallax
+    // Force ScrollTrigger to recalculate after Lenis + layout settle
     useEffect(() => {
-        if (!isMobile) return;
-        gsap.registerPlugin(ScrollTrigger);
-
-        const allTriggers = [];
-
-        const timer = setTimeout(() => {
-            const cards = document.querySelectorAll('.sticky-mobile-card');
-            if (!cards.length) return;
-
-            cards.forEach((card, i) => {
-                const img = card.querySelector('img');
-
-                gsap.set(card, { opacity: 0, y: 45 });
-
-                const st = ScrollTrigger.create({
-                    trigger: card,
-                    start: 'top 86%',
-                    onEnter: () => {
-                        gsap.to(card, {
-                            opacity: 1, y: 0,
-                            duration: 0.8,
-                            ease: 'power3.out',
-                            delay: i * 0.085,
-                        });
-                    },
-                    once: true,
-                });
-                allTriggers.push(st);
-
-                if (img) {
-                    const anim = gsap.to(img, {
-                        yPercent: 8,
-                        ease: 'none',
-                        scrollTrigger: {
-                            trigger: card,
-                            start: 'top bottom',
-                            end: 'bottom top',
-                            scrub: 1.5,
-                        },
-                    });
-                    if (anim.scrollTrigger) allTriggers.push(anim.scrollTrigger);
-                }
-            });
-        }, 120);
-
-        return () => {
-            clearTimeout(timer);
-            allTriggers.forEach(t => t?.kill?.());
-        };
+        if (isMobile) return;
+        const timeout = setTimeout(() => { ScrollTrigger.refresh(true); }, 300);
+        return () => clearTimeout(timeout);
     }, [isMobile]);
 
     // Mobile — clean vertical card layout, no GSAP pin
     if (isMobile) {
         const cards = [
-            { img: colimg1, num: '01', title: 'Architects of the Phygital Economy.', body: 'Merging immersive digital worlds with high-frequency global trade infrastructure.', accentTitle: true },
-            { img: colimg2, num: '02', title: 'Ghost Logistics & Trade.', body: 'Next-gen supply chains driven by algorithmic demand and immersive commerce.', accentTitle: false },
-            { img: colimg3, num: '03', title: 'The Aura Protocol.', body: 'Redefining the fan-to-icon relationship through biometric identity and digital ownership.', accentTitle: false },
+            {
+                img: STICKY_IMAGES[0],
+                num: '01',
+                title: 'Architects of the Phygital Economy.',
+                body: 'Merging immersive digital worlds with high-frequency global trade infrastructure.',
+                accentTitle: true,
+            },
+            {
+                img: STICKY_IMAGES[1],
+                num: '02',
+                title: 'Ghost Logistics & Trade.',
+                body: 'Next-gen supply chains driven by algorithmic demand and immersive commerce.',
+                accentTitle: false,
+            },
+            {
+                img: STICKY_IMAGES[2],
+                num: '03',
+                title: 'The Aura Protocol.',
+                body: 'Redefining the fan-to-icon relationship through biometric identity and digital ownership.',
+                accentTitle: false,
+            },
         ];
         return (
             <section style={{ background: 'var(--bg-void)', padding: '3rem 1rem 4rem' }}>
@@ -144,23 +217,8 @@ const StickyCols = () => {
                     Phygital Economy
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    {cards.map((card) => (
-                        <div key={card.num} className="sticky-mobile-card" style={{ border: '1px solid var(--border)', borderRadius: '12px', overflow: 'hidden', background: 'var(--bg-void)' }}>
-                            <div style={{ height: '56vw', overflow: 'hidden' }}>
-                                <img src={card.img} alt={card.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                            </div>
-                            <div style={{ padding: '1.25rem' }}>
-                                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: 'var(--accent)', textTransform: 'uppercase' }}>
-                                    {card.num} / 03
-                                </span>
-                                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', lineHeight: 1.05, color: card.accentTitle ? 'var(--accent)' : 'var(--text-primary)', marginTop: '0.625rem' }}>
-                                    {card.title}
-                                </h2>
-                                <p style={{ fontSize: '0.75rem', lineHeight: 1.65, color: 'var(--text-secondary)', marginTop: '0.625rem' }}>
-                                    {card.body}
-                                </p>
-                            </div>
-                        </div>
+                    {cards.map((card, i) => (
+                        <MobileFeatureCard key={card.num} card={card} index={i} />
                     ))}
                 </div>
             </section>
@@ -168,7 +226,7 @@ const StickyCols = () => {
     }
 
     return (
-        <section className="sticky-cols w-screen overflow-hidden">
+        <section className="sticky-cols w-screen overflow-visible">
             <div className="sticky-cols-wrapper relative w-full h-screen">
                 {/* SLIDE 1 — The Vision */}
                 <div className="col col-1">
@@ -197,12 +255,12 @@ const StickyCols = () => {
                 <div className="col col-2">
                     <div className="col-img col-img-1">
                         <div className="col-img-wrapper">
-                            <img src={colimg1} alt="Cristi Labs — Phygital Economy Architecture" />
+                            <img src={`${STICKY_IMAGES[0].src}${STICKY_IMAGES[0].params}`} alt="Cristi Labs — Phygital Economy Architecture" />
                         </div>
                     </div>
                     <div className="col col-img-2 p-2">
                         <div className="col-img-wrapper">
-                            <img src={colimg2} alt="Cristi Labs — Ghost Logistics & Trade" />
+                            <img src={`${STICKY_IMAGES[1].src}${STICKY_IMAGES[1].params}`} alt="Cristi Labs — Ghost Logistics & Trade" />
                         </div>
                     </div>
                 </div>
@@ -244,7 +302,7 @@ const StickyCols = () => {
                 <div className="col col-4">
                     <div className="col-img col-img-1">
                         <div className="col-img-wrapper">
-                            <img src={colimg3} alt="Cristi Labs — The Aura Protocol" />
+                            <img src={`${STICKY_IMAGES[2].src}${STICKY_IMAGES[2].params}`} alt="Cristi Labs — The Aura Protocol" />
                         </div>
                     </div>
                 </div>
