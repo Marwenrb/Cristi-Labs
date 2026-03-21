@@ -6,7 +6,7 @@ import { waitForFonts } from "../../lib/fontLoader";
 
 import sticky1 from "../../assets/Medias/sticky/sticky-1.png";
 import sticky2 from "../../assets/Medias/sticky/sticky-2.png";
-import auraProtocol from "../../assets/Medias/gallery/The Aura Protocol.png";
+import auraProtocol from "../../assets/Medias/gallery/the-aura-protocol.png";
 
 // Local images — cinematic, matching each phase
 const STICKY_IMAGES = [

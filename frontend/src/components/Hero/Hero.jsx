@@ -23,9 +23,7 @@ const PARTICLES = Array.from({ length: 20 }, (_, i) => ({
 const Hero = () => {
     const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
     const mobileRef = useRef(null);
-    const eyebrowRef  = useRef(null);
-    const headlineRef = useRef(null);
-    const sublineRef  = useRef(null);
+    const desktopRef = useRef(null);
     const scrollRef   = useRef(null);
     const [scrollHidden, setScrollHidden] = useState(false);
 
@@ -36,7 +34,7 @@ const Hero = () => {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
-    // Desktop animations (GSAP + ScrollTrigger)
+    // Desktop: video parallax on scroll
     useGSAP(() => {
         if (isMobile) return;
 
@@ -44,60 +42,126 @@ const Hero = () => {
             yPercent: -12, scale: 1.08, ease: "none",
             scrollTrigger: { trigger: ".hero-section", start: "top top", end: "bottom top", scrub: 1.5 },
         });
-
-        const tl = gsap.timeline({ delay: 0.3 });
-        tl.from(eyebrowRef.current, { opacity: 0, y: 20, duration: 0.8, ease: 'expo.out' }, 0.5)
-          .from(headlineRef.current, { opacity: 0, y: 40, duration: 1, ease: 'expo.out' }, 0.7)
-          .from(sublineRef.current, { opacity: 0, y: 20, duration: 0.8, ease: 'expo.out' }, 1.1);
     }, [isMobile]);
 
-    // Mobile: CSS transition-based entrance — zero GSAP dependency
+    // Desktop entrance: CSS transitions with data-attr selectors
+    useEffect(() => {
+        if (typeof window === 'undefined' || window.innerWidth < 768) return;
+
+        const root = desktopRef.current;
+        if (!root) return;
+
+        const eyebrow = root.querySelector('[data-hero-eyebrow]');
+        const title   = root.querySelector('[data-hero-title]');
+        const desc    = root.querySelector('[data-hero-desc]');
+
+        [eyebrow, title, desc].forEach(el => {
+            if (!el) return;
+            el.style.cssText = 'opacity:0;transform:translateY(20px);transition:none;filter:blur(3px);';
+        });
+
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            if (eyebrow) {
+                setTimeout(() => {
+                    eyebrow.style.transition = 'opacity 0.7s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.6s ease';
+                    eyebrow.style.opacity = '1'; eyebrow.style.transform = 'translateY(0)'; eyebrow.style.filter = 'blur(0)';
+                }, 100);
+            }
+            if (title) {
+                setTimeout(() => {
+                    title.style.transition = 'opacity 0.8s ease, transform 0.9s cubic-bezier(0.16,1,0.3,1), filter 0.7s ease';
+                    title.style.opacity = '1'; title.style.transform = 'translateY(0)'; title.style.filter = 'blur(0)';
+                }, 250);
+            }
+            if (desc) {
+                setTimeout(() => {
+                    desc.style.transition = 'opacity 0.7s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1)';
+                    desc.style.opacity = '1'; desc.style.transform = 'translateY(0)';
+                }, 450);
+            }
+        }));
+    }, []);
+
+    // Mobile entrance: sequential reveal with blur
     useEffect(() => {
         if (typeof window === 'undefined' || window.innerWidth >= 768) return;
 
-        const el = mobileRef.current;
-        if (!el) return;
+        const root = mobileRef.current;
+        if (!root) return;
 
-        const label = el.querySelector('.hero-label-m');
-        const typeBlock = el.querySelector('.hero-type-m');
-        const sub   = el.querySelector('.hero-sub-m');
+        const label   = root.querySelector('.hero-label-m');
+        const typebox = root.querySelector('.hero-type-m');
+        const sub     = root.querySelector('.hero-sub-m');
 
-        // Set start state — hidden
-        [label, typeBlock, sub].forEach(node => {
-            if (!node) return;
-            node.style.opacity = '0';
-            node.style.transform = 'translateY(20px)';
-            node.style.transition = 'none';
+        if (!label || !typebox) return;
+
+        // Hard reset — clear any stuck final-state styles
+        [label, typebox, sub].forEach(el => {
+            if (!el) return;
+            el.style.cssText = 'opacity:0;transform:translateY(28px);transition:none;filter:blur(4px);';
         });
-        if (sub) sub.style.filter = 'blur(6px)';
 
-        // Double-rAF then CSS transitions
+        // Animate after browser paints
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-                if (label) {
-                    label.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                    label.style.opacity = '1';
-                    label.style.transform = 'translateY(0)';
-                }
+                setTimeout(() => {
+                    label.style.transition = 'opacity 0.55s ease, transform 0.65s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease';
+                    label.style.opacity    = '1';
+                    label.style.transform  = 'translateY(0)';
+                    label.style.filter     = 'blur(0px)';
+                }, 50);
 
                 setTimeout(() => {
-                    if (typeBlock) {
-                        typeBlock.style.transition = 'opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
-                        typeBlock.style.opacity = '1';
-                        typeBlock.style.transform = 'translateY(0)';
-                    }
+                    typebox.style.transition = 'opacity 0.6s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.55s ease';
+                    typebox.style.opacity    = '1';
+                    typebox.style.transform  = 'translateY(0)';
+                    typebox.style.filter     = 'blur(0px)';
                 }, 200);
 
-                setTimeout(() => {
-                    if (sub) {
-                        sub.style.transition = 'opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease';
-                        sub.style.opacity = '1';
-                        sub.style.transform = 'translateY(0)';
-                        sub.style.filter = 'blur(0px)';
-                    }
-                }, 600);
+                if (sub) {
+                    setTimeout(() => {
+                        sub.style.transition = 'opacity 0.7s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.6s ease';
+                        sub.style.opacity    = '1';
+                        sub.style.transform  = 'translateY(0)';
+                        sub.style.filter     = 'blur(0px)';
+                    }, 450);
+                }
             });
         });
+    }, []);
+
+    // Mobile touch parallax — subtle 3D tilt toward finger
+    useEffect(() => {
+        if (typeof window === 'undefined' || window.innerWidth >= 768) return;
+        const root = mobileRef.current;
+        if (!root) return;
+
+        let active = false;
+        const handleTouchStart = () => { active = true; };
+        const handleTouchEnd   = () => {
+            active = false;
+            root.style.transition = 'transform 0.8s cubic-bezier(0.16,1,0.3,1)';
+            root.style.transform  = 'rotateX(0deg) rotateY(0deg)';
+        };
+        const handleTouchMove  = (e) => {
+            if (!active) return;
+            const touch = e.touches[0];
+            const rect  = root.getBoundingClientRect();
+            const dx    = ((touch.clientX - rect.left) / rect.width  - 0.5) * 6;
+            const dy    = ((touch.clientY - rect.top)  / rect.height - 0.5) * 4;
+            root.style.transition = 'transform 0.2s ease';
+            root.style.transform  = `rotateY(${dx}deg) rotateX(${-dy}deg)`;
+        };
+
+        root.addEventListener('touchstart', handleTouchStart, { passive: true });
+        root.addEventListener('touchmove',  handleTouchMove,  { passive: true });
+        root.addEventListener('touchend',   handleTouchEnd,   { passive: true });
+
+        return () => {
+            root.removeEventListener('touchstart', handleTouchStart);
+            root.removeEventListener('touchmove',  handleTouchMove);
+            root.removeEventListener('touchend',   handleTouchEnd);
+        };
     }, []);
 
     return (
@@ -206,17 +270,18 @@ const Hero = () => {
                                 fontFamily: 'var(--font-body)', fontSize: '0.7rem',
                                 color: 'var(--text-secondary)', lineHeight: 1.7, letterSpacing: '0.02em',
                             }}>
-                                Silicon Valley innovation meets global commerce.<br />
-                                We build phygital ecosystems at the frontier.
+                                Silicon Valley engineering meets<br />
+                                global commerce infrastructure.<br />
+                                <span style={{ color: 'rgba(184,146,76,0.6)' }}>We build what others only imagine.</span>
                             </p>
                         </div>
                     </div>
 
                     {/* ── DESKTOP layout: bottom-anchored, TypeWriter headline ── */}
-                    <div className="hidden md:block absolute bottom-[8%] lg:bottom-[9%] left-0 right-0 px-4">
+                    <div ref={desktopRef} className="hidden md:block absolute bottom-[8%] lg:bottom-[9%] left-0 right-0 px-4">
 
                         {/* Eyebrow */}
-                        <div ref={eyebrowRef} style={{ marginBottom: '0.75rem' }}>
+                        <div data-hero-eyebrow style={{ marginBottom: '0.75rem' }}>
                             <p style={{
                                 fontFamily: 'var(--font-mono)',
                                 fontSize: 'clamp(0.6rem, 1.2vw, 0.78rem)',
@@ -230,8 +295,8 @@ const Hero = () => {
                         </div>
 
                         {/* Main headline */}
-                        <div ref={headlineRef} className="flex flex-row justify-between items-end">
-                            <div className="flex flex-col gap-0.5">
+                        <div className="flex flex-row justify-between items-end">
+                            <div data-hero-title className="flex flex-col gap-0.5">
                                 <p style={{
                                     fontFamily: 'var(--font-display)',
                                     fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
@@ -253,7 +318,7 @@ const Hero = () => {
                             </div>
 
                             {/* Right descriptor */}
-                            <p ref={sublineRef} style={{
+                            <p data-hero-desc style={{
                                 width: '22%', fontFamily: 'var(--font-body)',
                                 fontSize: '0.7rem', color: 'var(--text-secondary)',
                                 lineHeight: 1.8, letterSpacing: '0.08em', textAlign: 'right',

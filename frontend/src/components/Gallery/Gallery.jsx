@@ -5,8 +5,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './gallery.css';
 
 import gallery3 from '../../assets/Medias/gallery/gallery-3.png';
-import galleryHq from '../../assets/Medias/gallery/Cristi Labs Hq.png';
-import galleryTrade from '../../assets/Medias/gallery/global trade.png';
+import galleryHq from '../../assets/Medias/gallery/cristi-labs-hq.png';
+import galleryTrade from '../../assets/Medias/gallery/global-trade.png';
+import neuromorphicWeb from '../../assets/Medias/gallery/neuromorphic-web.png';
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -14,13 +15,13 @@ gsap.registerPlugin(ScrollTrigger);
 // Local gallery images — cinematic, dark-toned
 const GALLERY_IMAGES = [
     {
-        src: gallery3,
+        src: galleryTrade,
         alt: "Global logistics network — Cristi Labs trade infrastructure",
         label: "GLOBAL INFRASTRUCTURE",
     },
     {
-        src: galleryTrade,
-        alt: "Global trade infrastructure — Cristi Labs international operations",
+        src: neuromorphicWeb,
+        alt: "Neuromorphic web technology — Cristi Labs digital innovation",
         label: "TECHNOLOGY PRECISION",
     },
     {

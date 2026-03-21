@@ -941,3 +941,21 @@ p, li {
 .hero-sub-m {
   animation: fallbackReveal 0.1s ease 3s forwards;
 }
+
+/* ================================================================
+   CURSOR BLINK (for typewriter caret)
+   ================================================================ */
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* ================================================================
+   HERO MOBILE POLISH
+   ================================================================ */
+
+@media (max-width: 767px) {
+  .hero-particle:nth-child(n+10) { display: none; }
+  .hero-type-m p { word-break: break-word; hyphens: auto; }
+}

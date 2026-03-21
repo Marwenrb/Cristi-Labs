@@ -3,7 +3,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import gallery3Img from '../../assets/Medias/gallery/gallery-3.png';
+import airplaneImg from '../../assets/Medias/gallery/airplane.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -218,59 +218,91 @@ export default function ApexTransit() {
   const sectionRef = useRef(null);
   const headlineRef = useRef(null);
   const paragraphRef = useRef(null);
-  const gallery3ImgRef = useRef(null);
+  const tagsRef = useRef(null);
+  const labelRef = useRef(null);
   const [activeRoute, setActiveRoute] = useState(0);
 
-  // ── HEADLINE + PARAGRAPH: IntersectionObserver — works everywhere ─────
+  // ── HEADLINE + PARAGRAPH: IntersectionObserver with skewY reveal ──────
   useEffect(() => {
     const headline = headlineRef.current;
-    if (!headline) return;
-
-    // Set initial HIDDEN state before first paint via cssText
-    headline.style.cssText = `
-      opacity: 0;
-      transform: translateY(60px) skewY(2deg);
-      filter: blur(12px);
-      transition: none;
-    `;
-
-    const headlineObserver = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting) return;
-      headlineObserver.disconnect();
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        headline.style.transition = [
-          'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
-          'transform 1.4s cubic-bezier(0.16, 1, 0.3, 1)',
-          'filter 1.1s ease',
-        ].join(', ');
-        headline.style.opacity = '1';
-        headline.style.transform = 'translateY(0) skewY(0)';
-        headline.style.filter = 'blur(0px)';
-      }));
-    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-
-    headlineObserver.observe(headline);
-
     const para = paragraphRef.current;
-    if (para) {
-      para.style.cssText = 'opacity: 0; transform: translateY(30px); transition: none;';
 
-      const paraObserver = new IntersectionObserver(([e]) => {
-        if (!e.isIntersecting) return;
-        paraObserver.disconnect();
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          setTimeout(() => {
-            para.style.transition = 'opacity 0.9s ease 0.1s, transform 1s cubic-bezier(0.16,1,0.3,1) 0.1s';
-            para.style.opacity = '1';
-            para.style.transform = 'translateY(0)';
-          }, 300);
-        }));
-      }, { threshold: 0.1 });
-
-      paraObserver.observe(para);
-      return () => { headlineObserver.disconnect(); paraObserver.disconnect(); };
+    if (headline) {
+      headline.style.cssText =
+        'opacity:0;transform:translateY(55px) skewY(2.5deg);filter:blur(10px);transition:none;';
     }
-    return () => headlineObserver.disconnect();
+    if (para) {
+      para.style.cssText = 'opacity:0;transform:translateY(28px);transition:none;';
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (headline) {
+          headline.style.transition = [
+            'opacity 1.2s cubic-bezier(0.16,1,0.3,1)',
+            'transform 1.4s cubic-bezier(0.16,1,0.3,1)',
+            'filter 1.1s ease',
+          ].join(',');
+          headline.style.opacity   = '1';
+          headline.style.transform = 'translateY(0) skewY(0deg)';
+          headline.style.filter    = 'blur(0px)';
+        }
+
+        if (para) {
+          setTimeout(() => {
+            para.style.transition = 'opacity 0.9s ease, transform 1s cubic-bezier(0.16,1,0.3,1)';
+            para.style.opacity    = '1';
+            para.style.transform  = 'translateY(0)';
+          }, 350);
+        }
+      }));
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    if (headline) observer.observe(headline);
+    return () => observer.disconnect();
+  }, []);
+
+  // ── DIVISION LABEL: slide in from left ────────────────────────────────
+  useEffect(() => {
+    const el = labelRef.current;
+    if (!el) return;
+    el.style.cssText = 'opacity:0;transform:translateX(-24px);transition:none;';
+
+    const obs = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      obs.disconnect();
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        el.style.transition = 'opacity 0.7s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1)';
+        el.style.opacity = '1';
+        el.style.transform = 'translateX(0)';
+      }));
+    }, { threshold: 0.1 });
+
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  // ── TAG STRIP: fade up on scroll ──────────────────────────────────────
+  useEffect(() => {
+    const el = tagsRef.current;
+    if (!el) return;
+    el.style.cssText = 'opacity:0;transform:translateY(16px);transition:none;';
+
+    const obs = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      obs.disconnect();
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        el.style.transition = 'opacity 0.8s ease 0.2s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }));
+    }, { threshold: 0.1 });
+
+    obs.observe(el);
+    return () => obs.disconnect();
   }, []);
 
   // ── ROUTE ROWS + SPEC CARDS: IntersectionObserver (reliable, no stuck opacity) ──
@@ -345,26 +377,6 @@ export default function ApexTransit() {
           scrub: 2,
         },
       });
-
-      // Division label
-      gsap.from('.apex-division-label', {
-        opacity: 0,
-        letterSpacing: '0.6em',
-        duration: 1.2,
-        ease: 'expo.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true },
-      });
-    });
-
-    mm.add('(max-width: 768px)', () => {
-      // Label fade
-      gsap.from('.apex-division-label', {
-        opacity: 0,
-        y: 16,
-        duration: 0.6,
-        ease: 'expo.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 85%', once: true },
-      });
     });
 
     return () => mm.revert();
@@ -389,7 +401,7 @@ export default function ApexTransit() {
     >
       {/* ── SECTION IDENTIFIER ────────────────────────────────────────────── */}
       <div style={{ padding: '0 clamp(1.25rem, 6vw, 6rem)', marginBottom: '2rem' }}>
-        <div className="apex-division-label" style={{
+        <div ref={labelRef} className="apex-division-label" style={{
           display: 'flex',
           alignItems: 'center',
           gap: '12px',
@@ -430,7 +442,7 @@ export default function ApexTransit() {
         </div>
 
         {/* ── DESCRIPTOR TAGS ──────────────────────────────────────────────── */}
-        <div style={{
+        <div ref={tagsRef} style={{
           display: 'flex',
           flexWrap: 'wrap',
           borderTop: '1px solid rgba(184,146,74,0.1)',
@@ -692,15 +704,21 @@ export default function ApexTransit() {
               ))}
             </div>
 
-            {/* Image panel */}
-            <div style={{ position: 'relative', minHeight: '280px', overflow: 'hidden' }}>
+            {/* RIGHT PANEL — airplane image */}
+            <div style={{
+              position: 'relative',
+              minHeight: '280px',
+              overflow: 'hidden',
+              background: '#0B0B0B',
+            }}>
               <img
-                ref={gallery3ImgRef}
-                src={gallery3Img}
-                alt="Apex Transit aerial city network — Cristi Labs"
+                src={airplaneImg}
+                alt="Apex Transit eVTOL — Cristi Labs urban air mobility corridor"
                 loading="lazy"
                 decoding="async"
                 style={{
+                  position: 'absolute',
+                  inset: 0,
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',
@@ -708,16 +726,21 @@ export default function ApexTransit() {
                   display: 'block',
                 }}
               />
+              {/* Gradient for text legibility */}
               <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(to right, var(--bg-void) 0%, rgba(11,11,11,0.1) 60%, transparent 100%)',
+                background: 'linear-gradient(to right, var(--bg-void) 0%, rgba(11,11,11,0.45) 40%, transparent 100%)',
+                pointerEvents: 'none',
+                zIndex: 1,
               }} />
+              {/* 47+ overlay */}
               <div style={{
                 position: 'absolute',
                 bottom: '1.5rem',
                 right: '1.5rem',
                 textAlign: 'right',
+                zIndex: 2,
               }}>
                 <p style={{
                   fontFamily: 'var(--font-display)',
