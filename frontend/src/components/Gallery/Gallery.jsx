@@ -4,10 +4,10 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './gallery.css';
 
-import gallery3 from '../../assets/Medias/gallery/gallery-3.png';
 import galleryHq from '../../assets/Medias/gallery/cristi-labs-hq.png';
-import galleryTrade from '../../assets/Medias/gallery/global-trade.png';
-import neuromorphicWeb from '../../assets/Medias/gallery/neuromorphic-web.png';
+import infiniteSeat from '../../assets/Medias/gallery/infinite-seat.png';
+import globalTrade from '../../assets/Medias/gallery/global-trade.png';
+import heroBg from '../../assets/Medias/hero/hero-bg.png';
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -15,22 +15,22 @@ gsap.registerPlugin(ScrollTrigger);
 // Local gallery images — cinematic, dark-toned
 const GALLERY_IMAGES = [
     {
-        src: galleryTrade,
-        alt: "Global logistics network — Cristi Labs trade infrastructure",
-        label: "GLOBAL INFRASTRUCTURE",
+        src: infiniteSeat,
+        alt: "Infinite Seat — Cristi Labs phygital commerce experience",
+        label: "INFINITE SEAT",
     },
     {
-        src: neuromorphicWeb,
-        alt: "Neuromorphic web technology — Cristi Labs digital innovation",
-        label: "TECHNOLOGY PRECISION",
+        src: globalTrade,
+        alt: "Phygital global trade — Cristi Labs international commerce infrastructure",
+        label: "GLOBAL TRADE",
     },
     {
-        src: gallery3,
-        alt: "Earth from orbit — Cristi Labs worldwide operations",
-        label: "GLOBAL REACH",
+        src: heroBg,
+        alt: "Cristi Labs — Command the horizon, global operations worldwide",
+        label: "COMMAND THE HORIZON",
     },
     {
-        src: galleryTrade,
+        src: globalTrade,
         alt: "Global trade operations — Cristi Labs financial intelligence",
         label: "FINANCIAL INTELLIGENCE",
     },
@@ -271,9 +271,9 @@ const Gallery = () => {
                     src={GALLERY_IMAGES[0].src}
                     alt={GALLERY_IMAGES[0].alt} loading="eager" decoding="async"
                 />
-                <div className="gallery-topText"><h4>Digital Entertainment</h4></div>
+                <div className="gallery-topText"><h4>INFINITE SEAT</h4></div>
                 <div className="gallery-bottomText">
-                    <h3>Premium content and experiences delivered with refined craft and modern vision.</h3>
+                    <h3>Phygital commerce redefined — where digital presence meets physical experience.</h3>
                 </div>
             </div>
 
@@ -282,7 +282,7 @@ const Gallery = () => {
                     src={GALLERY_IMAGES[1].src}
                     alt={GALLERY_IMAGES[1].alt} loading="lazy" decoding="async"
                 />
-                <div className="gallery-topText"><h4>International Trade</h4></div>
+                <div className="gallery-topText"><h4>GLOBAL TRADE</h4></div>
                 <div className="gallery-bottomText">
                     <h3>Cross-border commerce and strategic partnerships at the heart of global markets.</h3>
                 </div>
@@ -293,9 +293,9 @@ const Gallery = () => {
                     src={GALLERY_IMAGES[2].src}
                     alt={GALLERY_IMAGES[2].alt} loading="lazy" decoding="async"
                 />
-                <div className="gallery-topText"><h4>Strategic Vision</h4></div>
+                <div className="gallery-topText"><h4>COMMAND THE HORIZON</h4></div>
                 <div className="gallery-bottomText">
-                    <h3>Innovation meets integrity—where digital media and commerce converge.</h3>
+                    <h3>Innovation meets integrity — where digital media and commerce converge on a global scale.</h3>
                 </div>
             </div>
         </section>
