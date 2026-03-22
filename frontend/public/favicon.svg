@@ -1,18 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <!-- Background -->
-  <rect width="32" height="32" rx="4" fill="#0B0B0B"/>
-  <!-- Gold border -->
-  <rect x="1" y="1" width="30" height="30" rx="3" fill="none" stroke="#B8924A" stroke-width="1.5"/>
-  <!-- C monogram -->
-  <text
-    x="5"
-    y="24"
-    font-family="'Bebas Neue', Impact, sans-serif"
-    font-size="22"
-    font-weight="700"
-    fill="#B8924A"
-    letter-spacing="-1"
-  >CL</text>
-  <!-- Accent underline -->
-  <line x1="5" y1="26.5" x2="27" y2="26.5" stroke="#B8924A" stroke-width="1" stroke-opacity="0.5"/>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4A85C"/>
+      <stop offset="50%" stop-color="#B8924A"/>
+      <stop offset="100%" stop-color="#7A5F2E"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#B8924A" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#B8924A" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="clip"><rect width="512" height="512" rx="110"/></clipPath>
+  </defs>
+  <g clip-path="url(#clip)">
+    <!-- Background -->
+    <rect width="512" height="512" fill="#0B0B0B"/>
+    <rect width="512" height="512" fill="url(#glow)"/>
+    <!-- Outer border -->
+    <rect x="3" y="3" width="506" height="506" rx="108"
+          fill="none" stroke="url(#gold)" stroke-width="2" opacity="0.5"/>
+    <!-- Corner accents TL -->
+    <line x1="38" y1="38" x2="90" y2="38" stroke="#C9A55A" stroke-width="3.5" opacity="0.7"/>
+    <line x1="38" y1="38" x2="38" y2="90" stroke="#C9A55A" stroke-width="3.5" opacity="0.7"/>
+    <!-- Corner accents TR -->
+    <line x1="474" y1="38" x2="422" y2="38" stroke="#C9A55A" stroke-width="3.5" opacity="0.7"/>
+    <line x1="474" y1="38" x2="474" y2="90" stroke="#C9A55A" stroke-width="3.5" opacity="0.7"/>
+    <!-- Corner accents BL -->
+    <line x1="38" y1="474" x2="90" y2="474" stroke="#C9A55A" stroke-width="3.5" opacity="0.7"/>
+    <line x1="38" y1="474" x2="38" y2="422" stroke="#C9A55A" stroke-width="3.5" opacity="0.7"/>
+    <!-- Corner accents BR -->
+    <line x1="474" y1="474" x2="422" y2="474" stroke="#C9A55A" stroke-width="3.5" opacity="0.7"/>
+    <line x1="474" y1="474" x2="474" y2="422" stroke="#C9A55A" stroke-width="3.5" opacity="0.7"/>
+    <!-- Top horizontal rule -->
+    <line x1="80" y1="148" x2="432" y2="148" stroke="#B8924A" stroke-width="1.5" opacity="0.25"/>
+    <!-- Bottom horizontal rule -->
+    <line x1="80" y1="364" x2="432" y2="364" stroke="#B8924A" stroke-width="1.5" opacity="0.25"/>
+    <!-- Diamond ornament center top -->
+    <polygon points="256,138 264,148 256,158 248,148" fill="#B8924A" opacity="0.6"/>
+    <!-- CL monogram -->
+    <text x="256" y="272"
+          text-anchor="middle"
+          dominant-baseline="central"
+          font-family="'Georgia', 'Times New Roman', serif"
+          font-size="200"
+          font-weight="300"
+          fill="url(#gold)"
+          letter-spacing="4"
+          opacity="0.95">CL</text>
+    <!-- Diamond ornament center bottom -->
+    <polygon points="256,354 264,364 256,374 248,364" fill="#B8924A" opacity="0.6"/>
+  </g>
 </svg>

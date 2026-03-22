@@ -1,12 +1,16 @@
 {
-  "name": "Cristi Labs LLC",
+  "name": "Cristi Labs",
   "short_name": "Cristi Labs",
-  "description": "Digital Entertainment & International Trade",
+  "description": "Code the Impossible. Trade the World.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0B0B0B",
   "theme_color": "#B8924A",
   "icons": [
-    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
   ]
 }

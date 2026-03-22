@@ -106,6 +106,27 @@ function LiveDataTicker() {
 const Footer = () => {
     const { footerRevealRef, footerInnerRef, linkRefs } = useFooterGSAP();
 
+    useEffect(() => {
+        const cols = document.querySelectorAll('.footer-col');
+        if (!cols.length) return;
+
+        cols.forEach((col, i) => {
+            col.style.cssText = 'opacity:0;transform:translateY(24px);transition:none;';
+
+            const obs = new IntersectionObserver(([entry]) => {
+                if (!entry.isIntersecting) return;
+                obs.disconnect();
+                setTimeout(() => {
+                    col.style.transition = 'opacity 0.7s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1)';
+                    col.style.opacity = '1';
+                    col.style.transform = 'translateY(0)';
+                }, i * 100);
+            }, { threshold: 0.1 });
+
+            obs.observe(col);
+        });
+    }, []);
+
     return (
         <section
             ref={footerRevealRef}
@@ -134,14 +155,25 @@ const Footer = () => {
                         </div>
 
                         {/* Top Section: Brand + Navigation */}
-                        <div className="flex flex-col lg:flex-row justify-between items-start gap-16 lg:gap-24">
+                        <div id="footer-nav-block" className="flex flex-col lg:flex-row justify-between items-start gap-16 lg:gap-24">
                             <FooterBrand />
 
                         {/* Navigation + Corporate — 2-col grid on mobile, row on md+ */}
                         <div className="grid grid-cols-2 md:flex md:flex-row gap-8 md:gap-24 px-5 sm:px-8 md:px-0">
                                 {/* Navigation */}
-                                <div className="space-y-6 min-w-0">
-                                    <p className="text-[0.65rem] text-zinc-600 uppercase tracking-[0.25em]">
+                                <div className="footer-col space-y-6 min-w-0">
+                                    <p style={{
+                                        fontFamily: 'var(--font-mono)',
+                                        fontSize: '7px',
+                                        letterSpacing: '0.38em',
+                                        textTransform: 'uppercase',
+                                        color: 'rgba(184,146,74,0.4)',
+                                        marginBottom: '1.25rem',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '10px',
+                                    }}>
+                                        <span style={{ display: 'inline-block', width: '18px', height: '1px', background: 'rgba(184,146,74,0.4)' }} />
                                         Navigation
                                     </p>
                                     <div className="flex flex-col gap-8">
@@ -150,8 +182,27 @@ const Footer = () => {
                                                 key={item.to}
                                                 ref={(el) => { linkRefs.current[i] = el; }}
                                                 to={item.to}
-                                                className="footer-magnetic-link inline-block text-zinc-500 text-sm tracking-wide md:tracking-wider hover:text-[var(--accent)] transition-colors duration-300 cursor-pointer will-change-transform"
+                                                className="footer-magnetic-link will-change-transform"
+                                                style={{
+                                                    fontFamily: 'var(--font-body)',
+                                                    fontSize: 'clamp(0.85rem, 2vw, 1rem)',
+                                                    color: 'var(--text-secondary)',
+                                                    textDecoration: 'none',
+                                                    display: 'inline-flex',
+                                                    alignItems: 'center',
+                                                    gap: '8px',
+                                                    transition: 'color 0.3s ease, gap 0.3s ease',
+                                                }}
+                                                onMouseEnter={e => {
+                                                    e.currentTarget.style.color = 'var(--accent)';
+                                                    e.currentTarget.style.gap = '14px';
+                                                }}
+                                                onMouseLeave={e => {
+                                                    e.currentTarget.style.color = 'var(--text-secondary)';
+                                                    e.currentTarget.style.gap = '8px';
+                                                }}
                                             >
+                                                <span style={{ display: 'inline-block', width: '4px', height: '4px', background: 'var(--accent)', transform: 'rotate(45deg)', flexShrink: 0, opacity: 0.5 }} />
                                                 {item.label}
                                             </Link>
                                         ))}
@@ -159,29 +210,74 @@ const Footer = () => {
                                 </div>
 
                                 {/* Corporate Access */}
-                                <div className="space-y-6 min-w-0">
-                                    <p className="text-[0.65rem] text-zinc-600 uppercase tracking-[0.25em]">
+                                <div className="footer-col space-y-6 min-w-0">
+                                    <p style={{
+                                        fontFamily: 'var(--font-mono)',
+                                        fontSize: '7px',
+                                        letterSpacing: '0.38em',
+                                        textTransform: 'uppercase',
+                                        color: 'rgba(184,146,74,0.4)',
+                                        marginBottom: '1.25rem',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '10px',
+                                    }}>
+                                        <span style={{ display: 'inline-block', width: '18px', height: '1px', background: 'rgba(184,146,74,0.4)' }} />
                                         Corporate Access
                                     </p>
                                     <div className="flex flex-col gap-8">
                                         <a
                                             href="mailto:access@cristilabs.net"
                                             ref={(el) => { linkRefs.current[FOOTER_LINKS.length] = el; }}
-                                            className="footer-magnetic-link inline-block text-zinc-500 text-sm tracking-wide md:tracking-wider hover:text-[var(--accent)] transition-colors duration-300 will-change-transform"
+                                            className="footer-magnetic-link will-change-transform"
+                                            style={{
+                                                fontFamily: 'var(--font-body)',
+                                                fontSize: '0.9rem',
+                                                color: 'var(--text-secondary)',
+                                                textDecoration: 'none',
+                                                display: 'block',
+                                                letterSpacing: '0.02em',
+                                                transition: 'color 0.3s ease',
+                                            }}
+                                            onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'}
+                                            onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
                                         >
                                             access@cristilabs.net
                                         </a>
                                         <a
                                             href="tel:+16816772084"
                                             ref={(el) => { linkRefs.current[FOOTER_LINKS.length + 1] = el; }}
-                                            className="footer-magnetic-link inline-block text-zinc-500 text-sm tracking-wide md:tracking-wider hover:text-[var(--accent)] transition-colors duration-300 will-change-transform"
+                                            className="footer-magnetic-link will-change-transform"
+                                            style={{
+                                                fontFamily: 'var(--font-mono)',
+                                                fontSize: '0.8rem',
+                                                color: 'var(--text-secondary)',
+                                                textDecoration: 'none',
+                                                display: 'block',
+                                                letterSpacing: '0.06em',
+                                                transition: 'color 0.3s ease',
+                                            }}
+                                            onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'}
+                                            onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
                                         >
-                                            +1 (681) 677-2084
+                                            +1 (681) 677‑2084
                                         </a>
                                     </div>
 
-                                    <p className="text-[0.65rem] text-zinc-600 uppercase tracking-[0.25em] pt-4 mt-6">
-                                        Social
+                                    <p style={{
+                                        fontFamily: 'var(--font-mono)',
+                                        fontSize: '7px',
+                                        letterSpacing: '0.38em',
+                                        textTransform: 'uppercase',
+                                        color: 'rgba(184,146,74,0.4)',
+                                        marginTop: '1.5rem',
+                                        paddingTop: '1rem',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '10px',
+                                    }}>
+                                        <span style={{ display: 'inline-block', width: '18px', height: '1px', background: 'rgba(184,146,74,0.4)' }} />
+                                        Connect
                                     </p>
                                     <div className="flex flex-col gap-6">
                                         {[
@@ -195,9 +291,27 @@ const Footer = () => {
                                                 ref={(el) => { linkRefs.current[FOOTER_LINKS.length + 2 + i] = el; }}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="footer-magnetic-link inline-flex items-center gap-2.5 text-zinc-500 text-sm tracking-wide md:tracking-wider hover:text-[var(--accent)] transition-colors duration-300 cursor-pointer will-change-transform"
+                                                className="footer-magnetic-link will-change-transform"
+                                                style={{
+                                                    fontFamily: 'var(--font-body)',
+                                                    fontSize: 'clamp(0.85rem, 2vw, 1rem)',
+                                                    color: 'var(--text-secondary)',
+                                                    textDecoration: 'none',
+                                                    display: 'inline-flex',
+                                                    alignItems: 'center',
+                                                    gap: '8px',
+                                                    transition: 'color 0.3s ease, gap 0.3s ease',
+                                                }}
+                                                onMouseEnter={e => {
+                                                    e.currentTarget.style.color = 'var(--accent)';
+                                                    e.currentTarget.style.gap = '14px';
+                                                }}
+                                                onMouseLeave={e => {
+                                                    e.currentTarget.style.color = 'var(--text-secondary)';
+                                                    e.currentTarget.style.gap = '8px';
+                                                }}
                                             >
-                                                <span className="opacity-70">{s.icon}</span>
+                                                <span style={{ width: '4px', height: '4px', background: 'var(--accent)', transform: 'rotate(45deg)', flexShrink: 0, opacity: 0.5 }} />
                                                 {s.label}
                                             </a>
                                         ))}
