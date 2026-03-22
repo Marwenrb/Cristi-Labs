@@ -150,6 +150,10 @@
     transform: scale(1.3);
 }
 
+.gallery-background2 video {
+    transform: scale(1.3);
+}
+
 /* Mobile marquee animation */
 @keyframes marquee-mobile {
     from { transform: translateX(0); }

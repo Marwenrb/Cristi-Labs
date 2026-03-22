@@ -21,7 +21,7 @@ export function useFooterBounds() {
 
         const readRect = () => {
             const base = isMobile() ? MIN_BOTTOM_MOBILE : DEFAULT_BOTTOM;
-            const el = document.getElementById("footer-copyright");
+            const el = document.getElementById("footer-nav-block") || document.getElementById("footer-copyright");
             if (!el) {
                 setBottomPx(base);
                 return;

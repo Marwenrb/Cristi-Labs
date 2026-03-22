@@ -176,7 +176,7 @@ const Hero = () => {
                     style={{ pointerEvents: 'none', zIndex: 0 }}
                 >
                     <source src={heroVideo} type="video/mp4" />
-                    <img src={heroPoster} alt="Cristi Labs" className="w-full h-full object-cover" loading="eager" />
+                    <img src={heroPoster} alt="Cristi Labs" className="w-full h-full object-cover" loading="eager" fetchPriority="high" />
                 </video>
 
                 {/* Stacked gradient overlays */}
@@ -317,16 +317,22 @@ const Hero = () => {
                                 </p>
                             </div>
 
-                            {/* Right descriptor */}
-                            <p data-hero-desc style={{
-                                width: '22%', fontFamily: 'var(--font-body)',
-                                fontSize: '0.7rem', color: 'var(--text-secondary)',
-                                lineHeight: 1.8, letterSpacing: '0.08em', textAlign: 'right',
+                            {/* Right descriptor — side-info panel */}
+                            <div style={{
+                                width: '22%', maxWidth: '280px', flexShrink: 0,
+                                borderLeft: '1.5px solid var(--accent-gold-dim)',
+                                paddingLeft: '0.875rem',
                             }}>
-                                Orchestrating Real-World Asset liquidity, the Aura Protocol,
-                                and neuromorphic web ecosystems — where physical commerce
-                                and immersive experience converge.
-                            </p>
+                                <p data-hero-desc style={{
+                                    fontFamily: 'var(--font-body)',
+                                    fontSize: '0.7rem', color: 'var(--text-secondary)',
+                                    lineHeight: 1.8, letterSpacing: '0.08em', textAlign: 'right',
+                                }}>
+                                    Orchestrating Real-World Asset liquidity, the Aura Protocol,
+                                    and neuromorphic web ecosystems — where physical commerce
+                                    and immersive experience converge.
+                                </p>
+                            </div>
                         </div>
 
                     </div>

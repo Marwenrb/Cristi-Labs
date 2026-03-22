@@ -334,7 +334,7 @@ const Footer = () => {
                                     Global HQ
                                 </span>
                                 <p style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.15em', color: 'var(--text-secondary)', whiteSpace: 'nowrap', textAlign: 'center' }}>
-                                    30 N Gould St, Suite R · Sheridan, WY 82801 · USA
+                                    SHERIDAN, WYOMING 82801 · USA
                                 </p>
                             </div>
 

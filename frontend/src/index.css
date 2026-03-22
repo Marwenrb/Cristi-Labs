@@ -453,7 +453,7 @@ p, li {
    ================================================================ */
 
 .text-darkBrown {
-  color: var(--bg-void);
+  color: var(--text-secondary);
   position: relative;
   display: inline-block;
   overflow: hidden;

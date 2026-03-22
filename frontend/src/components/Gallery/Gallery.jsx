@@ -4,10 +4,11 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './gallery.css';
 
-import galleryHq from '../../assets/Medias/gallery/cristi-labs-hq.png';
-import infiniteSeat from '../../assets/Medias/gallery/infinite-seat.png';
-import globalTrade from '../../assets/Medias/gallery/global-trade.png';
-import heroBg from '../../assets/Medias/hero/hero-bg.png';
+import galleryHq        from '../../assets/Medias/gallery/cristi-labs-hq.png';
+import globalTrade      from '../../assets/Medias/gallery/global-trade.png';
+import infiniteSeatImg  from '../../assets/Medias/Slides/the-infinite-seat.png';
+import ghostLogisticsImg from '../../assets/Medias/Slides/ghost-logistics.png';
+import digitalVaultsVid from '../../assets/Medias/Slides/digital-vaults.mp4';
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -15,19 +16,21 @@ gsap.registerPlugin(ScrollTrigger);
 // Local gallery images — cinematic, dark-toned
 const GALLERY_IMAGES = [
     {
-        src: infiniteSeat,
-        alt: "Infinite Seat — Cristi Labs phygital commerce experience",
-        label: "INFINITE SEAT",
+        src: infiniteSeatImg,
+        alt: "The Infinite Seat — Cristi Labs virtual stadium experience",
+        label: "THE INFINITE SEAT",
     },
     {
-        src: globalTrade,
-        alt: "Phygital global trade — Cristi Labs international commerce infrastructure",
-        label: "GLOBAL TRADE",
+        src: ghostLogisticsImg,
+        alt: "Ghost Logistics — Cristi Labs global arbitrage and digital twin trade",
+        label: "GHOST LOGISTICS",
     },
     {
-        src: heroBg,
-        alt: "Cristi Labs — Command the horizon, global operations worldwide",
-        label: "COMMAND THE HORIZON",
+        src: null,
+        vidSrc: digitalVaultsVid,
+        isVideo: true,
+        alt: "Digital Vaults — Cristi Labs 3D gamified luxury asset trading",
+        label: "DIGITAL VAULTS",
     },
     {
         src: globalTrade,
@@ -59,6 +62,7 @@ const Gallery = () => {
     const mobileRef          = useRef(null);
     const scrollContainerRef = useRef(null);
     const cardRefs           = useRef([]);
+    const videoRef           = useRef(null);
     const isMobile           = useMediaQuery({ maxWidth: 768 });
 
     // Desktop: pinned scroll gallery with anticipatePin fix
@@ -78,7 +82,7 @@ const Gallery = () => {
         });
 
         tl4.to(".gallery-page4", { backgroundColor: "var(--bg-void)" }, 'start');
-        gsap.set(".gallery-topText h4, .gallery-topText h3, .gallery-bottomText h3", { opacity: 1, x: 0 });
+        gsap.set(".gallery-topText h4, .gallery-topText h3, .gallery-topText p, .gallery-bottomText h3", { opacity: 1, x: 0 });
 
         tl4.to(".gallery-box h3", { opacity: 0 }, 'a')
             .to(".gallery-page4 .gallery-background", {
@@ -86,17 +90,17 @@ const Gallery = () => {
                 borderRadius: "3.5rem", y: -40,
             }, 'a')
             .to(".gallery-page4 .gallery-background img", { transform: "scale(1)" }, 'a')
-            .from(".gallery-background .gallery-topText h4, .gallery-background .gallery-topText h3, .gallery-background .gallery-bottomText h3", { opacity: 0, x: 50 })
+            .from(".gallery-background .gallery-topText h4, .gallery-background .gallery-topText h3, .gallery-background .gallery-topText p, .gallery-background .gallery-bottomText h3", { opacity: 0, x: 50 })
             .to({}, { duration: 0.4 }, "+=0")
             .to("#gallery-second", { transform: "translate(-50%, -56%)" }, 'b')
             .to("#gallery-second img", { transform: "scale(1)" }, 'b')
             .to(".gallery-page4 .gallery-background", { scale: 0.9, opacity: 0, y: -50 }, 'b')
-            .from("#gallery-second .gallery-topText h4, #gallery-second .gallery-topText h3, #gallery-second .gallery-bottomText h3", { opacity: 0, x: 50 })
+            .from("#gallery-second .gallery-topText h4, #gallery-second .gallery-topText h3, #gallery-second .gallery-topText p, #gallery-second .gallery-bottomText h3", { opacity: 0, x: 50 })
             .to({}, { duration: 0.4 }, "+=0")
             .to("#gallery-third", { transform: "translate(-50%, -56%)" }, 'c')
-            .to("#gallery-third img", { transform: "scale(1)" }, 'c')
+            .to("#gallery-third video", { transform: "scale(1)" }, 'c')
             .to("#gallery-second", { scale: 0.9, opacity: 0 }, 'c')
-            .from("#gallery-third .gallery-topText h4, #gallery-third .gallery-topText h3, #gallery-third .gallery-bottomText h3", { opacity: 0, x: 50 })
+            .from("#gallery-third .gallery-topText h4, #gallery-third .gallery-topText h3, #gallery-third .gallery-topText p, #gallery-third .gallery-bottomText h3", { opacity: 0, x: 50 })
             .to({}, { duration: 0.4 }, "+=0");
 
         const images = pageRef.current?.querySelectorAll('img') ?? [];
@@ -182,14 +186,29 @@ const Gallery = () => {
         };
     }, [isMobile]);
 
+    // Lazy-load video only when slide 3 enters viewport — saves bandwidth + battery
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                if (!video.src) video.src = digitalVaultsVid;
+                video.play().catch(() => {});
+            } else {
+                video.pause();
+            }
+        }, { threshold: 0.1 });
+
+        observer.observe(video);
+        return () => observer.disconnect();
+    }, []);
+
+    const SLIDER_LABELS = ['Cristi Labs', 'The Infinite Seat', 'Ghost Logistics', 'Digital Vaults', 'The Aura Protocol', 'Beyond Borders'];
     const generateBrandElements = (quantity = 6) => {
-        const elements = [];
-        for (let i = 1; i <= quantity; i++) {
-            elements.push(
-                <h3 key={i} style={{ "--index": i }} className='tracking-tighter'>Cristi Labs</h3>
-            );
-        }
-        return elements;
+        return SLIDER_LABELS.slice(0, quantity).map((label, i) => (
+            <h3 key={i + 1} style={{ "--index": i + 1 }} className='tracking-tighter'>{label}</h3>
+        ));
     };
 
     // Mobile — horizontal swipe with snap scrolling
@@ -200,7 +219,7 @@ const Gallery = () => {
                 style={{ background: 'var(--bg-void)', padding: '3rem 0 4rem', perspective: '1200px' }}
             >
                 <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5625rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '2rem', paddingLeft: '1rem' }}>
-                    § PORTFOLIO
+                    § VENTURE DIVISIONS
                 </p>
 
                 {/* Horizontal swipe container */}
@@ -226,13 +245,25 @@ const Gallery = () => {
                                 transformStyle: 'preserve-3d', willChange: 'transform, opacity',
                             }}
                         >
-                            <img
+                            {img.isVideo ? (
+                                <video
+                                    src={img.vidSrc}
+                                    autoPlay
+                                    muted
+                                    loop
+                                    playsInline
+                                    preload="none"
+                                    style={{ width: '100%', height: '110%', objectFit: 'cover', objectPosition: 'center center', pointerEvents: 'none' }}
+                                />
+                            ) : (
+                                <img
                                     src={img.src}
                                     alt={img.alt}
                                     style={{ width: '100%', height: '110%', objectFit: 'cover', objectPosition: 'center center' }}
                                     loading={i === 0 ? 'eager' : 'lazy'}
                                     decoding="async"
                                 />
+                            )}
                             {/* Gradient overlay */}
                             <div style={{
                                 position: 'absolute', inset: 0,
@@ -268,34 +299,78 @@ const Gallery = () => {
 
             <div className="gallery-background">
                 <img
-                    src={GALLERY_IMAGES[0].src}
-                    alt={GALLERY_IMAGES[0].alt} loading="eager" decoding="async"
+                    src={infiniteSeatImg}
+                    alt="The Infinite Seat — Cristi Labs virtual stadium experience"
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                    style={{
+                        width: '100%', height: '100%',
+                        objectFit: 'cover', objectPosition: 'center center',
+                        display: 'block', pointerEvents: 'none',
+                    }}
                 />
-                <div className="gallery-topText"><h4>INFINITE SEAT</h4></div>
+                <div className="gallery-topText">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        <p style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(8px, 0.75vw, 10px)', letterSpacing: '0.28em', color: 'var(--accent-gold)', textTransform: 'uppercase', margin: 0 }}>
+                            Division V · Virtual Stadiums
+                        </p>
+                        <h4>THE INFINITE SEAT</h4>
+                    </div>
+                </div>
                 <div className="gallery-bottomText">
-                    <h3>Phygital commerce redefined — where digital presence meets physical experience.</h3>
+                    <h3>The sold-out problem — solved forever. We engineer hyper-realistic virtual arenas where fans attend World Cups, championship nights, and sold-out concerts from anywhere on Earth. FIFA. NFL. NBA. We hold every seat.</h3>
                 </div>
             </div>
 
             <div id="gallery-second" className="gallery-background2">
                 <img
-                    src={GALLERY_IMAGES[1].src}
-                    alt={GALLERY_IMAGES[1].alt} loading="lazy" decoding="async"
+                    src={ghostLogisticsImg}
+                    alt="Ghost Logistics — Cristi Labs global digital twin trade"
+                    loading="lazy"
+                    decoding="async"
+                    style={{
+                        width: '100%', height: '100%',
+                        objectFit: 'cover', objectPosition: 'center center',
+                        display: 'block', pointerEvents: 'none',
+                    }}
                 />
-                <div className="gallery-topText"><h4>GLOBAL TRADE</h4></div>
+                <div className="gallery-topText">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        <p style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(8px, 0.75vw, 10px)', letterSpacing: '0.28em', color: 'var(--accent-gold)', textTransform: 'uppercase', margin: 0 }}>
+                            Division III · Digital Twin Trade
+                        </p>
+                        <h4>GHOST LOGISTICS</h4>
+                    </div>
+                </div>
                 <div className="gallery-bottomText">
-                    <h3>Cross-border commerce and strategic partnerships at the heart of global markets.</h3>
+                    <h3>From Shenzhen to New York in 48 hours. We master the global arbitrage — securing exclusive rights to emerging technologies and launching capsule-quality brands before the market knows they exist. Every physical product ships with a verified digital twin.</h3>
                 </div>
             </div>
 
             <div id="gallery-third" className="gallery-background2">
-                <img
-                    src={GALLERY_IMAGES[2].src}
-                    alt={GALLERY_IMAGES[2].alt} loading="lazy" decoding="async"
+                <video
+                    ref={videoRef}
+                    muted
+                    loop
+                    playsInline
+                    preload="none"
+                    style={{
+                        width: '100%', height: '100%',
+                        objectFit: 'cover', objectPosition: 'center center',
+                        display: 'block', pointerEvents: 'none',
+                    }}
                 />
-                <div className="gallery-topText"><h4>COMMAND THE HORIZON</h4></div>
+                <div className="gallery-topText">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        <p style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(8px, 0.75vw, 10px)', letterSpacing: '0.28em', color: 'var(--accent-gold)', textTransform: 'uppercase', margin: 0 }}>
+                            Division I · RWA Immersive Commerce
+                        </p>
+                        <h4>DIGITAL VAULTS</h4>
+                    </div>
+                </div>
                 <div className="gallery-bottomText">
-                    <h3>Innovation meets integrity — where digital media and commerce converge on a global scale.</h3>
+                    <h3>Where $50,000 transactions begin in the browser. We build 3D gamified vaults for rare watches, exotic assets, and limited-edition luxury — where the unboxing experience starts long before the package arrives. High-frequency commerce. Cinematic precision.</h3>
                 </div>
             </div>
         </section>

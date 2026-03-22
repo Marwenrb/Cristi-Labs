@@ -6,8 +6,8 @@ import { useMediaQuery } from "react-responsive";
 import { welcomeLinesLG, welcomeLinesSM } from "../../constants/welcome";
 import SectionDivider from "../SectionDivider/SectionDivider";
 
-import welcome1 from "../../assets/Medias/welcome/welcome-1.png";
-import welcome2 from "../../assets/Medias/welcome/welcome-2.png";
+import portVideo  from "../../assets/Medias/welcome/Container Port · Global Trade Infrastructure.mp4";
+import towerVideo from "../../assets/Medias/welcome/Futuristic Corporate Tower · Digital Vision.mp4";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -76,13 +76,11 @@ const Welcome = () => {
             <div className="flex md:flex-row flex-col justify-between items-center md:p-4 md:mt-20 mt-10">
                 <div className="flex flex-row justify-center items-center gap-1">
                     <div style={{ position: 'relative', display: 'inline-block' }}>
-                        <img
-                            src={welcome1}
-                            alt="Container port at golden hour — Cristi Labs global trade infrastructure"
-                            className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44"
-                            loading="lazy"
-                            decoding="async"
-                            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                        <video
+                            src={portVideo}
+                            autoPlay loop muted playsInline controls={false} preload="auto"
+                            className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44 object-cover pointer-events-none"
+                            style={{ display: 'block' }}
                         />
                         <div style={{
                             position: 'absolute', inset: 0,
@@ -91,13 +89,11 @@ const Welcome = () => {
                         }} />
                     </div>
                     <div style={{ position: 'relative', display: 'inline-block' }}>
-                        <img
-                            src={welcome2}
-                            alt="Futuristic corporate tower at night — Cristi Labs digital venture studio"
-                            className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44"
-                            loading="lazy"
-                            decoding="async"
-                            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                        <video
+                            src={towerVideo}
+                            autoPlay loop muted playsInline controls={false} preload="auto"
+                            className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44 object-cover pointer-events-none"
+                            style={{ display: 'block' }}
                         />
                         <div style={{
                             position: 'absolute', inset: 0,

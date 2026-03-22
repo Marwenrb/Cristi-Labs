@@ -46,16 +46,17 @@ const BackToTop = () => {
         };
     }, []);
 
-    /* ── 2. Hide when footer is in view ────────────────────────── */
+    /* ── 2. Hide when within 180px of the page bottom ──────────── */
     useEffect(() => {
-        const footer = document.querySelector('footer');
-        if (!footer) return;
-        const observer = new IntersectionObserver(
-            ([entry]) => setNearBottom(entry.isIntersecting),
-            { threshold: 0.05 }
-        );
-        observer.observe(footer);
-        return () => observer.disconnect();
+        const checkScroll = () => {
+            const scrolled = window.scrollY;
+            const total    = document.documentElement.scrollHeight;
+            const viewH    = window.innerHeight;
+            setNearBottom(total - scrolled - viewH < 180);
+        };
+        window.addEventListener('scroll', checkScroll, { passive: true });
+        checkScroll();
+        return () => window.removeEventListener('scroll', checkScroll);
     }, []);
 
     /* ── 3. Fade in / out ──────────────────────────────────────── */
@@ -64,7 +65,6 @@ const BackToTop = () => {
         const show = visible && !nearBottom;
         gsap.to(containerRef.current, {
             opacity:  show ? 1 : 0,
-            y:        show ? 0 : 16,
             duration: 0.4,
             ease:     "power3.out",
         });

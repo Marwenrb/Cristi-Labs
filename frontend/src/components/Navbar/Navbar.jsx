@@ -119,16 +119,17 @@ const Navbar = () => {
         }
     };
 
-    // Fade out MENU button when footer enters viewport
+    // Fade out MENU button when within 180px of the page bottom
     useEffect(() => {
-        const footer = document.querySelector('footer');
-        if (!footer) return;
-        const observer = new IntersectionObserver(
-            ([entry]) => setNearBottom(entry.isIntersecting),
-            { threshold: 0.05 }
-        );
-        observer.observe(footer);
-        return () => observer.disconnect();
+        const checkScroll = () => {
+            const scrolled = window.scrollY;
+            const total    = document.documentElement.scrollHeight;
+            const viewH    = window.innerHeight;
+            setNearBottom(total - scrolled - viewH < 180);
+        };
+        window.addEventListener('scroll', checkScroll, { passive: true });
+        checkScroll();
+        return () => window.removeEventListener('scroll', checkScroll);
     }, []);
 
     // GSAP entrance animation on open/close
@@ -256,10 +257,10 @@ const Navbar = () => {
                 className="fixed left-1/2 z-[101]"
                 style={{
                     bottom: `${bottomPx}px`,
-                    transform: nearBottom ? 'translateX(-50%) translateY(20px)' : 'translateX(-50%)',
+                    transform: 'translateX(-50%)',
                     opacity: nearBottom ? 0 : 1,
                     pointerEvents: nearBottom ? 'none' : 'auto',
-                    transition: 'bottom 0.35s ease, opacity 0.4s ease, transform 0.4s ease',
+                    transition: 'bottom 0.35s ease, opacity 0.4s ease',
                 }}
             >
                 <MenuButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
