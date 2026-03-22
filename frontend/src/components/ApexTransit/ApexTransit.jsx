@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import airplaneImg from '../../assets/Medias/gallery/airplane.jpg';
+import apexTransitVideo from '../../assets/Medias/welcome/apex-transit-sequence.mp4';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,156 +28,6 @@ const FLEET_SPECS = [
 ];
 
 const DESCRIPTOR_TAGS = ['eVTOL Networks', 'AI Orchestration', '47 Countries', 'Zero Emissions', 'Executive Transit'];
-
-// ── CANVAS: CITY GRID AIR CORRIDOR VISUALIZATION ──────────────────────────
-function AirCorridorCanvas() {
-  const canvasRef = useRef(null);
-  const animRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const mobile = window.innerWidth < 768;
-
-    const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = canvas.offsetWidth * dpr;
-      canvas.height = canvas.offsetHeight * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    const W = () => canvas.offsetWidth;
-    const H = () => canvas.offsetHeight;
-
-    const NODES = [];
-    const GRID_X = mobile ? 5 : 8;
-    const GRID_Y = mobile ? 4 : 6;
-    const initNodes = () => {
-      NODES.length = 0;
-      for (let x = 0; x < GRID_X; x++) {
-        for (let y = 0; y < GRID_Y; y++) {
-          const jitter = () => (Math.random() - 0.5) * (W() / GRID_X) * 0.4;
-          NODES.push({
-            x: (x / (GRID_X - 1)) * W() * 0.85 + W() * 0.075 + jitter(),
-            y: (y / (GRID_Y - 1)) * H() * 0.75 + H() * 0.125 + jitter(),
-            pulse: Math.random() * Math.PI * 2,
-            size: Math.random() * 2 + 1.5,
-            active: Math.random() > 0.3,
-          });
-        }
-      }
-    };
-    initNodes();
-
-    const PODS = Array.from({ length: mobile ? 3 : 6 }, (_, i) => ({
-      progress: i / (mobile ? 3 : 6),
-      speed: 0.0008 + Math.random() * 0.0006,
-      fromNode: Math.floor(Math.random() * NODES.length),
-      toNode: Math.floor(Math.random() * NODES.length),
-      trail: [],
-    }));
-
-    let t = 0;
-    const draw = () => {
-      t += 0.012;
-      const w = W(), h = H();
-      ctx.clearRect(0, 0, w, h);
-
-      ctx.fillStyle = 'rgba(11, 11, 11, 0.92)';
-      ctx.fillRect(0, 0, w, h);
-
-      NODES.forEach((node, i) => {
-        NODES.forEach((other, j) => {
-          if (j <= i) return;
-          const dist = Math.hypot(node.x - other.x, node.y - other.y);
-          if (dist > w * 0.28) return;
-          const alpha = (1 - dist / (w * 0.28)) * 0.12;
-          ctx.beginPath();
-          ctx.moveTo(node.x, node.y);
-          ctx.lineTo(other.x, other.y);
-          ctx.strokeStyle = `rgba(184, 146, 74, ${alpha})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        });
-      });
-
-      PODS.forEach(pod => {
-        pod.progress += pod.speed;
-        if (pod.progress >= 1) {
-          pod.progress = 0;
-          pod.fromNode = pod.toNode;
-          pod.toNode = Math.floor(Math.random() * NODES.length);
-          pod.trail = [];
-        }
-
-        const from = NODES[pod.fromNode];
-        const to = NODES[pod.toNode];
-        if (!from || !to) return;
-
-        const px = from.x + (to.x - from.x) * pod.progress;
-        const py = from.y + (to.y - from.y) * pod.progress;
-
-        pod.trail.push({ x: px, y: py });
-        if (pod.trail.length > 20) pod.trail.shift();
-
-        pod.trail.forEach((pt, ti) => {
-          const alpha = (ti / pod.trail.length) * 0.5;
-          ctx.beginPath();
-          ctx.arc(pt.x, pt.y, 1.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(220, 170, 75, ${alpha})`;
-          ctx.fill();
-        });
-
-        const glowAlpha = 0.7 + Math.sin(t * 4 + pod.fromNode) * 0.3;
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = 'rgba(184, 146, 74, 0.8)';
-        ctx.beginPath();
-        ctx.arc(px, py, 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(237, 234, 228, ${glowAlpha})`;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      });
-
-      NODES.forEach(node => {
-        if (!node.active) return;
-        node.pulse += 0.04;
-        const ring = (node.pulse % (Math.PI * 2)) / (Math.PI * 2);
-        const ringAlpha = (1 - ring) * 0.25;
-        const ringSize = ring * 20;
-
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, ringSize, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(184, 146, 74, ${ringAlpha})`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, node.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(184, 146, 74, 0.8)';
-        ctx.fill();
-      });
-
-      animRef.current = requestAnimationFrame(draw);
-    };
-
-    draw();
-    return () => {
-      cancelAnimationFrame(animRef.current);
-      window.removeEventListener('resize', resize);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
-      aria-hidden="true"
-    />
-  );
-}
 
 // ── MOBILE REVEAL WRAPPER ─────────────────────────────────────────────────
 function MobileReveal({ children, delay = 0, style = {}, className = '' }) {
@@ -220,7 +71,35 @@ export default function ApexTransit() {
   const paragraphRef = useRef(null);
   const tagsRef = useRef(null);
   const labelRef = useRef(null);
+  const videoRef = useRef(null);
   const [activeRoute, setActiveRoute] = useState(0);
+
+  // ── APEX VIDEO: lazy load + auto pause off-screen ──────────────────────
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      {
+        threshold: 0.05,
+        rootMargin: '100px 0px 0px 0px',
+      }
+    );
+
+    observer.observe(video);
+
+    return () => {
+      observer.disconnect();
+      video.pause();
+    };
+  }, []);
 
   // ── HEADLINE + PARAGRAPH: IntersectionObserver with skewY reveal ──────
   useEffect(() => {
@@ -479,14 +358,34 @@ export default function ApexTransit() {
         </p>
       </div>
 
-      {/* ── CANVAS VISUALIZATION ───────────────────────────────────────── */}
+      {/* ── VIDEO VISUALIZATION ─────────────────────────────────────────── */}
       <div className="apex-canvas-wrap" style={{
         position: 'relative',
         width: '100%',
         height: 'clamp(180px, 35vw, 460px)',
         overflow: 'hidden',
       }}>
-        <AirCorridorCanvas />
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="none"
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center center',
+            display: 'block',
+            pointerEvents: 'none',
+          }}
+        >
+          <source src={apexTransitVideo} type="video/mp4" />
+        </video>
 
         <div style={{
           position: 'absolute', inset: 0,
