@@ -4,23 +4,23 @@ import { useMediaQuery } from "react-responsive";
 import { useState, useEffect, useRef } from "react";
 import { waitForFonts } from "../../lib/fontLoader";
 
-import sticky1 from "../../assets/Medias/sticky/sticky-1.png";
-import sticky2 from "../../assets/Medias/sticky/sticky-2.png";
-import auraProtocol from "../../assets/Medias/gallery/the-aura-protocol.png";
+import architectsImg from "../../assets/Medias/sticky/architects-phygital-economy.png";
+import ghostLogisticsImg from "../../assets/Medias/sticky/ghost-logistics-trade.png";
+import auraProtocolImg from "../../assets/Medias/sticky/the-aura-protocol.png";
 
 // Local images — cinematic, matching each phase
 const STICKY_IMAGES = [
     {
-        src: sticky1,
-        alt: "Aerial view of container port with cranes — logistics and global trade",
+        src: architectsImg,
+        alt: "Architects of the Phygital Economy — Cristi Labs global trade infrastructure",
     },
     {
-        src: sticky2,
-        alt: "Dark esports arena with screens and RGB — digital entertainment",
+        src: ghostLogisticsImg,
+        alt: "Ghost Logistics & Trade — Cristi Labs digital twin commerce",
     },
     {
-        src: auraProtocol,
-        alt: "The Aura Protocol — Cristi Labs digital identity platform",
+        src: auraProtocolImg,
+        alt: "The Aura Protocol — Cristi Labs celebrity tokenization and fan legacy economy",
     },
 ];
 
