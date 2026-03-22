@@ -75,8 +75,8 @@ const Hero = () => {
             }
             if (desc) {
                 setTimeout(() => {
-                    desc.style.transition = 'opacity 0.7s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1)';
-                    desc.style.opacity = '1'; desc.style.transform = 'translateY(0)';
+                    desc.style.transition = 'opacity 0.7s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.7s ease';
+                    desc.style.opacity = '1'; desc.style.transform = 'translateY(0)'; desc.style.filter = 'blur(0px)';
                 }, 450);
             }
         }));
@@ -320,8 +320,8 @@ const Hero = () => {
                             {/* Right descriptor — side-info panel */}
                             <div style={{
                                 width: '22%', maxWidth: '280px', flexShrink: 0,
-                                borderLeft: '1.5px solid var(--accent-gold-dim)',
-                                paddingLeft: '0.875rem',
+                                borderRight: '1.5px solid var(--accent-gold-dim)',
+                                paddingRight: '0.875rem',
                             }}>
                                 <p data-hero-desc style={{
                                     fontFamily: 'var(--font-body)',
