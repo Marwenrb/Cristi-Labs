@@ -613,6 +613,7 @@ p, li {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    will-change: opacity, transform;
   }
 
   .col-content-wrapper,
@@ -636,6 +637,8 @@ p, li {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
+    will-change: opacity, transform;
   }
 
   .col-img-1,

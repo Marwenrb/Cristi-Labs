@@ -1,20 +1,10 @@
-﻿import { useEffect, useState } from "react";
+﻿import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { useFooterGSAP } from "../../hooks/useFooterGSAP";
+import GlobalPulse from "../GlobalPulse/GlobalPulse";
 import FooterBrand from "./FooterBrand";
 import "./footer.css";
-
-// Global hubs — trading floor + North Africa + HQ
-const GLOBAL_HUBS = [
-    { city: "NYC", tz: "America/New_York" },
-    { city: "LON", tz: "Europe/London" },
-    { city: "TYO", tz: "Asia/Tokyo" },
-    { city: "SGP", tz: "Asia/Singapore" },
-    { city: "TUN", tz: "Africa/Tunis" },
-    { city: "ALG", tz: "Africa/Algiers", utcOffset: 1 },
-    { city: "WY",  tz: "America/Denver", utcOffset: -7 },
-];
 
 const FOOTER_LINKS = [
     { to: "/",            label: "Home" },
@@ -24,84 +14,6 @@ const FOOTER_LINKS = [
     { to: "/store",       label: "The Vault" },
     { to: "/contact",     label: "Contact" },
 ];
-
-function LiveDataTicker() {
-    const [times, setTimes] = useState(
-        GLOBAL_HUBS.map(() => ({ time: "", date: "" }))
-    );
-
-    useEffect(() => {
-        const formatTime = (date, hub) => {
-            const opts = {
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-                hour12: false,
-                hourCycle: "h23",
-            };
-            try {
-                const formatted = new Intl.DateTimeFormat("en-GB", {
-                    ...opts,
-                    timeZone: hub.tz,
-                }).format(date);
-                if (formatted && formatted.length >= 8) return formatted;
-            } catch { /* fallback below */ }
-            if (typeof hub.utcOffset === "number") {
-                const utc = date.getTime() + date.getTimezoneOffset() * 60000;
-                const local = new Date(utc + hub.utcOffset * 3600000);
-                return new Intl.DateTimeFormat("en-GB", opts).format(local);
-            }
-            return "\u2014";
-        };
-
-        const update = () => {
-            const now = new Date();
-            setTimes(
-                GLOBAL_HUBS.map((hub) => ({
-                    time: formatTime(now, hub),
-                    date: (() => {
-                        try {
-                            return now.toLocaleDateString("en-GB", {
-                                timeZone: hub.tz,
-                                weekday: "short",
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric",
-                            });
-                        } catch { return ""; }
-                    })(),
-                }))
-            );
-        };
-
-        update();
-        const interval = setInterval(update, 1000);
-        return () => clearInterval(interval);
-    }, []);
-
-    return (
-        <div className="live-ticker">
-            <div className="live-ticker-badge">
-                <span className="live-ticker-dot" />
-                <span className="live-ticker-label">GLOBAL PULSE</span>
-            </div>
-            <div className="live-ticker-marquee">
-                <div className="live-ticker-track">
-                    {[...Array(4)].flatMap((_, cycle) =>
-                        GLOBAL_HUBS.map((hub, j) => (
-                            <div key={`${hub.city}-${cycle}-${j}`} className="live-ticker-hub">
-                                <span className="live-ticker-city">{hub.city}</span>
-                                <span className="live-ticker-time">
-                                    {times[j]?.time || "\u2014"}
-                                </span>
-                            </div>
-                        ))
-                    )}
-                </div>
-            </div>
-        </div>
-    );
-}
 
 const Footer = () => {
     const { footerRevealRef, footerInnerRef, linkRefs } = useFooterGSAP();
@@ -149,10 +61,8 @@ const Footer = () => {
                     />
 
                     <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pt-6 pb-10 md:pt-8 md:pb-12">
-                        {/* Live Data Ticker */}
-                        <div className="live-ticker-wrapper">
-                            <LiveDataTicker />
-                        </div>
+                        {/* Global Pulse — live world clock ticker */}
+                        <GlobalPulse />
 
                         {/* Top Section: Brand + Navigation */}
                         <div id="footer-nav-block" className="flex flex-col lg:flex-row justify-between items-start gap-16 lg:gap-24">

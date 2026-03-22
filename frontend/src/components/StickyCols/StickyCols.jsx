@@ -1,4 +1,4 @@
-import gsap, { ScrollTrigger, SplitText } from "gsap/all";
+import gsap, { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import { useMediaQuery } from "react-responsive";
 import { useState, useEffect, useRef } from "react";
@@ -8,7 +8,7 @@ import architectsImg     from "../../assets/Medias/sticky/architects-phygital-ec
 import ghostLogisticsImg from "../../assets/Medias/sticky/ghost-logistics-trade.png";
 import auraProtocolImg   from "../../assets/Medias/sticky/the-aura-protocol.png";
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+gsap.registerPlugin(ScrollTrigger);
 
 const STICKY_IMAGES = [
     { src: architectsImg,     alt: "Architects of the Phygital Economy — Cristi Labs global trade infrastructure" },
@@ -90,38 +90,18 @@ const StickyCols = () => {
         waitForFonts().then(() => {
             if (!mounted || !document.querySelector(".sticky-cols-wrapper")) return;
 
-            // SplitText — wrap each line in a <span> so yPercent masks behind .line{overflow:hidden}
-            const textEls = document.querySelectorAll(
-                ".col-3 .col-content-wrapper h1, .col-3 .col-content-wrapper p," +
-                ".col-3 .col-content-wrapper-2 h1, .col-3 .col-content-wrapper-2 p"
-            );
-            textEls.forEach(el => {
-                if (!document.body.contains(el)) return;
-                const split = new SplitText(el, { type: "lines", linesClass: "line" });
-                split.lines.forEach(line => {
-                    line.innerHTML = `<span>${line.textContent}</span>`;
-                });
-            });
-
             ScrollTrigger.refresh();
             if (!mounted) return;
 
-            // ── Initial states — GSAP owns all transforms; no CSS conflicts ──────
-            //  col-2: right image panel — off-screen right (left:50% + translateX(+100%) = 100vw)
-            gsap.set(".col-2",   { xPercent: 100 });
-            //  col-3: left text panel for slides 2 & 3 — off-screen left (left:0 + translateX(-100%) = -50vw)
-            gsap.set(".col-3",   { xPercent: -100 });
-            //  col-4: slide-3 right image — below viewport
-            gsap.set(".col-4",   { yPercent: 100 });
-            //  col-img-2: Ghost Logistics image — fully clipped (zero height polygon)
+            // ── Initial states ────────────────────────────────────────────────
+            gsap.set(".col-2",   { xPercent: 100 });          // off-screen right
+            gsap.set(".col-3",   { xPercent: -100 });         // off-screen left
+            gsap.set(".col-4",   { yPercent: 100 });          // below viewport
             gsap.set(".col-img-2", { clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)" });
-            //  Slide-2 text lines — visible
-            gsap.set(".col-3 .col-content-wrapper .line span",   { yPercent: 0 });
-            //  Slide-3 text lines — masked below .line containers
-            gsap.set(".col-3 .col-content-wrapper-2 .line span", { yPercent: 125 });
+            // Slide 3 wrapper hidden — will fade in during phase 3
+            gsap.set(".col-3 .col-content-wrapper-2", { autoAlpha: 0, y: 20 });
 
-            // ── Master scroll timeline — 3 equal phases, each = 1 unit ──────────
-            //  end: +2*VH scroll → each phase ≈ 0.67 screens → 3 screens total doc height
+            // ── Master timeline ───────────────────────────────────────────────
             tl = gsap.timeline({
                 scrollTrigger: {
                     trigger:          ".sticky-cols-wrapper",
@@ -130,30 +110,28 @@ const StickyCols = () => {
                     pin:              true,
                     pinSpacing:       true,
                     anticipatePin:    1,
-                    scrub:            true,         // direct 1:1 scroll relationship
+                    scrub:            1,
                     invalidateOnRefresh: true,
                 },
             });
 
-            // ── PHASE 1 (0 → 1): Slide 1 exits • Slide 2 layout enters ──────────
-            //  Slide 1 col-1 exits to the left while fading
+            // ── PHASE 1 (0 → 1): Slide 1 exits · Slide 2 layout enters ───────
             tl.to(".col-1",  { xPercent: -8, opacity: 0, ease: "none", duration: 1 }, 0)
-            //  Right image panel slides in from right
-              .to(".col-2",  { xPercent: 0,               ease: "none", duration: 1 }, 0)
-            //  Left text panel (slide 2) slides in from left — symmetric entrance
-              .to(".col-3",  { xPercent: 0,               ease: "none", duration: 1 }, 0);
+              .to(".col-2",  { xPercent: 0,              ease: "none", duration: 1 }, 0)
+              .to(".col-3",  { xPercent: 0,              ease: "none", duration: 1 }, 0);
 
-            // ── PHASE 2 (1 → 2): Ghost Logistics image reveals over Architects ───
+            // ── PHASE 2 (1 → 2): Ghost Logistics image wipe ──────────────────
             tl.to(".col-img-2", {
                 clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
                 ease: "none", duration: 1,
             }, 1);
 
-            // ── PHASE 3 (2 → 3): Slide 2 → Slide 3 ─────────────────────────────
-            //  col-3 text swap: slide-2 lines exit upward, slide-3 lines enter from below
-            tl.to(".col-3 .col-content-wrapper .line span",   { yPercent: -125, ease: "none", duration: 0.55 }, 2)
-              .to(".col-3 .col-content-wrapper-2 .line span", { yPercent: 0,    ease: "none", duration: 0.55 }, 2.45)
-            //  col-2 exits right as col-4 rises from below
+            // ── PHASE 3 (2 → 3): Slide 2 → Slide 3 clean autoAlpha swap ─────
+            //  Outgoing (Ghost Logistics): fade up and out
+            tl.to(".col-3 .col-content-wrapper",   { autoAlpha: 0, y: -20, ease: "none", duration: 0.4 }, 2)
+            //  Incoming (Aura Protocol): fade in from below — starts after exit clears
+              .to(".col-3 .col-content-wrapper-2", { autoAlpha: 1, y: 0,   ease: "none", duration: 0.4 }, 2.45)
+            //  Right panel swap: col-2 exits, col-4 rises
               .to(".col-2",  { xPercent: 100, ease: "none", duration: 0.8 }, 2)
               .to(".col-4",  { yPercent: 0,   ease: "none", duration: 1   }, 2);
         });
