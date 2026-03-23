@@ -49,6 +49,7 @@
 
   /* ── TYPOGRAPHY ── */
   --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-luxury:  'Cormorant Garamond', 'Georgia', serif;
   --font-body:    'Sora', 'DM Sans', sans-serif;
   --font-mono:    'Geist Mono', 'JetBrains Mono', monospace;
 

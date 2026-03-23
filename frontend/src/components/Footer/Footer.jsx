@@ -139,14 +139,16 @@ const Footer = () => {
                                         <a
                                             href="mailto:access@cristilabs.net"
                                             ref={(el) => { linkRefs.current[FOOTER_LINKS.length] = el; }}
-                                            className="footer-magnetic-link will-change-transform"
+                                            className="footer-magnetic-link footer-contact-email will-change-transform"
                                             style={{
                                                 fontFamily: 'var(--font-body)',
-                                                fontSize: '0.9rem',
+                                                fontSize: 'clamp(0.7rem, 2.4vw, 0.9rem)',
                                                 color: 'var(--text-secondary)',
                                                 textDecoration: 'none',
                                                 display: 'block',
                                                 letterSpacing: '0.02em',
+                                                wordBreak: 'break-all',
+                                                overflowWrap: 'anywhere',
                                                 transition: 'color 0.3s ease',
                                             }}
                                             onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'}

@@ -201,18 +201,21 @@
 }
 
 .footer-brand-title {
-    font-family: var(--font-display);
+    font-family: var(--font-luxury);
     color: var(--text-primary);
-    font-size: clamp(1.875rem, 4.5vw, 2.75rem);
-    font-weight: 400;
-    letter-spacing: 0.12em;
+    font-size: clamp(2rem, 4.5vw, 2.875rem);
+    font-weight: 500;
+    font-style: normal;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     white-space: nowrap;
-    transition: color var(--duration-mid) var(--ease-out-expo);
+    transition: color var(--duration-mid) var(--ease-out-expo),
+                text-shadow var(--duration-mid) var(--ease-out-expo);
 }
 
 .footer-brand-card:hover .footer-brand-title {
     color: var(--text-primary);
+    text-shadow: 0 0 48px rgba(201, 168, 76, 0.22), 0 0 80px rgba(201, 168, 76, 0.08);
 }
 
 .footer-brand-title-accent {
@@ -247,11 +250,12 @@
 
 .footer-brand-tagline {
     margin-top: 1.125rem;
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
+    font-size: clamp(0.6rem, 1.1vw, 0.72rem);
+    font-weight: 300;
+    letter-spacing: 0.26em;
     text-transform: uppercase;
     color: var(--text-secondary);
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     line-height: 1.5;
     white-space: nowrap;
     transition: color var(--duration-mid) var(--ease-out-expo);
@@ -259,6 +263,16 @@
 
 .footer-brand-card:hover .footer-brand-tagline {
     color: var(--text-primary);
+}
+
+/* ── Mobile: prevent email overflow in 2-col grid ── */
+@media (max-width: 768px) {
+    .footer-contact-email {
+        font-size: 0.72rem !important;
+        word-break: break-all;
+        overflow-wrap: anywhere;
+        letter-spacing: 0 !important;
+    }
 }
 
 .footer-brand-accent {
