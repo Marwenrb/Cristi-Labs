@@ -342,6 +342,15 @@ const Contact = () => {
             {/* ═══ Hero Section ═══════════════════════════════════ */}
             <section className="w-dvw md:h-dvh h-[100vh] md:p-2 p-2.5 mb-10">
                 <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden bg-[var(--bg-void)]">
+                    {/* Ambient grid */}
+                    <div
+                        aria-hidden="true"
+                        style={{
+                            position: 'absolute', inset: 0,
+                            backgroundImage: 'linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px)',
+                            backgroundSize: '80px 80px', pointerEvents: 'none',
+                        }}
+                    />
                     <div className="p-4 flex flex-col justify-center h-full">
                         <div className="relative flex flex-col justify-center items-start md:pl-12 pl-4">
                             <p className="text-[.7rem] text-[var(--accent)] uppercase tracking-[0.25em] mb-6 contact-hero-sub">
@@ -391,8 +400,13 @@ const Contact = () => {
                             </p>
                             <a
                                 href="mailto:access@cristilabs.net"
-                                className="text-[var(--text-primary)] text-lg md:text-xl tracking-wider hover:text-[var(--accent)] transition-colors duration-300"
-                                style={{ fontFamily: 'var(--font-mono)' }}
+                                className="contact-email-link text-[var(--text-primary)] text-base md:text-xl hover:text-[var(--accent)] transition-colors duration-300"
+                                style={{
+                                    fontFamily: 'var(--font-mono)',
+                                    wordBreak: 'break-all',
+                                    overflowWrap: 'anywhere',
+                                    letterSpacing: '0.02em',
+                                }}
                             >
                                 access@cristilabs.net
                             </a>

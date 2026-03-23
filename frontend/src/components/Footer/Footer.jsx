@@ -242,10 +242,10 @@ const Footer = () => {
                             </p>
 
                             <div className="flex flex-col items-center gap-1 order-1 md:order-2">
-                                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.3em', color: 'var(--accent)', textTransform: 'uppercase' }}>
+                                <span style={{ fontFamily: 'var(--font-luxury)', fontSize: '9px', letterSpacing: '0.3em', color: '#D4AF37', textTransform: 'uppercase', textShadow: '0 0 12px rgba(212,175,55,0.35), 0 0 24px rgba(184,146,74,0.18)', fontWeight: 500 }}>
                                     Global HQ
                                 </span>
-                                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.15em', color: 'var(--text-secondary)', whiteSpace: 'nowrap', textAlign: 'center' }}>
+                                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.15em', color: '#F7E7CE', whiteSpace: 'nowrap', textAlign: 'center', textShadow: '0 0 8px rgba(184,146,74,0.15)' }}>
                                     SHERIDAN, WYOMING 82801 · USA
                                 </p>
                             </div>

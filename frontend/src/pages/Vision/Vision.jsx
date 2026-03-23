@@ -73,6 +73,15 @@ const Vision = () => {
             {/* Hero Section */}
             <section className="w-dvw md:h-dvh h-[100vh] md:p-2 p-2.5 mb-20">
                 <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden bg-[var(--bg-void)]">
+                    {/* Ambient grid */}
+                    <div
+                        aria-hidden="true"
+                        style={{
+                            position: 'absolute', inset: 0,
+                            backgroundImage: 'linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px)',
+                            backgroundSize: '80px 80px', pointerEvents: 'none',
+                        }}
+                    />
                     <div className="p-6 md:p-10 flex flex-col h-full">
                         <div className="relative h-full flex flex-col">
                             {/* Label — top left, generous breathing room */}
@@ -116,29 +125,48 @@ const Vision = () => {
             {/* Manifesto Section */}
             <section className="w-full px-6 md:px-12 py-32">
                 <div className="max-w-5xl mx-auto space-y-24">
-                    <div className="manifesto-line">
-                        <p className="text-[0.65rem] text-[var(--accent)] uppercase tracking-[0.3em] mb-8" style={{ fontFamily: 'var(--font-mono)' }}>
-                            The Thesis
-                        </p>
-                        <h2 className="text-[var(--text-primary)] text-3xl md:text-5xl lg:text-6xl tracking-wider leading-[1.1]" style={{ fontFamily: 'var(--font-display)' }}>
-                            The next century of value creation belongs to those who refuse to choose between the physical and the digital.
-                        </h2>
+                    <div className="manifesto-line flex gap-8 md:gap-16 items-start">
+                        <span className="hidden md:block shrink-0 mt-1" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent)', letterSpacing: '0.2em', opacity: 0.5 }}>§01</span>
+                        <div>
+                            <p className="text-[0.65rem] text-[var(--accent)] uppercase tracking-[0.3em] mb-8" style={{ fontFamily: 'var(--font-mono)' }}>
+                                The Thesis
+                            </p>
+                            <h2 className="text-[var(--text-primary)] text-3xl md:text-5xl lg:text-6xl tracking-wider leading-[1.1]" style={{ fontFamily: 'var(--font-display)' }}>
+                                The next century of value creation belongs to those who refuse to choose between the physical and the digital.
+                            </h2>
+                        </div>
                     </div>
-                    <div className="manifesto-line">
+                    <div className="manifesto-line flex gap-8 md:gap-16 items-start">
+                        <span className="hidden md:block shrink-0 mt-1" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent)', letterSpacing: '0.2em', opacity: 0.5 }}>§02</span>
                         <p className="text-[var(--text-secondary)] text-xl md:text-2xl leading-relaxed max-w-3xl">
                             Cristi Labs exists because of a single, irreversible insight: the most consequential opportunities on earth live at the exact intersection where Silicon Valley&rsquo;s engineering velocity collides with the raw, unforgiving power of cross-border commerce.
                         </p>
                     </div>
-                    <div className="manifesto-line">
+                    <div className="manifesto-line flex gap-8 md:gap-16 items-start">
+                        <span className="hidden md:block shrink-0 mt-1" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent)', letterSpacing: '0.2em', opacity: 0.5 }}>§03</span>
                         <p className="text-[var(--text-secondary)] text-xl md:text-2xl leading-relaxed max-w-3xl">
                             We are not a startup chasing product-market fit. We are not a consultancy packaging insights. We are a sovereign venture studio and global trade conglomerate — engineering companies, moving physical assets at scale, and building immersive digital ecosystems that collapse the distance between atoms and bits.
                         </p>
                     </div>
-                    <div className="manifesto-line">
-                        <h3 className="text-[var(--text-primary)] text-2xl md:text-4xl tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                    <div className="manifesto-line flex gap-8 md:gap-16 items-start">
+                        <span className="hidden md:block shrink-0 mt-1" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent)', letterSpacing: '0.2em', opacity: 0.5 }}>§04</span>
+                        {/* Key quote — Cormorant Garamond luxury serif */}
+                        <h3
+                            style={{
+                                fontFamily: 'var(--font-luxury)',
+                                fontSize: 'clamp(1.75rem, 4vw, 3rem)',
+                                fontWeight: 400,
+                                fontStyle: 'italic',
+                                color: 'var(--text-primary)',
+                                lineHeight: 1.3,
+                                letterSpacing: '0.01em',
+                            }}
+                        >
                             Phygital is not a trend we follow.
                             <br />
-                            <span className="text-[var(--accent)]">It is the operating system we wrote.</span>
+                            <span style={{ color: 'var(--accent)', fontStyle: 'normal' }}>
+                                It is the operating system we wrote.
+                            </span>
                         </h3>
                     </div>
                 </div>
@@ -157,33 +185,54 @@ const Vision = () => {
                         />
                     </p>
                     <div className="vision-values-grid grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-                        <div className="vision-value">
-                            <span className="text-[var(--accent)] text-xs tracking-wider" style={{ fontFamily: 'var(--font-mono)' }}>01</span>
-                            <h4 className="text-[var(--text-primary)] text-2xl md:text-3xl tracking-wider mb-4 mt-3" style={{ fontFamily: 'var(--font-display)' }}>
-                                Relentless Innovation
-                            </h4>
-                            <p className="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed">
-                                We engineer what does not yet exist. From neuromorphic interface systems to tokenized fan engagement protocols, every venture begins with a question the market has not thought to ask — and an answer only we can build.
-                            </p>
-                        </div>
-                        <div className="vision-value">
-                            <span className="text-[var(--accent)] text-xs tracking-wider" style={{ fontFamily: 'var(--font-mono)' }}>02</span>
-                            <h4 className="text-[var(--text-primary)] text-2xl md:text-3xl tracking-wider mb-4 mt-3" style={{ fontFamily: 'var(--font-display)' }}>
-                                Borderless Operations
-                            </h4>
-                            <p className="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed">
-                                Incorporated in Wyoming. Operating across continents. Our trade infrastructure and digital platforms recognize no borders — only velocity, opportunity, and the disciplined execution required to capture both at scale.
-                            </p>
-                        </div>
-                        <div className="vision-value">
-                            <span className="text-[var(--accent)] text-xs tracking-wider" style={{ fontFamily: 'var(--font-mono)' }}>03</span>
-                            <h4 className="text-[var(--text-primary)] text-2xl md:text-3xl tracking-wider mb-4 mt-3" style={{ fontFamily: 'var(--font-display)' }}>
-                                Uncompromising Excellence
-                            </h4>
-                            <p className="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed">
-                                Every interface pixel, every container shipment, every line of production code reflects a standard that refuses negotiation. Mediocrity is not a risk we manage — it is a reality we have eliminated from our operating vocabulary.
-                            </p>
-                        </div>
+                        {[
+                            {
+                                n: '01',
+                                title: 'Relentless Innovation',
+                                body: 'We engineer what does not yet exist. From neuromorphic interface systems to tokenized fan engagement protocols, every venture begins with a question the market has not thought to ask — and an answer only we can build.',
+                            },
+                            {
+                                n: '02',
+                                title: 'Borderless Operations',
+                                body: 'Incorporated in Wyoming. Operating across continents. Our trade infrastructure and digital platforms recognize no borders — only velocity, opportunity, and the disciplined execution required to capture both at scale.',
+                            },
+                            {
+                                n: '03',
+                                title: 'Uncompromising Excellence',
+                                body: 'Every interface pixel, every container shipment, every line of production code reflects a standard that refuses negotiation. Mediocrity is not a risk we manage — it is a reality we have eliminated from our operating vocabulary.',
+                            },
+                        ].map((pillar, i) => (
+                            <div
+                                key={i}
+                                className="vision-value relative pt-8"
+                                style={{
+                                    borderTop: '1px solid var(--border)',
+                                    paddingLeft: '1.25rem',
+                                    borderLeft: '2px solid var(--accent)',
+                                }}
+                            >
+                                <span
+                                    className="text-xs tracking-wider"
+                                    style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)' }}
+                                >
+                                    {pillar.n}
+                                </span>
+                                <h4
+                                    className="mb-4 mt-3"
+                                    style={{
+                                        fontFamily: 'var(--font-display)',
+                                        fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+                                        letterSpacing: '0.05em',
+                                        color: 'var(--text-primary)',
+                                    }}
+                                >
+                                    {pillar.title}
+                                </h4>
+                                <p className="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed">
+                                    {pillar.body}
+                                </p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>

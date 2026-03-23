@@ -963,3 +963,38 @@ p, li {
   .hero-particle:nth-child(n+10) { display: none; }
   .hero-type-m p { word-break: break-word; hyphens: auto; }
 }
+
+/* ================================================================
+   FOOTER MOBILE OVERLAP FIX
+   The footer reveal uses absolute positioning inside a min-h-[60vh]
+   wrapper for its desktop parallax. On mobile we collapse this to
+   normal document flow so footer never overlaps page content.
+   ================================================================ */
+
+@media (max-width: 767px) {
+  .footer-reveal-wrapper {
+    min-height: auto !important;
+    padding-bottom: 0 !important;
+  }
+  .footer-inner {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+}
+
+/* ================================================================
+   CONTACT PAGE — MOBILE OVERFLOW SAFETY
+   ================================================================ */
+
+@media (max-width: 767px) {
+  .contact-email-link {
+    font-size: 0.8rem !important;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    letter-spacing: 0.02em !important;
+  }
+}
