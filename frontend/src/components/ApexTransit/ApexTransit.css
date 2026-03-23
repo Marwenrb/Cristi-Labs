@@ -1,0 +1,59 @@
+/* ── APEX TRANSIT: CANVAS HUD ANIMATIONS ─────────────────────────────────── */
+
+/* Pulsing live indicator dot */
+@keyframes apex-live-pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(184, 146, 74, 0.45);
+  }
+  50% {
+    opacity: 0.45;
+    box-shadow: 0 0 0 4px rgba(184, 146, 74, 0);
+  }
+}
+
+.apex-live-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  display: inline-block;
+  animation: apex-live-pulse 1.8s ease-in-out infinite;
+}
+
+/* Horizontal scan line sweep */
+@keyframes apex-scan-sweep {
+  0%   { top: -2px;             opacity: 0;   }
+  6%   {                        opacity: 0.9; }
+  90%  {                        opacity: 0.3; }
+  100% { top: calc(100% + 2px); opacity: 0;   }
+}
+
+.apex-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent             0%,
+    rgba(184,146,74,0.00)  10%,
+    rgba(184,146,74,0.18)  35%,
+    rgba(184,146,74,0.28)  50%,
+    rgba(184,146,74,0.18)  65%,
+    rgba(184,146,74,0.00)  90%,
+    transparent            100%
+  );
+  pointer-events: none;
+  animation: apex-scan-sweep 5.5s linear infinite;
+  z-index: 4;
+}
+
+/* ── MOBILE: COMPACT ACTIVE ROUTE CARD ──────────────────────────────────── */
+@media (max-width: 767px) {
+  .apex-route-card {
+    padding: 7px 11px !important;
+    min-width: 152px !important;
+  }
+}

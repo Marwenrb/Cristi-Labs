@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import airplaneImg from '../../assets/Medias/gallery/airplane.jpg';
 import apexTransitVideo from '../../assets/Medias/welcome/apex-transit-sequence.mp4';
+import './ApexTransit.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -398,54 +399,100 @@ export default function ApexTransit() {
           pointerEvents: 'none',
         }} />
 
-        {/* Network badge */}
+        {/* ── HUD: subtle dot-grid overlay ─────────────────────────── */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: [
+            'linear-gradient(rgba(184,146,74,0.016) 1px, transparent 1px)',
+            'linear-gradient(90deg, rgba(184,146,74,0.016) 1px, transparent 1px)',
+          ].join(', '),
+          backgroundSize: '72px 72px',
+          pointerEvents: 'none',
+          zIndex: 1,
+        }} />
+
+        {/* ── Corner bracket: top-left ─────────────────────────────────── */}
+        <div style={{
+          position: 'absolute',
+          top: '1rem',
+          left: '1rem',
+          width: '16px',
+          height: '16px',
+          borderTop: '1px solid rgba(184,146,74,0.42)',
+          borderLeft: '1px solid rgba(184,146,74,0.42)',
+          pointerEvents: 'none',
+          zIndex: 3,
+        }} />
+
+        {/* ── Corner bracket: bottom-right ─────────────────────────────── */}
+        <div style={{
+          position: 'absolute',
+          bottom: '1rem',
+          right: '1rem',
+          width: '16px',
+          height: '16px',
+          borderBottom: '1px solid rgba(184,146,74,0.42)',
+          borderRight: '1px solid rgba(184,146,74,0.42)',
+          pointerEvents: 'none',
+          zIndex: 3,
+        }} />
+
+        {/* ── Scan line sweep ──────────────────────────────────────────── */}
+        <div className="apex-scan-line" />
+
+        {/* ── Network badge ────────────────────────────────────────────── */}
         <div style={{
           position: 'absolute',
           top: '1.25rem',
           right: 'clamp(1rem, 4vw, 3rem)',
-          display: 'flex', alignItems: 'center', gap: '8px',
-          background: 'rgba(11,11,11,0.9)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          background: 'rgba(8,8,8,0.94)',
           border: '1px solid rgba(184,146,74,0.22)',
-          backdropFilter: 'blur(16px)',
-          padding: '6px 16px',
+          backdropFilter: 'blur(20px)',
+          padding: '6px 14px',
           borderRadius: '2px',
+          boxShadow: '0 2px 20px rgba(0,0,0,0.45), inset 0 1px 0 rgba(184,146,74,0.07)',
+          zIndex: 5,
         }}>
-          <span style={{
-            width: '4px',
-            height: '4px',
-            background: 'var(--accent)',
-            transform: 'rotate(45deg)',
-            flexShrink: 0,
-          }} />
+          <span className="apex-live-dot" />
           <span style={{
             fontFamily: 'var(--font-mono)',
             fontSize: '8px',
-            letterSpacing: '0.28em',
-            color: 'rgba(184,146,74,0.6)',
+            letterSpacing: '0.3em',
+            color: 'rgba(184,146,74,0.65)',
             textTransform: 'uppercase',
           }}>
             APEX NETWORK
           </span>
         </div>
 
-        {/* Active route overlay */}
-        <div style={{
-          position: 'absolute',
-          bottom: 'clamp(1rem, 3vw, 2rem)',
-          left: 'clamp(1rem, 4vw, 3rem)',
-          background: 'rgba(11,11,11,0.85)',
-          border: '1px solid rgba(184,146,74,0.18)',
-          backdropFilter: 'blur(20px)',
-          borderRadius: '2px',
-          padding: '12px 18px',
-          minWidth: '200px',
-        }}>
+        {/* ── Active route overlay ─────────────────────────────────────── */}
+        <div
+          className="apex-route-card"
+          style={{
+            position: 'absolute',
+            bottom: 'clamp(1rem, 3vw, 2rem)',
+            left: 'clamp(1rem, 4vw, 3rem)',
+            background: 'rgba(8,8,8,0.92)',
+            border: '1px solid rgba(184,146,74,0.16)',
+            borderTop: '1px solid rgba(184,146,74,0.5)',
+            backdropFilter: 'blur(24px)',
+            borderRadius: '2px',
+            padding: '12px 18px',
+            minWidth: '200px',
+            boxShadow: '0 8px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(184,146,74,0.06)',
+            zIndex: 5,
+          }}
+        >
           <p style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: '7px',
-            letterSpacing: '0.32em',
-            color: 'var(--accent)',
-            marginBottom: '6px',
+            fontSize: '6.5px',
+            letterSpacing: '0.36em',
+            color: 'rgba(184,146,74,0.5)',
+            marginBottom: '7px',
             textTransform: 'uppercase',
           }}>
             Active Route
@@ -455,14 +502,40 @@ export default function ApexTransit() {
             fontSize: 'clamp(0.9rem, 2vw, 1rem)',
             color: 'var(--text-primary)',
             lineHeight: 1.15,
+            letterSpacing: '-0.01em',
           }}>
-            {AIR_ROUTES[activeRoute].from} → {AIR_ROUTES[activeRoute].to}
+            {AIR_ROUTES[activeRoute].from}
+            <span style={{ color: 'rgba(184,146,74,0.55)', margin: '0 5px', fontSize: '0.82em' }}>›</span>
+            {AIR_ROUTES[activeRoute].to}
           </p>
-          <div style={{ display: 'flex', gap: '1rem', marginTop: '6px' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-secondary)' }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            marginTop: '8px',
+            paddingTop: '7px',
+            borderTop: '1px solid rgba(184,146,74,0.08)',
+          }}>
+            <span style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '9px',
+              color: 'rgba(255,255,255,0.3)',
+              letterSpacing: '0.06em',
+            }}>
               ⏱ {AIR_ROUTES[activeRoute].time}
             </span>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--accent)', letterSpacing: '0.1em' }}>
+            <span style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px',
+              fontFamily: 'var(--font-mono)',
+              fontSize: '9px',
+              color: AIR_ROUTES[activeRoute].status === 'LIVE' ? 'var(--accent)' : 'rgba(184,146,74,0.4)',
+              letterSpacing: '0.14em',
+            }}>
+              {AIR_ROUTES[activeRoute].status === 'LIVE' && (
+                <span className="apex-live-dot" style={{ width: '4px', height: '4px' }} />
+              )}
               {AIR_ROUTES[activeRoute].status}
             </span>
           </div>
