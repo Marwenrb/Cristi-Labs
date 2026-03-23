@@ -1,4 +1,4 @@
-import{r as o}from"./react-core-BdIgl1Fy.js";import{g as x}from"./gsap-Do8WOVkd.js";/*!
+import{a as o}from"./react-core-BMCAOQsz.js";import{g as x}from"./gsap-C4Wc4pQP.js";/*!
  * @gsap/react 2.1.2
  * https://gsap.com
  *
