@@ -126,7 +126,7 @@ const Vision = () => {
             <section className="w-full px-6 md:px-12 py-32">
                 <div className="max-w-5xl mx-auto space-y-24">
                     <div className="manifesto-line flex gap-8 md:gap-16 items-start">
-                        <span className="hidden md:block shrink-0 mt-1" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent)', letterSpacing: '0.2em', opacity: 0.5 }}>§01</span>
+                        <span className="hidden md:block shrink-0 mt-1" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent)', letterSpacing: '0.2em', opacity: 0.5, border: '1px solid rgba(201,168,76,0.18)', padding: '3px 7px' }}>§ 01</span>
                         <div>
                             <p className="text-[0.65rem] text-[var(--accent)] uppercase tracking-[0.3em] mb-8" style={{ fontFamily: 'var(--font-mono)' }}>
                                 The Thesis
@@ -137,19 +137,19 @@ const Vision = () => {
                         </div>
                     </div>
                     <div className="manifesto-line flex gap-8 md:gap-16 items-start">
-                        <span className="hidden md:block shrink-0 mt-1" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent)', letterSpacing: '0.2em', opacity: 0.5 }}>§02</span>
+                        <span className="hidden md:block shrink-0 mt-1" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent)', letterSpacing: '0.2em', opacity: 0.5, border: '1px solid rgba(201,168,76,0.18)', padding: '3px 7px' }}>§ 02</span>
                         <p className="text-[var(--text-secondary)] text-xl md:text-2xl leading-relaxed max-w-3xl">
                             Cristi Labs exists because of a single, irreversible insight: the most consequential opportunities on earth live at the exact intersection where Silicon Valley&rsquo;s engineering velocity collides with the raw, unforgiving power of cross-border commerce.
                         </p>
                     </div>
                     <div className="manifesto-line flex gap-8 md:gap-16 items-start">
-                        <span className="hidden md:block shrink-0 mt-1" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent)', letterSpacing: '0.2em', opacity: 0.5 }}>§03</span>
+                        <span className="hidden md:block shrink-0 mt-1" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent)', letterSpacing: '0.2em', opacity: 0.5, border: '1px solid rgba(201,168,76,0.18)', padding: '3px 7px' }}>§ 03</span>
                         <p className="text-[var(--text-secondary)] text-xl md:text-2xl leading-relaxed max-w-3xl">
                             We are not a startup chasing product-market fit. We are not a consultancy packaging insights. We are a sovereign venture studio and global trade conglomerate — engineering companies, moving physical assets at scale, and building immersive digital ecosystems that collapse the distance between atoms and bits.
                         </p>
                     </div>
                     <div className="manifesto-line flex gap-8 md:gap-16 items-start">
-                        <span className="hidden md:block shrink-0 mt-1" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent)', letterSpacing: '0.2em', opacity: 0.5 }}>§04</span>
+                        <span className="hidden md:block shrink-0 mt-1" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent)', letterSpacing: '0.2em', opacity: 0.5, border: '1px solid rgba(201,168,76,0.18)', padding: '3px 7px' }}>§ 04</span>
                         {/* Key quote — Cormorant Garamond luxury serif */}
                         <h3
                             style={{
@@ -209,6 +209,15 @@ const Vision = () => {
                                     borderTop: '1px solid var(--border)',
                                     paddingLeft: '1.25rem',
                                     borderLeft: '2px solid var(--accent)',
+                                    transition: 'box-shadow 0.4s ease, border-left-color 0.4s ease',
+                                }}
+                                onMouseEnter={e => {
+                                    e.currentTarget.style.boxShadow = '-4px 0 24px rgba(201,168,76,0.10)';
+                                    e.currentTarget.style.borderLeftColor = 'rgba(201,168,76,0.9)';
+                                }}
+                                onMouseLeave={e => {
+                                    e.currentTarget.style.boxShadow = 'none';
+                                    e.currentTarget.style.borderLeftColor = 'var(--accent)';
                                 }}
                             >
                                 <span

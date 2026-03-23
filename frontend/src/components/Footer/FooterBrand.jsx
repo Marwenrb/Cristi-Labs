@@ -5,7 +5,7 @@ import { waitForFonts } from "../../lib/fontLoader";
 
 gsap.registerPlugin(SplitText);
 
-const TYPING_SPEED = 0.06;
+const TYPING_SPEED = 0.055;
 
 const FooterBrand = () => {
     const brandRef = useRef(null);
@@ -53,34 +53,43 @@ const FooterBrand = () => {
 
                 gsap.set(titleSplit.chars, {
                     opacity: 0,
-                    scaleX: 0,
+                    y: 14,
+                    scaleX: 0.65,
+                    filter: 'blur(3px)',
                     transformOrigin: "left center",
                 });
                 cursorEl && gsap.set(cursorEl, { opacity: 0 });
-                gsap.set(taglineSplit.words, { y: 16, opacity: 0 });
+                gsap.set(taglineSplit.words, { y: 20, opacity: 0 });
 
                 const tl = gsap.timeline();
 
+                // Phase 1 — character-by-character reveal: blur dissolve + scaleX expand
                 tl.to(titleSplit.chars, {
                     opacity: 1,
+                    y: 0,
                     scaleX: 1,
+                    filter: 'blur(0px)',
                     stagger: TYPING_SPEED,
-                    duration: 0.3,
-                    ease: "power2.out",
+                    duration: 0.52,
+                    ease: "power4.out",
                 });
+
+                // Phase 2 — cursor blink-in
                 if (cursorEl) {
-                    tl.to(cursorEl, { opacity: 1, duration: 0.05 }, `-=${TYPING_SPEED}`);
+                    tl.to(cursorEl, { opacity: 1, duration: 0.06 }, `-=${TYPING_SPEED}`);
                 }
+
+                // Phase 3 — tagline words rise into place with a silky stagger
                 tl.to(
                     taglineSplit.words,
                     {
                         y: 0,
                         opacity: 1,
-                        stagger: 0.04,
-                        duration: 0.45,
-                        ease: "power2.out",
+                        stagger: 0.06,
+                        duration: 0.65,
+                        ease: "power3.out",
                     },
-                    "-=0.15"
+                    "-=0.22"
                 );
                 }); // end waitForFonts
             },

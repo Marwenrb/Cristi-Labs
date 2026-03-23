@@ -351,11 +351,44 @@ const Contact = () => {
                             backgroundSize: '80px 80px', pointerEvents: 'none',
                         }}
                     />
-                    <div className="p-4 flex flex-col justify-center h-full">
+                    {/* ── HUD corner bracket — top left */}
+                    <div aria-hidden="true" style={{
+                        position: 'absolute', top: '1.5rem', left: '1.5rem',
+                        width: '22px', height: '22px',
+                        borderTop: '1px solid rgba(201,168,76,0.28)',
+                        borderLeft: '1px solid rgba(201,168,76,0.28)',
+                        pointerEvents: 'none',
+                    }} />
+                    {/* ── HUD corner bracket — bottom right */}
+                    <div aria-hidden="true" style={{
+                        position: 'absolute', bottom: '1.5rem', right: '1.5rem',
+                        width: '22px', height: '22px',
+                        borderBottom: '1px solid rgba(201,168,76,0.28)',
+                        borderRight: '1px solid rgba(201,168,76,0.28)',
+                        pointerEvents: 'none',
+                    }} />
+
+                    {/* ── Bottom-right coordinate data strip */}
+                    <div aria-hidden="true" style={{
+                        position: 'absolute',
+                        bottom: 'clamp(2rem, 4vw, 3rem)',
+                        right: 'clamp(2rem, 5vw, 4rem)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        gap: '4px',
+                        pointerEvents: 'none',
+                    }}>
+                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.2em', color: 'rgba(201,168,76,0.3)', textTransform: 'uppercase' }}>44.7966° N · 106.9562° W</span>
+                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '7px', letterSpacing: '0.16em', color: 'rgba(201,168,76,0.18)', textTransform: 'uppercase' }}>SHR HQ · SECURE CHANNEL</span>
+                    </div>                    <div className="p-4 flex flex-col justify-center h-full">
                         <div className="relative flex flex-col justify-center items-start md:pl-12 pl-4">
-                            <p className="text-[.7rem] text-[var(--accent)] uppercase tracking-[0.25em] mb-6 contact-hero-sub">
-                                Corporate Access
-                            </p>
+                            <div className="flex items-center gap-3 mb-6">
+                                <div style={{ width: '20px', height: '1px', background: 'var(--accent)', opacity: 0.7 }} />
+                                <p className="text-[.7rem] text-[var(--accent)] uppercase tracking-[0.28em] contact-hero-sub" style={{ fontFamily: 'var(--font-mono)' }}>
+                                    Corporate Access
+                                </p>
+                            </div>
                             <div className="overflow-hidden">
                                 <h1 className="text-[var(--text-primary)] text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-wider leading-[0.9] flex flex-wrap gap-x-6" style={{ fontFamily: 'var(--font-display)' }}>
                                     {heroWords.map((word, i) => (
@@ -376,12 +409,22 @@ const Contact = () => {
                 </div>
             </section>
 
-            {/* ═══ Two-Column Grid ════════════════════════════════ */}
+                    {/* ═══ Two-Column Grid ══════════════════════════════ */}
             <SectionDivider index={2} total={3} />
             <section className="contact-grid w-full px-6 md:px-12 lg:px-16 py-16 md:py-24">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
-                    {/* ── LEFT: Corporate Info ─────────────────── */}
+                    {/* ── LEFT: Corporate Info ──────────────────── */}
                     <div className="flex flex-col gap-12">
+                        {/* Section header — premium label */}
+                        <div style={{
+                            display: 'flex', alignItems: 'center', gap: '14px',
+                            paddingBottom: '1.25rem',
+                            borderBottom: '1px solid rgba(201,168,76,0.08)',
+                            marginBottom: '0.5rem',
+                        }}>
+                            <div style={{ width: '28px', height: '1px', background: 'var(--accent)', opacity: 0.6 }} />
+                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.32em', color: 'rgba(201,168,76,0.5)', textTransform: 'uppercase' }}>Corporate Intelligence</span>
+                        </div>
                         <div className="contact-info-item">
                             <p className="text-[.7rem] text-[var(--accent)] uppercase tracking-[0.25em] mb-4">
                                 Headquarters

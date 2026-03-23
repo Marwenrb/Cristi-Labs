@@ -338,7 +338,19 @@ const Store = () => {
                                     filter: tier.isClassified ? 'blur(4px)' : 'none',
                                     userSelect: tier.isClassified ? 'none' : 'auto',
                                     pointerEvents: tier.isClassified ? 'none' : 'auto',
-                                    transition: 'border-color 0.3s, background 0.3s',
+                                    transition: 'border-color 0.35s ease, box-shadow 0.35s ease, background 0.3s',
+                                }}
+                                onMouseEnter={e => {
+                                    if (!tier.isClassified) {
+                                        e.currentTarget.style.borderColor = 'rgba(201,168,76,0.35)';
+                                        e.currentTarget.style.boxShadow = '0 0 48px rgba(184,146,74,0.07), inset 0 1px 0 rgba(184,146,74,0.08)';
+                                    }
+                                }}
+                                onMouseLeave={e => {
+                                    if (!tier.isClassified) {
+                                        e.currentTarget.style.borderColor = 'var(--border)';
+                                        e.currentTarget.style.boxShadow = 'none';
+                                    }
                                 }}
                             >
                                 {/* Top accent line */}
@@ -541,14 +553,22 @@ const Store = () => {
                                     textTransform: 'uppercase',
                                     color: 'var(--bg-void)',
                                     background: 'var(--accent)',
-                                    border: 'none',
+                                    border: '1px solid var(--accent)',
                                     padding: '16px 48px',
                                     cursor: 'pointer',
                                     width: '100%',
-                                    transition: 'opacity 0.3s',
+                                    transition: 'opacity 0.3s, transform 0.2s, box-shadow 0.3s',
                                 }}
-                                onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
-                                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+                                onMouseEnter={e => {
+                                    e.currentTarget.style.opacity = '0.88';
+                                    e.currentTarget.style.boxShadow = '0 6px 32px rgba(184,146,74,0.22)';
+                                }}
+                                onMouseLeave={e => {
+                                    e.currentTarget.style.opacity = '1';
+                                    e.currentTarget.style.boxShadow = 'none';
+                                }}
+                                onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.98)'; }}
+                                onMouseUp={e => { e.currentTarget.style.transform = 'scale(1)'; }}
                             >
                                 REQUEST VAULT ACCESS
                             </button>

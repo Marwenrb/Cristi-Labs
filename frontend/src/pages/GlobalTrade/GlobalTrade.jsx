@@ -402,7 +402,7 @@ const GlobalTrade = () => {
                         Operational Reach
                     </p>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-                        <div className="trade-stat">
+                        <div className="trade-stat" style={{ borderTop: '1px solid rgba(201,168,76,0.18)', paddingTop: '1.5rem' }}>
                             <p
                                 className="trade-stat-value text-[var(--text-primary)]"
                                 data-target="12"
@@ -418,7 +418,7 @@ const GlobalTrade = () => {
                                 Countries
                             </p>
                         </div>
-                        <div className="trade-stat">
+                        <div className="trade-stat" style={{ borderTop: '1px solid rgba(201,168,76,0.18)', paddingTop: '1.5rem' }}>
                             <p
                                 className="trade-stat-value text-[var(--text-primary)]"
                                 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1 }}
@@ -432,7 +432,7 @@ const GlobalTrade = () => {
                                 Operations
                             </p>
                         </div>
-                        <div className="trade-stat">
+                        <div className="trade-stat" style={{ borderTop: '1px solid rgba(201,168,76,0.18)', paddingTop: '1.5rem' }}>
                             <p
                                 className="trade-stat-value text-[var(--text-primary)]"
                                 data-target="100"
@@ -448,7 +448,7 @@ const GlobalTrade = () => {
                                 Digital Tracked
                             </p>
                         </div>
-                        <div className="trade-stat">
+                        <div className="trade-stat" style={{ borderTop: '1px solid rgba(201,168,76,0.18)', paddingTop: '1.5rem' }}>
                             <p
                                 className="trade-stat-value text-[var(--text-primary)]"
                                 data-infinity="true"
@@ -470,6 +470,11 @@ const GlobalTrade = () => {
             {/* ═══ Closing Section ════════════════════════════════ */}
             <section className="trade-closing w-full px-6 md:px-12 py-32">
                 <div className="max-w-5xl mx-auto">
+                    {/* Premium section label */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '2.5rem' }}>
+                        <div style={{ width: '28px', height: '1px', background: 'var(--accent)', opacity: 0.5 }} />
+                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.32em', color: 'rgba(201,168,76,0.45)', textTransform: 'uppercase' }}>Infrastructure Statement</span>
+                    </div>
                     <h2
                         className="text-[var(--text-primary)] tracking-wider leading-[0.95]"
                         style={{
@@ -486,6 +491,30 @@ const GlobalTrade = () => {
                         the tangible world to our digital ecosystem with speed, scale, and
                         intelligence.
                     </p>
+                    <div style={{
+                        marginTop: '3rem',
+                        paddingTop: '2rem',
+                        borderTop: '1px solid rgba(201,168,76,0.08)',
+                        display: 'flex', alignItems: 'center', gap: '2rem',
+                        flexWrap: 'wrap',
+                    }}>
+                        <a
+                            href="/contact"
+                            style={{
+                                display: 'inline-flex', alignItems: 'center', gap: '10px',
+                                fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.28em',
+                                textTransform: 'uppercase', color: 'var(--accent)',
+                                border: '1px solid rgba(201,168,76,0.35)',
+                                padding: '14px 28px', textDecoration: 'none',
+                                transition: 'border-color 0.3s, background 0.3s',
+                            }}
+                            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.background = 'rgba(201,168,76,0.04)'; }}
+                            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(201,168,76,0.35)'; e.currentTarget.style.background = 'transparent'; }}
+                        >
+                            Open a Trade Channel
+                            <span style={{ fontSize: '12px' }}>↗</span>
+                        </a>
+                    </div>
                 </div>
             </section>
 

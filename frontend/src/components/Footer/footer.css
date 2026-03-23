@@ -157,6 +157,7 @@
 
 .footer-brand-card:hover {
     border-color: var(--border-strong);
+    box-shadow: 0 0 80px rgba(184,146,74,0.06), inset 0 1px 0 rgba(184,146,74,0.1);
 }
 
 .footer-brand-card::before {
@@ -203,10 +204,10 @@
 .footer-brand-title {
     font-family: var(--font-luxury);
     color: var(--text-primary);
-    font-size: clamp(2rem, 4.5vw, 2.875rem);
+    font-size: clamp(2.5rem, 5.5vw, 4rem);
     font-weight: 500;
     font-style: normal;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     white-space: nowrap;
     transition: color var(--duration-mid) var(--ease-out-expo),
@@ -215,7 +216,7 @@
 
 .footer-brand-card:hover .footer-brand-title {
     color: var(--text-primary);
-    text-shadow: 0 0 48px rgba(201, 168, 76, 0.22), 0 0 80px rgba(201, 168, 76, 0.08);
+    text-shadow: 0 0 60px rgba(201, 168, 76, 0.3), 0 0 100px rgba(201, 168, 76, 0.1);
 }
 
 .footer-brand-title-accent {
@@ -234,13 +235,14 @@
 
 .footer-brand-cursor {
     display: inline-block;
-    width: 2px;
-    height: 0.95em;
+    width: 2.5px;
+    height: 0.9em;
     background: var(--accent);
-    margin-left: 3px;
+    margin-left: 4px;
     vertical-align: text-bottom;
     flex-shrink: 0;
-    animation: footer-brand-cursor-blink 1s step-end infinite;
+    box-shadow: 0 0 8px rgba(184,146,74,0.5);
+    animation: footer-brand-cursor-blink 1.1s step-end infinite;
 }
 
 @keyframes footer-brand-cursor-blink {
@@ -249,10 +251,10 @@
 }
 
 .footer-brand-tagline {
-    margin-top: 1.125rem;
-    font-size: clamp(0.6rem, 1.1vw, 0.72rem);
+    margin-top: 1.25rem;
+    font-size: clamp(0.62rem, 1.15vw, 0.76rem);
     font-weight: 300;
-    letter-spacing: 0.26em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--text-secondary);
     font-family: var(--font-body);

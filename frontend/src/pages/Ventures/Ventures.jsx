@@ -124,9 +124,28 @@ const VentureItem = ({ venture, index }) => {
                 >
                     {venture.number}
                 </span>
-                <div>
+                <div style={{ position: 'relative' }}>
+                    {/* Ghost number — decorative background digit */}
+                    <span
+                        aria-hidden="true"
+                        style={{
+                            position: 'absolute',
+                            top: '-0.6em',
+                            right: '-0.15em',
+                            fontFamily: 'var(--font-display)',
+                            fontSize: 'clamp(5rem, 12vw, 9rem)',
+                            color: 'rgba(201,168,76,0.038)',
+                            lineHeight: 1,
+                            letterSpacing: '-0.02em',
+                            userSelect: 'none',
+                            pointerEvents: 'none',
+                            zIndex: 0,
+                        }}
+                    >
+                        {venture.number}
+                    </span>
                     {/* Status + metric pills */}
-                    <div className="flex flex-wrap items-center gap-2 mb-4">
+                    <div className="flex flex-wrap items-center gap-2 mb-4" style={{ position: 'relative', zIndex: 1 }}>
                         <span
                             style={{
                                 fontFamily: 'var(--font-mono)',
@@ -160,13 +179,15 @@ const VentureItem = ({ venture, index }) => {
                             fontFamily: 'var(--font-display)',
                             fontSize: 'clamp(1.75rem, 4vw, 3.75rem)',
                             color: venture.accent,
+                            position: 'relative',
+                            zIndex: 1,
                         }}
                     >
                         {venture.name}
                     </h2>
                     <p
                         className="text-xs uppercase tracking-[0.2em] mt-3"
-                        style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)' }}
+                        style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)', position: 'relative', zIndex: 1 }}
                     >
                         {venture.tagline}
                     </p>
