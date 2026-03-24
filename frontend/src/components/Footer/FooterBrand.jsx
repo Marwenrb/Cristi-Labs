@@ -53,43 +53,41 @@ const FooterBrand = () => {
 
                 gsap.set(titleSplit.chars, {
                     opacity: 0,
-                    y: 14,
-                    scaleX: 0.65,
-                    filter: 'blur(3px)',
-                    transformOrigin: "left center",
+                    y: 22,
+                    filter: 'blur(7px)',
+                    transformOrigin: "50% 100%",
                 });
                 cursorEl && gsap.set(cursorEl, { opacity: 0 });
-                gsap.set(taglineSplit.words, { y: 20, opacity: 0 });
+                gsap.set(taglineSplit.words, { y: 18, opacity: 0 });
 
                 const tl = gsap.timeline();
 
-                // Phase 1 — character-by-character reveal: blur dissolve + scaleX expand
+                // Phase 1 — luxury blur-dissolve reveal: each char falls lightly into place
                 tl.to(titleSplit.chars, {
                     opacity: 1,
                     y: 0,
-                    scaleX: 1,
                     filter: 'blur(0px)',
                     stagger: TYPING_SPEED,
-                    duration: 0.52,
-                    ease: "power4.out",
+                    duration: 0.7,
+                    ease: "expo.out",
                 });
 
-                // Phase 2 — cursor blink-in
+                // Phase 2 — cursor materialises immediately after last char
                 if (cursorEl) {
-                    tl.to(cursorEl, { opacity: 1, duration: 0.06 }, `-=${TYPING_SPEED}`);
+                    tl.to(cursorEl, { opacity: 1, duration: 0.08 }, `-=${TYPING_SPEED}`);
                 }
 
-                // Phase 3 — tagline words rise into place with a silky stagger
+                // Phase 3 — tagline glides upward word by word
                 tl.to(
                     taglineSplit.words,
                     {
                         y: 0,
                         opacity: 1,
-                        stagger: 0.06,
-                        duration: 0.65,
-                        ease: "power3.out",
+                        stagger: 0.07,
+                        duration: 0.7,
+                        ease: "expo.out",
                     },
-                    "-=0.22"
+                    "-=0.3"
                 );
                 }); // end waitForFonts
             },
