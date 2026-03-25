@@ -57,13 +57,18 @@ const FooterBrand = () => {
                     const tier = cardEl.querySelector('.footer-brand-tier');
                     const accent = cardEl.querySelector('.footer-brand-accent');
                     const sigEl = sigRef.current;
-                    const sigPath = sigEl?.querySelector('.footer-brand-signature-path');
+                    const sigBody = sigEl?.querySelector('.footer-brand-signature-body');
+                    const sigFlourish = sigEl?.querySelector('.footer-brand-signature-flourish');
 
-                    // Pre-compute signature path length for dash animation
-                    let sigLen = 0;
-                    if (sigPath) {
-                        sigLen = sigPath.getTotalLength() || 320;
-                        gsap.set(sigPath, { strokeDasharray: sigLen, strokeDashoffset: sigLen });
+                    // Pre-compute path lengths for dual-stroke dash animation
+                    let sigBodyLen = 0, sigFlourishLen = 0;
+                    if (sigBody) {
+                        sigBodyLen = sigBody.getTotalLength() || 420;
+                        gsap.set(sigBody, { strokeDasharray: sigBodyLen, strokeDashoffset: sigBodyLen });
+                    }
+                    if (sigFlourish) {
+                        sigFlourishLen = sigFlourish.getTotalLength() || 280;
+                        gsap.set(sigFlourish, { strokeDasharray: sigFlourishLen, strokeDashoffset: sigFlourishLen });
                     }
 
                     // Reduced motion — instant reveal
@@ -77,9 +82,10 @@ const FooterBrand = () => {
                         watermark && gsap.set(watermark, { opacity: 0.045 });
                         tier && gsap.set(tier, { opacity: 1 });
                         accent && gsap.set(accent, { scaleX: 1 });
-                        if (sigEl && sigPath) {
+                        if (sigEl) {
                             gsap.set(sigEl, { opacity: 1 });
-                            gsap.set(sigPath, { strokeDashoffset: 0 });
+                            sigBody && gsap.set(sigBody, { strokeDashoffset: 0 });
+                            sigFlourish && gsap.set(sigFlourish, { strokeDashoffset: 0 });
                         }
                         cardEl.classList.add('is-revealed');
                         return;
@@ -137,14 +143,35 @@ const FooterBrand = () => {
                         }, null, typewriterEnd + 0.05);
                     }
 
-                    // typewriterEnd + 0.12s — Signature draws like a pen stroke
-                    if (sigEl && sigPath && sigLen > 0) {
+                    // typewriterEnd + 0.12s — Body draws (cursive monogram), then flourish sweeps
+                    if (sigEl && (sigBodyLen > 0 || sigFlourishLen > 0)) {
                         tl.set(sigEl, { opacity: 1 }, typewriterEnd + 0.12);
-                        tl.to(sigPath, {
-                            strokeDashoffset: 0,
-                            duration: 1.15,
-                            ease: "power2.inOut",
-                        }, typewriterEnd + 0.12);
+                        if (sigBody && sigBodyLen > 0) {
+                            tl.to(sigBody, {
+                                strokeDashoffset: 0,
+                                duration: 0.9,
+                                ease: "power3.inOut",
+                            }, typewriterEnd + 0.12);
+                        }
+                        if (sigFlourish && sigFlourishLen > 0) {
+                            // Flourish starts as body is near its end (0.7s offset)
+                            tl.to(sigFlourish, {
+                                strokeDashoffset: 0,
+                                duration: 0.45,
+                                ease: "expo.out",
+                            }, typewriterEnd + 0.12 + 0.7);
+                            // Wet-ink shimmer — gold flare then fades as ink dries
+                            tl.to(sigEl, {
+                                filter: "brightness(1.5) drop-shadow(0 0 6px rgba(240,201,107,0.50))",
+                                duration: 0.2,
+                                ease: "power2.out",
+                            }, typewriterEnd + 0.12 + 0.7 + 0.42);
+                            tl.to(sigEl, {
+                                filter: "brightness(1) drop-shadow(0 0 0px transparent)",
+                                duration: 0.65,
+                                ease: "sine.inOut",
+                            }, ">");
+                        }
                     }
 
                     // typewriterEnd + 0.2s — Tagline words drift up into place
@@ -198,28 +225,45 @@ const FooterBrand = () => {
                     />
                 </div>
 
-                {/* Founder signature — pen-stroke draw after typewriter completes */}
+                {/* Founder signature — body (cursive monogram) + sweeping flourish */}
                 <svg
                     ref={sigRef}
                     className="footer-brand-signature"
-                    viewBox="0 0 196 36"
+                    viewBox="0 0 240 48"
                     xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true"
                     focusable="false"
                 >
                     <defs>
                         <linearGradient id="fbsig-gold" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%"   stopColor="#F0C96B" stopOpacity="0.95" />
-                            <stop offset="45%"  stopColor="#C9A84C" stopOpacity="0.75" />
-                            <stop offset="100%" stopColor="#9A7530" stopOpacity="0.15" />
+                            <stop offset="0%"   stopColor="#FFEEA0" stopOpacity="1.0" />
+                            <stop offset="30%"  stopColor="#F0C96B" stopOpacity="0.90" />
+                            <stop offset="65%"  stopColor="#C9A84C" stopOpacity="0.70" />
+                            <stop offset="100%" stopColor="#9A7530" stopOpacity="0.10" />
+                        </linearGradient>
+                        <linearGradient id="fbsig-flourish" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%"   stopColor="#C9A84C" stopOpacity="0.55" />
+                            <stop offset="70%"  stopColor="#9A7530" stopOpacity="0.28" />
+                            <stop offset="100%" stopColor="#7A5C28" stopOpacity="0.04" />
                         </linearGradient>
                     </defs>
+                    {/* Body: expressive cursive monogram — looping initial + connecting strokes */}
                     <path
-                        className="footer-brand-signature-path"
-                        d="M 5,27 C 2,17 3,5 12,5 C 20,5 25,13 22,21 C 20,27 15,31 10,27 C 8,25 9,21 13,18 C 18,14 30,9 42,10 C 50,11 53,20 49,27 L 186,27 C 189,27 191,24 190,21"
+                        className="footer-brand-signature-body"
+                        d="M 8,34 C 4,20 5,7 18,6 C 29,5 36,17 31,28 C 28,35 20,40 14,34 C 11,31 13,26 18,22 C 24,17 40,11 58,14 C 68,15 76,10 90,8 C 102,6 110,18 104,28 C 101,34 95,36 90,33 C 88,31 90,27 95,25 C 102,22 114,19 128,20 C 138,21 146,30 142,36"
                         fill="none"
                         stroke="url(#fbsig-gold)"
-                        strokeWidth="1.3"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+                    {/* Flourish: sweeping underline that lifts off — pen leaving paper */}
+                    <path
+                        className="footer-brand-signature-flourish"
+                        d="M 6,43 C 50,41 110,39 160,39 C 186,39 212,37 228,32 C 236,29 240,24 238,20"
+                        fill="none"
+                        stroke="url(#fbsig-flourish)"
+                        strokeWidth="1.0"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                     />
