@@ -11,6 +11,7 @@ const FooterBrand = () => {
     const titleRef = useRef(null);
     const cursorRef = useRef(null);
     const taglineRef = useRef(null);
+    const sigRef = useRef(null);
     const hasAnimatedRef = useRef(false);
 
     useEffect(() => {
@@ -55,6 +56,15 @@ const FooterBrand = () => {
                     const watermark = cardEl.querySelector('.footer-brand-watermark');
                     const tier = cardEl.querySelector('.footer-brand-tier');
                     const accent = cardEl.querySelector('.footer-brand-accent');
+                    const sigEl = sigRef.current;
+                    const sigPath = sigEl?.querySelector('.footer-brand-signature-path');
+
+                    // Pre-compute signature path length for dash animation
+                    let sigLen = 0;
+                    if (sigPath) {
+                        sigLen = sigPath.getTotalLength() || 320;
+                        gsap.set(sigPath, { strokeDasharray: sigLen, strokeDashoffset: sigLen });
+                    }
 
                     // Reduced motion — instant reveal
                     if (prefersReduced) {
@@ -67,6 +77,10 @@ const FooterBrand = () => {
                         watermark && gsap.set(watermark, { opacity: 0.045 });
                         tier && gsap.set(tier, { opacity: 1 });
                         accent && gsap.set(accent, { scaleX: 1 });
+                        if (sigEl && sigPath) {
+                            gsap.set(sigEl, { opacity: 1 });
+                            gsap.set(sigPath, { strokeDashoffset: 0 });
+                        }
                         cardEl.classList.add('is-revealed');
                         return;
                     }
@@ -123,6 +137,16 @@ const FooterBrand = () => {
                         }, null, typewriterEnd + 0.05);
                     }
 
+                    // typewriterEnd + 0.12s — Signature draws like a pen stroke
+                    if (sigEl && sigPath && sigLen > 0) {
+                        tl.set(sigEl, { opacity: 1 }, typewriterEnd + 0.12);
+                        tl.to(sigPath, {
+                            strokeDashoffset: 0,
+                            duration: 1.15,
+                            ease: "power2.inOut",
+                        }, typewriterEnd + 0.12);
+                    }
+
                     // typewriterEnd + 0.2s — Tagline words drift up into place
                     tl.to(words, {
                         opacity: 1,
@@ -173,6 +197,33 @@ const FooterBrand = () => {
                         aria-hidden="true"
                     />
                 </div>
+
+                {/* Founder signature — pen-stroke draw after typewriter completes */}
+                <svg
+                    ref={sigRef}
+                    className="footer-brand-signature"
+                    viewBox="0 0 196 36"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    focusable="false"
+                >
+                    <defs>
+                        <linearGradient id="fbsig-gold" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%"   stopColor="#F0C96B" stopOpacity="0.95" />
+                            <stop offset="45%"  stopColor="#C9A84C" stopOpacity="0.75" />
+                            <stop offset="100%" stopColor="#9A7530" stopOpacity="0.15" />
+                        </linearGradient>
+                    </defs>
+                    <path
+                        className="footer-brand-signature-path"
+                        d="M 5,27 C 2,17 3,5 12,5 C 20,5 25,13 22,21 C 20,27 15,31 10,27 C 8,25 9,21 13,18 C 18,14 30,9 42,10 C 50,11 53,20 49,27 L 186,27 C 189,27 191,24 190,21"
+                        fill="none"
+                        stroke="url(#fbsig-gold)"
+                        strokeWidth="1.3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+                </svg>
 
                 <p ref={taglineRef} className="footer-brand-tagline" aria-label="Code the Impossible. Trade the World.">
                     Code the Impossible. Trade the World.

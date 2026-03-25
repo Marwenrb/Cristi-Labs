@@ -456,6 +456,23 @@
     transform: translateY(8px);
 }
 
+/* ── Founder signature — pen-stroke draw ── */
+.footer-brand-signature {
+    display: block;
+    width: 195px;
+    height: 28px;
+    margin-top: 0.3rem;
+    overflow: visible;
+    opacity: 0; /* GSAP sets to 1 after typewriter */
+    flex-shrink: 0;
+}
+
+.footer-brand-signature-path {
+    /* GSAP overrides with getTotalLength() at runtime */
+    stroke-dasharray: 320;
+    stroke-dashoffset: 320;
+}
+
 /* ── Accent line ── */
 .footer-brand-accent {
     position: absolute;
@@ -507,6 +524,11 @@
     .footer-brand-watermark {
         font-size: 6rem;
         right: 2%;
+    }
+
+    .footer-brand-signature {
+        width: 155px;
+        height: 22px;
     }
 }
 
