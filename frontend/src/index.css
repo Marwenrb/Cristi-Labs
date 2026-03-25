@@ -998,3 +998,415 @@ p, li {
     letter-spacing: 0.02em !important;
   }
 }
+
+/* ================================================================
+   PRESIDENTIAL UI REVOLUTION — GLOBAL UTILITIES
+   ================================================================ */
+
+/* ── Presidential Section Eyebrow ── */
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.section-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px; height: 1px;
+  background: var(--accent-gold);
+  flex-shrink: 0;
+}
+.section-eyebrow-text {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+}
+
+/* ── Ghost Background Typography ── */
+.ghost-bg-text {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 18vw, 16rem);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.025;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  z-index: 0;
+  line-height: 1;
+}
+
+/* ── Page Section Spacing ── */
+.page-section {
+  padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem);
+  position: relative;
+}
+
+/* ── Presidential Separator ── */
+.presidential-rule {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184,146,74,0.3), transparent);
+  margin: 0;
+  border: none;
+}
+
+/* ── Ventures Dossier ── */
+.venture-dossier {
+  display: grid;
+  grid-template-columns: 120px 1fr 280px;
+  gap: 0;
+  padding: 3rem 0;
+  border-top: 1px solid rgba(184,146,74,0.1);
+  position: relative;
+  cursor: default;
+  transition: background 0.5s ease;
+}
+.venture-dossier:hover {
+  background: rgba(184,146,74,0.015);
+}
+.venture-dossier::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 1px;
+  background: linear-gradient(90deg, #B8924A, transparent);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.venture-dossier:hover::after { width: 100%; }
+
+.venture-index {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  color: var(--accent-gold);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.venture-status {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.25em;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+.venture-divider {
+  width: 24px;
+  height: 1px;
+  background: rgba(184,146,74,0.2);
+  margin-bottom: 0.75rem;
+}
+.venture-category {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+}
+.venture-name {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: 0.12em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.venture-desc {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 1.25rem;
+}
+.venture-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.vtag {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  border: 1px solid rgba(184,146,74,0.25);
+  padding: 0.2rem 0.6rem;
+  border-radius: 1px;
+}
+.venture-visual {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  filter: grayscale(0.6) brightness(0.7);
+  transition: filter 0.6s ease;
+}
+.venture-dossier:hover .venture-visual {
+  filter: grayscale(0.2) brightness(0.9);
+}
+.venture-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.venture-visual-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(11,11,11,0.4), transparent);
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .venture-dossier {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 2rem 0;
+  }
+  .venture-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .venture-meta .venture-divider { display: none; }
+  .venture-meta .venture-status { margin-bottom: 0; }
+  .venture-meta .venture-index { margin-bottom: 0; }
+  .venture-visual { display: none; }
+}
+
+/* ── Global Trade — Ops Ticker ── */
+.ops-ticker {
+  background: rgba(184,146,74,0.06);
+  border-top: 1px solid rgba(184,146,74,0.12);
+  border-bottom: 1px solid rgba(184,146,74,0.12);
+  padding: 0.75rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ops-ticker-inner {
+  display: inline-block;
+  animation: ticker-scroll 30s linear infinite;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--accent-gold);
+}
+@keyframes ticker-scroll {
+  from { transform: translateX(100vw); }
+  to   { transform: translateX(-100%); }
+}
+
+/* ── Global Trade — Feature Grid ── */
+.trade-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid rgba(184,146,74,0.1);
+}
+.trade-feature-col {
+  padding: 2.5rem;
+  border-right: 1px solid rgba(184,146,74,0.1);
+  position: relative;
+}
+.trade-feature-col:last-child { border-right: none; }
+.trade-feature-col::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 2px; height: 0;
+  background: var(--accent-gold);
+  transition: height 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.trade-feature-col:hover::before { height: 100%; }
+
+@media (max-width: 768px) {
+  .trade-feature-grid {
+    grid-template-columns: 1fr;
+  }
+  .trade-feature-col {
+    border-right: none;
+    border-bottom: 1px solid rgba(184,146,74,0.1);
+  }
+  .trade-feature-col:last-child { border-bottom: none; }
+  .ops-ticker-inner {
+    animation-duration: 15s;
+  }
+}
+
+/* ── Global Trade — Route Lines ── */
+@keyframes route-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ── Vision — Grain ── */
+.vision-grain::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0;
+}
+
+/* ── Vision — Pillars Accordion ── */
+.pillar-row {
+  border-top: 1px solid rgba(184,146,74,0.1);
+  cursor: pointer;
+  transition: background 0.4s;
+}
+.pillar-row:hover { background: rgba(184,146,74,0.015); }
+.pillar-row-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.75rem 0;
+}
+.pillar-expand-body {
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.4s;
+}
+.pillar-expand-rule {
+  width: 0;
+  height: 1px;
+  background: var(--accent-gold);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pillar-row.is-open .pillar-expand-rule { width: 100%; }
+
+/* ── Vision — Leadership ── */
+.leadership-photo {
+  filter: grayscale(1) contrast(1.1) brightness(0.8);
+  mix-blend-mode: luminosity;
+  transition: filter 0.8s ease;
+}
+.leadership-photo:hover {
+  filter: grayscale(0.3) contrast(1.05) brightness(0.9);
+}
+.leadership-section {
+  position: relative;
+}
+.leadership-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(184,146,74,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Contact — Access Terminal ── */
+.access-terminal {
+  border: 1px solid rgba(184,146,74,0.15);
+  padding: 3rem;
+  position: relative;
+  background: rgba(22,21,20,0.8);
+  backdrop-filter: blur(8px);
+}
+.access-terminal::before {
+  content: '> SECURE TERMINAL \2014  CRISTI LABS LLC';
+  position: absolute;
+  top: -1px; left: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.3em;
+  color: var(--accent-gold);
+  background: var(--bg-void);
+  padding: 0 0.5rem;
+  transform: translateY(-50%);
+}
+
+.terminal-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(184,146,74,0.2);
+  padding: 1rem 0 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.3s;
+  resize: none;
+}
+.terminal-input:focus {
+  border-bottom-color: var(--accent-gold);
+}
+.terminal-input::placeholder {
+  color: rgba(122,118,112,0.4);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.terminal-submit {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent;
+  border: 1px solid rgba(184,146,74,0.3);
+  padding: 0.875rem 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s, border-color 0.4s;
+}
+.terminal-submit::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--accent-gold);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+}
+.terminal-submit:hover {
+  color: var(--bg-void);
+  border-color: var(--accent-gold);
+}
+.terminal-submit:hover::after { transform: scaleX(1); }
+.terminal-submit:disabled {
+  opacity: 0.4;
+  cursor: wait;
+}
+.terminal-submit:disabled:hover::after { transform: scaleX(0); }
+.terminal-submit:disabled:hover { color: var(--accent-gold); }
+
+/* ── Contact — HQ Card ── */
+.hq-intel-card {
+  border: 1px solid rgba(184,146,74,0.15);
+  padding: 2.5rem;
+  position: relative;
+  background: rgba(22,21,20,0.4);
+}
+.hq-intel-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  width: 0; height: 1px;
+  background: var(--accent-gold);
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1), left 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hq-intel-card.is-visible::before {
+  width: 100%;
+  left: 0;
+}
+
+/* ── Animated Grid Background ── */
+.ventures-grid-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(184,146,74,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184,146,74,0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  animation: grid-drift 20s linear infinite;
+  pointer-events: none;
+}
+@keyframes grid-drift {
+  from { background-position: 0 0; }
+  to   { background-position: 80px 80px; }
+}
