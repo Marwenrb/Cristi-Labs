@@ -15,6 +15,12 @@ export default defineConfig({
       jpeg: { quality: 80 },
       webp: { lossless: false, quality: 75, alphaQuality: 85 },
       avif: { lossless: false, quality: 60 },
+      svg: {
+        plugins: [
+          { name: 'preset-default' },
+          'removeViewBox',
+        ],
+      },
     }),
   ],
 
