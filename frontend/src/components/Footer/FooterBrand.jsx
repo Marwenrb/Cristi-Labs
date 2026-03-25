@@ -57,17 +57,19 @@ const FooterBrand = () => {
                     const tier = cardEl.querySelector('.footer-brand-tier');
                     const accent = cardEl.querySelector('.footer-brand-accent');
                     const sigEl = sigRef.current;
+
                     const sigBody = sigEl?.querySelector('.footer-brand-signature-body');
                     const sigFlourish = sigEl?.querySelector('.footer-brand-signature-flourish');
 
-                    // Pre-compute path lengths for dual-stroke dash animation
+                    // Pre-compute path lengths for signature animation
+
                     let sigBodyLen = 0, sigFlourishLen = 0;
                     if (sigBody) {
-                        sigBodyLen = sigBody.getTotalLength() || 420;
+                        sigBodyLen = sigBody.getTotalLength() || 680;
                         gsap.set(sigBody, { strokeDasharray: sigBodyLen, strokeDashoffset: sigBodyLen });
                     }
                     if (sigFlourish) {
-                        sigFlourishLen = sigFlourish.getTotalLength() || 280;
+                        sigFlourishLen = sigFlourish.getTotalLength() || 420;
                         gsap.set(sigFlourish, { strokeDasharray: sigFlourishLen, strokeDashoffset: sigFlourishLen });
                     }
 
@@ -143,37 +145,38 @@ const FooterBrand = () => {
                         }, null, typewriterEnd + 0.05);
                     }
 
-                    // typewriterEnd + 0.12s — Body draws (cursive monogram), then flourish sweeps
+                    // typewriterEnd + 0.12s — Signature draws in pen-stroke animation
                     if (sigEl && (sigBodyLen > 0 || sigFlourishLen > 0)) {
                         tl.set(sigEl, { opacity: 1 }, typewriterEnd + 0.12);
                         if (sigBody && sigBodyLen > 0) {
+                            // Main signature body — realistic cursive "Cristi"
                             tl.to(sigBody, {
                                 strokeDashoffset: 0,
-                                duration: 1.1,
-                                ease: "power3.inOut",
+                                duration: 1.4,
+                                ease: "power2.inOut",
                             }, typewriterEnd + 0.12);
                         }
                         if (sigFlourish && sigFlourishLen > 0) {
-                            // Flourish starts as body is near its end (0.85s offset)
+                            // Flourish underline sweeps in as signature completes
                             tl.to(sigFlourish, {
                                 strokeDashoffset: 0,
-                                duration: 0.6,
-                                ease: "expo.out",
-                            }, typewriterEnd + 0.12 + 0.85);
-                            // Wet-ink shimmer — gold flare then fades as ink dries
+                                duration: 0.7,
+                                ease: "power3.out",
+                            }, typewriterEnd + 0.12 + 1.15);
+                            // Wet-ink shimmer — gold flare as pen lifts, then ink dries
                             tl.to(sigEl, {
-                                filter: "brightness(1.5) drop-shadow(0 0 6px rgba(240,201,107,0.50))",
-                                duration: 0.2,
+                                filter: "brightness(1.4) drop-shadow(0 0 8px rgba(248,228,165,0.55))",
+                                duration: 0.25,
                                 ease: "power2.out",
-                            }, typewriterEnd + 0.12 + 0.85 + 0.58);
+                            }, typewriterEnd + 0.12 + 1.7);
                             tl.to(sigEl, {
-                                filter: "brightness(1) drop-shadow(0 0 0px transparent)",
-                                duration: 0.65,
+                                filter: "brightness(1) drop-shadow(0 0 2px rgba(201,168,76,0.15))",
+                                duration: 0.7,
                                 ease: "sine.inOut",
-                            }, ">");
+                            }, ">"
+                            );
                         }
                     }
-
                     // typewriterEnd + 0.2s — Tagline words drift up into place
                     tl.to(words, {
                         opacity: 1,
@@ -225,46 +228,49 @@ const FooterBrand = () => {
                     />
                 </div>
 
-                {/* Founder signature — body (cursive monogram) + sweeping flourish */}
+                {/* Founder signature — Realistic "Cristi" handwritten signature */}
+
                 <svg
                     ref={sigRef}
                     className="footer-brand-signature"
-                    viewBox="0 0 312 52"
+                    viewBox="0 0 480 72"
                     xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true"
                     focusable="false"
                 >
                     <defs>
-                        <linearGradient id="fbsig-gold" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%"   stopColor="#FFF4C0" stopOpacity="1.0" />
-                            <stop offset="20%"  stopColor="#F0C96B" stopOpacity="0.95" />
-                            <stop offset="55%"  stopColor="#C9A84C" stopOpacity="0.75" />
-                            <stop offset="85%"  stopColor="#9A7530" stopOpacity="0.40" />
-                            <stop offset="100%" stopColor="#7A5C28" stopOpacity="0.08" />
+                        <linearGradient id="fbsig-ink" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%"   stopColor="#F8E4A5" stopOpacity="0.98" />
+                            <stop offset="18%"  stopColor="#F0C96B" stopOpacity="0.95" />
+                            <stop offset="48%"  stopColor="#C9A84C" stopOpacity="0.88" />
+                            <stop offset="75%"  stopColor="#9A7530" stopOpacity="0.72" />
+                            <stop offset="100%" stopColor="#6B4E1A" stopOpacity="0.35" />
                         </linearGradient>
                         <linearGradient id="fbsig-flourish" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%"   stopColor="#C9A84C" stopOpacity="0.60" />
-                            <stop offset="55%"  stopColor="#9A7530" stopOpacity="0.30" />
-                            <stop offset="100%" stopColor="#7A5C28" stopOpacity="0.03" />
+                            <stop offset="0%"   stopColor="#C9A84C" stopOpacity="0.68" />
+                            <stop offset="60%"  stopColor="#9A7530" stopOpacity="0.35" />
+                            <stop offset="100%" stopColor="#6B4E1A" stopOpacity="0.05" />
                         </linearGradient>
                     </defs>
-                    {/* Body: full cursive name — dramatic loop initial + 5 connected humps + resolving tail */}
+
+                    {/* Body: Realistic cursive "Cristi" with natural pen pressure variation */}
                     <path
                         className="footer-brand-signature-body"
-                        d="M 10,38 C 5,22 6,7 20,6 C 33,5 42,19 36,31 C 33,38 24,44 16,37 C 13,34 15,28 21,24 C 28,18 46,12 68,15 C 80,16 90,9 106,7 C 120,5 130,18 124,30 C 121,37 113,40 106,37 C 103,35 105,30 112,27 C 120,23 136,20 152,21 C 164,22 174,32 170,40 L 180,30 C 185,24 196,20 208,25 C 213,28 214,34 210,38 C 207,41 202,41 199,37 C 196,33 200,27 210,25 C 222,22 238,28 236,38"
+                        d="M 35,42 C 25,20 32,8 52,10 C 68,11 76,28 68,42 C 63,50 50,54 42,46 C 38,41 42,34 51,31 C 55,29 62,29 68,32 C 72,34 74,36 74,38 L 78,38 C 82,38 85,36 85,33 C 85,29 82,27 78,28 C 75,29 74,32 76,34 C 78,36 82,35 84,32 L 88,52 C 90,56 92,58 96,58 C 98,58 100,57 101,55 L 104,38 C 105,32 108,28 114,28 C 118,28 120,30 120,34 C 120,36 119,38 117,40 C 115,42 112,43 110,42 L 108,38 L 112,38 C 114,38 116,36 116,34 C 116,32 114,30 112,30 L 115,47 C 116,51 118,54 122,55 C 125,55 128,53 130,49 L 134,38 L 136,38 L 138,46 C 140,52 144,56 150,56 C 155,56 160,52 164,46 C 167,42 168,37 166,32 L 172,32 C 176,32 179,34 180,37 L 182,44 C 184,50 188,54 194,54 C 200,54 206,50 210,44 C 214,38 216,31 214,24 L 220,38 C 222,44 226,48 232,48 C 237,48 242,44 246,38 C 250,32 252,25 250,18 C 260,28 272,36 286,40 C 298,43 310,42 320,36 C 328,31 334,22 335,12"
                         fill="none"
-                        stroke="url(#fbsig-gold)"
-                        strokeWidth="2.0"
+                        stroke="url(#fbsig-ink)"
+                        strokeWidth="2.6"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                     />
-                    {/* Flourish: long sweeping underline — pen glides then lifts dramatically off paper */}
+
+                    {/* Flourish: elegant underline sweep with slight upward lift at end */}
                     <path
                         className="footer-brand-signature-flourish"
-                        d="M 8,48 C 70,46 148,44 212,44 C 244,44 272,42 292,36 C 304,31 310,24 308,18"
+                        d="M 28,58 C 95,57 168,56 242,56 C 288,56 334,55 368,50 C 392,46 408,39 418,29 C 422,25 424,20 423,15"
                         fill="none"
                         stroke="url(#fbsig-flourish)"
-                        strokeWidth="1.1"
+                        strokeWidth="1.3"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                     />

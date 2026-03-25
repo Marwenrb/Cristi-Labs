@@ -206,6 +206,11 @@
         0 0 60px rgba(184, 146, 74, 0.03);
     overflow: hidden;
     transition: border-color 0.8s ease, box-shadow 0.8s ease;
+    /* Center all content */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 /* ── Top rule — starts invisible, .is-revealed sweeps it in ── */
@@ -288,6 +293,7 @@
 .footer-brand-tier {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     font-family: var(--font-mono);
     font-size: 0.48rem;
@@ -351,6 +357,7 @@
 .footer-brand-title-row {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
     flex-wrap: nowrap;
     min-width: 0;
@@ -398,16 +405,19 @@
     color: #D4B960;
 }
 
-/* ── Cursor — bright sovereign gold ── */
+/* ── Cursor — brilliant platinum white ── */
 .footer-brand-cursor {
     display: inline-block;
-    width: 3px;
-    height: 0.78em;
-    background: #F0C96B;
-    box-shadow: 0 0 8px rgba(240, 201, 107, 0.35);
-    margin-left: 2px;
+    width: 5px;
+    height: 0.85em;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F4EFE7 50%, #E8E0D5 100%);
+    box-shadow: 
+        0 0 12px rgba(255, 255, 255, 0.5),
+        0 0 24px rgba(255, 255, 255, 0.3),
+        0 0 36px rgba(255, 255, 255, 0.15);
+    margin-left: 3px;
     vertical-align: middle;
-    border-radius: 0;
+    border-radius: 1px;
     flex-shrink: 0;
     opacity: 0;
     animation: cursorBlink 1.1s step-end infinite;
@@ -431,6 +441,8 @@
     white-space: normal;
     line-height: 1.7;
     transition: color 0.7s ease;
+    text-align: center;
+    width: 100%;
 }
 
 /* Fine separator above tagline */
@@ -456,26 +468,28 @@
     transform: translateY(8px);
 }
 
-/* ── Founder signature — pen-stroke draw ── */
+/* ── Founder signature — realistic "Cristi" handwriting ── */
 .footer-brand-signature {
     display: block;
-    width: 310px;
-    height: 46px;
-    margin-top: 0.3rem;
+    width: 100%;  /* Full width — responsive */
+    max-width: 420px;
+    height: 58px;
+    margin: 0.5rem auto 0;
     overflow: visible;
     opacity: 0; /* GSAP sets to 1 after typewriter */
     flex-shrink: 0;
+    filter: drop-shadow(0 2px 14px rgba(201, 168, 76, 0.12));
 }
 
 .footer-brand-signature-body {
     /* GSAP overrides with getTotalLength() at runtime */
-    stroke-dasharray: 560;
-    stroke-dashoffset: 560;
+    stroke-dasharray: 680;
+    stroke-dashoffset: 680;
 }
 
 .footer-brand-signature-flourish {
-    stroke-dasharray: 340;
-    stroke-dashoffset: 340;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
 }
 
 /* ── Accent line ── */
@@ -507,6 +521,11 @@
 
     .footer-brand-card {
         padding: 1.5rem 1.25rem;
+        /* Ensure centering on mobile */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 
     .footer-brand-title {
@@ -519,11 +538,14 @@
         font-size: 0.6rem;
         letter-spacing: 0.2em;
         line-height: 1.75;
+        text-align: center;
+        width: 100%;
     }
 
     .footer-brand-tier {
         font-size: 0.4rem;
         letter-spacing: 0.2em;
+        justify-content: center;
     }
 
     .footer-brand-watermark {
@@ -532,8 +554,9 @@
     }
 
     .footer-brand-signature {
-        width: 246px;
-        height: 37px;
+        max-width: 320px;
+        height: 48px;
+        margin: 0.5rem auto 0;
     }
 }
 
