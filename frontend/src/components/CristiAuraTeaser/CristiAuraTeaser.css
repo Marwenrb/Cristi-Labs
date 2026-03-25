@@ -320,72 +320,82 @@
   border-right: 1px solid rgba(184,146,74,0.6);
 }
 
-/* CLASSIFIED stamp — Premium movie-teaser style announcement */
+/* CLASSIFIED stamp — Premium movie-teaser announcement style */
 .cat-classified-stamp {
   position: absolute;
-  top: 50%;
+  top: 52%;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(-8deg);
+  transform: translate(-50%, -50%) rotate(-6deg);
   font-family: var(--font-display, 'Bebas Neue', sans-serif);
-  font-size: 5.5rem;
-  letter-spacing: 0.28em;
+  font-size: 5.8rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
   line-height: 1;
   text-transform: uppercase;
-  color: rgba(184,146,74,0.08);
+  color: rgba(201, 168, 76, 0.12);
   text-shadow:
-    0 0 40px rgba(184,146,74,0.25),
-    0 0 80px rgba(184,146,74,0.15),
-    inset 0 0 20px rgba(255,255,255,0.02);
-  border: 3px solid rgba(184,146,74,0.12);
-  padding: 1.8rem 3.6rem;
-  border-radius: 0;  /* Sharp edges — no rounding */
+    0 0 45px rgba(201, 168, 76, 0.28),
+    0 0 90px rgba(201, 168, 76, 0.18),
+    0 2px 4px rgba(0, 0, 0, 0.45);
+  border: 4px solid rgba(201, 168, 76, 0.15);
+  padding: 2rem 4rem;
+  border-radius: 2px;  /* Minimal rounding — sharp stamp aesthetic */
   z-index: 6;
   opacity: 0; /* GSAP */
-  backdrop-filter: blur(1px);
+  backdrop-filter: blur(2px);
   box-shadow:
-    inset 0 0 60px rgba(184,146,74,0.08),
-    0 0 80px rgba(184,146,74,0.10),
-    0 8px 32px rgba(0,0,0,0.35);
+    inset 0 0 70px rgba(201, 168, 76, 0.10),
+    0 0 100px rgba(201, 168, 76, 0.12),
+    0 12px 40px rgba(0, 0, 0, 0.40);
   /* Double border effect — presidential document seal */
-  outline: 1px solid rgba(184,146,74,0.05);
-  outline-offset: 6px;
+  outline: 2px solid rgba(201, 168, 76, 0.08);
+  outline-offset: 8px;
   pointer-events: none;
   user-select: none;
-  font-weight: 400;
-  /* Stamp texture overlay */
+  /* Stamp texture overlay — diagonal hatching pattern */
   background:
     repeating-linear-gradient(
-      45deg,
+      42deg,
       transparent,
-      transparent 2px,
-      rgba(184,146,74,0.015) 2px,
-      rgba(184,146,74,0.015) 4px
+      transparent 2.5px,
+      rgba(201, 168, 76, 0.018) 2.5px,
+      rgba(201, 168, 76, 0.018) 5px
     ),
     radial-gradient(ellipse at center,
-      rgba(184,146,74,0.03) 0%,
-      transparent 70%
+      rgba(201, 168, 76, 0.04) 0%,
+      transparent 75%
     );
+  /* Premium cinematic feel */
+  filter:
+    contrast(1.15)
+    drop-shadow(0 0 35px rgba(201, 168, 76, 0.12));
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Hover effect — intensify on parent frame hover */
 .cat-image-frame:hover .cat-classified-stamp {
-  color: rgba(184,146,74,0.14);
-  border-color: rgba(184,146,74,0.18);
+  color: rgba(201, 168, 76, 0.18);
+  border-color: rgba(201, 168, 76, 0.22);
   text-shadow:
-    0 0 50px rgba(184,146,74,0.35),
-    0 0 100px rgba(184,146,74,0.20);
+    0 0 55px rgba(201, 168, 76, 0.38),
+    0 0 110px rgba(201, 168, 76, 0.24),
+    0 2px 6px rgba(0, 0, 0, 0.50);
   box-shadow:
-    inset 0 0 70px rgba(184,146,74,0.12),
-    0 0 100px rgba(184,146,74,0.15),
-    0 10px 40px rgba(0,0,0,0.40);
+    inset 0 0 80px rgba(201, 168, 76, 0.14),
+    0 0 120px rgba(201, 168, 76, 0.18),
+    0 14px 48px rgba(0, 0, 0, 0.45);
+  outline-color: rgba(201, 168, 76, 0.12);
 }
 
 /* ── Mobile overrides ────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .cat-classified-stamp {
-    font-size: 3.5rem;
-    padding: 1.2rem 2.4rem;
-    letter-spacing: 0.2em;
+    font-size: 3.8rem;
+    padding: 1.4rem 2.8rem;
+    letter-spacing: 0.24em;
+    border-width: 3px;
+    outline-width: 1.5px;
+    outline-offset: 6px;
   }
 }
 
@@ -398,10 +408,11 @@
     max-height: 380px;
   }
   .cat-classified-stamp {
-    font-size: 2.8rem;
-    padding: 1rem 2rem;
-    border-width: 2px;
+    font-size: 3rem;
+    padding: 1.1rem 2.2rem;
+    border-width: 2.5px;
     outline-width: 1px;
-    outline-offset: 4px;
+    outline-offset: 5px;
+    letter-spacing: 0.2em;
   }
 }

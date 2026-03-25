@@ -1,81 +1,219 @@
 @import "tailwindcss";
 
 /* ================================================================
-   CRISTI LABS — DESIGN SYSTEM v3
+   CRISTI LABS — DESIGN SYSTEM v4
    Presidential Dark Luxury Palette
-   Identity: Institutional Power × Technological Supremacy
+   Identity: Institutional Power × Technological Supremacy × Future Noir
+   Engineering Level: Next-Gen · Zero Compromise
    ================================================================ */
 
 :root {
-  /* ── BACKGROUNDS — Deep Obsidian System ── */
+  /* ══════════════════════════════════════════════════════════════
+     BACKGROUNDS — Deep Obsidian Luminance System
+     A progressive darkness scale with chromatic undertones
+     ══════════════════════════════════════════════════════════════ */
+  --bg-abyss:     #020204;   /* True abyss — reserved for contrast */
   --bg-void:      #050507;   /* Deepest black — main background */
   --bg-surface:   #0A0A0F;   /* Slightly lifted surface */
-  --bg-card:      #0F0F18;   /* Cards and panels */
-  --bg-elevated:  #141420;   /* Elevated interactive elements */
-  --bg-invert:    #F2EDE4;   /* Light invert */
+  --bg-card:      #0E0E16;   /* Cards and panels — warm undertone */
+  --bg-elevated:  #12121C;   /* Elevated interactive elements */
+  --bg-glass:     rgba(14, 14, 22, 0.72);  /* Glassmorphism base */
+  --bg-invert:    #F4EFE7;   /* Light invert — warm cream */
 
-  /* ── PRIMARY ACCENT — Sovereign Gold ── */
-  --accent:         #C9A84C;              /* maps to --accent-gold */
-  --accent-gold:    #C9A84C;
-  --accent-light:   #F0C96B;              /* maps to --accent-gold-bright */
-  --accent-gold-bright: #F0C96B;
-  --accent-dim:     #7A6230;              /* maps to --accent-gold-dim */
-  --accent-gold-dim: #7A6230;
-  --accent-ghost:   rgba(201, 168, 76, 0.08);
-  --accent-glow:    rgba(201, 168, 76, 0.25);
-  --accent-gold-glow: rgba(201, 168, 76, 0.15);
+  /* ══════════════════════════════════════════════════════════════
+     PRIMARY ACCENT — Sovereign Gold Spectrum
+     Multi-tier gold system for depth and hierarchy
+     ══════════════════════════════════════════════════════════════ */
+  /* Core golds */
+  --gold-100:       #FDF3D3;  /* Lightest — highlights */
+  --gold-200:       #F8E4A5;  /* Light — hover states */
+  --gold-300:       #F0C96B;  /* Bright — emphasis */
+  --gold-400:       #DEB954;  /* Standard bright */
+  --gold-500:       #C9A84C;  /* Primary — brand gold ★ */
+  --gold-600:       #B8924A;  /* Deep — secondary emphasis */
+  --gold-700:       #9A7A3E;  /* Rich — borders */
+  --gold-800:       #7A6230;  /* Muted — tertiary */
+  --gold-900:       #5C4A24;  /* Dim — backgrounds */
+  
+  /* Aliases for legacy compatibility */
+  --accent:           var(--gold-500);
+  --accent-gold:      var(--gold-500);
+  --accent-light:     var(--gold-300);
+  --accent-gold-bright: var(--gold-300);
+  --accent-dim:       var(--gold-800);
+  --accent-gold-dim:  var(--gold-800);
+  
+  /* Gold transparencies — refined opacity scale */
+  --gold-ghost:       rgba(201, 168, 76, 0.04);
+  --gold-whisper:     rgba(201, 168, 76, 0.08);
+  --gold-subtle:      rgba(201, 168, 76, 0.12);
+  --gold-soft:        rgba(201, 168, 76, 0.18);
+  --gold-medium:      rgba(201, 168, 76, 0.28);
+  --gold-strong:      rgba(201, 168, 76, 0.45);
+  --gold-glow:        rgba(201, 168, 76, 0.55);
+  
+  /* Legacy aliases */
+  --accent-ghost:     var(--gold-whisper);
+  --accent-glow:      var(--gold-strong);
+  --accent-gold-glow: var(--gold-medium);
 
-  /* ── SECONDARY ACCENT — Electric Ice ── */
-  --accent-ice:     #5EEAD4;
-  --accent-ice-dim: #1E4D47;
-  --success:        #5EEAD4;   /* alias */
+  /* ══════════════════════════════════════════════════════════════
+     SECONDARY ACCENT — Electric Ice / Teal Spectrum
+     For success states, CTAs, and technological accents
+     ══════════════════════════════════════════════════════════════ */
+  --ice-100:        #CCFBF1;
+  --ice-200:        #99F6E4;
+  --ice-300:        #5EEAD4;  /* Primary ice ★ */
+  --ice-400:        #2DD4BF;
+  --ice-500:        #14B8A6;
+  --ice-600:        #0D9488;
+  --ice-700:        #0F766E;
+  --ice-800:        #115E59;
+  --ice-900:        #134E4A;
+  --ice-glow:       rgba(94, 234, 212, 0.35);
+  
+  --accent-ice:     var(--ice-300);
+  --accent-ice-dim: var(--ice-800);
+  --success:        var(--ice-300);
 
-  /* ── TERTIARY — Deep Crimson ── */
-  --accent-crimson: #8B1A1A;
-  --error:          #C0392B;
+  /* ══════════════════════════════════════════════════════════════
+     TERTIARY — Deep Crimson / Error States
+     ══════════════════════════════════════════════════════════════ */
+  --crimson-500:    #DC2626;
+  --crimson-600:    #B91C1C;
+  --crimson-700:    #991B1B;
+  --crimson-800:    #7F1D1D;
+  --crimson-glow:   rgba(220, 38, 38, 0.35);
+  
+  --accent-crimson: var(--crimson-700);
+  --error:          var(--crimson-500);
 
-  /* ── TEXT ── */
-  --text-primary:   #F2EDE4;
-  --text-secondary: #9A9080;
-  --text-tertiary:  #8A8278;
+  /* ══════════════════════════════════════════════════════════════
+     TEXT — Refined Luminance Hierarchy
+     ══════════════════════════════════════════════════════════════ */
+  --text-primary:   #F4EFE7;   /* Warm white — headlines, primary */
+  --text-secondary: #A89F91;   /* Warm gray — body text */
+  --text-tertiary:  #6B6560;   /* Muted — captions, metadata */
+  --text-ghost:     #4A4642;   /* Near-invisible — watermarks */
   --text-invert:    #050507;
   --text-inverse:   #050507;
 
-  /* ── BORDERS & SEPARATORS ── */
-  --border:         rgba(201, 168, 76, 0.18);   /* default border */
-  --border-subtle:  rgba(201, 168, 76, 0.08);
+  /* ══════════════════════════════════════════════════════════════
+     BORDERS & SEPARATORS — Architectural Lines
+     ══════════════════════════════════════════════════════════════ */
+  --border-ghost:   rgba(201, 168, 76, 0.06);
+  --border-subtle:  rgba(201, 168, 76, 0.10);
+  --border:         rgba(201, 168, 76, 0.18);
   --border-default: rgba(201, 168, 76, 0.18);
   --border-strong:  rgba(201, 168, 76, 0.35);
+  --border-accent:  rgba(201, 168, 76, 0.55);
 
-  /* ── TYPOGRAPHY ── */
-  --font-display: 'Bebas Neue', 'Impact', sans-serif;
-  --font-luxury:  'Cormorant Garamond', 'Georgia', serif;
-  --font-body:    'Sora', 'DM Sans', sans-serif;
-  --font-mono:    'Geist Mono', 'JetBrains Mono', monospace;
+  /* ══════════════════════════════════════════════════════════════
+     TYPOGRAPHY — Premium Variable Font System
+     Engineered for maximum legibility and brand presence
+     ══════════════════════════════════════════════════════════════ */
+  --font-display:   'Bebas Neue', 'Antonio', 'Oswald', system-ui, sans-serif;
+  --font-luxury:    'Cormorant Garamond', 'Playfair Display', 'Georgia', serif;
+  --font-body:      'Sora', 'Inter', 'SF Pro Display', system-ui, sans-serif;
+  --font-mono:      'Geist Mono', 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+  --font-accent:    'Space Grotesk', 'Outfit', var(--font-body);
+  
+  /* Font feature settings */
+  --font-features-display: 'kern' 1, 'liga' 1, 'calt' 1;
+  --font-features-body:    'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+  --font-features-mono:    'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1, 'ss02' 1;
 
-  /* ── SPACING ── */
+  /* ══════════════════════════════════════════════════════════════
+     TYPOGRAPHY SCALE — Fluid Clamps
+     ══════════════════════════════════════════════════════════════ */
+  --text-hero:      clamp(4rem, 12vw, 12rem);
+  --text-display:   clamp(3rem, 8vw, 8rem);
+  --text-h1:        clamp(2.25rem, 5vw, 5rem);
+  --text-h2:        clamp(1.75rem, 4vw, 3.5rem);
+  --text-h3:        clamp(1.25rem, 2.5vw, 2rem);
+  --text-body:      clamp(0.875rem, 1vw, 1rem);
+  --text-sm:        clamp(0.75rem, 0.85vw, 0.875rem);
+  --text-xs:        clamp(0.65rem, 0.75vw, 0.75rem);
+  --text-micro:     clamp(0.55rem, 0.65vw, 0.65rem);
+
+  /* ══════════════════════════════════════════════════════════════
+     SPACING — 8pt Grid System
+     ══════════════════════════════════════════════════════════════ */
+  --space-1:  0.25rem;   /* 4px */
+  --space-2:  0.5rem;    /* 8px */
+  --space-3:  0.75rem;   /* 12px */
+  --space-4:  1rem;      /* 16px */
+  --space-5:  1.25rem;   /* 20px */
+  --space-6:  1.5rem;    /* 24px */
+  --space-8:  2rem;      /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+  --space-20: 5rem;      /* 80px */
+  --space-24: 6rem;      /* 96px */
+  --space-32: 8rem;      /* 128px */
   --space-unit: 8px;
 
-  /* ── MOTION ── */
-  --ease-expo:       cubic-bezier(0.87, 0, 0.13, 1);
-  --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-back:       cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-smooth:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --ease-in-out:     cubic-bezier(0.87, 0, 0.13, 1);
-  --duration-fast:   0.3s;
-  --duration-base:   0.6s;
-  --duration-slow:   1.2s;
-  --duration-mid:    340ms;
+  /* ══════════════════════════════════════════════════════════════
+     MOTION — Cinematic Easing Library
+     ══════════════════════════════════════════════════════════════ */
+  /* Primary easings */
+  --ease-out-expo:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-expo:      cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out-expo:  cubic-bezier(0.87, 0, 0.13, 1);
+  
+  /* Smooth & organic */
+  --ease-out-quint:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-circ:     cubic-bezier(0, 0.55, 0.45, 1);
+  --ease-smooth:       cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* Spring & bounce */
+  --ease-spring:       cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-back:         cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-bounce:       cubic-bezier(0.34, 1.3, 0.64, 1);
+  
+  /* Legacy aliases */
+  --ease-expo:         var(--ease-in-out-expo);
+  --ease-in-out:       var(--ease-in-out-expo);
+  
+  /* Durations */
+  --duration-instant:  100ms;
+  --duration-fast:     200ms;
+  --duration-base:     400ms;
+  --duration-mid:      600ms;
+  --duration-slow:     900ms;
+  --duration-slower:   1200ms;
+  --duration-glacial:  2000ms;
 
-  /* ── RADII ── */
+  /* ══════════════════════════════════════════════════════════════
+     RADII — Refined Corner System
+     ══════════════════════════════════════════════════════════════ */
+  --radius-xs:   2px;
   --radius-sm:   4px;
-  --radius-md:   12px;
-  --radius-lg:   24px;
-  --radius-xl:   40px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   20px;
+  --radius-2xl:  32px;
   --radius-full: 9999px;
 
-  /* ── NOISE ── */
-  --noise-opacity: 0.035;
+  /* ══════════════════════════════════════════════════════════════
+     EFFECTS — Shadows & Glows
+     ══════════════════════════════════════════════════════════════ */
+  --shadow-sm:    0 1px 2px rgba(0,0,0,0.25);
+  --shadow-md:    0 4px 12px rgba(0,0,0,0.35);
+  --shadow-lg:    0 8px 32px rgba(0,0,0,0.45);
+  --shadow-xl:    0 16px 48px rgba(0,0,0,0.55);
+  --shadow-gold:  0 4px 24px rgba(201, 168, 76, 0.25);
+  --shadow-ice:   0 4px 24px rgba(94, 234, 212, 0.25);
+  
+  --glow-gold:    0 0 40px rgba(201, 168, 76, 0.35);
+  --glow-ice:     0 0 40px rgba(94, 234, 212, 0.35);
+  --glow-text:    0 0 20px currentColor;
+
+  /* ══════════════════════════════════════════════════════════════
+     GRAIN — Film Texture
+     ══════════════════════════════════════════════════════════════ */
+  --noise-opacity: 0.028;
 }
 
 /* ================================================================
@@ -98,6 +236,7 @@ html {
   background: var(--bg-void);
   color: var(--text-primary);
   font-family: var(--font-body);
+  font-weight: 400;
   scroll-behavior: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -105,10 +244,11 @@ html {
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   line-height: 1.6;
-  font-feature-settings: 'kern' 1, 'liga' 1;
+  font-feature-settings: var(--font-features-body);
   scrollbar-width: none;
   scrollbar-color: transparent transparent;
   overflow: -moz-scrollbars-none;
+  font-optical-sizing: auto;
 }
 
 body {
@@ -125,11 +265,10 @@ body::after {
   pointer-events: none;
   z-index: 9998;
   opacity: var(--noise-opacity);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
-  background-size: 256px 256px;
+  background-size: 512px 512px;
   mix-blend-mode: overlay;
-  /* Disable on mobile for performance */
 }
 
 @media (max-width: 768px) {
@@ -140,7 +279,7 @@ body::after {
 
 /* ── SELECTION — branded ── */
 ::selection {
-  background: var(--accent-gold);
+  background: var(--gold-500);
   color: var(--bg-void);
 }
 
@@ -154,7 +293,7 @@ html, #root {
 ::-webkit-scrollbar { width: 3px; display: block; }
 ::-webkit-scrollbar-track { background: var(--bg-void); }
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-gold);
+  background: linear-gradient(180deg, var(--gold-500), var(--gold-700));
   border-radius: var(--radius-full);
 }
 
@@ -163,33 +302,139 @@ html, #root {
   * { cursor: none !important; }
 }
 
-/* ── TYPOGRAPHY RENDERING ── */
-h1, h2, h3, h4, h5, h6 {
-  text-rendering: optimizeLegibility;
-  font-feature-settings: 'kern' 1;
-  -webkit-font-smoothing: antialiased;
-}
+/* ══════════════════════════════════════════════════════════════
+   TYPOGRAPHY SYSTEM — Premium Rendering
+   ══════════════════════════════════════════════════════════════ */
 
-p, li {
-  text-rendering: geometricPrecision;
-  letter-spacing: 0.01em;
-}
-
-/* ── FLUID TYPOGRAPHY SCALE ── */
-.heading-display {
-  font-size: clamp(2.5rem, 8vw, 9rem);
-  line-height: 1.05;
-  letter-spacing: clamp(0.02em, 0.05vw, 0.08em);
-}
+/* Display typography — headlines, hero text */
+h1, h2, h3, h4, h5, h6,
+.heading-display,
+.heading-hero,
 .heading-section {
-  font-size: clamp(2rem, 5vw, 6rem);
+  font-family: var(--font-display);
+  text-rendering: geometricPrecision;
+  font-feature-settings: var(--font-features-display);
+  -webkit-font-smoothing: antialiased;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
+
+/* Body typography */
+p, li, span, div {
+  text-rendering: optimizeLegibility;
+  letter-spacing: 0.015em;
+}
+
+/* Monospace typography — labels, badges, technical */
+code, pre, kbd,
+.font-mono,
+[class*="eyebrow"],
+[class*="label-mono"] {
+  font-family: var(--font-mono);
+  font-feature-settings: var(--font-features-mono);
+  letter-spacing: 0.08em;
+}
+
+/* Luxury/Serif typography — quotes, special text */
+.font-luxury,
+blockquote,
+.quote {
+  font-family: var(--font-luxury);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FLUID TYPOGRAPHY SCALE — Responsive Clamps
+   ══════════════════════════════════════════════════════════════ */
+
+.text-hero {
+  font-size: var(--text-hero);
+  line-height: 0.88;
+  letter-spacing: 0.02em;
+}
+
+.heading-display {
+  font-size: var(--text-display);
+  line-height: 0.92;
+  letter-spacing: 0.03em;
+}
+
+.heading-section {
+  font-size: var(--text-h1);
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+}
+
 .heading-sub {
-  font-size: clamp(1.25rem, 3vw, 3rem);
+  font-size: var(--text-h2);
+  line-height: 1.1;
+  letter-spacing: 0.05em;
 }
+
 .label-mono {
-  font-size: clamp(0.6rem, 1.2vw, 0.85rem);
-  letter-spacing: clamp(0.2em, 0.5vw, 0.6em);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TEXT GRADIENT UTILITIES — Premium Gold Treatments
+   ══════════════════════════════════════════════════════════════ */
+
+.text-gradient-gold {
+  background: linear-gradient(
+    135deg,
+    var(--gold-200) 0%,
+    var(--gold-400) 25%,
+    var(--gold-500) 50%,
+    var(--gold-600) 75%,
+    var(--gold-800) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-gold-vertical {
+  background: linear-gradient(
+    180deg,
+    var(--gold-300) 0%,
+    var(--gold-500) 40%,
+    var(--gold-700) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-ice {
+  background: linear-gradient(
+    135deg,
+    var(--ice-100) 0%,
+    var(--ice-300) 50%,
+    var(--ice-500) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-glow-gold {
+  text-shadow: 
+    0 0 10px var(--gold-soft),
+    0 0 30px var(--gold-ghost),
+    0 0 60px var(--gold-ghost);
+}
+
+.text-glow-ice {
+  text-shadow: 
+    0 0 10px var(--ice-glow),
+    0 0 30px rgba(94, 234, 212, 0.15);
 }
 
 /* ================================================================
@@ -694,48 +939,84 @@ p, li {
 }
 
 /* ================================================================
-   CUSTOM CURSOR
+   CUSTOM CURSOR — Presidential Precision System
    ================================================================ */
 
-.cursor-outer {
+/*
+ * cursor-ring  : thin 34px ring, tight lerp, only cosmetic elegance
+ * cursor-dot   : 5px precision dot, snaps to exact pointer position
+ * Both are pointer-events:none — zero interaction blocking
+ * Both hide during scroll, re-appear only on next mousemove
+ */
+
+.cursor-ring {
   position: fixed;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--accent-gold);
+  top: 0; left: 0;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  pointer-events: none;
+  pointer-events: none !important;
+  user-select: none;
+  -webkit-user-select: none;
   z-index: 99999;
-  transform: translate(-50%, -50%) scale(1);
-  transition: transform 0.25s ease, border-radius 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-  will-change: transform;
+  will-change: transform, opacity;
+  transition:
+    width      0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    height     0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity    0.12s linear;
+  /* Default: thin gold ring */
+  border: 1.5px solid rgba(201, 168, 76, 0.65);
+  background: transparent;
 }
 
-.cursor-outer.is-hover {
-  transform: translate(-50%, -50%) scale(1.5);
-  border-color: var(--accent-gold-bright);
-  background: var(--accent-gold-glow);
+/* Hover state — larger ring with gold fill hint */
+.cursor-ring.is-hover {
+  width: 48px;
+  height: 48px;
+  border-color: rgba(201, 168, 76, 1);
+  background: rgba(201, 168, 76, 0.06);
+  box-shadow: 0 0 18px rgba(201, 168, 76, 0.25);
 }
 
-.cursor-outer.is-text {
-  transform: translate(-50%, -50%) scaleX(1.5) scaleY(0.075);
+/* Text state — flatten into a horizontal cursor beam */
+.cursor-ring.is-text {
+  width: 2px;
+  height: 22px;
   border-radius: 2px;
+  border-color: rgba(201, 168, 76, 0.9);
+  background: rgba(201, 168, 76, 0.9);
 }
 
-.cursor-outer.is-click {
-  transform: translate(-50%, -50%) scale(0.6);
+/* Click state — compress */
+.cursor-ring.is-click {
+  width: 24px;
+  height: 24px;
+  border-color: rgba(94, 234, 212, 0.9);
+  background: rgba(94, 234, 212, 0.08);
 }
 
+/* Precision dot — always exact cursor position */
 .cursor-dot {
   position: fixed;
-  width: 6px;
-  height: 6px;
-  background: var(--accent-gold-bright);
+  top: 0; left: 0;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  pointer-events: none;
-  z-index: 99999;
-  transform: translate(-50%, -50%);
-  will-change: transform;
-  mix-blend-mode: exclusion;
+  pointer-events: none !important;
+  user-select: none;
+  -webkit-user-select: none;
+  z-index: 100000;
+  will-change: transform, opacity;
+  transition: opacity 0.12s linear;
+  background: #C9A84C;
+  box-shadow: 0 0 6px rgba(201, 168, 76, 0.8);
+}
+
+/* Touch / coarse pointer — hide everything */
+@media (pointer: coarse) {
+  .cursor-ring,
+  .cursor-dot { display: none !important; }
 }
 
 /* ================================================================

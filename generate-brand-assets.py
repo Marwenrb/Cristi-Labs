@@ -348,4 +348,35 @@ if __name__ == "__main__":
     print("=" * 42)
     build_logo()
     build_og()
+    build_favicons()
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  FAVICONS — All required icon sizes for browsers, PWA, iOS
+# ══════════════════════════════════════════════════════════════════════════════
+def build_favicons():
+    print("\n-- Building favicons --")
+    src = Image.open(PUBLIC_DIR / "logo-512.png").convert("RGBA")
+    
+    sizes = {
+        "favicon-16x16.png":    (16, 16),
+        "favicon-32x32.png":    (32, 32),
+        "apple-touch-icon.png": (180, 180),
+        "logo-192.png":         (192, 192),
+    }
+    for name, size in sizes.items():
+        img = src.resize(size, Image.LANCZOS)
+        img.save(PUBLIC_DIR / name, "PNG", optimize=True)
+        print(f"  + {name}  {size[0]}×{size[1]}")
+    
+    # ICO: embed 16, 32, 48
+    ico_sizes = [(16,16),(32,32),(48,48)]
+    ico_frames = [src.resize(s, Image.LANCZOS) for s in ico_sizes]
+    ico_frames[0].save(
+        PUBLIC_DIR / "favicon.ico",
+        format="ICO",
+        sizes=ico_sizes,
+        append_images=ico_frames[1:]
+    )
+    print("  + favicon.ico  (16, 32, 48)")
     print("\nAll assets generated.")

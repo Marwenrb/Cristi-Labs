@@ -190,7 +190,7 @@ const Hero = () => {
                 {/* Hero video — real brand asset */}
                 <video
                     ref={videoRef}
-                    autoPlay loop muted playsInline preload="auto"
+                    autoPlay loop muted playsInline preload="none"
                     aria-hidden="true"
                     className="hero-video absolute inset-0 w-full h-full object-cover object-center"
                     style={{ opacity: 0, willChange: 'transform, opacity', pointerEvents: 'none', zIndex: 0 }}

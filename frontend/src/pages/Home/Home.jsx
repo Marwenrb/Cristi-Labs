@@ -3,6 +3,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Hero from '../../components/Hero/Hero'
 import Welcome from '../../components/Welcome/Welcome'
 import MetricsPulse from '../../components/MetricsPulse/MetricsPulse'
+import CristiAuraTeaser from '../../components/CristiAuraTeaser/CristiAuraTeaser'
 import Choose from '../../components/Choose/Choose'
 import Gallery from '../../components/Gallery/Gallery'
 import InfiniteMarquee from '../../components/Marquee/Marquee'
@@ -28,6 +29,7 @@ const Home = () => {
       <Hero />
       <Welcome />
       <MetricsPulse />
+      <CristiAuraTeaser />
       <Choose />
       <Gallery />
       <InfiniteMarquee

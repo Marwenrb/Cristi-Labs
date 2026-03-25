@@ -6,12 +6,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const METRICS = [
-    { value: '$2.4B', suffix: '+', label: 'Global Trade Volume',   numericValue: 2.4,  prefix: '$', isDecimal: true,  icon: '◈', description: 'Combined gross merchandise value flowing through all Cristi Labs venture divisions globally' },
-    { value: '47',    suffix: '+', label: 'Countries Reached',     numericValue: 47,   prefix: '',  isDecimal: false, icon: '◎', description: 'Active operational territories' },
-    { value: '12',    suffix: '+', label: 'Venture Divisions',     numericValue: 12,   prefix: '',  isDecimal: false, icon: '◆', description: 'Autonomous business units' },
-    { value: '99.97', suffix: '%', label: 'Platform Uptime',       numericValue: 99.97,prefix: '',  isDecimal: true,  icon: '◉', description: 'Infrastructure reliability SLA' },
-    { value: '340',   suffix: '+', label: 'Digital Applications',  numericValue: 340,  prefix: '',  isDecimal: false, icon: '⬡', description: 'Deployed across global markets' },
-    { value: '4',     suffix: '',  label: 'Continents Active',     numericValue: 4,    prefix: '',  isDecimal: false, icon: '◐', description: 'On-ground operations & logistics' },
+    { value: '$2.4B', suffix: '+', label: 'Global Trade Volume',   numericValue: 2.4,  prefix: '$', isDecimal: true,  icon: '◈', description: 'All venture divisions' },
+    { value: '47',    suffix: '+', label: 'Countries Reached',     numericValue: 47,   prefix: '',  isDecimal: false, icon: '◎', description: 'Active territories' },
+    { value: '12',    suffix: '+', label: 'Venture Divisions',     numericValue: 12,   prefix: '',  isDecimal: false, icon: '◆', description: 'Business units' },
+    { value: '99.97', suffix: '%', label: 'Platform Uptime',       numericValue: 99.97,prefix: '',  isDecimal: true,  icon: '◉', description: 'Infrastructure SLA' },
+    { value: '340',   suffix: '+', label: 'Digital Applications',  numericValue: 340,  prefix: '',  isDecimal: false, icon: '⬡', description: 'Global deployments' },
+    { value: '4',     suffix: '',  label: 'Continents Active',     numericValue: 4,    prefix: '',  isDecimal: false, icon: '◐', description: 'On-ground operations' },
 ];
 
 export default function MetricsPulse() {
@@ -100,8 +100,9 @@ export default function MetricsPulse() {
             style={{
                 background: 'var(--bg-void)',
                 position: 'relative',
-                padding: '5rem 0 0',
+                padding: '3.5rem 0 0',
                 overflow: 'hidden',
+                borderTop: '1px solid rgba(184,146,74,0.12)',
             }}
         >
             {/* Top rule with label */}
@@ -133,8 +134,8 @@ export default function MetricsPulse() {
                     style={{
                         background: 'rgba(184,146,74,0.03)',
                         border: '1px solid rgba(184,146,74,0.1)',
-                        borderRadius: '0',
-                        padding: 'clamp(2rem, 4vw, 3rem)',
+                        borderRadius: '4px',
+                        padding: 'clamp(1.25rem, 2.5vw, 2rem)',
                         display: 'flex',
                         alignItems: 'flex-end',
                         justifyContent: 'space-between',
@@ -154,7 +155,7 @@ export default function MetricsPulse() {
                             data-metric="0"
                             style={{
                                 fontFamily: 'var(--font-display)',
-                                fontSize: 'clamp(4rem, 10vw, 8rem)',
+                                fontSize: 'clamp(3rem, 7vw, 6rem)',
                                 color: 'var(--text-primary)', lineHeight: 0.9, display: 'block',
                             }}
                         >
@@ -170,6 +171,7 @@ export default function MetricsPulse() {
                         <p style={{
                             fontFamily: 'var(--font-body)', fontSize: '0.75rem',
                             color: 'var(--text-secondary)', maxWidth: '220px', lineHeight: 1.6,
+                            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                         }}>
                             {METRICS[0].description}
                         </p>
@@ -190,7 +192,7 @@ export default function MetricsPulse() {
                 gap: '1px',
                 background: 'rgba(184,146,74,0.06)',
                 margin: '1px clamp(1.25rem, 6vw, 6rem) 0',
-                borderRadius: '0 0 0.5rem 0.5rem',
+                borderRadius: '4px',
                 overflow: 'hidden',
             }}>
                 {METRICS.slice(1).map((metric, i) => (
@@ -199,7 +201,7 @@ export default function MetricsPulse() {
                         className="metric-card"
                         style={{
                             background: 'var(--bg-void)',
-                            padding: 'clamp(1.25rem, 3vw, 2rem)',
+                            padding: 'clamp(0.9rem, 2vw, 1.5rem)',
                             position: 'relative',
                             overflow: 'hidden',
                             transition: 'background 0.3s',
@@ -208,14 +210,14 @@ export default function MetricsPulse() {
                         onMouseLeave={e => e.currentTarget.style.background = 'var(--bg-void)'}
                     >
                         <span style={{
-                            fontFamily: 'var(--font-mono)', fontSize: '14px',
-                            color: 'rgba(184,146,74,0.58)', display: 'block', marginBottom: '0.75rem',
+                            fontFamily: 'var(--font-mono)', fontSize: '11px',
+                            color: 'rgba(184,146,74,0.45)', display: 'block', marginBottom: '0.75rem',
                         }}>{metric.icon}</span>
                         <span
                             data-metric={i + 1}
                             style={{
                                 fontFamily: 'var(--font-display)',
-                                fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
+                                fontSize: 'clamp(1.5rem, 2.8vw, 2.2rem)',
                                 color: 'var(--text-primary)', lineHeight: 1, display: 'block',
                                 marginBottom: '0.4rem',
                             }}
@@ -244,9 +246,6 @@ export default function MetricsPulse() {
                     </div>
                 ))}
             </div>
-
-            {/* Bottom spacing */}
-            <div style={{ height: 'clamp(3rem, 6vw, 5rem)' }} />
         </section>
     );
 }

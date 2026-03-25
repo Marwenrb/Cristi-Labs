@@ -468,28 +468,28 @@
     transform: translateY(8px);
 }
 
-/* ── Founder signature — realistic "Cristi" handwriting ── */
+/* ── Founder signature — realistic "Cristi" handwriting positioned directly under brand name ── */
 .footer-brand-signature {
     display: block;
-    width: 100%;  /* Full width — responsive */
-    max-width: 420px;
-    height: 58px;
-    margin: 0.5rem auto 0;
+    width: 100%;
+    max-width: 340px;
+    height: 62px;
+    margin: 0.35rem auto 0.8rem;
     overflow: visible;
     opacity: 0; /* GSAP sets to 1 after typewriter */
     flex-shrink: 0;
-    filter: drop-shadow(0 2px 14px rgba(201, 168, 76, 0.12));
+    filter: drop-shadow(0 2px 18px rgba(201, 168, 76, 0.14));
 }
 
 .footer-brand-signature-body {
     /* GSAP overrides with getTotalLength() at runtime */
-    stroke-dasharray: 680;
-    stroke-dashoffset: 680;
+    stroke-dasharray: 550;
+    stroke-dashoffset: 550;
 }
 
 .footer-brand-signature-flourish {
-    stroke-dasharray: 420;
-    stroke-dashoffset: 420;
+    stroke-dasharray: 380;
+    stroke-dashoffset: 380;
 }
 
 /* ── Accent line ── */
@@ -554,9 +554,9 @@
     }
 
     .footer-brand-signature {
-        max-width: 320px;
-        height: 48px;
-        margin: 0.5rem auto 0;
+        max-width: 280px;
+        height: 52px;
+        margin: 0.3rem auto 0.6rem;
     }
 }
 

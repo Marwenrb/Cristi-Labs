@@ -5,10 +5,11 @@ import { useGSAP } from "@gsap/react";
 import Footer from "../../components/Footer/Footer";
 
 import stickyAura from '../../assets/Medias/sticky/the-aura-protocol.png';
-import stickyGhost from '../../assets/Medias/sticky/ghost-logistics-trade.png';
 import stickyArch from '../../assets/Medias/sticky/architects-phygital-economy.png';
+import ghostLogistics from '../../assets/Medias/Slides/ghost-logistics.png';
+import infiniteSeat from '../../assets/Medias/Slides/the-infinite-seat.png';
+import apexStadium from '../../assets/Pages Media/apex_final_preview.jpg';
 import galleryTrade from '../../assets/Medias/gallery/global-trade.png';
-import galleryHQ from '../../assets/Medias/gallery/cristi-labs-hq.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -41,7 +42,7 @@ const ventures = [
         number: "03",
         status: "ACTIVE",
         tags: ["AI Routing", "Cross-Border", "Digital Twin"],
-        img: stickyGhost,
+        img: ghostLogistics,
     },
     {
         name: "Neuromorphic UI",
@@ -61,7 +62,7 @@ const ventures = [
         number: "05",
         status: "DEVELOPING",
         tags: ["Esports", "Live Events", "Immersive"],
-        img: galleryHQ,
+        img: apexStadium,
     },
 ];
 
@@ -240,7 +241,14 @@ const Ventures = () => {
 
                                 {/* Right: Visual */}
                                 <div className="venture-visual">
-                                    <img src={v.img} alt={v.name} loading="lazy" />
+                                    <img 
+                                        src={v.img} 
+                                        alt={v.name} 
+                                        width={1920}
+                                        height={1080}
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
                                     <div className="venture-visual-overlay" />
                                 </div>
                             </div>
@@ -282,21 +290,72 @@ const Ventures = () => {
                         </p>
 
                         {/* Venture count indicators */}
-                        <div className="flex items-center gap-6 shrink-0">
+                        <div className="flex items-center gap-4 md:gap-6 shrink-0">
                             {['ACTIVE', 'DEVELOPING', 'CLASSIFIED'].map((s, i) => {
                                 const count = ventures.filter(v => v.status === s).length;
                                 return (
-                                    <div key={i} className="flex flex-col items-center gap-2">
+                                    <div 
+                                        key={i} 
+                                        className="venture-stat-card group"
+                                        style={{
+                                            position: 'relative',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            gap: '0.75rem',
+                                            padding: '1.5rem 1.25rem',
+                                            background: `linear-gradient(135deg, ${STATUS_COLOR[s]}08, ${STATUS_COLOR[s]}15)`,
+                                            border: `1px solid ${STATUS_COLOR[s]}30`,
+                                            borderRadius: '1rem',
+                                            backdropFilter: 'blur(10px)',
+                                            transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                                            cursor: 'pointer',
+                                            minWidth: '90px',
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.transform = 'translateY(-8px) scale(1.05)';
+                                            e.currentTarget.style.borderColor = STATUS_COLOR[s];
+                                            e.currentTarget.style.boxShadow = `0 12px 40px ${STATUS_COLOR[s]}40, 0 0 0 1px ${STATUS_COLOR[s]}50`;
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                                            e.currentTarget.style.borderColor = `${STATUS_COLOR[s]}30`;
+                                            e.currentTarget.style.boxShadow = 'none';
+                                        }}
+                                    >
+                                        {/* Animated dot indicator */}
+                                        <div 
+                                            style={{
+                                                position: 'absolute',
+                                                top: '0.75rem',
+                                                right: '0.75rem',
+                                                width: '6px',
+                                                height: '6px',
+                                                background: STATUS_COLOR[s],
+                                                borderRadius: '50%',
+                                                animation: s === 'ACTIVE' ? 'pulsing-dot 2s ease-in-out infinite' : 'none',
+                                                boxShadow: `0 0 10px ${STATUS_COLOR[s]}`,
+                                            }}
+                                        />
+                                        
                                         <span style={{
-                                            fontFamily: 'var(--font-display)', fontSize: '2rem',
-                                            color: STATUS_COLOR[s], lineHeight: 1,
+                                            fontFamily: 'var(--font-display)', 
+                                            fontSize: '2.5rem',
+                                            fontWeight: '600',
+                                            color: STATUS_COLOR[s], 
+                                            lineHeight: 1,
+                                            textShadow: `0 0 20px ${STATUS_COLOR[s]}40`,
                                         }}>
                                             {count}
                                         </span>
                                         <span style={{
-                                            fontFamily: 'var(--font-mono)', fontSize: '0.55rem',
-                                            letterSpacing: '0.25em', color: STATUS_COLOR[s],
-                                            textTransform: 'uppercase', opacity: 0.8,
+                                            fontFamily: 'var(--font-mono)', 
+                                            fontSize: '0.5rem',
+                                            letterSpacing: '0.3em', 
+                                            color: STATUS_COLOR[s],
+                                            textTransform: 'uppercase', 
+                                            opacity: 0.9,
+                                            fontWeight: '500',
                                         }}>
                                             {s}
                                         </span>
