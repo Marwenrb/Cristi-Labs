@@ -77,7 +77,7 @@ const Footer = () => {
                                         fontSize: '7px',
                                         letterSpacing: '0.38em',
                                         textTransform: 'uppercase',
-                                        color: 'rgba(184,146,74,0.4)',
+                                        color: 'rgba(184,146,74,0.58)',
                                         marginBottom: '1.25rem',
                                         display: 'flex',
                                         alignItems: 'center',
@@ -126,7 +126,7 @@ const Footer = () => {
                                         fontSize: '7px',
                                         letterSpacing: '0.38em',
                                         textTransform: 'uppercase',
-                                        color: 'rgba(184,146,74,0.4)',
+                                        color: 'rgba(184,146,74,0.58)',
                                         marginBottom: '1.25rem',
                                         display: 'flex',
                                         alignItems: 'center',
@@ -185,7 +185,7 @@ const Footer = () => {
                                         fontSize: '7px',
                                         letterSpacing: '0.38em',
                                         textTransform: 'uppercase',
-                                        color: 'rgba(184,146,74,0.4)',
+                                        color: 'rgba(184,146,74,0.58)',
                                         marginTop: '1.5rem',
                                         paddingTop: '1rem',
                                         display: 'flex',
@@ -246,11 +246,11 @@ const Footer = () => {
                             </p>
 
                             <div className="flex flex-col items-center gap-1 order-1 md:order-2">
-                                <span style={{ fontFamily: 'var(--font-luxury)', fontSize: '9px', letterSpacing: '0.3em', color: '#D4AF37', textTransform: 'uppercase', textShadow: '0 0 12px rgba(212,175,55,0.35), 0 0 24px rgba(184,146,74,0.18)', fontWeight: 500 }}>
+                                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.3em', color: 'rgba(184,146,74,0.7)', textTransform: 'uppercase', fontWeight: 400 }}>
                                     Global HQ
                                 </span>
-                                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.15em', color: '#F7E7CE', whiteSpace: 'nowrap', textAlign: 'center', textShadow: '0 0 8px rgba(184,146,74,0.15)' }}>
-                                    SHERIDAN, WYOMING 82801 · USA
+                                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(237,234,228,0.6)', whiteSpace: 'nowrap', textAlign: 'center' }}>
+                                    SHERIDAN, WYOMING 82801 &middot; USA
                                 </p>
                             </div>
 

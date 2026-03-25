@@ -68,7 +68,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    left: -80%;
+    left: 0;
     width: 50%;
     background: linear-gradient(
         90deg,
@@ -78,11 +78,12 @@
     );
     pointer-events: none;
     z-index: 0;
-    transition: left 650ms var(--ease-out-expo);
+    transform: translateX(-160%);
+    transition: transform 650ms var(--ease-out-expo);
 }
 
 .connect-btn:hover::before {
-    left: 140%;
+    transform: translateX(280%);
 }
 
 /* ── Radial ambient fill ───────────────────────────────────── */

@@ -191,6 +191,7 @@ const Hero = () => {
                 <video
                     ref={videoRef}
                     autoPlay loop muted playsInline preload="auto"
+                    aria-hidden="true"
                     className="hero-video absolute inset-0 w-full h-full object-cover object-center"
                     style={{ opacity: 0, willChange: 'transform, opacity', pointerEvents: 'none', zIndex: 0 }}
                 >

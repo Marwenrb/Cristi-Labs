@@ -1,145 +1,189 @@
-/* Live Data Ticker — Premium 42px dark bar with CSS marquee */
+/* ===================================================
+   GLOBAL PULSE TICKER — INTELLIGENCE FEED
+   =================================================== */
 
+/* Wrapper principal */
 .live-ticker-wrapper {
-    margin-bottom: 1rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    position: relative;
+    margin-bottom: 3rem;
+    padding: 0.875rem 0;
+
+    /* Double bordure horizontale — gravee */
+    border-top: 1px solid rgba(184, 146, 74, 0.1);
+    border-bottom: 1px solid rgba(184, 146, 74, 0.1);
+
+    /* Fond legerement distinct */
+    background: rgba(184, 146, 74, 0.018);
+
+    overflow: hidden;  /* AUTORISE — conteneur direct du ticker */
 }
 
+/* Degrades de masque lateraux — fondu */
+.live-ticker-wrapper::before,
+.live-ticker-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+}
+.live-ticker-wrapper::before {
+    left: 0;
+    background: linear-gradient(90deg, var(--bg-void, #0B0B0B), transparent);
+}
+.live-ticker-wrapper::after {
+    right: 0;
+    background: linear-gradient(-90deg, var(--bg-void, #0B0B0B), transparent);
+}
+
+/* Badge GLOBAL PULSE */
 .live-ticker {
-    position: relative;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.20);
-    border-top: 1px solid rgba(184, 146, 74, 0.12);
-    border-bottom: 1px solid rgba(184, 146, 74, 0.12);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
-    height: 42px;
-    overflow: hidden;
+    gap: 0;
 }
 
 .live-ticker-badge {
     display: flex;
     align-items: center;
-    gap: 7px;
-    padding: 0 20px;
+    gap: 8px;
+    padding: 0 1.25rem;
+    flex-shrink: 0;
     border-right: 1px solid rgba(184, 146, 74, 0.12);
     height: 100%;
-    flex-shrink: 0;
-    background: rgba(184, 146, 74, 0.04);
+    position: relative;
+    z-index: 3;
+    background: var(--bg-void, #0B0B0B);  /* couvre le ticker derriere */
+}
+
+.live-ticker-label {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: rgba(184, 146, 74, 0.55);
     white-space: nowrap;
 }
 
+/* Point live — pulse en opacity+scale, PAS box-shadow */
 .live-ticker-dot-wrapper {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     flex-shrink: 0;
+}
+
+.live-ticker-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #B8924A;
+    position: relative;
+    z-index: 1;
 }
 
 .live-ticker-ping {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: rgba(34, 197, 94, 0.35);
-    animation: tickerPing 1.8s ease-out infinite;
+    border: 1px solid rgba(184, 146, 74, 0.45);
+    animation: ping-scale 2.4s ease-out infinite;
 }
 
-.live-ticker-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #22c55e;
-    box-shadow: 0 0 6px rgba(34, 197, 94, 0.8);
-    position: relative;
-    z-index: 1;
-    flex-shrink: 0;
+@keyframes ping-scale {
+    0%   { transform: scale(1);   opacity: 0.7; }
+    100% { transform: scale(2.8); opacity: 0; }
 }
+/* scale + opacity = GPU composited */
 
-@keyframes tickerPing {
-    0%       { transform: scale(0.8); opacity: 0.9; }
-    75%, 100% { transform: scale(2.4); opacity: 0; }
-}
-
-.live-ticker-label {
-    font-family: var(--font-mono);
-    font-size: 8px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--accent);
-}
-
+/* Zone scrollante */
 .live-ticker-marquee {
     flex: 1;
     overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
     display: flex;
-    align-items: center;
+    position: relative;
 }
 
+/* Les deux tracks — animation decalee pour loop seamless */
 .live-ticker-track {
     display: flex;
     align-items: center;
     gap: 0;
-    animation: tickerScroll 30s linear infinite;
-    width: max-content;
-    will-change: transform;
+    white-space: nowrap;
+    flex-shrink: 0;
+    animation: ticker-march 28s linear infinite;
 }
 
-.live-ticker-track:hover {
-    animation-play-state: paused;
+.live-ticker-track--b {
+    animation-delay: -14s;  /* seamless avec seulement 2 nodes */
 }
 
-@keyframes tickerScroll {
-    from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-25%, 0, 0); }
+@keyframes ticker-march {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-100%); }
 }
+/* translateX = GPU composited */
 
+/* Hub city/time */
 .live-ticker-hub {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0 24px;
-    border-right: 1px solid rgba(184, 146, 74, 0.08);
-    height: 42px;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 0 1.75rem;
+    position: relative;
+}
+
+/* Separateur vertical entre les hubs */
+.live-ticker-hub::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 10px;
+    background: rgba(184, 146, 74, 0.1);
 }
 
 .live-ticker-city {
     font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.22em;
-    color: var(--accent);
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
     text-transform: uppercase;
-    font-weight: 600;
+    color: rgba(184, 146, 74, 0.75);
+    font-weight: 500;
 }
 
 .live-ticker-sep {
     font-family: var(--font-mono);
-    font-size: 8px;
-    color: var(--accent);
-    opacity: 0.25;
-    flex-shrink: 0;
-    padding: 0 2px;
+    font-size: 0.45rem;
+    color: rgba(184, 146, 74, 0.25);
 }
 
 .live-ticker-time {
     font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 400;
-    color: var(--text-secondary);
-    letter-spacing: 0.06em;
-    font-variant-numeric: tabular-nums;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: rgba(237, 234, 228, 0.35);
+    font-variant-numeric: tabular-nums;  /* evite le CLS des chiffres */
 }
 
-/* Footer Brand — Premium, industrial, brass edition */
+/* Losange separateur de boucle */
+.live-ticker-loop-sep {
+    font-size: 0.3rem;
+    color: rgba(184, 146, 74, 0.2);
+    padding: 0 1rem;
+    display: inline-block;
+}
+
+
+/* ===================================================
+   FOOTER BRAND CARD — PRESIDENTIAL SEAL
+   =================================================== */
 
 .footer-brand {
     max-width: 100%;
@@ -147,41 +191,56 @@
 
 .footer-brand-card {
     position: relative;
-    padding: 3rem 2.5rem 2.5rem;
-    background: transparent;
-    border: 1px solid rgba(184, 146, 74, 0.12);
-    border-radius: 2px;
-    overflow: hidden;
+    padding: 2.75rem 2.5rem 2.25rem;
     isolation: isolate;
-    transition: border-color 0.6s ease;
+
+    /* Bordure fine gravee — pas de glow */
+    border: 1px solid rgba(184, 146, 74, 0.14);
+    border-radius: 1px;
+
+    /* Fond legerement plus chaud que le void */
+    /* Texture de grain subtile via SVG inline */
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.028'/%3E%3C/svg%3E"),
+        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(184, 146, 74, 0.025) 0%, transparent 70%);
+    background-color: rgba(14, 13, 12, 0.6);
+
+    overflow: hidden;  /* AUTORISE ici — c'est le conteneur direct */
+    transition: border-color 0.8s ease;
 }
 
-.footer-brand-card:hover {
-    border-color: rgba(184, 146, 74, 0.22);
-}
-
-/* Presidential top rule — single fine line, expands on load (scaleX — GPU composited) */
+/* -- Ligne de regle superieure — s'etend depuis le centre (scaleX GPU composited) -- */
 .footer-brand-card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translateX(-50%) scaleX(0);
-    transform-origin: center;
     width: 100%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, #B8924A, transparent);
-    animation: card-rule-expand 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.2s;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(184, 146, 74, 0.5) 30%,
+        rgba(201, 168, 76, 0.7) 50%,
+        rgba(184, 146, 74, 0.5) 70%,
+        transparent 100%
+    );
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    animation: card-top-rule 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.3s;
 }
 
-/* Ambient radial glow — no layout impact */
+/* -- Lueur dorsale tres subtile -- */
 .footer-brand-card::after {
     content: '';
     position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(ellipse 60% 40% at 50% 110%, rgba(184, 146, 74, 0.04) 0%, transparent 70%);
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 80px;
+    background: radial-gradient(ellipse, rgba(184, 146, 74, 0.06) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
 }
@@ -191,6 +250,41 @@
     z-index: 1;
 }
 
+/* -- Marques de coin — L-brackets graves -- */
+.footer-brand-corner {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.footer-brand-corner::before,
+.footer-brand-corner::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-color: rgba(184, 146, 74, 0.3);
+    border-style: solid;
+    opacity: 0;
+    animation: corner-engrave 0.6s ease forwards;
+}
+
+.footer-brand-corner::before {
+    top: 8px;
+    left: 8px;
+    border-width: 1px 0 0 1px;
+    animation-delay: 0.7s;
+}
+
+.footer-brand-corner::after {
+    bottom: 8px;
+    right: 8px;
+    border-width: 0 1px 1px 0;
+    animation-delay: 0.85s;
+}
+
+/* -- Titre — Bebas Neue grave dans l'acier -- */
 .footer-brand-title-row {
     display: flex;
     align-items: center;
@@ -201,37 +295,32 @@
 
 .footer-brand-title {
     font-family: var(--font-display);
-    font-size: clamp(2.8rem, 6vw, 4.5rem);
-    letter-spacing: 0.18em;
+    font-size: clamp(2.6rem, 5.5vw, 4rem);
+    letter-spacing: 0.2em;
     line-height: 1;
-    color: #B8924A;
     text-transform: uppercase;
+    color: #D4C5A8;  /* legerement plus chaud/patine que --text-primary */
     white-space: nowrap;
+
+    /* Effet gravure : ombre vers le bas (lumiere vient du haut) */
     text-shadow:
-        0 1px 0 rgba(255, 220, 140, 0.06),
-        0 -1px 0 rgba(0, 0, 0, 0.6),
-        0 0 40px rgba(184, 146, 74, 0.08);
-    transition: text-shadow 0.6s ease;
+        0 1px 0 rgba(255, 235, 180, 0.05),
+        0 -1px 0 rgba(0, 0, 0, 0.5),
+        0 0 60px rgba(184, 146, 74, 0.04);
+
+    position: relative;
+    z-index: 2;
+    transition: text-shadow 0.8s ease;
 }
 
-.footer-brand-card:hover .footer-brand-title {
-    text-shadow:
-        0 1px 0 rgba(255, 220, 140, 0.1),
-        0 -1px 0 rgba(0, 0, 0, 0.6),
-        0 0 60px rgba(184, 146, 74, 0.14);
-}
-
+/* -- Accent "LABS" — legerement plus lumineux, pas neon -- */
 .footer-brand-title-accent {
-    color: #C9A84C;
-    text-shadow:
-        0 0 20px rgba(201, 168, 76, 0.15),
-        0 1px 0 rgba(255, 220, 140, 0.08),
-        0 -1px 0 rgba(0, 0, 0, 0.6);
-    transition: text-shadow 0.6s ease;
-}
+    color: #C4A876;
 
-.footer-brand-card:hover .footer-brand-title-accent {
-    color: #C9A84C;
+    text-shadow:
+        0 1px 0 rgba(255, 220, 140, 0.07),
+        0 -1px 0 rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(184, 146, 74, 0.06);
 }
 
 .footer-brand-char {
@@ -239,44 +328,83 @@
     will-change: transform, opacity;
 }
 
+/* -- Curseur clignotant — fin et sobre -- */
 .footer-brand-cursor {
     display: inline-block;
     width: 2px;
-    height: clamp(1.8rem, 4vw, 3rem);
+    height: 0.72em;
     background: #B8924A;
-    margin-left: 4px;
+    margin-left: 3px;
     vertical-align: middle;
+    border-radius: 1px;
     flex-shrink: 0;
-    box-shadow: 0 0 8px rgba(184, 146, 74, 0.5);
     opacity: 0;
-    animation: cursor-blink 1.8s step-end infinite;
-    animation-delay: 1.2s;
+    animation: cursor-pulse 2s step-end infinite;
+    animation-delay: 1.5s;
+    position: relative;
+    z-index: 2;
 }
 
-@keyframes cursor-blink {
-    0%, 100% { opacity: 0; }
-    50%       { opacity: 1; }
-}
-
+/* -- Tagline — separateur + mono -- */
 .footer-brand-tagline {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.45em;
+    font-size: 0.55rem;
+    letter-spacing: 0.42em;
     text-transform: uppercase;
-    color: rgba(184, 146, 74, 0.45);
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(184, 146, 74, 0.08);
+    color: rgba(184, 146, 74, 0.58);
+    margin-top: 1.25rem;
+    padding-top: 1.1rem;
+    position: relative;
+    z-index: 2;
+    display: block !important;  /* override inline-block des word-divs */
     white-space: normal;
     line-height: 1.7;
     transition: color 0.6s ease;
+}
+
+/* Ligne fine au-dessus de la tagline */
+.footer-brand-tagline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(184,146,74,0.2), rgba(184,146,74,0.05) 70%, transparent);
 }
 
 .footer-brand-card:hover .footer-brand-tagline {
     color: rgba(184, 146, 74, 0.65);
 }
 
-/* ── Mobile: prevent email overflow in 2-col grid ── */
+/* -- Barre accent bottom-left — scaleX au lieu de width -- */
+.footer-brand-accent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 55%;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(184, 146, 74, 0.45), rgba(184, 146, 74, 0.1), transparent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: accent-engrave 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.5s;
+    z-index: 2;
+}
+
+/* -- Hover : carte respire legerement -- */
+.footer-brand-card:hover {
+    border-color: rgba(184, 146, 74, 0.24);
+}
+
+.footer-brand-card:hover .footer-brand-title {
+    text-shadow:
+        0 1px 0 rgba(255, 235, 180, 0.08),
+        0 -1px 0 rgba(0, 0, 0, 0.5),
+        0 0 80px rgba(184, 146, 74, 0.07);
+}
+
+/* ── Mobile: brand card adjustments ── */
 @media (max-width: 768px) {
     .footer-contact-email {
         font-size: 0.72rem !important;
@@ -299,57 +427,10 @@
 
     /* Tagline: allow wrapping on small screens */
     .footer-brand-tagline {
-        white-space: normal;
         font-size: 0.6rem;
         letter-spacing: 0.2em;
         line-height: 1.75;
     }
-}
-
-.footer-brand-accent {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 60%;
-    height: 1px;
-    background: linear-gradient(90deg, #B8924A, transparent);
-    transform: scaleX(0);
-    transform-origin: left center;
-    animation: accent-slide 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.4s;
-    z-index: 1;
-}
-
-.footer-brand-corner {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.footer-brand-corner::before,
-.footer-brand-corner::after {
-    content: '';
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-color: rgba(184, 146, 74, 0.35);
-    border-style: solid;
-    opacity: 0;
-    animation: corner-appear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.6s;
-}
-
-.footer-brand-corner::before {
-    top: 10px;
-    left: 10px;
-    border-width: 1px 0 0 1px;
-}
-
-.footer-brand-corner::after {
-    bottom: 10px;
-    right: 10px;
-    border-width: 0 1px 1px 0;
 }
 
 /* Footer Location — Production-grade, minimal, premium */
@@ -379,15 +460,23 @@
     color: var(--text-secondary);
 }
 
-/* ── Footer brand card keyframes — scaleX (GPU composited, no width animation) ── */
-@keyframes card-rule-expand {
-    to { transform: translateX(-50%) scaleX(1); }
+/* -- Keyframes — GPU composited uniquement -- */
+@keyframes card-top-rule {
+    from { transform: translateX(-50%) scaleX(0); }
+    to   { transform: translateX(-50%) scaleX(1); }
 }
 
-@keyframes accent-slide {
-    to { transform: scaleX(1); }
+@keyframes corner-engrave {
+    from { opacity: 0; transform: scale(0.6); }
+    to   { opacity: 1; transform: scale(1); }
 }
 
-@keyframes corner-appear {
-    to { opacity: 1; }
+@keyframes accent-engrave {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+
+@keyframes cursor-pulse {
+    0%, 100% { opacity: 0; }
+    50%       { opacity: 1; }
 }

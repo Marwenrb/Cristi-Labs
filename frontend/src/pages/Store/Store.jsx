@@ -487,6 +487,7 @@ const Store = () => {
                             >
                                 <input
                                     type="email"
+                                    id="vault-email"
                                     value={email}
                                     onChange={e => {
                                         setEmail(e.target.value);
@@ -514,6 +515,7 @@ const Store = () => {
                                     }}
                                 />
                                 <label
+                                    htmlFor="vault-email"
                                     style={{
                                         position: 'absolute',
                                         left: 0,
@@ -534,11 +536,13 @@ const Store = () => {
                                     style={{
                                         position: 'absolute',
                                         bottom: 0,
-                                        left: emailFocused ? '0' : '50%',
-                                        width: emailFocused ? '100%' : '0',
+                                        left: 0,
+                                        width: '100%',
                                         height: '1px',
                                         background: emailError ? 'var(--error)' : 'var(--accent)',
-                                        transition: 'width 0.5s var(--ease-out-expo), left 0.5s var(--ease-out-expo)',
+                                        transform: emailFocused ? 'scaleX(1)' : 'scaleX(0)',
+                                        transformOrigin: 'center',
+                                        transition: 'transform 0.5s var(--ease-out-expo)',
                                         pointerEvents: 'none',
                                     }}
                                 />

@@ -79,6 +79,7 @@ const Welcome = () => {
                         <video
                             src={portVideo}
                             autoPlay loop muted playsInline controls={false} preload="auto"
+                            aria-hidden="true"
                             className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44 object-cover pointer-events-none"
                             style={{ display: 'block' }}
                         />
@@ -92,6 +93,7 @@ const Welcome = () => {
                         <video
                             src={towerVideo}
                             autoPlay loop muted playsInline controls={false} preload="auto"
+                            aria-hidden="true"
                             className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44 object-cover pointer-events-none"
                             style={{ display: 'block' }}
                         />

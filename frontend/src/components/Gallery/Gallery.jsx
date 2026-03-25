@@ -82,25 +82,25 @@ const Gallery = () => {
         });
 
         tl4.to(".gallery-page4", { backgroundColor: "var(--bg-void)" }, 'start');
-        gsap.set(".gallery-topText h4, .gallery-topText h3, .gallery-topText p, .gallery-bottomText h3", { opacity: 1, x: 0 });
+        gsap.set(".gallery-topText h3, .gallery-topText p, .gallery-bottomText p", { opacity: 1, x: 0 });
 
-        tl4.to(".gallery-box h3", { opacity: 0 }, 'a')
+        tl4.to(".gallery-box span", { opacity: 0 }, 'a')
             .to(".gallery-page4 .gallery-background", {
                 width: "calc(100vw - 1rem)", height: "calc(100vh - 1rem)",
                 borderRadius: "3.5rem", y: -40,
             }, 'a')
             .to(".gallery-page4 .gallery-background img", { transform: "scale(1)" }, 'a')
-            .from(".gallery-background .gallery-topText h4, .gallery-background .gallery-topText h3, .gallery-background .gallery-topText p, .gallery-background .gallery-bottomText h3", { opacity: 0, x: 50 })
+            .from(".gallery-background .gallery-topText h3, .gallery-background .gallery-topText p, .gallery-background .gallery-bottomText p", { opacity: 0, x: 50 })
             .to({}, { duration: 0.4 }, "+=0")
             .to("#gallery-second", { transform: "translate(-50%, -56%)" }, 'b')
             .to("#gallery-second img", { transform: "scale(1)" }, 'b')
             .to(".gallery-page4 .gallery-background", { scale: 0.9, opacity: 0, y: -50 }, 'b')
-            .from("#gallery-second .gallery-topText h4, #gallery-second .gallery-topText h3, #gallery-second .gallery-topText p, #gallery-second .gallery-bottomText h3", { opacity: 0, x: 50 })
+            .from("#gallery-second .gallery-topText h3, #gallery-second .gallery-topText p, #gallery-second .gallery-bottomText p", { opacity: 0, x: 50 })
             .to({}, { duration: 0.4 }, "+=0")
             .to("#gallery-third", { transform: "translate(-50%, -56%)" }, 'c')
             .to("#gallery-third video", { transform: "scale(1)" }, 'c')
             .to("#gallery-second", { scale: 0.9, opacity: 0 }, 'c')
-            .from("#gallery-third .gallery-topText h4, #gallery-third .gallery-topText h3, #gallery-third .gallery-topText p, #gallery-third .gallery-bottomText h3", { opacity: 0, x: 50 })
+            .from("#gallery-third .gallery-topText h3, #gallery-third .gallery-topText p, #gallery-third .gallery-bottomText p", { opacity: 0, x: 50 })
             .to({}, { duration: 0.4 }, "+=0");
 
         const images = pageRef.current?.querySelectorAll('img') ?? [];
@@ -207,7 +207,7 @@ const Gallery = () => {
     const SLIDER_LABELS = ['Cristi Labs', 'The Infinite Seat', 'Ghost Logistics', 'Digital Vaults', 'The Aura Protocol', 'Beyond Borders'];
     const generateBrandElements = (quantity = 6) => {
         return SLIDER_LABELS.slice(0, quantity).map((label, i) => (
-            <h3 key={i + 1} style={{ "--index": i + 1 }} className='tracking-tighter'>{label}</h3>
+            <span key={i + 1} style={{ "--index": i + 1 }} className='tracking-tighter' aria-hidden="true">{label}</span>
         ));
     };
 
@@ -253,6 +253,7 @@ const Gallery = () => {
                                     loop
                                     playsInline
                                     preload="none"
+                                    aria-hidden="true"
                                     style={{ width: '100%', height: '110%', objectFit: 'cover', objectPosition: 'center center', pointerEvents: 'none' }}
                                 />
                             ) : (
@@ -319,11 +320,11 @@ const Gallery = () => {
                         <p style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(8px, 0.75vw, 10px)', letterSpacing: '0.28em', color: 'var(--accent-gold)', textTransform: 'uppercase', margin: 0 }}>
                             Division V · Virtual Stadiums
                         </p>
-                        <h4>THE INFINITE SEAT</h4>
+                        <h3>THE INFINITE SEAT</h3>
                     </div>
                 </div>
                 <div className="gallery-bottomText">
-                    <h3>The sold-out problem — solved forever. We engineer hyper-realistic virtual arenas where fans attend World Cups, championship nights, and sold-out concerts from anywhere on Earth. FIFA. NFL. NBA. We hold every seat.</h3>
+                    <p>The sold-out problem — solved forever. We engineer hyper-realistic virtual arenas where fans attend World Cups, championship nights, and sold-out concerts from anywhere on Earth. FIFA. NFL. NBA. We hold every seat.</p>
                 </div>
             </div>
 
@@ -346,11 +347,11 @@ const Gallery = () => {
                         <p style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(8px, 0.75vw, 10px)', letterSpacing: '0.28em', color: 'var(--accent-gold)', textTransform: 'uppercase', margin: 0 }}>
                             Division III · Digital Twin Trade
                         </p>
-                        <h4>GHOST LOGISTICS</h4>
+                        <h3>GHOST LOGISTICS</h3>
                     </div>
                 </div>
                 <div className="gallery-bottomText">
-                    <h3>From Shenzhen to New York in 48 hours. We master the global arbitrage — securing exclusive rights to emerging technologies and launching capsule-quality brands before the market knows they exist. Every physical product ships with a verified digital twin.</h3>
+                    <p>From Shenzhen to New York in 48 hours. We master the global arbitrage — securing exclusive rights to emerging technologies and launching capsule-quality brands before the market knows they exist. Every physical product ships with a verified digital twin.</p>
                 </div>
             </div>
 
@@ -361,6 +362,7 @@ const Gallery = () => {
                     loop
                     playsInline
                     preload="none"
+                    aria-hidden="true"
                     style={{
                         width: '100%', height: '100%',
                         objectFit: 'cover', objectPosition: 'center center',
@@ -372,11 +374,11 @@ const Gallery = () => {
                         <p style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(8px, 0.75vw, 10px)', letterSpacing: '0.28em', color: 'var(--accent-gold)', textTransform: 'uppercase', margin: 0 }}>
                             Division I · RWA Immersive Commerce
                         </p>
-                        <h4>DIGITAL VAULTS</h4>
+                        <h3>DIGITAL VAULTS</h3>
                     </div>
                 </div>
                 <div className="gallery-bottomText">
-                    <h3>Where $50,000 transactions begin in the browser. We build 3D gamified vaults for rare watches, exotic assets, and limited-edition luxury — where the unboxing experience starts long before the package arrives. High-frequency commerce. Cinematic precision.</h3>
+                    <p>Where $50,000 transactions begin in the browser. We build 3D gamified vaults for rare watches, exotic assets, and limited-edition luxury — where the unboxing experience starts long before the package arrives. High-frequency commerce. Cinematic precision.</p>
                 </div>
             </div>
         </section>

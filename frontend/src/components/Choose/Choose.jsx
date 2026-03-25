@@ -30,12 +30,12 @@ const Choose = () => {
             ease: "power1.inOut"
         });
 
-        // Animate the div height
+        // Animate the div via clipPath instead of height
         if (!isMobD) {
             tl.fromTo(
                 ".title-part",
-                { height: "10vh" },
-                { height: `${isMobD ? "22vh" : "50vh"}`, ease: "none" }
+                { clipPath: "inset(0 0 90% 0)" },
+                { clipPath: "inset(0 0 0% 0)", ease: "none" }
             );
         }
 
@@ -65,9 +65,9 @@ const Choose = () => {
             <div className="lg:mt-10 mt-4 md:mt-7 title-part origin-bottom">
                 {
                     chooseLines.map((line, index) => (
-                        <h1 key={index} className={`choose-heading font-medium tracking-tighter text-[var(--text-primary)] lg:text-[9.5rem] text-2xl sm:text-3xl leading-[0.9]`}>
+                        <h2 key={index} className={`choose-heading font-medium tracking-tighter text-[var(--text-primary)] lg:text-[9.5rem] text-2xl sm:text-3xl leading-[0.9]`}>
                             <span className={`choose-title-break ${index == 1 ? "lg:pb-3 pb-1 md:pb-2" : ""}`}>{line}<span className={`choose-title-clip ${index == 1 ? "lg:pb-3 pb-1 md:pb-2" : ""}`}>{line}</span></span>
-                        </h1>
+                        </h2>
                     ))
                 }
             </div>

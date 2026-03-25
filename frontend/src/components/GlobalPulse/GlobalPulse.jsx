@@ -1,50 +1,55 @@
 import { useState, useEffect } from "react";
 
-// All brand trading-floor hubs — NYC → WY HQ
-const GLOBAL_HUBS = [
-    { city: "NYC", tz: "America/New_York" },
-    { city: "LON", tz: "Europe/London" },
-    { city: "TYO", tz: "Asia/Tokyo" },
-    { city: "SGP", tz: "Asia/Singapore" },
-    { city: "TUN", tz: "Africa/Tunis" },
-    { city: "ALG", tz: "Africa/Algiers", utcOffset: 1 },
-    { city: "WY",  tz: "America/Denver", utcOffset: -7 },
+// Intelligence Feed — 7 global hubs
+const CITIES = [
+    { code: "NYC", zone: "America/New_York" },
+    { code: "LON", zone: "Europe/London" },
+    { code: "TYO", zone: "Asia/Tokyo" },
+    { code: "SGP", zone: "Asia/Singapore" },
+    { code: "TUN", zone: "Africa/Tunis" },
+    { code: "ALG", zone: "Africa/Algiers" },
+    { code: "WY",  zone: "America/Denver" },
 ];
 
-const formatTime = (date, hub) => {
-    const opts = { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false, hourCycle: "h23" };
+function getTime(zone) {
     try {
-        const result = new Intl.DateTimeFormat("en-GB", { ...opts, timeZone: hub.tz }).format(date);
-        if (result?.length >= 8) return result;
-    } catch { /* fallback */ }
-    if (typeof hub.utcOffset === "number") {
-        const utc = date.getTime() + date.getTimezoneOffset() * 60000;
-        return new Intl.DateTimeFormat("en-GB", opts).format(new Date(utc + hub.utcOffset * 3600000));
+        return new Date().toLocaleTimeString("en-GB", {
+            timeZone: zone,
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+        });
+    } catch {
+        return "—";
     }
-    return "—";
-};
+}
+
+// Shared ticker items — rendered inside each track copy
+function TickerItems({ times }) {
+    return (
+        <>
+            {CITIES.map((city, i) => (
+                <div key={city.code} className="live-ticker-hub" aria-hidden="true">
+                    <span className="live-ticker-city">{city.code}</span>
+                    <span className="live-ticker-sep">·</span>
+                    <span className="live-ticker-time">{times[i]}</span>
+                </div>
+            ))}
+            <span className="live-ticker-loop-sep" aria-hidden="true">◆</span>
+        </>
+    );
+}
 
 export default function GlobalPulse() {
-    const [times, setTimes] = useState(GLOBAL_HUBS.map(() => ""));
+    const [times, setTimes] = useState(() => CITIES.map((c) => getTime(c.zone)));
 
     useEffect(() => {
-        const update = () => {
-            const now = new Date();
-            setTimes(GLOBAL_HUBS.map((hub) => formatTime(now, hub)));
-        };
-        update();
-        const id = setInterval(update, 1000);
+        const id = setInterval(() => {
+            setTimes(CITIES.map((c) => getTime(c.zone)));
+        }, 1000);
         return () => clearInterval(id);
     }, []);
-
-    // 4× repeat — seamless -25% translateX loop
-    const items = [...Array(4)].flatMap((_, cycle) =>
-        GLOBAL_HUBS.map((hub, j) => ({
-            key: `${hub.city}-${cycle}-${j}`,
-            city: hub.city,
-            time: times[j] || "—",
-        }))
-    );
 
     return (
         <div className="live-ticker-wrapper">
@@ -53,22 +58,19 @@ export default function GlobalPulse() {
                 {/* ── Badge — ping dot + label ── */}
                 <div className="live-ticker-badge">
                     <span className="live-ticker-dot-wrapper">
-                        <span className="live-ticker-ping" aria-hidden />
+                        <span className="live-ticker-ping" aria-hidden="true" />
                         <span className="live-ticker-dot" />
                     </span>
                     <span className="live-ticker-label">GLOBAL PULSE</span>
                 </div>
 
-                {/* ── Marquee — edge-faded, GPU-accelerated ── */}
-                <div className="live-ticker-marquee">
-                    <div className="live-ticker-track">
-                        {items.map(({ key, city, time }) => (
-                            <div key={key} className="live-ticker-hub">
-                                <span className="live-ticker-city">{city}</span>
-                                <span className="live-ticker-sep" aria-hidden>·</span>
-                                <span className="live-ticker-time">{time}</span>
-                            </div>
-                        ))}
+                {/* ── Marquee — 2 tracks (7 cities × 2 = 14 nodes), CSS seamless loop ── */}
+                <div className="live-ticker-marquee" aria-label="Global time zones" role="timer">
+                    <div className="live-ticker-track live-ticker-track--a">
+                        <TickerItems times={times} />
+                    </div>
+                    <div className="live-ticker-track live-ticker-track--b" aria-hidden="true">
+                        <TickerItems times={times} />
                     </div>
                 </div>
 

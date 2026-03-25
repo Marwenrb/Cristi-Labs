@@ -84,11 +84,16 @@ const BackToTop = () => {
         <div
             ref={containerRef}
             onClick={handleClick}
+            role="button"
+            tabIndex={0}
+            aria-label="Back to top"
+            onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleClick(); } }}
             style={{
                 position:      "fixed",
                 right:         "clamp(16px, 4vw, 40px)",
-                bottom:        `${bottomPx + 16}px`,
-                transition:    "bottom 0.35s ease",
+                bottom:        "16px",
+                transform:     `translateY(${-(bottomPx)}px)`,
+                transition:    "transform 0.35s ease",
                 zIndex:        90,
                 opacity:       0,
                 cursor:        "pointer",
@@ -112,9 +117,11 @@ const BackToTop = () => {
                     bottom:     0,
                     left:       0,
                     width:      "100%",
-                    height:     `${progress * 100}%`,
+                    height:     "100%",
                     background: "var(--accent)",
-                    transition: "height 0.1s linear",
+                    transform:  `scaleY(${progress})`,
+                    transformOrigin: "bottom",
+                    transition: "transform 0.1s linear",
                 }} />
             </div>
 

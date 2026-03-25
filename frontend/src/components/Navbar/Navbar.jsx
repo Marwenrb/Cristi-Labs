@@ -58,9 +58,11 @@ const MenuButton = ({ isOpen, onClick }) => (
             }} />
             <div style={{
                 height: '1px',
-                width: isOpen ? '0' : '12px',
+                width: '12px',
                 background: 'var(--accent-gold)',
-                transition: 'width 0.25s var(--ease-out-expo)',
+                transform: isOpen ? 'scaleX(0)' : 'scaleX(1)',
+                transformOrigin: 'center',
+                transition: 'transform 0.25s var(--ease-out-expo)',
             }} />
             <div style={{
                 height: '1px', width: '20px',
@@ -256,11 +258,11 @@ const Navbar = () => {
             <div
                 className="fixed left-1/2 z-[101]"
                 style={{
-                    bottom: `${bottomPx}px`,
-                    transform: 'translateX(-50%)',
+                    bottom: '28px',
+                    transform: `translateX(-50%) translateY(${-(bottomPx - 28)}px)`,
                     opacity: nearBottom ? 0 : 1,
                     pointerEvents: nearBottom ? 'none' : 'auto',
-                    transition: 'bottom 0.35s ease, opacity 0.4s ease',
+                    transition: 'transform 0.35s ease, opacity 0.4s ease',
                 }}
             >
                 <MenuButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />

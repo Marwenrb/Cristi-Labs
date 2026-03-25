@@ -89,7 +89,7 @@ export default function MetricsPulse() {
     const accentLineRef = (el) => {
         if (!el) return;
         const obs = new IntersectionObserver(([e]) => {
-            if (e.isIntersecting) { el.style.width = '100%'; obs.disconnect(); }
+            if (e.isIntersecting) { el.style.transform = 'scaleX(1)'; obs.disconnect(); }
         }, { threshold: 0.5 });
         obs.observe(el);
     };
@@ -119,7 +119,7 @@ export default function MetricsPulse() {
                 <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, rgba(184,146,74,0.2), transparent)' }} />
                 <span style={{
                     fontFamily: 'var(--font-mono)', fontSize: '0.55rem',
-                    letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(184,146,74,0.3)',
+                    letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(184,146,74,0.58)',
                 }}>Cristi Labs LLC · 2026</span>
             </div>
 
@@ -209,7 +209,7 @@ export default function MetricsPulse() {
                     >
                         <span style={{
                             fontFamily: 'var(--font-mono)', fontSize: '14px',
-                            color: 'rgba(184,146,74,0.4)', display: 'block', marginBottom: '0.75rem',
+                            color: 'rgba(184,146,74,0.58)', display: 'block', marginBottom: '0.75rem',
                         }}>{metric.icon}</span>
                         <span
                             data-metric={i + 1}
@@ -235,8 +235,9 @@ export default function MetricsPulse() {
                         <div
                             style={{
                                 position: 'absolute', bottom: 0, left: 0, right: 0,
-                                height: '1px', background: 'var(--accent)', width: '0%',
-                                transition: 'width 1.5s ease',
+                                height: '1px', background: 'var(--accent)',
+                                transform: 'scaleX(0)', transformOrigin: 'left',
+                                transition: 'transform 1.5s ease',
                             }}
                             ref={accentLineRef}
                         />

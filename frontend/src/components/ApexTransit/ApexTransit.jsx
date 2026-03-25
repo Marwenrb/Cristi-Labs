@@ -530,7 +530,7 @@ export default function ApexTransit() {
               gap: '5px',
               fontFamily: 'var(--font-mono)',
               fontSize: '9px',
-              color: AIR_ROUTES[activeRoute].status === 'LIVE' ? 'var(--accent)' : 'rgba(184,146,74,0.4)',
+              color: AIR_ROUTES[activeRoute].status === 'LIVE' ? 'var(--accent)' : 'rgba(184,146,74,0.58)',
               letterSpacing: '0.14em',
             }}>
               {AIR_ROUTES[activeRoute].status === 'LIVE' && (
@@ -571,7 +571,7 @@ export default function ApexTransit() {
               fontSize: '7px',
               letterSpacing: '0.22em',
               textTransform: 'uppercase',
-              color: 'rgba(184,146,74,0.4)',
+              color: 'rgba(184,146,74,0.58)',
               marginBottom: '8px',
             }}>{spec.label}</div>
             <div style={{
@@ -618,7 +618,7 @@ export default function ApexTransit() {
                     fontFamily: 'var(--font-mono)',
                     fontSize: '7px',
                     letterSpacing: '0.24em',
-                    color: 'rgba(184,146,74,0.3)',
+                    color: 'rgba(184,146,74,0.58)',
                     textTransform: 'uppercase',
                   }}>{h}</span>
                 ))}
@@ -669,7 +669,7 @@ export default function ApexTransit() {
                     fontFamily: 'var(--font-mono)',
                     fontSize: '7.5px',
                     letterSpacing: '0.12em',
-                    color: route.status === 'LIVE' ? 'var(--accent)' : 'rgba(184,146,74,0.4)',
+                    color: route.status === 'LIVE' ? 'var(--accent)' : 'rgba(184,146,74,0.58)',
                     textTransform: 'uppercase',
                   }}>{route.status}</span>
                 </div>

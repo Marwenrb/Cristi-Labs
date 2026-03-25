@@ -51,6 +51,10 @@ export default function ScrollReturn() {
         <div
             ref={containerRef}
             onClick={handleClick}
+            role="button"
+            tabIndex={0}
+            aria-label="Back to top"
+            onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleClick(); } }}
             style={{
                 position: 'fixed',
                 bottom: '40px',
@@ -79,9 +83,11 @@ export default function ScrollReturn() {
                     bottom: 0,
                     left: 0,
                     width: '100%',
-                    height: `${progress * 100}%`,
+                    height: '100%',
                     background: 'var(--accent)',
-                    transition: 'height 0.1s linear',
+                    transform: `scaleY(${progress})`,
+                    transformOrigin: 'bottom',
+                    transition: 'transform 0.1s linear',
                 }} />
             </div>
 

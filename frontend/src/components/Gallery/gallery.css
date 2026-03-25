@@ -54,7 +54,7 @@
     gap: 2rem;
 }
 
-.gallery-slider .gallery-box h3 {
+.gallery-slider .gallery-box span {
     font-family: var(--font-display);
     font-size: 10rem;
     width: 50rem;
@@ -65,12 +65,12 @@
     animation: gallery-animate var(--time) linear infinite;
     animation-delay: calc((var(--time) / var(--quantity) * (var(--index) - 1)) - var(--time));
     color: var(--text-tertiary);
+    will-change: transform;
 }
 
 @keyframes gallery-animate {
-    to {
-        left: -50rem;
-    }
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(-50rem - 100%)); }
 }
 
 .gallery-page4 .gallery-background {
@@ -114,16 +114,12 @@
     z-index: 10;
 }
 
-.gallery-topText h4 {
+.gallery-topText h3 {
     font-size: clamp(1.5rem, 5vw, 5rem);
     font-weight: 400;
 }
 
-.gallery-topText h3 {
-    font-size: clamp(1rem, 2.5vw, 3rem);
-}
-
-.gallery-bottomText h3 {
+.gallery-bottomText p {
     width: min(30%, 100%);
     font-size: clamp(0.75rem, 1.5vw, 1rem);
     margin-left: clamp(1rem, 3vw, 3rem);
@@ -180,15 +176,14 @@
         height: 8rem;
     }
 
-    .gallery-slider .gallery-box h3 {
+    .gallery-slider .gallery-box span {
         font-size: 5rem;
         width: 25rem;
     }
 
     @keyframes gallery-animate {
-        to {
-            left: -25rem;
-        }
+        from { transform: translateX(0); }
+        to   { transform: translateX(calc(-25rem - 100%)); }
     }
 
     .gallery-topText,
@@ -200,7 +195,7 @@
         gap: 0.5rem;
     }
 
-    .gallery-bottomText h3 {
+    .gallery-bottomText p {
         width: 85%;
         margin-left: 0;
     }

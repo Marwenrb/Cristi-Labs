@@ -235,6 +235,10 @@ const Vision = () => {
                                     key={i}
                                     className={`pillar-row ${isOpen ? 'is-open' : ''}`}
                                     onClick={() => setOpenPillar(isOpen ? null : i)}
+                                    role="button"
+                                    tabIndex={0}
+                                    aria-expanded={isOpen}
+                                    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpenPillar(isOpen ? null : i); } }}
                                 >
                                     <div className="pillar-row-header">
                                         <div className="flex items-center gap-6">

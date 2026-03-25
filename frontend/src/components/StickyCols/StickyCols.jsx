@@ -201,13 +201,13 @@ const StickyCols = () => {
                 <div className="col col-1">
                     <div className="col-content">
                         <div className="col-content-wrapper">
-                            <h1 className="text-2xl text-[var(--accent)] font-bold leading-auto">
+                            <h2 className="text-2xl text-[var(--accent)] font-bold leading-auto">
                                 Architects of<br />the Phygital<br />Economy.
-                            </h1>
+                            </h2>
                             <div className="col-content-para flex items-center gap-4 justify-between">
                                 <div className="flex items-center gap-0 justify-center">
-                                    <h3 className="border-1 px-3 py-1 text-[var(--accent)]">1</h3>
-                                    <h3 className="border-1 px-3 py-1 text-[var(--accent)]/50">3</h3>
+                                    <span className="border-1 px-3 py-1 text-[var(--accent)]">1</span>
+                                    <span className="border-1 px-3 py-1 text-[var(--accent)]/50">3</span>
                                 </div>
                                 <p className="text-[12px] font-medium mr-6">
                                     Merging immersive digital worlds with<br />
@@ -249,13 +249,13 @@ const StickyCols = () => {
                 <div className="col col-3">
                     {/* Slide 2 text — visible initially (yPercent:0 set by GSAP) */}
                     <div className="col-content-wrapper">
-                        <h1 className="text-2xl leading-auto text-[var(--text-primary)]">
+                        <h2 className="text-2xl leading-auto text-[var(--text-primary)]">
                             Ghost Logistics<br />&amp; Trade.
-                        </h1>
+                        </h2>
                         <div className="col-content-para flex items-center gap-4 justify-between">
                             <div className="flex items-center gap-0 justify-center">
-                                <h3 className="border-1 px-3 py-1 text-[var(--accent)]">2</h3>
-                                <h3 className="border-1 px-3 py-1 text-[var(--accent)]/50">3</h3>
+                                <span className="border-1 px-3 py-1 text-[var(--accent)]">2</span>
+                                <span className="border-1 px-3 py-1 text-[var(--accent)]/50">3</span>
                             </div>
                             <p className="text-[12px] font-medium">
                                 Next-gen supply chains driven by<br />
@@ -265,13 +265,13 @@ const StickyCols = () => {
                     </div>
                     {/* Slide 3 text — absolutely overlays slide 2; lines start at yPercent:125 */}
                     <div className="col-content-wrapper-2">
-                        <h1 className="text-2xl leading-auto text-[var(--text-primary)]">
+                        <h2 className="text-2xl leading-auto text-[var(--text-primary)]">
                             The Aura<br />Protocol.
-                        </h1>
+                        </h2>
                         <div className="col-content-para flex items-center gap-4 justify-between">
                             <div className="flex items-center gap-0 justify-center">
-                                <h3 className="border-1 px-3 py-1 text-[var(--accent)]">3</h3>
-                                <h3 className="border-1 px-3 py-1 text-[var(--accent)]/50">3</h3>
+                                <span className="border-1 px-3 py-1 text-[var(--accent)]">3</span>
+                                <span className="border-1 px-3 py-1 text-[var(--accent)]/50">3</span>
                             </div>
                             <p className="text-[12px] font-medium">
                                 Redefining the fan-to-icon relationship<br />
