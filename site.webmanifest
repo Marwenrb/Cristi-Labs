@@ -1,16 +1,30 @@
 {
-  "name": "Cristi Labs",
+  "name": "Cristi Labs LLC",
   "short_name": "Cristi Labs",
-  "description": "Code the Impossible. Trade the World.",
+  "description": "Venture studio at the intersection of global trade infrastructure and immersive digital technology.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0B0B0B",
+  "background_color": "#050507",
   "theme_color": "#B8924A",
+  "categories": ["business", "finance"],
   "icons": [
     {
       "src": "/favicon.svg",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
