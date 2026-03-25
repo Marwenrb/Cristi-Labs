@@ -459,8 +459,8 @@
 /* ── Founder signature — pen-stroke draw ── */
 .footer-brand-signature {
     display: block;
-    width: 240px;
-    height: 40px;
+    width: 310px;
+    height: 46px;
     margin-top: 0.3rem;
     overflow: visible;
     opacity: 0; /* GSAP sets to 1 after typewriter */
@@ -469,13 +469,13 @@
 
 .footer-brand-signature-body {
     /* GSAP overrides with getTotalLength() at runtime */
-    stroke-dasharray: 420;
-    stroke-dashoffset: 420;
+    stroke-dasharray: 560;
+    stroke-dashoffset: 560;
 }
 
 .footer-brand-signature-flourish {
-    stroke-dasharray: 280;
-    stroke-dashoffset: 280;
+    stroke-dasharray: 340;
+    stroke-dashoffset: 340;
 }
 
 /* ── Accent line ── */
@@ -532,8 +532,8 @@
     }
 
     .footer-brand-signature {
-        width: 190px;
-        height: 32px;
+        width: 246px;
+        height: 37px;
     }
 }
 

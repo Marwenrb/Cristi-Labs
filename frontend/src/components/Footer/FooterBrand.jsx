@@ -149,23 +149,23 @@ const FooterBrand = () => {
                         if (sigBody && sigBodyLen > 0) {
                             tl.to(sigBody, {
                                 strokeDashoffset: 0,
-                                duration: 0.9,
+                                duration: 1.1,
                                 ease: "power3.inOut",
                             }, typewriterEnd + 0.12);
                         }
                         if (sigFlourish && sigFlourishLen > 0) {
-                            // Flourish starts as body is near its end (0.7s offset)
+                            // Flourish starts as body is near its end (0.85s offset)
                             tl.to(sigFlourish, {
                                 strokeDashoffset: 0,
-                                duration: 0.45,
+                                duration: 0.6,
                                 ease: "expo.out",
-                            }, typewriterEnd + 0.12 + 0.7);
+                            }, typewriterEnd + 0.12 + 0.85);
                             // Wet-ink shimmer — gold flare then fades as ink dries
                             tl.to(sigEl, {
                                 filter: "brightness(1.5) drop-shadow(0 0 6px rgba(240,201,107,0.50))",
                                 duration: 0.2,
                                 ease: "power2.out",
-                            }, typewriterEnd + 0.12 + 0.7 + 0.42);
+                            }, typewriterEnd + 0.12 + 0.85 + 0.58);
                             tl.to(sigEl, {
                                 filter: "brightness(1) drop-shadow(0 0 0px transparent)",
                                 duration: 0.65,
@@ -229,41 +229,42 @@ const FooterBrand = () => {
                 <svg
                     ref={sigRef}
                     className="footer-brand-signature"
-                    viewBox="0 0 240 48"
+                    viewBox="0 0 312 52"
                     xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true"
                     focusable="false"
                 >
                     <defs>
                         <linearGradient id="fbsig-gold" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%"   stopColor="#FFEEA0" stopOpacity="1.0" />
-                            <stop offset="30%"  stopColor="#F0C96B" stopOpacity="0.90" />
-                            <stop offset="65%"  stopColor="#C9A84C" stopOpacity="0.70" />
-                            <stop offset="100%" stopColor="#9A7530" stopOpacity="0.10" />
+                            <stop offset="0%"   stopColor="#FFF4C0" stopOpacity="1.0" />
+                            <stop offset="20%"  stopColor="#F0C96B" stopOpacity="0.95" />
+                            <stop offset="55%"  stopColor="#C9A84C" stopOpacity="0.75" />
+                            <stop offset="85%"  stopColor="#9A7530" stopOpacity="0.40" />
+                            <stop offset="100%" stopColor="#7A5C28" stopOpacity="0.08" />
                         </linearGradient>
                         <linearGradient id="fbsig-flourish" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%"   stopColor="#C9A84C" stopOpacity="0.55" />
-                            <stop offset="70%"  stopColor="#9A7530" stopOpacity="0.28" />
-                            <stop offset="100%" stopColor="#7A5C28" stopOpacity="0.04" />
+                            <stop offset="0%"   stopColor="#C9A84C" stopOpacity="0.60" />
+                            <stop offset="55%"  stopColor="#9A7530" stopOpacity="0.30" />
+                            <stop offset="100%" stopColor="#7A5C28" stopOpacity="0.03" />
                         </linearGradient>
                     </defs>
-                    {/* Body: expressive cursive monogram — looping initial + connecting strokes */}
+                    {/* Body: full cursive name — dramatic loop initial + 5 connected humps + resolving tail */}
                     <path
                         className="footer-brand-signature-body"
-                        d="M 8,34 C 4,20 5,7 18,6 C 29,5 36,17 31,28 C 28,35 20,40 14,34 C 11,31 13,26 18,22 C 24,17 40,11 58,14 C 68,15 76,10 90,8 C 102,6 110,18 104,28 C 101,34 95,36 90,33 C 88,31 90,27 95,25 C 102,22 114,19 128,20 C 138,21 146,30 142,36"
+                        d="M 10,38 C 5,22 6,7 20,6 C 33,5 42,19 36,31 C 33,38 24,44 16,37 C 13,34 15,28 21,24 C 28,18 46,12 68,15 C 80,16 90,9 106,7 C 120,5 130,18 124,30 C 121,37 113,40 106,37 C 103,35 105,30 112,27 C 120,23 136,20 152,21 C 164,22 174,32 170,40 L 180,30 C 185,24 196,20 208,25 C 213,28 214,34 210,38 C 207,41 202,41 199,37 C 196,33 200,27 210,25 C 222,22 238,28 236,38"
                         fill="none"
                         stroke="url(#fbsig-gold)"
-                        strokeWidth="1.8"
+                        strokeWidth="2.0"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                     />
-                    {/* Flourish: sweeping underline that lifts off — pen leaving paper */}
+                    {/* Flourish: long sweeping underline — pen glides then lifts dramatically off paper */}
                     <path
                         className="footer-brand-signature-flourish"
-                        d="M 6,43 C 50,41 110,39 160,39 C 186,39 212,37 228,32 C 236,29 240,24 238,20"
+                        d="M 8,48 C 70,46 148,44 212,44 C 244,44 272,42 292,36 C 304,31 310,24 308,18"
                         fill="none"
                         stroke="url(#fbsig-flourish)"
-                        strokeWidth="1.0"
+                        strokeWidth="1.1"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                     />
