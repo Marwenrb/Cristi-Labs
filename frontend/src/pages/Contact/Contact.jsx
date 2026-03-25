@@ -103,19 +103,10 @@ export default function Contact() {
                 {/* -- Hero Section -- */}
                 <section className="contact-hero">
 
-                    {/* Geographic coordinates — decorative */}
-                    <div className="contact-geo" aria-hidden="true">
-                        <span>44.7970&deg;N</span>
-                        <span className="contact-geo-sep">&middot;</span>
-                        <span>106.9564&deg;W</span>
-                        <span className="contact-geo-sep">&middot;</span>
-                        <span>SHERIDAN &middot; WY</span>
-                    </div>
-
                     <div className="contact-eyebrow-wrapper">
                         <div className="contact-eyebrow">
                             <span className="contact-eyebrow-line" aria-hidden="true" />
-                            <span className="contact-eyebrow-text">[ 04 ] &middot; CORPORATE ACCESS</span>
+                            <span className="contact-eyebrow-text">CORPORATE ACCESS</span>
                         </div>
                     </div>
 
@@ -133,10 +124,20 @@ export default function Contact() {
                         <span style={{ color: "rgba(184,146,74,0.58)" }}>Response within 48 business hours.</span>
                     </p>
 
-                    {/* Separator line with timestamp */}
+                    {/* Separator line with timestamp + coordinates */}
                     <div className="contact-hero-rule">
                         <span className="contact-hero-rule-line" aria-hidden="true" />
                         <span className="contact-hero-timestamp" aria-live="polite">{time} MT</span>
+                        <span className="contact-hero-rule-line" aria-hidden="true" style={{ marginLeft: 'auto' }} />
+                    </div>
+
+                    {/* Geographic coordinates — under hero content */}
+                    <div className="contact-geo" aria-hidden="true">
+                        <span>44.7970&deg;N</span>
+                        <span className="contact-geo-sep">&middot;</span>
+                        <span>106.9564&deg;W</span>
+                        <span className="contact-geo-sep">&middot;</span>
+                        <span>SHERIDAN &middot; WY</span>
                     </div>
                 </section>
 

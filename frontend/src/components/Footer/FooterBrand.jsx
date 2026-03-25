@@ -101,8 +101,19 @@ const FooterBrand = () => {
     return (
         <div ref={brandRef} className="footer-brand">
             <div className="footer-brand-card">
+                {/* Sovereign watermark — faint CL monogram */}
+                <div className="footer-brand-watermark" aria-hidden="true">CL</div>
+
+                {/* Classification tier badge */}
+                <div className="footer-brand-tier" aria-hidden="true">
+                    <span className="footer-brand-tier-dot" />
+                    <span>EST. 2026</span>
+                    <span style={{ opacity: 0.3 }}>&middot;</span>
+                    <span>SHERIDAN, WY</span>
+                </div>
+
                 <div className="footer-brand-title-row">
-                    <h2 ref={titleRef} className="footer-brand-title">
+                    <h2 ref={titleRef} className="footer-brand-title" aria-label="CRISTI LABS">
                         CRISTI <span className="footer-brand-title-accent">LABS</span>
                     </h2>
                     <span
@@ -112,12 +123,14 @@ const FooterBrand = () => {
                     />
                 </div>
 
-                <p ref={taglineRef} className="footer-brand-tagline">
+                <p ref={taglineRef} className="footer-brand-tagline" aria-label="Code the Impossible. Trade the World.">
                     Code the Impossible. Trade the World.
                 </p>
 
+                {/* Bottom accent strip */}
                 <div className="footer-brand-accent" />
 
+                {/* Corner marks */}
                 <div className="footer-brand-corner" aria-hidden="true" />
             </div>
         </div>

@@ -91,7 +91,7 @@ const Logo = () => {
                             LABS
                         </span>
                     </div>
-                    {/* Micro tagline — desktop only via CSS */}
+                    {/* Micro tagline — always visible */}
                     <span
                         className="logo-tagline"
                         style={{
@@ -100,7 +100,7 @@ const Logo = () => {
                             color: 'var(--text-tertiary)',
                             letterSpacing: '2px',
                             textTransform: 'uppercase',
-                            display: 'none',
+                            display: 'block',
                         }}
                     >
                         VENTURE STUDIO

@@ -195,7 +195,7 @@ const Store = () => {
                         <div className="relative h-full flex flex-col">
 
                             {/* Label — restricted access */}
-                            <div className="flex items-center gap-4 pt-20 md:pt-28">
+                            <div className="flex items-center gap-4 pt-28 md:pt-36">
                                 <div style={{ width: '24px', height: '1px', background: 'var(--error)' }} />
                                 <p
                                     style={{

@@ -193,7 +193,7 @@ const GlobalTrade = () => {
                     <div className="p-6 md:p-10 flex flex-col h-full relative z-[1]">
                         <div className="relative h-full flex flex-col">
                             {/* Eyebrow */}
-                            <div className="section-eyebrow pt-20 md:pt-28">
+                            <div className="section-eyebrow pt-28 md:pt-36">
                                 <span className="section-eyebrow-text">[ 02 ] &middot; GLOBAL OPERATIONS</span>
                             </div>
 
@@ -262,9 +262,28 @@ const GlobalTrade = () => {
                         <span className="section-eyebrow-text">TRADE CORRIDOR NETWORK</span>
                     </div>
 
-                    <svg viewBox="0 0 1000 500" className="w-full h-auto opacity-30" style={{ maxHeight: '400px' }}>
+                    {/* Radial glow backdrop */}
+                    <div style={{
+                        position: 'absolute', top: '50%', left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '80%', height: '100%',
+                        background: 'radial-gradient(ellipse at center, rgba(184,146,74,0.06) 0%, transparent 70%)',
+                        pointerEvents: 'none',
+                    }} aria-hidden="true" />
+
+                    <svg viewBox="0 0 1000 500" className="w-full h-auto relative" style={{ maxHeight: '450px', opacity: 1 }}>
+                        {/* Grid lines for depth */}
+                        <g stroke="rgba(184,146,74,0.04)" strokeWidth="0.5" fill="none">
+                            {[100, 200, 300, 400].map(y => (
+                                <line key={`h${y}`} x1="0" y1={y} x2="1000" y2={y} />
+                            ))}
+                            {[200, 400, 600, 800].map(x => (
+                                <line key={`v${x}`} x1={x} y1="0" x2={x} y2="500" />
+                            ))}
+                        </g>
+
                         {/* Simplified world map outlines — gold strokes */}
-                        <g stroke="var(--accent-gold)" strokeWidth="0.5" fill="none" opacity="0.4">
+                        <g stroke="var(--accent-gold)" strokeWidth="0.7" fill="none" opacity="0.5">
                             {/* North America */}
                             <path d="M 150 120 Q 180 100 220 110 L 250 130 Q 270 150 260 180 L 230 200 Q 200 220 170 210 L 140 180 Q 130 150 150 120Z" />
                             {/* South America */}
@@ -279,25 +298,55 @@ const GlobalTrade = () => {
                             <path d="M 750 330 Q 790 320 820 340 L 830 370 Q 810 390 780 390 L 750 370 Q 740 350 750 330Z" />
                         </g>
 
-                        {/* Hub dots */}
+                        {/* Fill subtle areas for continents */}
+                        <g fill="rgba(184,146,74,0.025)" stroke="none">
+                            <path d="M 150 120 Q 180 100 220 110 L 250 130 Q 270 150 260 180 L 230 200 Q 200 220 170 210 L 140 180 Q 130 150 150 120Z" />
+                            <path d="M 560 80 Q 620 70 700 90 L 740 130 Q 750 170 730 200 L 680 210 Q 620 200 580 170 L 550 130 Q 545 100 560 80Z" />
+                        </g>
+
+                        {/* Hub dots with labels */}
                         {[
-                            { cx: 200, cy: 160, label: 'US' },
+                            { cx: 200, cy: 160, label: 'US HQ' },
                             { cx: 480, cy: 120, label: 'EU' },
                             { cx: 650, cy: 140, label: 'ASIA' },
                             { cx: 530, cy: 230, label: 'MENA' },
                         ].map((hub, i) => (
                             <g key={i}>
-                                <circle cx={hub.cx} cy={hub.cy} r="4" fill="var(--accent-gold)" opacity="0.8" />
-                                <circle cx={hub.cx} cy={hub.cy} r="8" fill="none" stroke="var(--accent-gold)" strokeWidth="0.5" opacity="0.4" />
+                                {/* Outer pulse ring */}
+                                <circle cx={hub.cx} cy={hub.cy} r="12" fill="none" stroke="var(--accent-gold)" strokeWidth="0.3" opacity="0.2" />
+                                {/* Inner glow */}
+                                <circle cx={hub.cx} cy={hub.cy} r="6" fill="rgba(184,146,74,0.15)" />
+                                {/* Core dot */}
+                                <circle cx={hub.cx} cy={hub.cy} r="3.5" fill="var(--accent-gold)" opacity="0.9" />
+                                {/* Label */}
+                                <text
+                                    x={hub.cx}
+                                    y={hub.cy - 18}
+                                    textAnchor="middle"
+                                    fill="var(--accent-gold)"
+                                    opacity="0.6"
+                                    style={{ fontSize: '10px', fontFamily: 'var(--font-mono)', letterSpacing: '2px' }}
+                                >
+                                    {hub.label}
+                                </text>
                             </g>
                         ))}
 
                         {/* Animated trade routes */}
-                        <path className="trade-route-line" d="M 200 160 Q 340 80 480 120" fill="none" stroke="#B8924A" strokeWidth="0.8" strokeDasharray="1000" strokeDashoffset="1000" />
-                        <path className="trade-route-line" d="M 480 120 Q 560 100 650 140" fill="none" stroke="#B8924A" strokeWidth="0.8" strokeDasharray="1000" strokeDashoffset="1000" />
-                        <path className="trade-route-line" d="M 200 160 Q 400 200 530 230" fill="none" stroke="#B8924A" strokeWidth="0.8" strokeDasharray="1000" strokeDashoffset="1000" />
-                        <path className="trade-route-line" d="M 530 230 Q 600 200 650 140" fill="none" stroke="#B8924A" strokeWidth="0.8" strokeDasharray="1000" strokeDashoffset="1000" />
+                        <path className="trade-route-line" d="M 200 160 Q 340 80 480 120" fill="none" stroke="#B8924A" strokeWidth="1.2" strokeDasharray="1000" strokeDashoffset="1000" />
+                        <path className="trade-route-line" d="M 480 120 Q 560 100 650 140" fill="none" stroke="#B8924A" strokeWidth="1.2" strokeDasharray="1000" strokeDashoffset="1000" />
+                        <path className="trade-route-line" d="M 200 160 Q 400 200 530 230" fill="none" stroke="#B8924A" strokeWidth="1.2" strokeDasharray="1000" strokeDashoffset="1000" />
+                        <path className="trade-route-line" d="M 530 230 Q 600 200 650 140" fill="none" stroke="#B8924A" strokeWidth="1.2" strokeDasharray="1000" strokeDashoffset="1000" />
                     </svg>
+
+                    {/* Corridor stats below map */}
+                    <div className="flex flex-wrap justify-center gap-8 mt-8" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.3em', color: 'var(--text-tertiary)', textTransform: 'uppercase' }}>
+                        <span>4 ACTIVE CORRIDORS</span>
+                        <span style={{ color: 'rgba(184,146,74,0.3)' }}>&middot;</span>
+                        <span>12+ ORIGIN COUNTRIES</span>
+                        <span style={{ color: 'rgba(184,146,74,0.3)' }}>&middot;</span>
+                        <span>REAL-TIME TRACKING</span>
+                    </div>
                 </div>
             </section>
 

@@ -123,7 +123,7 @@ const Vision = () => {
                     <div className="p-6 md:p-10 flex flex-col h-full relative z-[1]">
                         <div className="relative h-full flex flex-col">
                             {/* Eyebrow */}
-                            <div className="section-eyebrow pt-20 md:pt-28">
+                            <div className="section-eyebrow pt-28 md:pt-36">
                                 <span className="section-eyebrow-text">[ 03 ] &middot; CORPORATE PHILOSOPHY</span>
                             </div>
 

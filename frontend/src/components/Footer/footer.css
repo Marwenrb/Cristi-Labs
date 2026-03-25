@@ -250,6 +250,46 @@
     z-index: 1;
 }
 
+/* -- Sovereign watermark — faint CL monogram behind content -- */
+.footer-brand-watermark {
+    position: absolute;
+    top: 50%;
+    right: 8%;
+    transform: translateY(-50%);
+    font-family: var(--font-display);
+    font-size: 8rem;
+    letter-spacing: 0.15em;
+    color: rgba(184, 146, 74, 0.025);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+}
+
+/* -- Classification tier badge — top-right -- */
+.footer-brand-tier {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.45rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(184, 146, 74, 0.45);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-brand-tier-dot {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(184, 146, 74, 0.5);
+    flex-shrink: 0;
+}
+
 /* -- Marques de coin — L-brackets graves -- */
 .footer-brand-corner {
     position: absolute;
