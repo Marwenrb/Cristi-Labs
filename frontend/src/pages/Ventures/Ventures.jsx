@@ -8,7 +8,7 @@ import stickyAura from '../../assets/Medias/sticky/the-aura-protocol.png';
 import stickyArch from '../../assets/Medias/sticky/architects-phygital-economy.png';
 import ghostLogistics from '../../assets/Medias/Slides/ghost-logistics.png';
 import infiniteSeat from '../../assets/Medias/Slides/the-infinite-seat.png';
-import apexStadium from '../../assets/Pages Media/apex_final_preview.jpg';
+import apexStadium from '../../assets/Medias/Slides/Virtual Stadium.png';
 import galleryTrade from '../../assets/Medias/gallery/global-trade.png';
 
 gsap.registerPlugin(ScrollTrigger);

@@ -227,52 +227,121 @@ const FooterBrand = () => {
                     />
                 </div>
 
-                {/* Founder signature — Realistic "Cristi" handwritten signature directly under brand name */}
+                {/* Founder signature — Premium luxury signature "Cristi" */}
                 <svg
                     ref={sigRef}
                     className="footer-brand-signature"
-                    viewBox="0 0 380 85"
+                    viewBox="0 0 200 70"
                     xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true"
                     focusable="false"
                 >
                     <defs>
+                        {/* Premium ink gradient with natural pressure variation */}
                         <linearGradient id="fbsig-ink" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%"   stopColor="#F8E4A5" stopOpacity="0.95" />
-                            <stop offset="25%"  stopColor="#F0C96B" stopOpacity="0.92" />
-                            <stop offset="60%"  stopColor="#C9A84C" stopOpacity="0.85" />
-                            <stop offset="85%"  stopColor="#9A7530" stopOpacity="0.65" />
-                            <stop offset="100%" stopColor="#6B4E1A" stopOpacity="0.28" />
+                            <stop offset="0%"   stopColor="#F8E4A5" stopOpacity="0.92" />
+                            <stop offset="18%"  stopColor="#F0C96B" stopOpacity="0.88" />
+                            <stop offset="42%"  stopColor="#C9A84C" stopOpacity="0.82" />
+                            <stop offset="68%"  stopColor="#B8924A" stopOpacity="0.65" />
+                            <stop offset="88%"  stopColor="#9A7530" stopOpacity="0.42" />
+                            <stop offset="100%" stopColor="#7A6230" stopOpacity="0.22" />
                         </linearGradient>
                         <linearGradient id="fbsig-flourish" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%"   stopColor="#C9A84C" stopOpacity="0.75" />
-                            <stop offset="65%"  stopColor="#9A7530" stopOpacity="0.38" />
-                            <stop offset="100%" stopColor="#6B4E1A" stopOpacity="0.06" />
+                            <stop offset="0%"   stopColor="#C9A84C" stopOpacity="0.70" />
+                            <stop offset="55%"  stopColor="#9A7530" stopOpacity="0.35" />
+                            <stop offset="100%" stopColor="#7A6230" stopOpacity="0.08" />
                         </linearGradient>
                     </defs>
 
-                    {/* Body: Realistic cursive "Cristi" — flowing, legible handwriting */}
+                    {/*
+                        Luxury signature "Cristi" — bold capital C, flowing connected script
+                        Designed with the elegance of haute couture signatures
+                    */}
+
+                    {/* Capital "C" — bold, confident opening with luxury flair */}
                     <path
                         className="footer-brand-signature-body"
-                        d="M 42,35 C 35,28 32,18 38,12 C 44,6 55,8 60,15 C 63,20 62,28 56,32 C 52,35 45,34 43,30 M 58,28 L 68,28 C 72,28 74,25 74,22 L 74,16 C 74,12 76,10 80,12 L 85,22 C 86,25 88,26 90,26 C 92,26 93,25 93,23 L 93,22 M 98,26 C 102,22 108,20 113,22 C 117,24 118,28 116,32 C 114,36 108,38 103,35 M 115,28 L 115,16 C 115,12 117,10 121,12 L 133,40 C 135,44 138,46 142,45 C 145,44 147,41 147,37 L 147,16 C 147,12 149,10 153,12 L 158,22 C 159,25 161,26 163,26 C 165,26 166,25 166,23 L 166,22 M 163,26 L 163,38 C 163,42 165,44 169,44 C 172,44 175,42 177,38 C 180,33 180,26 177,21 M 183,38 C 185,42 188,44 192,44 C 195,44 198,42 200,38 C 203,33 203,26 200,21 M 200,28 L 210,28 C 214,28 216,25 216,22 L 216,16 C 216,12 218,10 222,12 L 227,22 C 228,25 230,26 232,26 C 234,26 235,25 235,23"
+                        d="M 35,25 C 32,22 30,18 32,14 C 35,9 42,6 50,8 C 57,10 62,16 63,23 C 64,30 60,37 53,40 C 46,43 38,41 34,36 C 31,32 30,28 33,25 C 35,23 39,23 42,25 C 44,27 45,30 43,33"
                         fill="none"
                         stroke="url(#fbsig-ink)"
-                        strokeWidth="2.8"
+                        strokeWidth="3.2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                     />
 
-                    {/* Dots for the two i's in "Cristi" */}
-                    <circle cx="87" cy="8" r="1.8" fill="url(#fbsig-ink)" opacity="0.88" className="footer-brand-signature-body" />
-                    <circle cx="160" cy="8" r="1.8" fill="url(#fbsig-ink)" opacity="0.88" className="footer-brand-signature-body" />
+                    {/* "r" — connected flowing stroke from C */}
+                    <path
+                        className="footer-brand-signature-body"
+                        d="M 58,35 C 60,33 63,32 66,33 C 69,34 71,36 71,39 C 71,41 70,43 68,44 L 68,48 C 68,49 69,50 70,50"
+                        fill="none"
+                        stroke="url(#fbsig-ink)"
+                        strokeWidth="2.6"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
 
-                    {/* Flourish: elegant underline sweep — signature authenticity mark */}
+                    {/* "i" — elegant vertical with slight curve */}
+                    <path
+                        className="footer-brand-signature-body"
+                        d="M 74,48 C 75,46 76,44 77,42 C 78,40 79,38 80,37 C 81,36 82,36 83,37 L 83,48 C 83,49 84,50 85,50"
+                        fill="none"
+                        stroke="url(#fbsig-ink)"
+                        strokeWidth="2.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+                    <circle cx="81" cy="30" r="1.8" fill="url(#fbsig-ink)" opacity="0.82" className="footer-brand-signature-body" />
+
+                    {/* "s" — flowing serpentine curve */}
+                    <path
+                        className="footer-brand-signature-body"
+                        d="M 88,42 C 90,40 93,39 96,40 C 99,41 101,44 100,47 C 99,50 96,52 93,52 C 90,52 88,50 88,48 C 88,46 90,45 92,45 C 94,45 96,46 97,48"
+                        fill="none"
+                        stroke="url(#fbsig-ink)"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+
+                    {/* "t" — tall ascender with confidence */}
+                    <path
+                        className="footer-brand-signature-body"
+                        d="M 102,48 C 103,46 104,44 105,42 C 106,38 107,34 108,30 C 109,26 110,22 111,20 C 112,18 113,17 114,18 L 114,48 C 114,49 115,50 116,50"
+                        fill="none"
+                        stroke="url(#fbsig-ink)"
+                        strokeWidth="2.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+                    {/* "t" crossbar — stylish stroke */}
+                    <path
+                        className="footer-brand-signature-body"
+                        d="M 107,32 L 120,32"
+                        fill="none"
+                        stroke="url(#fbsig-ink)"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                    />
+
+                    {/* "i" final — graceful ending */}
+                    <path
+                        className="footer-brand-signature-body"
+                        d="M 123,48 C 124,46 125,44 126,42 C 127,40 128,38 129,37 C 130,36 131,36 132,37 L 132,48 C 132,49 133,50 134,50"
+                        fill="none"
+                        stroke="url(#fbsig-ink)"
+                        strokeWidth="2.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+                    <circle cx="130" cy="30" r="1.8" fill="url(#fbsig-ink)" opacity="0.82" className="footer-brand-signature-body" />
+
+                    {/* Luxury flourish — confident underline sweep with presidential authority */}
                     <path
                         className="footer-brand-signature-flourish"
-                        d="M 35,52 C 90,50 145,49 200,49 C 245,49 285,48 315,44 C 335,41 350,36 357,28 C 360,24 361,19 359,14"
+                        d="M 30,52 C 50,51 70,50 90,50 C 110,50 130,50 148,48 C 160,47 170,45 178,41 C 184,38 188,34 189,29 C 190,26 189,23 187,21"
                         fill="none"
                         stroke="url(#fbsig-flourish)"
-                        strokeWidth="1.4"
+                        strokeWidth="1.8"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                     />
