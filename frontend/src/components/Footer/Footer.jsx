@@ -162,17 +162,21 @@ const Footer = () => {
                                             className="footer-magnetic-link will-change-transform"
                                             style={{
                                                 fontFamily: 'var(--font-mono)',
-                                                fontSize: '0.8rem',
+                                                fontSize: '0.65rem',
                                                 color: 'var(--text-secondary)',
                                                 textDecoration: 'none',
                                                 display: 'block',
-                                                letterSpacing: '0.06em',
+                                                letterSpacing: '0.04em',
+                                                whiteSpace: 'nowrap',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                                maxWidth: '100%',
                                                 transition: 'color 0.3s ease',
                                             }}
                                             onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'}
                                             onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
                                         >
-                                            +1 (681) 677‑2084
+                                            {"+1\u00A0(681)\u00A0677\u20112084"}
                                         </a>
                                     </div>
 

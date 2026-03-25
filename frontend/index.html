@@ -26,9 +26,12 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Cristi Labs | Digital Entertainment &amp; International Trade" />
-  <meta property="og:description" content="A venture studio at the intersection of global trade infrastructure and immersive digital technology." />
-  <meta property="og:image" content="https://cristilabs.net/og-image.jpg" />
+  <meta property="og:title" content="Cristi Labs LLC" />
+  <meta property="og:description" content="Venture studio at the intersection of global trade infrastructure and immersive digital technology." />
+  <meta property="og:image" content="https://cristilabs.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Cristi Labs LLC — Code the Impossible. Trade the World." />
   <meta property="og:url" content="https://cristilabs.net" />
   <meta property="og:site_name" content="Cristi Labs" />
   <meta property="og:locale" content="en_US" />
@@ -37,7 +40,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Cristi Labs | Digital Entertainment &amp; International Trade" />
   <meta name="twitter:description" content="A venture studio at the intersection of global trade infrastructure and immersive digital technology." />
-  <meta name="twitter:image" content="https://cristilabs.net/og-image.jpg" />
+  <meta name="twitter:image" content="https://cristilabs.net/og-image.png" />
 
   <!-- Fonts: non-blocking -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -58,6 +61,62 @@
     html { scroll-behavior: auto; }
     img, video { content-visibility: auto; }
   </style>
+
+  <!-- JSON-LD Organization Schema (Google logo in search results) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Cristi Labs LLC",
+    "alternateName": "Cristi Labs",
+    "url": "https://cristilabs.net",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cristilabs.net/logo-512.png",
+      "width": 512,
+      "height": 512
+    },
+    "sameAs": [],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "30 N Gould St, Suite R",
+      "addressLocality": "Sheridan",
+      "addressRegion": "WY",
+      "postalCode": "82801",
+      "addressCountry": "US"
+    },
+    "telephone": "+16816772084",
+    "email": "access@cristilabs.net",
+    "foundingDate": "2026",
+    "description": "Venture studio operating at the intersection of global trade infrastructure and immersive digital technology."
+  }
+  </script>
+
+  <!-- JSON-LD WebSite Schema (enables Google Sitelinks + Search Box) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Cristi Labs",
+    "alternateName": "Cristi Labs LLC",
+    "url": "https://cristilabs.net",
+    "description": "Venture studio operating at the intersection of global trade infrastructure and immersive digital technology.",
+    "inLanguage": "en-US",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Cristi Labs LLC",
+      "url": "https://cristilabs.net"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://cristilabs.net/?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
 </head>
 
 <body>

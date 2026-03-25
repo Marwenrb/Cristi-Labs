@@ -5,7 +5,6 @@ import { useGSAP } from "@gsap/react";
 import { useMediaQuery } from "react-responsive";
 import TypeWriter from "../TypeWriter/TypeWriter";
 import heroVideo  from "../../assets/Medias/hero/Cristi Labs Home Video.mp4";
-import heroPoster from "../../assets/Medias/hero/hero-poster.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,6 +21,7 @@ const PARTICLES = Array.from({ length: 20 }, (_, i) => ({
 
 const Hero = () => {
     const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+    const videoRef    = useRef(null);
     const mobileRef = useRef(null);
     const desktopRef = useRef(null);
     const scrollRef   = useRef(null);
@@ -43,6 +43,25 @@ const Hero = () => {
             scrollTrigger: { trigger: ".hero-section", start: "top top", end: "bottom top", scrub: 1.5 },
         });
     }, [isMobile]);
+
+    // Video fade-in — no poster flash, premium opacity reveal
+    useGSAP(() => {
+        const vid = videoRef.current;
+        if (!vid) return;
+
+        const onCanPlay = () => {
+            gsap.to(vid, { opacity: 1, duration: 0.6, ease: 'power2.out' });
+        };
+
+        // Already buffered enough (e.g. cached on revisit)
+        if (vid.readyState >= 3) {
+            onCanPlay();
+        } else {
+            vid.addEventListener('canplay', onCanPlay, { once: true });
+        }
+
+        return () => vid.removeEventListener('canplay', onCanPlay);
+    }, []);
 
     // Desktop entrance: CSS transitions with data-attr selectors
     useEffect(() => {
@@ -170,13 +189,12 @@ const Hero = () => {
 
                 {/* Hero video — real brand asset */}
                 <video
-                    autoPlay loop muted playsInline preload="metadata"
-                    poster={heroPoster}
+                    ref={videoRef}
+                    autoPlay loop muted playsInline preload="auto"
                     className="hero-video absolute inset-0 w-full h-full object-cover object-center"
-                    style={{ pointerEvents: 'none', zIndex: 0 }}
+                    style={{ opacity: 0, willChange: 'transform, opacity', pointerEvents: 'none', zIndex: 0 }}
                 >
                     <source src={heroVideo} type="video/mp4" />
-                    <img src={heroPoster} alt="Cristi Labs" className="w-full h-full object-cover" loading="eager" fetchPriority="high" />
                 </video>
 
                 {/* Stacked gradient overlays */}
