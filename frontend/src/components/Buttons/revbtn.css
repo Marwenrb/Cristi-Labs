@@ -49,10 +49,8 @@
         ) border-box;
     border: 1px solid transparent;
 
-    /* Scanning border + delayed pulse ring */
-    animation:
-        border-scan 10s linear infinite,
-        pulse-ring 2.5s ease-in-out 4s infinite;
+    /* Scanning border — border-scan uses @property (Houdini), no layout impact */
+    animation: border-scan 10s linear infinite;
 
     overflow: hidden;
     will-change: transform;
@@ -115,7 +113,7 @@
         0 0 24px rgba(201, 168, 76, 0.18),
         0 0 64px rgba(201, 168, 76, 0.06);
     letter-spacing: 0.24em;
-    animation: border-scan 10s linear infinite;
+    animation: border-scan 10s linear infinite; /* box-shadow on hover is static, not animated — OK */
 }
 
 /* ── Label ─────────────────────────────────────────────────── */

@@ -217,9 +217,8 @@ p, li {
 }
 
 @keyframes pulse-ring {
-  0%   { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.4); }
-  70%  { box-shadow: 0 0 0 10px rgba(201, 168, 76, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0); }
+  0%   { transform: scale(1);   opacity: 0.5; }
+  100% { transform: scale(1.6); opacity: 0; }
 }
 
 @keyframes bounce-scroll {
@@ -268,6 +267,22 @@ p, li {
   backdrop-filter: blur(5px) saturate(100%);
   background-color: rgba(237, 240, 245, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+/* ================================================================
+   ACCESSIBILITY UTILITY
+   ================================================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 /* ================================================================

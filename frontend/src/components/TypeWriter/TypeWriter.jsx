@@ -167,6 +167,9 @@ const TypeWriter = ({
     opacity: cursorVisible ? 1 : 0,
     transition: 'opacity 0.1s',
     marginLeft: '1px',
+    display: 'inline-block',
+    width: '0.4em',
+    textAlign: 'center',
   };
 
   return (

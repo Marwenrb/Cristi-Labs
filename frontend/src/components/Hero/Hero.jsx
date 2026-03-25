@@ -230,7 +230,7 @@ const Hero = () => {
                     <div
                         ref={mobileRef}
                         className="absolute bottom-8 left-5 right-5 md:hidden"
-                        style={{ perspective: '1200px' }}
+                        style={{ perspective: '1200px', minHeight: '220px' }}
                     >
                         {/* Corporate label */}
                         <div className="hero-label-m" style={{

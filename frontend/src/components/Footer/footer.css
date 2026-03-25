@@ -160,14 +160,15 @@
     border-color: rgba(184, 146, 74, 0.22);
 }
 
-/* Presidential top rule — single fine line, expands on load */
+/* Presidential top rule — single fine line, expands on load (scaleX — GPU composited) */
 .footer-brand-card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translateX(-50%);
-    width: 0;
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    width: 100%;
     height: 1px;
     background: linear-gradient(90deg, transparent, #B8924A, transparent);
     animation: card-rule-expand 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -309,9 +310,11 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 0;
+    width: 60%;
     height: 1px;
     background: linear-gradient(90deg, #B8924A, transparent);
+    transform: scaleX(0);
+    transform-origin: left center;
     animation: accent-slide 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     animation-delay: 0.4s;
     z-index: 1;
@@ -376,13 +379,13 @@
     color: var(--text-secondary);
 }
 
-/* ── Footer brand card keyframes ── */
+/* ── Footer brand card keyframes — scaleX (GPU composited, no width animation) ── */
 @keyframes card-rule-expand {
-    to { width: 100%; }
+    to { transform: translateX(-50%) scaleX(1); }
 }
 
 @keyframes accent-slide {
-    to { width: 60%; }
+    to { transform: scaleX(1); }
 }
 
 @keyframes corner-appear {

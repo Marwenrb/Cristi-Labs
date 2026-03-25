@@ -259,6 +259,8 @@ const Gallery = () => {
                                 <img
                                     src={img.src}
                                     alt={img.alt}
+                                    width={1920}
+                                    height={1080}
                                     style={{ width: '100%', height: '110%', objectFit: 'cover', objectPosition: 'center center' }}
                                     loading={i === 0 ? 'eager' : 'lazy'}
                                     decoding="async"
@@ -301,6 +303,8 @@ const Gallery = () => {
                 <img
                     src={infiniteSeatImg}
                     alt="The Infinite Seat — Cristi Labs virtual stadium experience"
+                    width={1920}
+                    height={1080}
                     loading="eager"
                     fetchPriority="high"
                     decoding="async"
@@ -327,6 +331,8 @@ const Gallery = () => {
                 <img
                     src={ghostLogisticsImg}
                     alt="Ghost Logistics — Cristi Labs global digital twin trade"
+                    width={1920}
+                    height={1080}
                     loading="lazy"
                     decoding="async"
                     style={{

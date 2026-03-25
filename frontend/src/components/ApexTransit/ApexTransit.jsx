@@ -686,6 +686,8 @@ export default function ApexTransit() {
               <img
                 src={airplaneImg}
                 alt="Apex Transit eVTOL — Cristi Labs urban air mobility corridor"
+                width={1920}
+                height={1080}
                 loading="lazy"
                 decoding="async"
                 style={{

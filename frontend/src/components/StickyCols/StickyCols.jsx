@@ -49,6 +49,8 @@ const MobileFeatureCard = ({ card, index }) => {
                 <img
                     src={card.img.src}
                     alt={card.img.alt}
+                    width={1920}
+                    height={1080}
                     loading={index === 0 ? "eager" : "lazy"}
                     decoding="async"
                     style={{
@@ -223,6 +225,8 @@ const StickyCols = () => {
                             <img
                                 src={STICKY_IMAGES[0].src}
                                 alt={STICKY_IMAGES[0].alt}
+                                width={1920}
+                                height={1080}
                                 loading="lazy" decoding="async"
                             />
                         </div>
@@ -233,6 +237,8 @@ const StickyCols = () => {
                             <img
                                 src={STICKY_IMAGES[1].src}
                                 alt={STICKY_IMAGES[1].alt}
+                                width={1920}
+                                height={1080}
                                 loading="lazy" decoding="async"
                             />
                         </div>
@@ -282,6 +288,8 @@ const StickyCols = () => {
                             <img
                                 src={STICKY_IMAGES[2].src}
                                 alt={STICKY_IMAGES[2].alt}
+                                width={1920}
+                                height={1080}
                                 loading="lazy" decoding="async"
                             />
                         </div>
