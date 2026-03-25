@@ -5,8 +5,6 @@ import { waitForFonts } from "../../lib/fontLoader";
 
 gsap.registerPlugin(SplitText);
 
-const TYPING_SPEED = 0.055;
-
 const FooterBrand = () => {
     const brandRef = useRef(null);
     const titleRef = useRef(null);
@@ -14,10 +12,11 @@ const FooterBrand = () => {
     const taglineRef = useRef(null);
     const hasAnimatedRef = useRef(false);
 
-    // IntersectionObserver — reliable trigger with ScrollSmoother
     useEffect(() => {
         const el = brandRef.current;
         if (!el) return;
+
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         const observer = new IntersectionObserver(
             (entries) => {
@@ -31,9 +30,9 @@ const FooterBrand = () => {
                 const titleEl = titleRef.current;
                 const cursorEl = cursorRef.current;
                 const taglineEl = taglineRef.current;
-                if (!titleEl || !taglineEl) return;
+                const cardEl = el.querySelector('.footer-brand-card');
+                if (!titleEl || !taglineEl || !cardEl) return;
 
-                // Wait for fonts before SplitText measures characters
                 waitForFonts().then(() => {
                 let titleSplit;
                 let taglineSplit;
@@ -51,44 +50,118 @@ const FooterBrand = () => {
                     return;
                 }
 
-                gsap.set(titleSplit.chars, {
-                    opacity: 0,
-                    y: 22,
-                    filter: 'blur(7px)',
-                    transformOrigin: "50% 100%",
-                });
-                cursorEl && gsap.set(cursorEl, { opacity: 0 });
-                gsap.set(taglineSplit.words, { y: 18, opacity: 0 });
+                const watermark = cardEl.querySelector('.footer-brand-watermark');
+                const tier = cardEl.querySelector('.footer-brand-tier');
+                const accent = cardEl.querySelector('.footer-brand-accent');
+                const cornerEl = cardEl.querySelector('.footer-brand-corner');
 
-                const tl = gsap.timeline();
-
-                // Phase 1 — luxury blur-dissolve reveal: each char falls lightly into place
-                tl.to(titleSplit.chars, {
-                    opacity: 1,
-                    y: 0,
-                    filter: 'blur(0px)',
-                    stagger: TYPING_SPEED,
-                    duration: 0.7,
-                    ease: "expo.out",
-                });
-
-                // Phase 2 — cursor materialises immediately after last char
-                if (cursorEl) {
-                    tl.to(cursorEl, { opacity: 1, duration: 0.08 }, `-=${TYPING_SPEED}`);
+                // Reduced motion — instant reveal, no animation
+                if (prefersReduced) {
+                    gsap.set(titleSplit.chars, { opacity: 1 });
+                    if (cursorEl) {
+                        gsap.set(cursorEl, { opacity: 1 });
+                        cursorEl.style.animationPlayState = 'running';
+                    }
+                    gsap.set(taglineSplit.words, { clipPath: 'inset(0 0% 0 0)' });
+                    watermark && gsap.set(watermark, { opacity: 1 });
+                    accent && gsap.set(accent, { scaleX: 1 });
+                    tier && gsap.set(tier, { clipPath: 'inset(0 0% 0 0)', opacity: 1 });
+                    cardEl.classList.add('is-revealed');
+                    return;
                 }
 
-                // Phase 3 — tagline glides upward word by word
-                tl.to(
-                    taglineSplit.words,
-                    {
-                        y: 0,
+                // --- Initial states for orchestrated reveal ---
+                gsap.set(titleSplit.chars, {
+                    opacity: 0,
+                    yPercent: 110,
+                    filter: 'blur(8px)',
+                    transformOrigin: "50% 100%",
+                    willChange: 'transform, opacity, filter',
+                });
+                cursorEl && gsap.set(cursorEl, { opacity: 0 });
+                gsap.set(taglineSplit.words, {
+                    clipPath: 'inset(0 100% 0 0)',
+                    yPercent: 8,
+                });
+                watermark && gsap.set(watermark, { opacity: 0, scale: 1.08 });
+                tier && gsap.set(tier, { clipPath: 'inset(0 100% 0 0)', opacity: 0 });
+                accent && gsap.set(accent, { scaleX: 0 });
+
+                // --- Orchestrated GSAP timeline ---
+                const cardTl = gsap.timeline();
+
+                // 0.0s — Watermark settles in background
+                if (watermark) {
+                    cardTl.to(watermark, {
                         opacity: 1,
-                        stagger: 0.07,
-                        duration: 0.7,
-                        ease: "expo.out",
+                        scale: 1,
+                        duration: 2.4,
+                        ease: "power4.out",
+                    }, 0);
+                }
+
+                // 0.1s — Tier clips in from left
+                if (tier) {
+                    cardTl.to(tier, {
+                        clipPath: 'inset(0 0% 0 0)',
+                        opacity: 1,
+                        duration: 0.9,
+                        ease: "power3.inOut",
+                    }, 0.1);
+                }
+
+                // 0.2s — Accent line sweeps from left
+                if (accent) {
+                    cardTl.to(accent, {
+                        scaleX: 1,
+                        duration: 1.0,
+                        ease: "power3.inOut",
+                    }, 0.2);
+                }
+
+                // 0.3s — Title characters cascade up through blur
+                cardTl.to(titleSplit.chars, {
+                    yPercent: 0,
+                    opacity: 1,
+                    filter: 'blur(0px)',
+                    duration: 0.75,
+                    ease: "power4.out",
+                    stagger: { each: 0.038, from: "start" },
+                    onComplete: () => {
+                        titleSplit.chars.forEach(c => {
+                            c.style.willChange = 'auto';
+                            c.style.filter = 'none';
+                        });
                     },
-                    "-=0.3"
-                );
+                }, 0.3);
+
+                // After title — tagline words clip in
+                cardTl.to(taglineSplit.words, {
+                    clipPath: 'inset(0 0% 0 0)',
+                    yPercent: 0,
+                    duration: 0.55,
+                    ease: "power3.inOut",
+                    stagger: 0.065,
+                }, ">+0.1");
+
+                // Last — cursor fades in and begins blinking
+                if (cursorEl) {
+                    cardTl.to(cursorEl, {
+                        opacity: 1,
+                        duration: 0.3,
+                        ease: "none",
+                        onComplete: () => {
+                            cursorEl.style.animationPlayState = 'running';
+                        },
+                    }, ">");
+                }
+
+                // 0.6s — Corner brackets + card ::after reveal via class toggle
+                // (GSAP cannot animate pseudo-elements directly)
+                cardTl.call(() => {
+                    cardEl.classList.add('is-revealed');
+                }, null, 0.6);
+
                 }); // end waitForFonts
             },
             { threshold: 0.2, rootMargin: "0px 0px -50px 0px" }
