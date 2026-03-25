@@ -1,9 +1,10 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitText from "gsap/SplitText";
 import { waitForFonts } from "../../lib/fontLoader";
 
-gsap.registerPlugin(SplitText);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const FooterBrand = () => {
     const brandRef = useRef(null);
@@ -16,134 +17,134 @@ const FooterBrand = () => {
         const el = brandRef.current;
         if (!el) return;
 
+        const cardEl = el.querySelector('.footer-brand-card');
+        const titleEl = titleRef.current;
+        const cursorEl = cursorRef.current;
+        const taglineEl = taglineRef.current;
+        if (!cardEl || !titleEl || !taglineEl) return;
+
         const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        const observer = new IntersectionObserver(
-            (entries) => {
+        // ScrollTrigger fires reliably inside GSAP ScrollSmoother
+        // (IntersectionObserver is unreliable inside pinned sections)
+        const st = ScrollTrigger.create({
+            trigger: cardEl,
+            start: "top 92%",
+            once: true,
+            onEnter: () => {
                 if (hasAnimatedRef.current) return;
-                const entry = entries[0];
-                if (!entry.isIntersecting) return;
-
                 hasAnimatedRef.current = true;
-                observer.disconnect();
-
-                const titleEl = titleRef.current;
-                const cursorEl = cursorRef.current;
-                const taglineEl = taglineRef.current;
-                const cardEl = el.querySelector('.footer-brand-card');
-                if (!titleEl || !taglineEl || !cardEl) return;
 
                 waitForFonts().then(() => {
-                let titleSplit;
-                let taglineSplit;
+                    let titleSplit;
+                    let taglineSplit;
 
-                try {
-                    titleSplit = new SplitText(titleEl, {
-                        type: "chars",
-                        charsClass: "footer-brand-char",
-                    });
-                    taglineSplit = new SplitText(taglineEl, {
-                        type: "words",
-                        wordsClass: "footer-brand-word",
-                    });
-                } catch {
-                    return;
-                }
+                    try {
+                        titleSplit = new SplitText(titleEl, {
+                            type: "chars",
+                            charsClass: "footer-brand-char",
+                        });
+                        taglineSplit = new SplitText(taglineEl, {
+                            type: "words",
+                            wordsClass: "footer-brand-word",
+                        });
+                    } catch { return; }
 
-                const watermark = cardEl.querySelector('.footer-brand-watermark');
-                const tier = cardEl.querySelector('.footer-brand-tier');
-                const accent = cardEl.querySelector('.footer-brand-accent');
-                const chars = titleSplit.chars;
-                const words = taglineSplit.words;
+                    const chars = titleSplit.chars;
+                    const words = taglineSplit.words;
+                    const watermark = cardEl.querySelector('.footer-brand-watermark');
+                    const tier = cardEl.querySelector('.footer-brand-tier');
+                    const accent = cardEl.querySelector('.footer-brand-accent');
 
-                // --- Reduced motion: instant show ---
-                if (prefersReduced) {
-                    gsap.set(chars, { opacity: 1 });
-                    gsap.set(words, { opacity: 1 });
-                    if (cursorEl) {
-                        gsap.set(cursorEl, { opacity: 1 });
-                        cursorEl.style.animationPlayState = 'running';
+                    // Reduced motion — instant reveal
+                    if (prefersReduced) {
+                        chars.forEach(c => gsap.set(c, { opacity: 1 }));
+                        gsap.set(words, { opacity: 1, y: 0 });
+                        if (cursorEl) {
+                            cursorEl.style.opacity = '1';
+                            cursorEl.style.animationPlayState = 'running';
+                        }
+                        watermark && gsap.set(watermark, { opacity: 0.028 });
+                        tier && gsap.set(tier, { opacity: 1 });
+                        accent && gsap.set(accent, { scaleX: 1 });
+                        cardEl.classList.add('is-revealed');
+                        return;
                     }
-                    watermark && gsap.set(watermark, { opacity: 0.035 });
-                    tier && gsap.set(tier, { opacity: 1 });
-                    accent && gsap.set(accent, { scaleX: 1 });
-                    cardEl.classList.add('is-revealed');
-                    return;
-                }
 
-                // --- Initial states ---
-                gsap.set(chars, { opacity: 0 });
-                gsap.set(words, { opacity: 0, y: 6 });
-                watermark && gsap.set(watermark, { opacity: 0 });
-                tier && gsap.set(tier, { opacity: 0 });
-                accent && gsap.set(accent, { scaleX: 0 });
-                cursorEl && gsap.set(cursorEl, { opacity: 0 });
+                    // ── Initial states ──
+                    // chars start opacity:0 via CSS (.footer-brand-char { opacity: 0 })
+                    gsap.set(words, { opacity: 0, y: 8 });
+                    watermark && gsap.set(watermark, { opacity: 0 });
+                    tier && gsap.set(tier, { opacity: 0 });
+                    accent && gsap.set(accent, { scaleX: 0 });
+                    cursorEl && gsap.set(cursorEl, { opacity: 0 });
 
-                // --- Master timeline ---
-                const tl = gsap.timeline();
+                    const tl = gsap.timeline();
 
-                // Phase 0 — Card structure reveals (corners + top rule)
-                tl.call(() => { cardEl.classList.add('is-revealed'); }, null, 0);
+                    // 0.0s — Card structure (corners + top rule via CSS transition)
+                    tl.call(() => { cardEl.classList.add('is-revealed'); }, null, 0);
 
-                // Phase 1 — Watermark fades in slowly (background element)
-                if (watermark) {
-                    tl.to(watermark, {
-                        opacity: 0.035,
-                        duration: 2,
-                        ease: "power2.out",
-                    }, 0);
-                }
+                    // 0.0s — Watermark drifts in
+                    if (watermark) {
+                        tl.to(watermark, {
+                            opacity: 0.028,
+                            duration: 1.6,
+                            ease: "power2.out",
+                        }, 0);
+                    }
 
-                // Phase 2 — Tier label fades in
-                if (tier) {
-                    tl.to(tier, {
+                    // 0.2s — Tier label appears
+                    if (tier) {
+                        tl.to(tier, {
+                            opacity: 1,
+                            duration: 0.5,
+                            ease: "power2.out",
+                        }, 0.2);
+                    }
+
+                    // 0.3s — TYPEWRITER: each character snaps on one by one
+                    // duration 0.01 = effectively instant (true typewriter, not a fade)
+                    tl.to(chars, {
                         opacity: 1,
-                        duration: 0.6,
-                        ease: "power2.out",
-                    }, 0.2);
-                }
+                        duration: 0.01,
+                        stagger: {
+                            each: 0.055,
+                            from: "start",
+                        },
+                    }, 0.3);
 
-                // Phase 3 — TYPEWRITER: characters appear one by one
-                // Each char snaps from 0 to 1 opacity — like a real terminal
-                const typeDelay = 0.05;   // time per character
-                chars.forEach((char, i) => {
-                    tl.set(char, { opacity: 1 }, 0.4 + (i * typeDelay));
-                });
+                    // After last char — cursor blinks on
+                    const typewriterEnd = 0.3 + (chars.length * 0.055);
 
-                // Phase 4 — Cursor appears after last character typed
-                const cursorTime = 0.4 + (chars.length * typeDelay);
-                if (cursorEl) {
-                    tl.set(cursorEl, { opacity: 1 }, cursorTime);
-                    tl.call(() => {
-                        cursorEl.style.animationPlayState = 'running';
-                    }, null, cursorTime);
-                }
+                    if (cursorEl) {
+                        tl.call(() => {
+                            cursorEl.style.opacity = '1';
+                            cursorEl.style.animationPlayState = 'running';
+                        }, null, typewriterEnd + 0.05);
+                    }
 
-                // Phase 5 — Tagline words fade up, staggered
-                tl.to(words, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.5,
-                    ease: "power3.out",
-                    stagger: 0.08,
-                }, cursorTime + 0.15);
+                    // typewriterEnd + 0.2s — Tagline words drift up into place
+                    tl.to(words, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.55,
+                        ease: "power3.out",
+                        stagger: 0.09,
+                    }, typewriterEnd + 0.2);
 
-                // Phase 6 — Accent line sweeps from left
-                if (accent) {
-                    tl.to(accent, {
-                        scaleX: 1,
-                        duration: 1,
-                        ease: "power3.inOut",
-                    }, cursorTime + 0.3);
-                }
-
+                    // typewriterEnd + 0.4s — Accent line sweeps left to right
+                    if (accent) {
+                        tl.to(accent, {
+                            scaleX: 1,
+                            duration: 1,
+                            ease: "power3.inOut",
+                        }, typewriterEnd + 0.4);
+                    }
                 }); // end waitForFonts
             },
-            { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
-        );
+        });
 
-        observer.observe(el);
-        return () => observer.disconnect();
+        return () => { st && st.kill(); };
     }, []);
 
     return (
