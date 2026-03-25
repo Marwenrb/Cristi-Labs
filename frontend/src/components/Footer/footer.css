@@ -195,14 +195,17 @@
     position: relative;
     padding: 2.75rem 2.5rem 2.25rem;
     isolation: isolate;
-    border: 1px solid rgba(201, 168, 76, 0.1);
+    border: 1px solid rgba(201, 168, 76, 0.18);
     border-radius: 0;
-    /* True void-black surface, hair of warm depth at the bottom */
+    /* Void-black + warm gold bloom rising from bottom */
     background:
-        radial-gradient(ellipse 55% 40% at 50% 110%, rgba(184, 146, 74, 0.05) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 50% at 50% 115%, rgba(201, 168, 76, 0.08) 0%, transparent 65%),
         #07070A;
+    box-shadow:
+        inset 0 1px 0 rgba(240, 201, 107, 0.08),
+        0 0 60px rgba(184, 146, 74, 0.03);
     overflow: hidden;
-    transition: border-color 1s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: border-color 0.8s ease, box-shadow 0.8s ease;
 }
 
 /* ── Top rule — starts invisible, .is-revealed sweeps it in ── */
@@ -215,11 +218,11 @@
     height: 1px;
     background: linear-gradient(
         90deg,
-        transparent        0%,
-        rgba(184,146,74,0.25) 15%,
-        rgba(201,168,76,0.55) 50%,
-        rgba(184,146,74,0.25) 85%,
-        transparent        100%
+        transparent          0%,
+        rgba(184,146,74,0.3) 10%,
+        rgba(240,201,107,0.8) 50%,
+        rgba(184,146,74,0.3) 90%,
+        transparent          100%
     );
     transform: scaleX(0);
     transform-origin: left center;
@@ -252,10 +255,16 @@
 
 /* ── Hover ── */
 .footer-brand-card:hover {
-    border-color: rgba(201, 168, 76, 0.2);
+    border-color: rgba(240, 201, 107, 0.32);
+    box-shadow:
+        inset 0 1px 0 rgba(240, 201, 107, 0.14),
+        0 0 80px rgba(184, 146, 74, 0.06);
 }
 .footer-brand-card:hover .footer-brand-tagline {
-    color: rgba(184, 146, 74, 0.65);
+    color: rgba(240, 201, 107, 0.7);
+}
+.footer-brand-card:hover .footer-brand-watermark {
+    color: rgba(184, 146, 74, 0.055);
 }
 
 /* ── Watermark ── */
@@ -268,10 +277,11 @@
     font-size: 9rem;
     letter-spacing: 0.2em;
     line-height: 1;
-    color: rgba(184, 146, 74, 0.028);
+    color: rgba(201, 168, 76, 0.045);
     pointer-events: none;
     user-select: none;
     z-index: 0;
+    transition: color 0.8s ease;
 }
 
 /* ── Tier badge ── */
@@ -283,7 +293,7 @@
     font-size: 0.48rem;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: rgba(201, 168, 76, 0.35);
+    color: rgba(240, 201, 107, 0.5);
     margin-bottom: 1.5rem;
     position: relative;
     z-index: 2;
@@ -295,7 +305,7 @@
     width: 2px;
     height: 2px;
     border-radius: 50%;
-    background: rgba(201, 168, 76, 0.4);
+    background: rgba(240, 201, 107, 0.55);
     flex-shrink: 0;
 }
 
@@ -313,7 +323,7 @@
     position: absolute;
     width: 14px;
     height: 14px;
-    border-color: rgba(201,168,76,0.18);
+    border-color: rgba(240, 201, 107, 0.3);
     border-style: solid;
     opacity: 0;
     transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
@@ -361,18 +371,19 @@
 }
 
 /*
- * Each char gets its own vertical metallic gradient —
- * top highlight to deep shadow, like hammered gold leaf.
- * SplitText wraps each letter in a span with this class.
+ * Each char: vertical metallic gradient — hammered gold leaf.
+ * Near-white highlight → primary gold → deep bronze shadow.
+ * Against the void-black background this reads as sovereign gold.
  */
 .footer-brand-char {
     display: inline-block;
     background: linear-gradient(
-        180deg,
-        #F0C96B 0%,    /* highlight — struck light */
-        #C9A84C 38%,   /* primary gold */
-        #A07838 72%,   /* mid shadow */
-        #7A5C28 100%   /* deep base shadow */
+        175deg,
+        #FFEEA0 0%,    /* struck-light near-white gold */
+        #F0C96B 15%,   /* bright gold */
+        #C9A84C 42%,   /* primary sovereign gold */
+        #9A7530 68%,   /* mid bronze shadow */
+        #6B4E1A 100%   /* deep cast shadow */
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -387,12 +398,13 @@
     color: #D4B960;
 }
 
-/* ── Cursor — gold, no glow ── */
+/* ── Cursor — bright sovereign gold ── */
 .footer-brand-cursor {
     display: inline-block;
     width: 3px;
     height: 0.78em;
-    background: #C9A84C;
+    background: #F0C96B;
+    box-shadow: 0 0 8px rgba(240, 201, 107, 0.35);
     margin-left: 2px;
     vertical-align: middle;
     border-radius: 0;
@@ -410,7 +422,7 @@
     font-size: 0.55rem;
     letter-spacing: 0.42em;
     text-transform: uppercase;
-    color: rgba(184, 146, 74, 0.45);
+    color: rgba(201, 168, 76, 0.58);
     margin-top: 1.25rem;
     padding-top: 1.1rem;
     position: relative;
@@ -431,8 +443,8 @@
     height: 1px;
     background: linear-gradient(
         90deg,
-        rgba(201, 168, 76, 0.12) 0%,
-        rgba(201, 168, 76, 0.04) 55%,
+        rgba(240, 201, 107, 0.2) 0%,
+        rgba(201, 168, 76, 0.06) 50%,
         transparent 100%
     );
 }
@@ -453,8 +465,8 @@
     height: 1px;
     background: linear-gradient(
         90deg,
-        rgba(201,168,76,0.35) 0%,
-        rgba(201,168,76,0.12) 65%,
+        rgba(240, 201, 107, 0.6) 0%,
+        rgba(201, 168, 76, 0.25) 55%,
         transparent 100%
     );
     transform: scaleX(0);

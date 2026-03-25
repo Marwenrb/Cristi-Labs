@@ -64,7 +64,7 @@ const FooterBrand = () => {
                             cursorEl.style.opacity = '1';
                             cursorEl.style.animationPlayState = 'running';
                         }
-                        watermark && gsap.set(watermark, { opacity: 0.028 });
+                        watermark && gsap.set(watermark, { opacity: 0.045 });
                         tier && gsap.set(tier, { opacity: 1 });
                         accent && gsap.set(accent, { scaleX: 1 });
                         cardEl.classList.add('is-revealed');
@@ -87,7 +87,7 @@ const FooterBrand = () => {
                     // 0.0s — Watermark drifts in
                     if (watermark) {
                         tl.to(watermark, {
-                            opacity: 0.028,
+                            opacity: 0.045,
                             duration: 1.6,
                             ease: "power2.out",
                         }, 0);
