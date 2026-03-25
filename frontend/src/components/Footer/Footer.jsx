@@ -245,11 +245,15 @@ const Footer = () => {
                                 &copy; 2026 Cristi Labs LLC. All Rights Reserved.
                             </p>
 
-                            <div className="flex flex-col items-center gap-1 order-1 md:order-2">
-                                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.3em', color: 'rgba(184,146,74,0.7)', textTransform: 'uppercase', fontWeight: 400 }}>
-                                    Global HQ
-                                </span>
-                                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(237,234,228,0.6)', whiteSpace: 'nowrap', textAlign: 'center' }}>
+                            <div className="flex flex-col items-center gap-1.5 order-1 md:order-2">
+                                <div className="flex items-center gap-2">
+                                    <span style={{ display: 'inline-block', width: '12px', height: '1px', background: 'rgba(184,146,74,0.35)' }} />
+                                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.45em', color: 'rgba(184,146,74,0.6)', textTransform: 'uppercase', fontWeight: 500 }}>
+                                        Global HQ
+                                    </span>
+                                    <span style={{ display: 'inline-block', width: '12px', height: '1px', background: 'rgba(184,146,74,0.35)' }} />
+                                </div>
+                                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.2em', color: 'rgba(237,234,228,0.5)', whiteSpace: 'nowrap', textAlign: 'center' }}>
                                     SHERIDAN, WYOMING 82801 &middot; USA
                                 </p>
                             </div>

@@ -109,7 +109,9 @@ const FooterBrand = () => {
                     <span className="footer-brand-tier-dot" />
                     <span>EST. 2026</span>
                     <span style={{ opacity: 0.3 }}>&middot;</span>
-                    <span>SHERIDAN, WY</span>
+                    <span>SHERIDAN, WYOMING</span>
+                    <span style={{ opacity: 0.3 }}>&middot;</span>
+                    <span>USA</span>
                 </div>
 
                 <div className="footer-brand-title-row">
