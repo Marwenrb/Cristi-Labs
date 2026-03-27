@@ -103,6 +103,7 @@ const Navbar = () => {
 
     const handleNavClick = (link) => {
         setIsOpen(false);
+        document.body.style.overflow = '';
         // Handle hash links (e.g. /#apex-transit)
         if (link.path.includes('#')) {
             const hash = link.path.split('#')[1];
@@ -120,6 +121,12 @@ const Navbar = () => {
             }
         }
     };
+
+    // Close menu on every route change (safety net)
+    useEffect(() => {
+        setIsOpen(false);
+        document.body.style.overflow = '';
+    }, [location.pathname]);
 
     // Fade out MENU button when within 180px of the page bottom
     useEffect(() => {
@@ -251,7 +258,7 @@ const Navbar = () => {
                     isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                 }`}
                 style={{ background: 'rgba(5,5,7,0.7)', backdropFilter: 'blur(8px)' }}
-                onClick={() => setIsOpen(false)}
+                onClick={() => { setIsOpen(false); document.body.style.overflow = ''; }}
             />
 
             {/* ── Floating Menu Button ── */}
@@ -265,7 +272,11 @@ const Navbar = () => {
                     transition: 'transform 0.35s ease, opacity 0.4s ease',
                 }}
             >
-                <MenuButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+                <MenuButton isOpen={isOpen} onClick={() => {
+                    const next = !isOpen;
+                    setIsOpen(next);
+                    document.body.style.overflow = next ? 'hidden' : '';
+                }} />
             </div>
         </>
     );

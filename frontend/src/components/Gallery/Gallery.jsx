@@ -351,7 +351,7 @@ const Gallery = () => {
                     </div>
                 </div>
                 <div className="gallery-bottomText">
-                    <p>From Shenzhen to New York in 48 hours. We master the global arbitrage — securing exclusive rights to emerging technologies and launching capsule-quality brands before the market knows they exist. Every physical product ships with a verified digital twin.</p>
+                    <p>From Shenzhen to New York in 48 hours — powered by exclusive air taxi freight corridors that move cargo at aviation speed with zero intermediaries. We master global import-export arbitrage, securing first-mover rights on emerging technologies and launching capsule brands before the market knows they exist — every shipment verified end-to-end with a live digital twin. And through our Predictive Port Intelligence network, we deploy AI-trained models that forecast customs clearance windows, duty fluctuations, and geopolitical chokepoints across 47+ territories — turning regulatory complexity into a competitive edge before cargo ever leaves the origin dock.</p>
                 </div>
             </div>
 

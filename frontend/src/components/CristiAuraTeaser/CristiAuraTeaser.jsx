@@ -34,6 +34,7 @@ export default function CristiAuraTeaser() {
   const imageColRef = useRef(null);
   const imageFrameRef = useRef(null);
   const imgRef = useRef(null);
+  const imageScaleRef = useRef(null);
   const stampRef = useRef(null);
 
   // GSAP Animations
@@ -45,8 +46,7 @@ export default function CristiAuraTeaser() {
         toggleActions: 'play none none none',
       },
       onComplete: () => {
-        // Remove will-change after animation
-        gsap.set([titleRef.current, imageFrameRef.current], { willChange: 'auto' });
+        gsap.set([titleRef.current, imageFrameRef.current, imageScaleRef.current], { willChange: 'auto' });
       }
     });
 
@@ -55,14 +55,14 @@ export default function CristiAuraTeaser() {
     if (reducedMotion) {
       gsap.set([eyebrowRef.current, titleRef.current, subRef.current,
                  typingRef.current, badgeRef.current, imageFrameRef.current,
-                 imgRef.current, stampRef.current,
+                 imgRef.current, imageScaleRef.current, stampRef.current,
                  ...sectionRef.current.querySelectorAll('.cat-image-corner')],
         { opacity: 1, clipPath: 'none', filter: 'none', transform: 'none' });
       return;
     }
 
     // Set will-change
-    gsap.set([titleRef.current, imageFrameRef.current], { willChange: 'transform, opacity' });
+    gsap.set([titleRef.current, imageFrameRef.current, imageScaleRef.current], { willChange: 'transform, opacity' });
 
     // 0.0s — eyebrow fades up
     tl.to(eyebrowRef.current, {
@@ -101,11 +101,16 @@ export default function CristiAuraTeaser() {
       ease: 'power4.inOut',
     }, 0.2);
 
-    // Image scale settle
-    tl.to(imgRef.current, {
+    // Image scale settle — on the scale wrapper (separate from parallax)
+    tl.to(imageScaleRef.current, {
       scale: 1,
       duration: 1.4,
       ease: 'power3.out',
+      onComplete: () => {
+        if (imageScaleRef.current) {
+          imageScaleRef.current.style.willChange = 'auto';
+        }
+      }
     }, 0.2);
 
     // Corner brackets staggered
@@ -116,12 +121,12 @@ export default function CristiAuraTeaser() {
       ease: 'power2.out',
     }, 1.0);
 
-    // CLASSIFIED stamp
-    tl.to(stampRef.current, {
-      opacity: 1,
-      duration: 0.6,
-      ease: 'power2.out',
-    }, 1.3);
+    // CLASSIFIED stamp — class-based stamp impact animation
+    tl.call(() => {
+      if (stampRef.current) {
+        stampRef.current.classList.add('is-stamped');
+      }
+    }, [], 1.3);
 
     // Parallax scroll effect on image (subtle)
     gsap.to(imgRef.current, {
@@ -203,21 +208,27 @@ export default function CristiAuraTeaser() {
           <div className="cat-image-frame" ref={imageFrameRef}>
             <div className="cat-image-overlay" />
             <div className="cat-image-scanlines" />
-            <img 
-              src={cristiAuraImg} 
-              alt="Cristi Aura" 
-              className="cat-image"
-              ref={imgRef}
-              loading="lazy"
-              width="600"
-              height="800"
-            />
+            <div className="cat-image-scale-wrapper" ref={imageScaleRef}>
+              <img
+                src={cristiAuraImg}
+                alt="Cristi Aura"
+                className="cat-image"
+                ref={imgRef}
+                loading="lazy"
+                width="600"
+                height="800"
+              />
+            </div>
             <div className="cat-image-vignette" />
             <div className="cat-image-corner cat-image-corner--tl" />
             <div className="cat-image-corner cat-image-corner--tr" />
             <div className="cat-image-corner cat-image-corner--bl" />
             <div className="cat-image-corner cat-image-corner--br" />
-            <div className="cat-classified-stamp" ref={stampRef}>CLASSIFIED</div>
+
+            {/* CLASSIFIED stamp — centered inside frame */}
+            <div className="cat-classified-stamp" ref={stampRef} aria-hidden="true">
+              <span className="cat-stamp-inner">CLASSIFIED</span>
+            </div>
           </div>
         </div>
 

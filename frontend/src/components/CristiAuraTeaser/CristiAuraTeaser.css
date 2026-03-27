@@ -91,18 +91,18 @@
   line-height: 0.88;
   letter-spacing: 0.04em;
   margin: 0;
-  /* Moving-light gold shimmer — premium metallic scan */
+  /* Moving-light white-gold shimmer — premium metallic scan */
   background: linear-gradient(
     115deg,
-    var(--gold-900, #5C4A24) 0%,
-    var(--gold-700, #9A7A3E) 15%,
-    var(--gold-500, #C9A84C) 30%,
-    var(--gold-200, #F8E4A5) 42%,
-    #FFFFFF                  47%,
-    var(--gold-200, #F8E4A5) 52%,
-    var(--gold-500, #C9A84C) 65%,
-    var(--gold-400, #DEB954) 80%,
-    var(--gold-900, #5C4A24) 100%
+    var(--gold-700, #9A7A3E) 0%,
+    var(--gold-500, #C9A84C) 12%,
+    var(--gold-200, #F8E4A5) 24%,
+    #FFFFFF                  35%,
+    #F8F4EC                  44%,
+    #FFFFFF                  52%,
+    var(--gold-200, #F8E4A5) 62%,
+    var(--gold-500, #C9A84C) 76%,
+    var(--gold-700, #9A7A3E) 100%
   );
   background-size: 220% auto;
   -webkit-background-clip: text;
@@ -235,18 +235,25 @@
   clip-path: inset(100% 0 0 0);
 }
 
+/* Scale wrapper — separates entry animation from parallax */
+.cat-image-scale-wrapper {
+  width: 100%;
+  height: 100%;
+  transform: scale(1.08);
+  will-change: transform;
+}
+
 .cat-image {
   width: 100%;
   height: 100%;
-  object-fit: contain;       /* show full logo — no cropping */
+  object-fit: contain;
   object-position: center center;
   display: block;
   filter: grayscale(0.25) contrast(1.06);
-  transform: scale(1.04); /* GSAP will scale to 1 on reveal */
   transform-origin: center center;
   transition: filter 1.2s ease;
 }
-.cat-image-frame:hover .cat-image {
+.cat-image-frame:hover .cat-image-scale-wrapper .cat-image {
   filter: grayscale(0) contrast(1.05);
 }
 
@@ -320,82 +327,110 @@
   border-right: 1px solid rgba(184,146,74,0.6);
 }
 
-/* CLASSIFIED stamp — Premium movie-teaser announcement style */
+/* ── CLASSIFIED stamp — centered on image ─────────────────────── */
 .cat-classified-stamp {
   position: absolute;
-  top: 52%;
+
+  /* Centered horizontally */
   left: 50%;
-  transform: translate(-50%, -50%) rotate(-6deg);
-  font-family: var(--font-display, 'Bebas Neue', sans-serif);
-  font-size: 5.8rem;
-  font-weight: 700;
-  letter-spacing: 0.32em;
-  line-height: 1;
-  text-transform: uppercase;
-  color: rgba(201, 168, 76, 0.12);
-  text-shadow:
-    0 0 45px rgba(201, 168, 76, 0.28),
-    0 0 90px rgba(201, 168, 76, 0.18),
-    0 2px 4px rgba(0, 0, 0, 0.45);
-  border: 4px solid rgba(201, 168, 76, 0.15);
-  padding: 2rem 4rem;
-  border-radius: 2px;  /* Minimal rounding — sharp stamp aesthetic */
-  z-index: 6;
-  opacity: 0; /* GSAP */
-  backdrop-filter: blur(2px);
-  box-shadow:
-    inset 0 0 70px rgba(201, 168, 76, 0.10),
-    0 0 100px rgba(201, 168, 76, 0.12),
-    0 12px 40px rgba(0, 0, 0, 0.40);
-  /* Double border effect — presidential document seal */
-  outline: 2px solid rgba(201, 168, 76, 0.08);
-  outline-offset: 8px;
+  transform: translateX(-50%) rotate(-10deg);
+
+  /* Golden ratio vertical point — 62% from top */
+  top: 62%;
+
+  /* Above image content layers */
+  z-index: 8;
+
+  /* Hidden until GSAP fires */
+  opacity: 0;
   pointer-events: none;
-  user-select: none;
-  /* Stamp texture overlay — diagonal hatching pattern */
-  background:
-    repeating-linear-gradient(
-      42deg,
-      transparent,
-      transparent 2.5px,
-      rgba(201, 168, 76, 0.018) 2.5px,
-      rgba(201, 168, 76, 0.018) 5px
-    ),
-    radial-gradient(ellipse at center,
-      rgba(201, 168, 76, 0.04) 0%,
-      transparent 75%
-    );
-  /* Premium cinematic feel */
-  filter:
-    contrast(1.15)
-    drop-shadow(0 0 35px rgba(201, 168, 76, 0.12));
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Prevent any clipping — stamp is fully inside frame */
+  width: max-content;
 }
 
-/* Hover effect — intensify on parent frame hover */
-.cat-image-frame:hover .cat-classified-stamp {
-  color: rgba(201, 168, 76, 0.18);
-  border-color: rgba(201, 168, 76, 0.22);
-  text-shadow:
-    0 0 55px rgba(201, 168, 76, 0.38),
-    0 0 110px rgba(201, 168, 76, 0.24),
-    0 2px 6px rgba(0, 0, 0, 0.50);
+.cat-stamp-inner {
+  display: block;
+
+  /* Typography — larger, more impactful */
+  font-family: var(--font-mono, 'Geist Mono', monospace);
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  font-weight: 800;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  /* Red stamp ink */
+  color: rgba(218, 40, 40, 0.92);
+
+  /* Outer box — thick stamp border */
+  padding: 9px 22px 8px;
+  border: 3px solid rgba(218, 40, 40, 0.82);
+
+  /* Double-border effect via outline */
+  outline: 1.5px solid rgba(218, 40, 40, 0.30);
+  outline-offset: 4px;
+
+  border-radius: 2px;
+
+  /* Distressed ink depth */
   box-shadow:
-    inset 0 0 80px rgba(201, 168, 76, 0.14),
-    0 0 120px rgba(201, 168, 76, 0.18),
-    0 14px 48px rgba(0, 0, 0, 0.45);
-  outline-color: rgba(201, 168, 76, 0.12);
+    inset 0 0 0 1px rgba(218, 40, 40, 0.10),
+    0 0 0 0.5px rgba(218, 40, 40, 0.18),
+    2px 2px 0px rgba(218, 40, 40, 0.08),
+    -1px 1px 0px rgba(218, 40, 40, 0.05);
+
+  /* Paper texture behind stamp */
+  background:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+    rgba(200, 0, 0, 0.06);
+
+  /* Ink bleed on fibrous paper */
+  text-shadow:
+    0.6px 0.6px 0px rgba(180, 0, 0, 0.40),
+    -0.3px 0px 0px rgba(240, 70, 70, 0.22);
+
+  filter: contrast(1.06);
+}
+
+/* Impact keyframe — physical stamp press */
+@keyframes stampImpact {
+  0%   {
+    transform: translateX(-50%) rotate(-10deg) scale(1.22);
+    opacity: 0;
+    filter: blur(0.8px) contrast(1.06);
+  }
+  30%  {
+    transform: translateX(-50%) rotate(-10deg) scale(0.94);
+    opacity: 1;
+    filter: blur(0px) contrast(1.14);
+  }
+  55%  {
+    transform: translateX(-50%) rotate(-10deg) scale(1.02);
+    filter: contrast(1.08);
+  }
+  100% {
+    transform: translateX(-50%) rotate(-10deg) scale(1.00);
+    filter: contrast(1.06);
+  }
+}
+
+.cat-classified-stamp.is-stamped {
+  animation: stampImpact 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 1;
 }
 
 /* ── Mobile overrides ────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .cat-classified-stamp {
-    font-size: 3.8rem;
-    padding: 1.4rem 2.8rem;
-    letter-spacing: 0.24em;
-    border-width: 3px;
-    outline-width: 1.5px;
-    outline-offset: 6px;
+    top: 60%;
+  }
+  .cat-stamp-inner {
+    font-size: 0.7rem;
+    padding: 7px 16px 6px;
+    border-width: 2.5px;
+    outline-offset: 3px;
+    letter-spacing: 0.35em;
   }
 }
 
@@ -408,11 +443,13 @@
     max-height: 380px;
   }
   .cat-classified-stamp {
-    font-size: 3rem;
-    padding: 1.1rem 2.2rem;
-    border-width: 2.5px;
-    outline-width: 1px;
-    outline-offset: 5px;
-    letter-spacing: 0.2em;
+    top: 58%;
+  }
+  .cat-stamp-inner {
+    font-size: 0.6rem;
+    letter-spacing: 0.30em;
+    padding: 6px 12px 5px;
+    border-width: 2px;
+    outline-offset: 2px;
   }
 }
