@@ -503,7 +503,7 @@ const FooterBrand = () => {
                         CRISTI
                     </text>
 
-                    {/* "LABS" — original gold gradient */}
+                    {/* "LABS" — premium white-gold gradient (matching CRISTI) */}
                     <text
                         className="footer-brand-sig-text"
                         x="222"
@@ -511,7 +511,7 @@ const FooterBrand = () => {
                         fontFamily="'Bebas Neue', sans-serif"
                         fontSize="22"
                         letterSpacing="5"
-                        fill="url(#fbsig-text)"
+                        fill="url(#fbsig-cristi)"
                         opacity="0"
                     >
                         LABS
