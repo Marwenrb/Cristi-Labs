@@ -394,6 +394,17 @@ const FooterBrand = () => {
                         opacity="0.92"
                     />
 
+                    {/* r — Signature slash: from loop intersection, elegant sweep with end flick */}
+                    <path
+                        className="footer-brand-sig-r"
+                        d="M 93,62 C 100,58 110,53 122,50 C 130,48 136,48 138,50 C 140,52 139,54 136,55"
+                        fill="none"
+                        stroke="#FFFFFF"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                        opacity="0.65"
+                    />
+
                     {/* r — Signature underline: simple pen line beneath */}
                     <path
                         className="footer-brand-sig-r"
