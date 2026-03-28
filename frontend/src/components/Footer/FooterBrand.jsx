@@ -46,12 +46,26 @@ const FooterBrand = () => {
                     const sigEl = sigRef.current;
 
                     const sigBody = sigEl ? Array.from(sigEl.querySelectorAll('.footer-brand-signature-body')) : [];
+                    const sigC = sigEl ? Array.from(sigEl.querySelectorAll('.footer-brand-sig-c')) : [];
+                    const sigCEcho = sigEl ? Array.from(sigEl.querySelectorAll('.footer-brand-sig-c-echo')) : [];
+                    const sigCGlow = sigEl ? sigEl.querySelector('.footer-brand-sig-c-glow') : null;
+                    const sigCDot = sigEl ? sigEl.querySelector('.footer-brand-sig-c-dot') : null;
                     const sigFlourish = sigEl ? Array.from(sigEl.querySelectorAll('.footer-brand-signature-flourish')) : [];
                     const sigText = sigEl ? Array.from(sigEl.querySelectorAll('.footer-brand-sig-text')) : [];
 
                     // Pre-compute path lengths for signature animation
-                    sigBody.forEach(path => {
+                    // C paths (separate from L)
+                    sigC.forEach(path => {
                         const len = path.getTotalLength?.() || 120;
+                        gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+                    });
+                    sigCEcho.forEach(path => {
+                        const len = path.getTotalLength?.() || 110;
+                        gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+                    });
+                    // L paths
+                    sigBody.forEach(path => {
+                        const len = path.getTotalLength?.() || 60;
                         gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
                     });
                     sigFlourish.forEach(path => {
@@ -67,6 +81,10 @@ const FooterBrand = () => {
                         accent && gsap.set(accent, { scaleX: 1 });
                         if (sigEl) {
                             gsap.set(sigEl, { opacity: 1 });
+                            sigC.forEach(p => gsap.set(p, { strokeDashoffset: 0 }));
+                            sigCEcho.forEach(p => gsap.set(p, { strokeDashoffset: 0 }));
+                            sigCGlow && gsap.set(sigCGlow, { opacity: 1 });
+                            sigCDot && gsap.set(sigCDot, { opacity: 1 });
                             sigBody.forEach(p => gsap.set(p, { strokeDashoffset: 0 }));
                             sigFlourish.forEach(p => gsap.set(p, { strokeDashoffset: 0 }));
                             sigText.forEach(el => gsap.set(el, { opacity: 1 }));
@@ -104,36 +122,73 @@ const FooterBrand = () => {
                         }, 0.2);
                     }
 
-                    // 0.4s — Signature draws in (CL monogram is the brand centerpiece)
-                    if (sigEl && (sigBody.length > 0 || sigFlourish.length > 0)) {
+                    // 0.4s — Signature draws in (staged: C first, then L)
+                    const hasSig = sigEl && (sigC.length > 0 || sigBody.length > 0 || sigFlourish.length > 0);
+                    if (hasSig) {
                         tl.set(sigEl, { opacity: 1 }, 0.4);
+
+                        // ── STAGE 1: "C" draws dramatically (0.4s → 1.6s) ──
+                        if (sigC.length > 0) {
+                            tl.to(sigC, {
+                                strokeDashoffset: 0,
+                                duration: 1.2,
+                                ease: "power4.inOut",
+                            }, 0.4);
+                        }
+                        // C inner echo draws slightly later (depth)
+                        if (sigCEcho.length > 0) {
+                            tl.to(sigCEcho, {
+                                strokeDashoffset: 0,
+                                duration: 1.0,
+                                ease: "power3.inOut",
+                            }, 0.65);
+                        }
+                        // C glow halo blooms as arc approaches midpoint
+                        if (sigCGlow) {
+                            tl.to(sigCGlow, {
+                                opacity: 1,
+                                duration: 0.8,
+                                ease: "power2.out",
+                            }, 0.8);
+                        }
+                        // C dot accent appears at end of draw
+                        if (sigCDot) {
+                            tl.to(sigCDot, {
+                                opacity: 0.9,
+                                duration: 0.3,
+                                ease: "power2.out",
+                            }, 1.5);
+                        }
+
+                        // ── STAGE 2: "L" draws after C (1.5s → 2.5s) ──
                         if (sigBody.length > 0) {
                             tl.to(sigBody, {
                                 strokeDashoffset: 0,
-                                duration: 1.8,
+                                duration: 1.0,
                                 ease: "power3.inOut",
-                            }, 0.4);
+                            }, 1.5);
                         }
-                        // "CRISTI LABS" text + divider fade in after monogram
+
+                        // ── STAGE 3: Text + flourish (2.2s+) ──
                         if (sigText.length > 0) {
                             tl.to(sigText, {
                                 opacity: 1,
                                 duration: 0.7,
                                 ease: "power2.out",
-                            }, 1.8);
+                            }, 2.2);
                         }
                         if (sigFlourish.length > 0) {
                             tl.to(sigFlourish, {
                                 strokeDashoffset: 0,
                                 duration: 1.2,
                                 ease: "power2.inOut",
-                            }, 1.4);
-                            // Wet-ink shimmer
+                            }, 1.8);
+                            // Wet-ink shimmer after everything
                             tl.to(sigEl, {
                                 filter: "brightness(1.4) drop-shadow(0 0 8px rgba(248,228,165,0.55))",
                                 duration: 0.25,
                                 ease: "power2.out",
-                            }, 2.4);
+                            }, 2.8);
                             tl.to(sigEl, {
                                 filter: "brightness(1) drop-shadow(0 0 2px rgba(201,168,76,0.15))",
                                 duration: 0.7,
@@ -142,22 +197,22 @@ const FooterBrand = () => {
                         }
                     }
 
-                    // 1.0s — Tagline words drift up
+                    // 1.6s — Tagline words drift up (starts as L is drawing)
                     tl.to(words, {
                         opacity: 1,
                         y: 0,
                         duration: 0.55,
                         ease: "power3.out",
                         stagger: 0.09,
-                    }, 1.0);
+                    }, 1.6);
 
-                    // 1.2s — Accent line sweeps
+                    // 1.8s — Accent line sweeps
                     if (accent) {
                         tl.to(accent, {
                             scaleX: 1,
                             duration: 1,
                             ease: "power3.inOut",
-                        }, 1.2);
+                        }, 1.8);
                     }
                 }); // end waitForFonts
             },
@@ -203,6 +258,24 @@ const FooterBrand = () => {
                             <stop offset="50%"  stopColor="#C9A84C" stopOpacity="0.85" />
                             <stop offset="100%" stopColor="#9A7A3E" stopOpacity="0.65" />
                         </linearGradient>
+                        {/* Premium C gradient — brighter, more luxurious */}
+                        <linearGradient id="fbsig-c-main" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%"   stopColor="#FFF2D0" stopOpacity="0.98" />
+                            <stop offset="20%"  stopColor="#F0C96B" stopOpacity="0.95" />
+                            <stop offset="55%"  stopColor="#C9A84C" stopOpacity="0.90" />
+                            <stop offset="100%" stopColor="#9A7A3E" stopOpacity="0.70" />
+                        </linearGradient>
+                        {/* C inner echo — subtle depth */}
+                        <linearGradient id="fbsig-c-echo" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%"   stopColor="#F8E4A5" stopOpacity="0.35" />
+                            <stop offset="100%" stopColor="#C9A84C" stopOpacity="0.12" />
+                        </linearGradient>
+                        {/* Radial glow behind C */}
+                        <radialGradient id="fbsig-c-glow" cx="38" cy="44" r="32" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%"   stopColor="#F0C96B" stopOpacity="0.18" />
+                            <stop offset="50%"  stopColor="#C9A84C" stopOpacity="0.06" />
+                            <stop offset="100%" stopColor="#C9A84C" stopOpacity="0" />
+                        </radialGradient>
                         <linearGradient id="fbsig-flourish" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%"   stopColor="#C9A84C" stopOpacity="0.80" />
                             <stop offset="55%"  stopColor="#9A7530" stopOpacity="0.38" />
@@ -213,17 +286,71 @@ const FooterBrand = () => {
                             <stop offset="40%"  stopColor="#C9A84C" stopOpacity="0.80" />
                             <stop offset="100%" stopColor="#9A7A3E" stopOpacity="0.55" />
                         </linearGradient>
+                        {/* SVG filter for C glow blur */}
+                        <filter id="fbsig-c-blur" x="-40%" y="-40%" width="180%" height="180%">
+                            <feGaussianBlur stdDeviation="5" />
+                        </filter>
                     </defs>
 
-                    {/* C arc — elegant open circle */}
+                    {/*
+                      ── NEXT-GEN "C" ─────────────────────────────────────
+                      Three layers: glow halo → main stroke → inner echo
+                      Each animates independently for staged reveal depth.
+                    */}
+
+                    {/* C — Layer 0: Glow halo (blurred gold circle behind) */}
+                    <circle
+                        className="footer-brand-sig-c-glow"
+                        cx="38"
+                        cy="44"
+                        r="30"
+                        fill="url(#fbsig-c-glow)"
+                        filter="url(#fbsig-c-blur)"
+                        opacity="0"
+                    />
+
+                    {/* C — Layer 1: Main arc (thicker, brighter gradient) */}
                     <path
-                        className="footer-brand-signature-body"
+                        className="footer-brand-sig-c"
                         d="M 52,16 C 46,14 38,14 32,18 C 22,24 17,35 18,47 C 19,59 27,68 38,71 C 48,74 57,70 62,63"
                         fill="none"
-                        stroke="url(#fbsig-mark)"
-                        strokeWidth="2.8"
+                        stroke="url(#fbsig-c-main)"
+                        strokeWidth="3.2"
                         strokeLinecap="round"
                         style={{ strokeDasharray: '120px', strokeDashoffset: '0px' }}
+                    />
+
+                    {/* C — Layer 2: Inner echo arc (thinner, inset, creates depth) */}
+                    <path
+                        className="footer-brand-sig-c-echo"
+                        d="M 50,19 C 45,17 38,17 33,21 C 25,26 21,36 22,46 C 23,56 29,64 38,67 C 46,69 53,66 57,61"
+                        fill="none"
+                        stroke="url(#fbsig-c-echo)"
+                        strokeWidth="1.0"
+                        strokeLinecap="round"
+                        style={{ strokeDasharray: '110px', strokeDashoffset: '0px' }}
+                    />
+
+                    {/* C — Dot accent at opening (pen entry point) */}
+                    <circle
+                        className="footer-brand-sig-c-dot"
+                        cx="53"
+                        cy="15"
+                        r="1.8"
+                        fill="url(#fbsig-c-main)"
+                        opacity="0"
+                    />
+
+                    {/* C — Fine serif on top entry */}
+                    <path
+                        className="footer-brand-sig-c"
+                        d="M 46,14 L 56,14"
+                        fill="none"
+                        stroke="url(#fbsig-c-main)"
+                        strokeWidth="1.4"
+                        strokeLinecap="round"
+                        opacity="0.70"
+                        style={{ strokeDasharray: '12px', strokeDashoffset: '0px' }}
                     />
 
                     {/* L vertical stroke */}
@@ -246,18 +373,6 @@ const FooterBrand = () => {
                         strokeWidth="2.8"
                         strokeLinecap="round"
                         style={{ strokeDasharray: '32px', strokeDashoffset: '0px' }}
-                    />
-
-                    {/* Fine serif on C — top entry */}
-                    <path
-                        className="footer-brand-signature-body"
-                        d="M 46,14 L 54,14"
-                        fill="none"
-                        stroke="url(#fbsig-mark)"
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                        opacity="0.70"
-                        style={{ strokeDasharray: '10px', strokeDashoffset: '0px' }}
                     />
 
                     {/* Fine serif on L — top entry */}

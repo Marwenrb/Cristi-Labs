@@ -427,6 +427,22 @@
     stroke-dashoffset: 234;
 }
 
+/* ── Next-gen C — separate animation layer from L ── */
+.footer-brand-sig-c {
+    stroke-dasharray: 132;
+    stroke-dashoffset: 132;
+}
+.footer-brand-sig-c-echo {
+    stroke-dasharray: 110;
+    stroke-dashoffset: 110;
+}
+.footer-brand-sig-c-glow {
+    opacity: 0;
+}
+.footer-brand-sig-c-dot {
+    opacity: 0;
+}
+
 .footer-brand-signature-flourish {
     stroke-dasharray: 340;
     stroke-dashoffset: 340;
