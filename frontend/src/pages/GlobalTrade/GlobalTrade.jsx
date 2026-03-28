@@ -272,8 +272,41 @@ const GlobalTrade = () => {
                     }} aria-hidden="true" />
 
                     <svg viewBox="0 0 1000 500" className="w-full h-auto relative" style={{ maxHeight: '450px', opacity: 1 }}>
-                        {/* Grid lines for depth */}
-                        <g stroke="rgba(184,146,74,0.04)" strokeWidth="0.5" fill="none">
+                        <defs>
+                            {/* Premium gold gradient for routes */}
+                            <linearGradient id="gt-route" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%"  stopColor="#F0C96B" stopOpacity="0.9" />
+                                <stop offset="50%" stopColor="#C9A84C" stopOpacity="0.7" />
+                                <stop offset="100%" stopColor="#9A7A3E" stopOpacity="0.4" />
+                            </linearGradient>
+                            {/* Hub glow */}
+                            <radialGradient id="gt-hub-glow">
+                                <stop offset="0%"  stopColor="#F0C96B" stopOpacity="0.35" />
+                                <stop offset="100%" stopColor="#C9A84C" stopOpacity="0" />
+                            </radialGradient>
+                            {/* Atmospheric fog at bottom */}
+                            <linearGradient id="gt-fog" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%"  stopColor="#050507" stopOpacity="0" />
+                                <stop offset="70%" stopColor="#050507" stopOpacity="0" />
+                                <stop offset="100%" stopColor="#050507" stopOpacity="0.6" />
+                            </linearGradient>
+                            {/* Route glow filter */}
+                            <filter id="gt-glow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="3" />
+                            </filter>
+                        </defs>
+
+                        {/* ── Constellation dot grid ── */}
+                        <g fill="rgba(184,146,74,0.06)">
+                            {Array.from({ length: 20 }, (_, i) => {
+                                const x = 50 + (i % 5) * 220 + (Math.floor(i / 5) % 2) * 110;
+                                const y = 60 + Math.floor(i / 5) * 110;
+                                return <circle key={`dot${i}`} cx={x} cy={y} r="1.5" />;
+                            })}
+                        </g>
+
+                        {/* ── Grid lines — refined ── */}
+                        <g stroke="rgba(184,146,74,0.035)" strokeWidth="0.5" fill="none" strokeDasharray="4 8">
                             {[100, 200, 300, 400].map(y => (
                                 <line key={`h${y}`} x1="0" y1={y} x2="1000" y2={y} />
                             ))}
@@ -282,8 +315,8 @@ const GlobalTrade = () => {
                             ))}
                         </g>
 
-                        {/* Simplified world map outlines — gold strokes */}
-                        <g stroke="var(--accent-gold)" strokeWidth="0.7" fill="none" opacity="0.5">
+                        {/* ── Continent outlines — luminous strokes ── */}
+                        <g stroke="rgba(240,201,107,0.12)" strokeWidth="0.8" fill="none">
                             {/* North America */}
                             <path d="M 150 120 Q 180 100 220 110 L 250 130 Q 270 150 260 180 L 230 200 Q 200 220 170 210 L 140 180 Q 130 150 150 120Z" />
                             {/* South America */}
@@ -298,45 +331,74 @@ const GlobalTrade = () => {
                             <path d="M 750 330 Q 790 320 820 340 L 830 370 Q 810 390 780 390 L 750 370 Q 740 350 750 330Z" />
                         </g>
 
-                        {/* Fill subtle areas for continents */}
-                        <g fill="rgba(184,146,74,0.025)" stroke="none">
+                        {/* ── Continent fills — subtle luminous ── */}
+                        <g fill="rgba(240,201,107,0.018)" stroke="none">
                             <path d="M 150 120 Q 180 100 220 110 L 250 130 Q 270 150 260 180 L 230 200 Q 200 220 170 210 L 140 180 Q 130 150 150 120Z" />
                             <path d="M 560 80 Q 620 70 700 90 L 740 130 Q 750 170 730 200 L 680 210 Q 620 200 580 170 L 550 130 Q 545 100 560 80Z" />
+                            <path d="M 440 100 Q 470 90 500 100 L 510 130 Q 500 150 480 150 L 450 140 Q 430 120 440 100Z" />
+                            <path d="M 460 190 Q 490 180 510 200 L 520 260 Q 510 310 490 330 L 470 320 Q 450 280 455 230Z" />
                         </g>
 
-                        {/* Hub dots with labels */}
+                        {/* ── Trade route glow layer (behind) ── */}
+                        <g filter="url(#gt-glow)" opacity="0.4">
+                            <path d="M 200 160 Q 340 80 480 120" fill="none" stroke="#F0C96B" strokeWidth="3" />
+                            <path d="M 480 120 Q 560 100 650 140" fill="none" stroke="#F0C96B" strokeWidth="3" />
+                            <path d="M 200 160 Q 400 200 530 230" fill="none" stroke="#F0C96B" strokeWidth="3" />
+                            <path d="M 530 230 Q 600 200 650 140" fill="none" stroke="#F0C96B" strokeWidth="3" />
+                        </g>
+
+                        {/* ── Animated trade routes — crisp layer ── */}
+                        <path className="trade-route-line" d="M 200 160 Q 340 80 480 120" fill="none" stroke="url(#gt-route)" strokeWidth="1.5" strokeDasharray="1000" strokeDashoffset="1000" strokeLinecap="round" />
+                        <path className="trade-route-line" d="M 480 120 Q 560 100 650 140" fill="none" stroke="url(#gt-route)" strokeWidth="1.5" strokeDasharray="1000" strokeDashoffset="1000" strokeLinecap="round" />
+                        <path className="trade-route-line" d="M 200 160 Q 400 200 530 230" fill="none" stroke="url(#gt-route)" strokeWidth="1.5" strokeDasharray="1000" strokeDashoffset="1000" strokeLinecap="round" />
+                        <path className="trade-route-line" d="M 530 230 Q 600 200 650 140" fill="none" stroke="url(#gt-route)" strokeWidth="1.5" strokeDasharray="1000" strokeDashoffset="1000" strokeLinecap="round" />
+
+                        {/* ── Hub dots — premium multi-ring system ── */}
                         {[
-                            { cx: 200, cy: 160, label: 'US HQ' },
-                            { cx: 480, cy: 120, label: 'EU' },
-                            { cx: 650, cy: 140, label: 'ASIA' },
-                            { cx: 530, cy: 230, label: 'MENA' },
+                            { cx: 200, cy: 160, label: 'US HQ', primary: true },
+                            { cx: 480, cy: 120, label: 'EU', primary: false },
+                            { cx: 650, cy: 140, label: 'ASIA', primary: false },
+                            { cx: 530, cy: 230, label: 'MENA', primary: false },
                         ].map((hub, i) => (
                             <g key={i}>
+                                {/* Ambient glow */}
+                                <circle cx={hub.cx} cy={hub.cy} r={hub.primary ? 28 : 20} fill="url(#gt-hub-glow)" opacity="0.6" />
                                 {/* Outer pulse ring */}
-                                <circle cx={hub.cx} cy={hub.cy} r="12" fill="none" stroke="var(--accent-gold)" strokeWidth="0.3" opacity="0.2" />
-                                {/* Inner glow */}
-                                <circle cx={hub.cx} cy={hub.cy} r="6" fill="rgba(184,146,74,0.15)" />
+                                <circle cx={hub.cx} cy={hub.cy} r={hub.primary ? 16 : 12} fill="none" stroke="var(--accent-gold)" strokeWidth="0.4" opacity="0.15">
+                                    <animate attributeName="r" values={hub.primary ? "16;24;16" : "12;18;12"} dur="3s" repeatCount="indefinite" />
+                                    <animate attributeName="opacity" values="0.15;0.05;0.15" dur="3s" repeatCount="indefinite" />
+                                </circle>
+                                {/* Middle ring */}
+                                <circle cx={hub.cx} cy={hub.cy} r={hub.primary ? 10 : 8} fill="none" stroke="rgba(240,201,107,0.25)" strokeWidth="0.6" />
+                                {/* Inner glow disc */}
+                                <circle cx={hub.cx} cy={hub.cy} r={hub.primary ? 6 : 5} fill="rgba(240,201,107,0.12)" />
                                 {/* Core dot */}
-                                <circle cx={hub.cx} cy={hub.cy} r="3.5" fill="var(--accent-gold)" opacity="0.9" />
+                                <circle cx={hub.cx} cy={hub.cy} r={hub.primary ? 3.5 : 3} fill="var(--accent-gold)" opacity="0.95">
+                                    <animate attributeName="opacity" values="0.95;0.7;0.95" dur="2s" repeatCount="indefinite" />
+                                </circle>
+                                {/* White center pinpoint */}
+                                <circle cx={hub.cx} cy={hub.cy} r="1.2" fill="#FFFFFF" opacity="0.6" />
                                 {/* Label */}
                                 <text
                                     x={hub.cx}
-                                    y={hub.cy - 18}
+                                    y={hub.cy - (hub.primary ? 22 : 18)}
                                     textAnchor="middle"
-                                    fill="var(--accent-gold)"
-                                    opacity="0.6"
-                                    style={{ fontSize: '10px', fontFamily: 'var(--font-mono)', letterSpacing: '2px' }}
+                                    fill={hub.primary ? 'rgba(255,255,255,0.7)' : 'var(--accent-gold)'}
+                                    opacity={hub.primary ? 0.8 : 0.55}
+                                    style={{
+                                        fontSize: hub.primary ? '11px' : '10px',
+                                        fontFamily: 'var(--font-mono)',
+                                        letterSpacing: hub.primary ? '3px' : '2px',
+                                        fontWeight: hub.primary ? 600 : 400,
+                                    }}
                                 >
                                     {hub.label}
                                 </text>
                             </g>
                         ))}
 
-                        {/* Animated trade routes */}
-                        <path className="trade-route-line" d="M 200 160 Q 340 80 480 120" fill="none" stroke="#B8924A" strokeWidth="1.2" strokeDasharray="1000" strokeDashoffset="1000" />
-                        <path className="trade-route-line" d="M 480 120 Q 560 100 650 140" fill="none" stroke="#B8924A" strokeWidth="1.2" strokeDasharray="1000" strokeDashoffset="1000" />
-                        <path className="trade-route-line" d="M 200 160 Q 400 200 530 230" fill="none" stroke="#B8924A" strokeWidth="1.2" strokeDasharray="1000" strokeDashoffset="1000" />
-                        <path className="trade-route-line" d="M 530 230 Q 600 200 650 140" fill="none" stroke="#B8924A" strokeWidth="1.2" strokeDasharray="1000" strokeDashoffset="1000" />
+                        {/* ── Atmospheric fog at bottom ── */}
+                        <rect x="0" y="0" width="1000" height="500" fill="url(#gt-fog)" pointerEvents="none" />
                     </svg>
 
                     {/* Corridor stats below map */}

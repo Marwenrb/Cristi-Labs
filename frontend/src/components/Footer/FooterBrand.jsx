@@ -53,6 +53,7 @@ const FooterBrand = () => {
                     const sigFlourish = sigEl ? Array.from(sigEl.querySelectorAll('.footer-brand-signature-flourish')) : [];
                     const sigText = sigEl ? Array.from(sigEl.querySelectorAll('.footer-brand-sig-text')) : [];
                     const sigR = sigEl ? Array.from(sigEl.querySelectorAll('.footer-brand-sig-r')) : [];
+                    const sigRGlow = sigEl ? sigEl.querySelector('.footer-brand-sig-r-glow') : null;
 
                     // Pre-compute path lengths for signature animation
                     // C paths (separate from L)
@@ -92,6 +93,7 @@ const FooterBrand = () => {
                             sigCGlow && gsap.set(sigCGlow, { opacity: 1 });
                             sigCDot && gsap.set(sigCDot, { opacity: 1 });
                             sigR.forEach(p => gsap.set(p, { strokeDashoffset: 0 }));
+                            sigRGlow && gsap.set(sigRGlow, { opacity: 1 });
                             sigBody.forEach(p => gsap.set(p, { strokeDashoffset: 0 }));
                             sigFlourish.forEach(p => gsap.set(p, { strokeDashoffset: 0 }));
                             sigText.forEach(el => gsap.set(el, { opacity: 1 }));
@@ -174,6 +176,14 @@ const FooterBrand = () => {
                                 duration: 0.9,
                                 ease: "power3.inOut",
                             }, 1.3);
+                        }
+                        // r glow blooms
+                        if (sigRGlow) {
+                            tl.to(sigRGlow, {
+                                opacity: 1,
+                                duration: 0.7,
+                                ease: "power2.out",
+                            }, 1.4);
                         }
 
                         // ── STAGE 2: "L" draws after C + r (1.8s → 2.8s) ──
@@ -274,24 +284,34 @@ const FooterBrand = () => {
                             <stop offset="50%"  stopColor="#C9A84C" stopOpacity="0.85" />
                             <stop offset="100%" stopColor="#9A7A3E" stopOpacity="0.65" />
                         </linearGradient>
-                        {/* Premium C gradient — brighter, more luxurious */}
+                        {/* Premium C gradient — ULTRA LUMINEUX */}
                         <linearGradient id="fbsig-c-main" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%"   stopColor="#FFF2D0" stopOpacity="0.98" />
-                            <stop offset="20%"  stopColor="#F0C96B" stopOpacity="0.95" />
-                            <stop offset="55%"  stopColor="#C9A84C" stopOpacity="0.90" />
-                            <stop offset="100%" stopColor="#9A7A3E" stopOpacity="0.70" />
+                            <stop offset="0%"   stopColor="#FFFAF0" stopOpacity="1.0" />
+                            <stop offset="15%"  stopColor="#FFE8A0" stopOpacity="0.98" />
+                            <stop offset="45%"  stopColor="#F0C96B" stopOpacity="0.95" />
+                            <stop offset="100%" stopColor="#C9A84C" stopOpacity="0.85" />
                         </linearGradient>
-                        {/* C inner echo — subtle depth */}
+                        {/* C inner echo — brighter depth */}
                         <linearGradient id="fbsig-c-echo" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%"   stopColor="#F8E4A5" stopOpacity="0.35" />
-                            <stop offset="100%" stopColor="#C9A84C" stopOpacity="0.12" />
+                            <stop offset="0%"   stopColor="#FFE8A0" stopOpacity="0.50" />
+                            <stop offset="100%" stopColor="#C9A84C" stopOpacity="0.20" />
                         </linearGradient>
-                        {/* Radial glow behind C */}
-                        <radialGradient id="fbsig-c-glow" cx="38" cy="44" r="32" gradientUnits="userSpaceOnUse">
-                            <stop offset="0%"   stopColor="#F0C96B" stopOpacity="0.18" />
-                            <stop offset="50%"  stopColor="#C9A84C" stopOpacity="0.06" />
+                        {/* Radial glow behind C — ULTRA LUMINEUX */}
+                        <radialGradient id="fbsig-c-glow" cx="42" cy="44" r="36" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%"   stopColor="#FFE8A0" stopOpacity="0.30" />
+                            <stop offset="40%"  stopColor="#F0C96B" stopOpacity="0.12" />
                             <stop offset="100%" stopColor="#C9A84C" stopOpacity="0" />
                         </radialGradient>
+                        {/* Radial glow behind r — white luminance */}
+                        <radialGradient id="fbsig-r-glow" cx="75" cy="44" r="30" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%"   stopColor="#FFFFFF" stopOpacity="0.18" />
+                            <stop offset="50%"  stopColor="#F8F0E0" stopOpacity="0.06" />
+                            <stop offset="100%" stopColor="#F8F0E0" stopOpacity="0" />
+                        </radialGradient>
+                        {/* Blur filter for r glow */}
+                        <filter id="fbsig-r-blur" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="4" />
+                        </filter>
                         <linearGradient id="fbsig-flourish" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%"   stopColor="#C9A84C" stopOpacity="0.80" />
                             <stop offset="55%"  stopColor="#9A7530" stopOpacity="0.38" />
@@ -313,6 +333,14 @@ const FooterBrand = () => {
                             <stop offset="70%"  stopColor="#F5ECD5" stopOpacity="0.88" />
                             <stop offset="100%" stopColor="#E0C880" stopOpacity="0.72" />
                         </linearGradient>
+                        {/* CRISTI — premium white-to-gold gradient */}
+                        <linearGradient id="fbsig-cristi" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%"   stopColor="#FFFFFF" stopOpacity="1.0" />
+                            <stop offset="25%"  stopColor="#FFF8E8" stopOpacity="0.98" />
+                            <stop offset="50%"  stopColor="#FFE8A0" stopOpacity="0.95" />
+                            <stop offset="80%"  stopColor="#F0C96B" stopOpacity="0.90" />
+                            <stop offset="100%" stopColor="#C9A84C" stopOpacity="0.85" />
+                        </linearGradient>
                     </defs>
 
                     {/*
@@ -321,45 +349,45 @@ const FooterBrand = () => {
                       Each animates independently for staged reveal depth.
                     */}
 
-                    {/* C — Layer 0: Glow halo (blurred gold circle behind) */}
+                    {/* C — Layer 0: Glow halo (brighter, larger) */}
                     <circle
                         className="footer-brand-sig-c-glow"
-                        cx="38"
+                        cx="42"
                         cy="44"
-                        r="30"
+                        r="34"
                         fill="url(#fbsig-c-glow)"
                         filter="url(#fbsig-c-blur)"
                         opacity="0"
                     />
 
-                    {/* C — Layer 1: Main arc (thicker, brighter gradient) */}
+                    {/* C — Layer 1: Main arc (COMPACT — shifted 4px right) */}
                     <path
                         className="footer-brand-sig-c"
-                        d="M 52,16 C 46,14 38,14 32,18 C 22,24 17,35 18,47 C 19,59 27,68 38,71 C 48,74 57,70 62,63"
+                        d="M 56,16 C 50,14 42,14 36,18 C 26,24 21,35 22,47 C 23,59 31,68 42,71 C 52,74 61,70 66,63"
                         fill="none"
                         stroke="url(#fbsig-c-main)"
-                        strokeWidth="3.2"
+                        strokeWidth="3.4"
                         strokeLinecap="round"
                         style={{ strokeDasharray: '120px', strokeDashoffset: '0px' }}
                     />
 
-                    {/* C — Layer 2: Inner echo arc (thinner, inset, creates depth) */}
+                    {/* C — Layer 2: Inner echo arc (shifted + brighter) */}
                     <path
                         className="footer-brand-sig-c-echo"
-                        d="M 50,19 C 45,17 38,17 33,21 C 25,26 21,36 22,46 C 23,56 29,64 38,67 C 46,69 53,66 57,61"
+                        d="M 54,19 C 49,17 42,17 37,21 C 29,26 25,36 26,46 C 27,56 33,64 42,67 C 50,69 57,66 61,61"
                         fill="none"
                         stroke="url(#fbsig-c-echo)"
-                        strokeWidth="1.0"
+                        strokeWidth="1.2"
                         strokeLinecap="round"
                         style={{ strokeDasharray: '110px', strokeDashoffset: '0px' }}
                     />
 
-                    {/* C — Dot accent at opening (pen entry point) */}
+                    {/* C — Dot accent at opening */}
                     <circle
                         className="footer-brand-sig-c-dot"
-                        cx="53"
+                        cx="57"
                         cy="15"
-                        r="1.8"
+                        r="2.0"
                         fill="url(#fbsig-c-main)"
                         opacity="0"
                     />
@@ -367,12 +395,12 @@ const FooterBrand = () => {
                     {/* C — Fine serif on top entry */}
                     <path
                         className="footer-brand-sig-c"
-                        d="M 46,14 L 56,14"
+                        d="M 50,14 L 60,14"
                         fill="none"
                         stroke="url(#fbsig-c-main)"
-                        strokeWidth="1.4"
+                        strokeWidth="1.5"
                         strokeLinecap="round"
-                        opacity="0.70"
+                        opacity="0.75"
                         style={{ strokeDasharray: '12px', strokeDashoffset: '0px' }}
                     />
 
@@ -381,6 +409,17 @@ const FooterBrand = () => {
                       One continuous pen stroke — full height, wide arm.
                       Stem up → shoulder → arm RIGHT → demi-tour back down.
                     */}
+
+                    {/* r — White glow halo behind */}
+                    <circle
+                        className="footer-brand-sig-r-glow"
+                        cx="75"
+                        cy="44"
+                        r="28"
+                        fill="url(#fbsig-r-glow)"
+                        filter="url(#fbsig-r-blur)"
+                        opacity="0"
+                    />
 
                     {/* r — Full height stem + wide arm + demi-tour + signature finish + pen loop */}
                     <path
@@ -391,7 +430,7 @@ const FooterBrand = () => {
                         strokeWidth="3.0"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        opacity="0.92"
+                        opacity="0.95"
                     />
 
                     {/* r — Signature slash: from loop intersection, elegant sweep with end flick */}
@@ -450,7 +489,7 @@ const FooterBrand = () => {
                         style={{ strokeDasharray: '12px', strokeDashoffset: '0px' }}
                     />
 
-                    {/* "CRISTI LABS" text */}
+                    {/* "CRISTI" — premium white-gold gradient */}
                     <text
                         className="footer-brand-sig-text"
                         x="130"
@@ -458,10 +497,24 @@ const FooterBrand = () => {
                         fontFamily="'Bebas Neue', sans-serif"
                         fontSize="22"
                         letterSpacing="5"
+                        fill="url(#fbsig-cristi)"
+                        opacity="0"
+                    >
+                        CRISTI
+                    </text>
+
+                    {/* "LABS" — original gold gradient */}
+                    <text
+                        className="footer-brand-sig-text"
+                        x="222"
+                        y="52"
+                        fontFamily="'Bebas Neue', sans-serif"
+                        fontSize="22"
+                        letterSpacing="5"
                         fill="url(#fbsig-text)"
                         opacity="0"
                     >
-                        CRISTI LABS
+                        LABS
                     </text>
 
                     {/* Vertical divider between monogram and text */}

@@ -419,7 +419,7 @@
     overflow: visible;
     opacity: 0; /* GSAP sets to 1 after typewriter */
     flex-shrink: 0;
-    filter: drop-shadow(0 2px 18px rgba(201, 168, 76, 0.14));
+    filter: drop-shadow(0 2px 22px rgba(240, 201, 107, 0.22)) drop-shadow(0 0 8px rgba(255, 255, 255, 0.06));
 }
 
 .footer-brand-signature-body {
@@ -447,6 +447,9 @@
 .footer-brand-sig-r {
     stroke-dasharray: 80;
     stroke-dashoffset: 80;
+}
+.footer-brand-sig-r-glow {
+    opacity: 0;
 }
 
 .footer-brand-signature-flourish {
