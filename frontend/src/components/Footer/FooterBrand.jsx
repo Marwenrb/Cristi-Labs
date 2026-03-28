@@ -52,6 +52,7 @@ const FooterBrand = () => {
                     const sigCDot = sigEl ? sigEl.querySelector('.footer-brand-sig-c-dot') : null;
                     const sigFlourish = sigEl ? Array.from(sigEl.querySelectorAll('.footer-brand-signature-flourish')) : [];
                     const sigText = sigEl ? Array.from(sigEl.querySelectorAll('.footer-brand-sig-text')) : [];
+                    const sigR = sigEl ? Array.from(sigEl.querySelectorAll('.footer-brand-sig-r')) : [];
 
                     // Pre-compute path lengths for signature animation
                     // C paths (separate from L)
@@ -61,6 +62,11 @@ const FooterBrand = () => {
                     });
                     sigCEcho.forEach(path => {
                         const len = path.getTotalLength?.() || 110;
+                        gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+                    });
+                    // "r" path
+                    sigR.forEach(path => {
+                        const len = path.getTotalLength?.() || 80;
                         gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
                     });
                     // L paths
@@ -85,6 +91,7 @@ const FooterBrand = () => {
                             sigCEcho.forEach(p => gsap.set(p, { strokeDashoffset: 0 }));
                             sigCGlow && gsap.set(sigCGlow, { opacity: 1 });
                             sigCDot && gsap.set(sigCDot, { opacity: 1 });
+                            sigR.forEach(p => gsap.set(p, { strokeDashoffset: 0 }));
                             sigBody.forEach(p => gsap.set(p, { strokeDashoffset: 0 }));
                             sigFlourish.forEach(p => gsap.set(p, { strokeDashoffset: 0 }));
                             sigText.forEach(el => gsap.set(el, { opacity: 1 }));
@@ -160,35 +167,44 @@ const FooterBrand = () => {
                             }, 1.5);
                         }
 
-                        // ── STAGE 2: "L" draws after C (1.5s → 2.5s) ──
+                        // ── STAGE 1.5: "r" draws in (1.3s → 2.2s) ──
+                        if (sigR.length > 0) {
+                            tl.to(sigR, {
+                                strokeDashoffset: 0,
+                                duration: 0.9,
+                                ease: "power3.inOut",
+                            }, 1.3);
+                        }
+
+                        // ── STAGE 2: "L" draws after C + r (1.8s → 2.8s) ──
                         if (sigBody.length > 0) {
                             tl.to(sigBody, {
                                 strokeDashoffset: 0,
                                 duration: 1.0,
                                 ease: "power3.inOut",
-                            }, 1.5);
+                            }, 1.8);
                         }
 
-                        // ── STAGE 3: Text + flourish (2.2s+) ──
+                        // ── STAGE 3: Text + flourish (2.5s+) ──
                         if (sigText.length > 0) {
                             tl.to(sigText, {
                                 opacity: 1,
                                 duration: 0.7,
                                 ease: "power2.out",
-                            }, 2.2);
+                            }, 2.5);
                         }
                         if (sigFlourish.length > 0) {
                             tl.to(sigFlourish, {
                                 strokeDashoffset: 0,
                                 duration: 1.2,
                                 ease: "power2.inOut",
-                            }, 1.8);
+                            }, 2.1);
                             // Wet-ink shimmer after everything
                             tl.to(sigEl, {
                                 filter: "brightness(1.4) drop-shadow(0 0 8px rgba(248,228,165,0.55))",
                                 duration: 0.25,
                                 ease: "power2.out",
-                            }, 2.8);
+                            }, 3.1);
                             tl.to(sigEl, {
                                 filter: "brightness(1) drop-shadow(0 0 2px rgba(201,168,76,0.15))",
                                 duration: 0.7,
@@ -197,22 +213,22 @@ const FooterBrand = () => {
                         }
                     }
 
-                    // 1.6s — Tagline words drift up (starts as L is drawing)
+                    // 1.9s — Tagline words drift up (starts as L is drawing)
                     tl.to(words, {
                         opacity: 1,
                         y: 0,
                         duration: 0.55,
                         ease: "power3.out",
                         stagger: 0.09,
-                    }, 1.6);
+                    }, 1.9);
 
-                    // 1.8s — Accent line sweeps
+                    // 2.1s — Accent line sweeps
                     if (accent) {
                         tl.to(accent, {
                             scaleX: 1,
                             duration: 1,
                             ease: "power3.inOut",
-                        }, 1.8);
+                        }, 2.1);
                     }
                 }); // end waitForFonts
             },
@@ -290,6 +306,13 @@ const FooterBrand = () => {
                         <filter id="fbsig-c-blur" x="-40%" y="-40%" width="180%" height="180%">
                             <feGaussianBlur stdDeviation="5" />
                         </filter>
+                        {/* "r" white gradient — pure white fading to warm gold */}
+                        <linearGradient id="fbsig-r" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%"   stopColor="#FFFFFF" stopOpacity="1.0" />
+                            <stop offset="40%"  stopColor="#FFFFFF" stopOpacity="0.95" />
+                            <stop offset="70%"  stopColor="#F5ECD5" stopOpacity="0.88" />
+                            <stop offset="100%" stopColor="#E0C880" stopOpacity="0.72" />
+                        </linearGradient>
                     </defs>
 
                     {/*
@@ -353,10 +376,39 @@ const FooterBrand = () => {
                         style={{ strokeDasharray: '12px', strokeDashoffset: '0px' }}
                     />
 
-                    {/* L vertical stroke */}
+                    {/*
+                      ── PETITE "r" ─────────────────────────────────────
+                      One continuous pen stroke — full height, wide arm.
+                      Stem up → shoulder → arm RIGHT → demi-tour back down.
+                    */}
+
+                    {/* r — Full height stem + wide arm + demi-tour + signature finish + pen loop */}
+                    <path
+                        className="footer-brand-sig-r"
+                        d="M 62,72 L 62,22 C 62,16 66,12 72,12 C 78,12 82,15 85,20 C 88,25 89,32 88,38 C 87,44 84,48 80,50 C 76,52 74,56 75,61 C 76,66 80,68 86,67 C 90,66 93,63 95,59 C 97,55 100,53 101,56 C 102,60 100,64 96,65 C 92,66 90,63 92,60"
+                        fill="none"
+                        stroke="#FFFFFF"
+                        strokeWidth="3.0"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        opacity="0.92"
+                    />
+
+                    {/* r — Signature underline: simple pen line beneath */}
+                    <path
+                        className="footer-brand-sig-r"
+                        d="M 58,76 C 66,75 78,74 90,73 C 96,72.5 100,72 103,71"
+                        fill="none"
+                        stroke="#FFFFFF"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                        opacity="0.55"
+                    />
+
+                    {/* L vertical stroke (shifted right: 75 → 92) */}
                     <path
                         className="footer-brand-signature-body"
-                        d="M 75,14 L 75,72"
+                        d="M 92,14 L 92,72"
                         fill="none"
                         stroke="url(#fbsig-mark)"
                         strokeWidth="2.8"
@@ -367,18 +419,18 @@ const FooterBrand = () => {
                     {/* L horizontal stroke */}
                     <path
                         className="footer-brand-signature-body"
-                        d="M 75,72 L 104,72"
+                        d="M 92,72 L 115,72"
                         fill="none"
                         stroke="url(#fbsig-mark)"
                         strokeWidth="2.8"
                         strokeLinecap="round"
-                        style={{ strokeDasharray: '32px', strokeDashoffset: '0px' }}
+                        style={{ strokeDasharray: '25px', strokeDashoffset: '0px' }}
                     />
 
                     {/* Fine serif on L — top entry */}
                     <path
                         className="footer-brand-signature-body"
-                        d="M 70,14 L 80,14"
+                        d="M 87,14 L 97,14"
                         fill="none"
                         stroke="url(#fbsig-mark)"
                         strokeWidth="1.4"
@@ -387,10 +439,10 @@ const FooterBrand = () => {
                         style={{ strokeDasharray: '12px', strokeDashoffset: '0px' }}
                     />
 
-                    {/* "CRISTI LABS" text — fades in after monogram draws */}
+                    {/* "CRISTI LABS" text */}
                     <text
                         className="footer-brand-sig-text"
-                        x="118"
+                        x="130"
                         y="52"
                         fontFamily="'Bebas Neue', sans-serif"
                         fontSize="22"
@@ -404,9 +456,9 @@ const FooterBrand = () => {
                     {/* Vertical divider between monogram and text */}
                     <line
                         className="footer-brand-sig-text"
-                        x1="112"
+                        x1="123"
                         y1="30"
-                        x2="112"
+                        x2="123"
                         y2="70"
                         stroke="rgba(184,146,74,0.30)"
                         strokeWidth="0.8"

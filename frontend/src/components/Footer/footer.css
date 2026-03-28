@@ -443,6 +443,12 @@
     opacity: 0;
 }
 
+/* ── Petite "r" — single stroke between C and L ── */
+.footer-brand-sig-r {
+    stroke-dasharray: 80;
+    stroke-dashoffset: 80;
+}
+
 .footer-brand-signature-flourish {
     stroke-dasharray: 340;
     stroke-dashoffset: 340;
