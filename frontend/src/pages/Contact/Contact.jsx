@@ -6,7 +6,7 @@ import Footer from "../../components/Footer/Footer";
 import "./Contact.css";
 
 /* Assets */
-import heroVideo from "../../assets/Pages Media/hero-video.mp4";
+import heroVideo from "../../assets/Pages Media/Cristi_Labs_Luxury_Brand_Video Contact.mp4";
 import hqImage from "../../assets/Medias/gallery/cristi-labs-hq.png";
 
 gsap.registerPlugin(ScrollTrigger);
