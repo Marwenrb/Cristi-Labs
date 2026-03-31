@@ -223,14 +223,14 @@ export default function Contact() {
         const netlifyResult = results[1];
 
         if (web3Result.status === "fulfilled") {
-            console.info("[Contact] ✓ Web3Forms: submission delivered.");
+            // Web3Forms delivered
         } else {
-            console.warn("[Contact] ✗ Web3Forms failed:", web3Result.reason?.message);
+            // Web3Forms failed silently — Netlify is the fallback
         }
         if (netlifyResult.status === "fulfilled") {
-            console.info("[Contact] ✓ Netlify Forms: submission delivered.");
+            // Netlify Forms delivered
         } else {
-            console.warn("[Contact] ✗ Netlify Forms failed:", netlifyResult.reason?.message);
+            // Both channels failed — show error UI below
         }
 
         const anySuccess =

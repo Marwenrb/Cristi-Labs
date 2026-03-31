@@ -1,3 +1,96 @@
+/* ── Self-hosted fonts — zero CDN requests, zero FOUT ────────────── */
+@font-face {
+  font-family: 'Bebas Neue';
+  font-style: normal;
+  font-weight: 400;
+  font-display: optional;
+  src: url('/fonts/bebas-neue-400-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 300;
+  font-display: optional;
+  src: url('/fonts/cormorant-garamond-300-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-display: optional;
+  src: url('/fonts/cormorant-garamond-400-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 300;
+  font-display: optional;
+  src: url('/fonts/cormorant-garamond-300-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: optional;
+  src: url('/fonts/cormorant-garamond-400-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 500;
+  font-display: optional;
+  src: url('/fonts/cormorant-garamond-500-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 600;
+  font-display: optional;
+  src: url('/fonts/cormorant-garamond-600-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: optional;
+  src: url('/fonts/geist-mono-400-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: optional;
+  src: url('/fonts/geist-mono-500-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 200;
+  font-display: optional;
+  src: url('/fonts/sora-200-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 300;
+  font-display: optional;
+  src: url('/fonts/sora-300-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: optional;
+  src: url('/fonts/sora-400-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 500;
+  font-display: optional;
+  src: url('/fonts/sora-500-regular.woff2') format('woff2');
+}
+
 @import "tailwindcss";
 
 /* ================================================================
@@ -112,10 +205,10 @@
      TYPOGRAPHY — Premium Variable Font System
      Engineered for maximum legibility and brand presence
      ══════════════════════════════════════════════════════════════ */
-  --font-display:   'Bebas Neue', 'Antonio', 'Oswald', system-ui, sans-serif;
+  --font-display:   'Bebas Neue', 'Arial Black', 'Impact', system-ui, sans-serif;
   --font-luxury:    'Cormorant Garamond', 'Playfair Display', 'Georgia', serif;
-  --font-body:      'Sora', 'Inter', 'SF Pro Display', system-ui, sans-serif;
-  --font-mono:      'Geist Mono', 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+  --font-body:      'Sora', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono:      'Geist Mono', 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
   --font-accent:    'Space Grotesk', 'Outfit', var(--font-body);
   
   /* Font feature settings */
