@@ -138,6 +138,12 @@ export default function Contact() {
             opacity: 1, duration: 0.6, ease: "power2.out", delay: 1.1,
         });
 
+        // Access tag
+        gsap.set(".contact-hero-access-tag", { x: -10 });
+        gsap.to(".contact-hero-access-tag", {
+            opacity: 1, x: 0, duration: 0.6, ease: "power3.out", delay: 1.0,
+        });
+
         // Scroll indicator
         gsap.to(".contact-hero-scroll", {
             opacity: 1, duration: 0.5, ease: "power2.out", delay: 1.4,
@@ -280,14 +286,22 @@ export default function Contact() {
                     </div>
 
                     <h1 className="contact-hero-title">
-                        <span className="contact-hero-title-line">OPEN</span>
+                        <span className="contact-hero-title-line">ACCESS</span>
                         <span className="contact-hero-title-line contact-hero-title-line--accent">
-                            CHANNEL<span className="contact-hero-title-cursor" />
+                            GRANTED<span className="contact-hero-title-cursor" aria-hidden="true" />
                         </span>
                     </h1>
 
+                    <div className="contact-hero-access-tag" aria-hidden="true">
+                        <span className="contact-hero-access-bracket">[</span>
+                        <span className="contact-hero-access-id">CL-EXEC-001</span>
+                        <span className="contact-hero-access-bracket">]</span>
+                        <span className="contact-hero-access-sep">·</span>
+                        <span className="contact-hero-access-label">EXECUTIVE CHANNEL</span>
+                    </div>
+
                     <p className="contact-hero-sub">
-                        Direct access to our executive team.<br />
+                        Direct line to our executive team.<br />
                         Response within 24–48 hours.
                     </p>
 

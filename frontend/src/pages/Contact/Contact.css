@@ -112,13 +112,48 @@
 .contact-hero-title-cursor {
   display: inline-block;
   width: 4px;
-  height: 0.78em;
+  height: 0.72em;
   background: #14b8a6;
   border-radius: 1px;
-  margin-left: 6px;
-  vertical-align: middle;
-  box-shadow: 0 0 10px rgba(20,184,166,0.6);
+  margin-left: 8px;
+  vertical-align: baseline;
+  position: relative;
+  top: -0.07em;
+  box-shadow: 0 0 12px rgba(20,184,166,0.65);
   animation: contactCursorBlink 1.1s step-end infinite;
+}
+
+/* Access classification tag — sits between title and sub */
+.contact-hero-access-tag {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  opacity: 0;
+}
+.contact-hero-access-bracket {
+  font-family: var(--font-mono, 'Geist Mono', monospace);
+  font-size: 0.48rem;
+  color: rgba(184,146,74,0.35);
+  letter-spacing: 0;
+}
+.contact-hero-access-id {
+  font-family: var(--font-mono, 'Geist Mono', monospace);
+  font-size: 0.48rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(20,184,166,0.70);
+}
+.contact-hero-access-sep {
+  color: rgba(184,146,74,0.25);
+  font-size: 0.5rem;
+}
+.contact-hero-access-label {
+  font-family: var(--font-mono, 'Geist Mono', monospace);
+  font-size: 0.48rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(184,146,74,0.40);
 }
 @keyframes contactCursorBlink {
   0%,  49% { opacity: 1; }
