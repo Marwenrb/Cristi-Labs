@@ -164,7 +164,7 @@ const Store = () => {
             },
         });
 
-        return () => ScrollTrigger.getAll().forEach(t => t.kill());
+        // useGSAP auto-cleans its scope — no manual kill needed
     });
 
     const handleSubmit = e => {

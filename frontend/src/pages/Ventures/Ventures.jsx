@@ -123,7 +123,7 @@ const Ventures = () => {
             }
         });
 
-        return () => ScrollTrigger.getAll().forEach(t => t.kill());
+        // useGSAP auto-cleans its scope — no manual kill needed
     }, []);
 
     const heroWords = ["FIVE", "DIVISIONS.", "ONE", "MANDATE."];

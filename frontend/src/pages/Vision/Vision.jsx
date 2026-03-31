@@ -74,11 +74,8 @@ const Vision = () => {
                 }
             });
 
-            /* Cleanup */
-            return () => {
-                split.revert();
-                ScrollTrigger.getAll().forEach(t => t.kill());
-            };
+            /* Cleanup — useGSAP handles ScrollTrigger scope; only revert SplitText */
+            return () => { split.revert(); };
         }
 
         /* Leadership */
@@ -107,7 +104,7 @@ const Vision = () => {
             }
         });
 
-        return () => ScrollTrigger.getAll().forEach(t => t.kill());
+        // useGSAP auto-cleans its scope — no manual kill needed
     }, []);
 
     return (

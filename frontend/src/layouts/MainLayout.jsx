@@ -48,8 +48,11 @@ const MainLayout = () => {
     useEffect(() => {
         const smoother = ScrollSmoother.get();
 
-        // Kill all stale ScrollTrigger instances from previous route
-        ScrollTrigger.getAll().forEach(t => t.kill());
+        // Kill stale page ScrollTriggers — preserve ScrollSmoother's internal trigger
+        ScrollTrigger.getAll().forEach(t => {
+            if (smoother && t === smoother.scrollTrigger) return;
+            t.kill();
+        });
 
         if (smoother) {
             smoother.scrollTo(0, true);

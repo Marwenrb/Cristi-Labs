@@ -140,8 +140,7 @@ export default function CristiAuraTeaser() {
       }
     });
 
-    // CLEANUP
-    return () => ScrollTrigger.getAll().forEach(t => t.kill());
+    // useGSAP auto-cleans its scope — no manual kill needed
   }, { scope: sectionRef });
 
   // Typing effect — useEffect separate from GSAP
