@@ -15,7 +15,8 @@
     /* Fond legerement distinct */
     background: rgba(184, 146, 74, 0.018);
 
-    overflow: hidden;  /* AUTORISE — conteneur direct du ticker */
+    overflow: hidden;
+    /* AUTORISE — conteneur direct du ticker */
 }
 
 /* Degrades de masque lateraux — fondu */
@@ -23,15 +24,18 @@
 .live-ticker-wrapper::after {
     content: '';
     position: absolute;
-    top: 0; bottom: 0;
+    top: 0;
+    bottom: 0;
     width: 80px;
     z-index: 2;
     pointer-events: none;
 }
+
 .live-ticker-wrapper::before {
     left: 0;
     background: linear-gradient(90deg, var(--bg-void, #0B0B0B), transparent);
 }
+
 .live-ticker-wrapper::after {
     right: 0;
     background: linear-gradient(-90deg, var(--bg-void, #0B0B0B), transparent);
@@ -54,7 +58,8 @@
     height: 100%;
     position: relative;
     z-index: 3;
-    background: var(--bg-void, #0B0B0B);  /* couvre le ticker derriere */
+    background: var(--bg-void, #0B0B0B);
+    /* couvre le ticker derriere */
 }
 
 .live-ticker-label {
@@ -95,9 +100,17 @@
 }
 
 @keyframes ping-scale {
-    0%   { transform: scale(1);   opacity: 0.7; }
-    100% { transform: scale(2.8); opacity: 0; }
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: scale(2.8);
+        opacity: 0;
+    }
 }
+
 /* scale + opacity = GPU composited */
 
 /* Zone scrollante */
@@ -119,13 +132,20 @@
 }
 
 .live-ticker-track--b {
-    animation-delay: -14s;  /* seamless avec seulement 2 nodes */
+    animation-delay: -14s;
+    /* seamless avec seulement 2 nodes */
 }
 
 @keyframes ticker-march {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-100%); }
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
 }
+
 /* translateX = GPU composited */
 
 /* Hub city/time */
@@ -169,7 +189,8 @@
     font-size: 0.55rem;
     letter-spacing: 0.15em;
     color: rgba(237, 234, 228, 0.35);
-    font-variant-numeric: tabular-nums;  /* evite le CLS des chiffres */
+    font-variant-numeric: tabular-nums;
+    /* evite le CLS des chiffres */
 }
 
 /* Losange separateur de boucle */
@@ -182,39 +203,45 @@
 
 
 /* ===================================================
-   FOOTER BRAND CARD — SOVEREIGN EDITION v4
-   True obsidian. Hammered gold. Presidential.
+   FOOTER BRAND CARD — SOVEREIGN EDITION v5
+   True obsidian. Hammered gold. Ambient particles.
+   3D tilt. Shimmer sweep. Pulse ring. Next-level.
    =================================================== */
 
 .footer-brand {
+    width: 100%;
     max-width: 100%;
 }
 
 /* ── Card Shell — layered premium background ── */
 .footer-brand-card {
     position: relative;
-    padding: 2rem 2rem 1.75rem;
+    padding: 2rem 1.1rem 1.75rem;
     isolation: isolate;
     border: 1px solid rgba(184, 146, 74, 0.15);
     border-radius: 0;
-    max-width: 520px;
-    margin: 0 auto;
+    max-width: 420px;
+    margin: 0 0 0 clamp(0.5rem, 2vw, 2.5rem);
+    /* Pushed responsively to the right on desktop */
     /* Layered: grain noise + gold bloom + dark base */
     background:
         url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.038'/%3E%3C/svg%3E"),
-        radial-gradient(ellipse 70% 50% at 30% 100%, rgba(184,146,74,0.065) 0%, transparent 70%),
+        radial-gradient(ellipse 70% 50% at 30% 100%, rgba(184, 146, 74, 0.065) 0%, transparent 70%),
         var(--bg-void, #0B0B0B);
     box-shadow:
         inset 0 1px 0 rgba(201, 168, 74, 0.10),
         inset 0 -1px 0 rgba(0, 0, 0, 0.55),
         0 0 0 1px rgba(0, 0, 0, 0.45);
     overflow: hidden;
-    transition: border-color 0.7s ease, box-shadow 0.7s ease;
+    transition: border-color 0.7s ease, box-shadow 0.7s ease, transform 0.1s ease;
     /* Center all content */
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    /* 3D tilt — JS applies perspective transforms */
+    transform-style: preserve-3d;
+    will-change: transform;
 }
 
 /* ── Top rule — starts invisible, .is-revealed sweeps it in ── */
@@ -225,14 +252,12 @@
     left: 0;
     width: 100%;
     height: 1px;
-    background: linear-gradient(
-        90deg,
-        transparent          0%,
-        rgba(184,146,74,0.3) 10%,
-        rgba(240,201,107,0.8) 50%,
-        rgba(184,146,74,0.3) 90%,
-        transparent          100%
-    );
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(184, 146, 74, 0.3) 10%,
+            rgba(240, 201, 107, 0.8) 50%,
+            rgba(184, 146, 74, 0.3) 90%,
+            transparent 100%);
     transform: scaleX(0);
     transform-origin: left center;
     z-index: 3;
@@ -244,11 +269,6 @@
     transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── Scanline overlay — broadcast quality texture ── */
-.footer-brand-card .footer-brand-corner::before,
-.footer-brand-card .footer-brand-corner::after {
-    /* Keep existing L-bracket styles, see below */
-}
 
 /* ── Bottom ambient glow ── */
 .footer-brand-card::after {
@@ -256,33 +276,132 @@
     position: absolute;
     bottom: -20px;
     left: 10%;
-    width: 50%;
-    height: 50px;
-    background: radial-gradient(ellipse, rgba(184,146,74,0.025) 0%, transparent 70%);
+    width: 80%;
+    height: 60px;
+    background: radial-gradient(ellipse, rgba(184, 146, 74, 0.04) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
+    transition: opacity 0.7s ease;
 }
 
-.footer-brand-card > * {
+.footer-brand-card:hover::after {
+    background: radial-gradient(ellipse, rgba(184, 146, 74, 0.08) 0%, transparent 70%);
+}
+
+.footer-brand-card>* {
     position: relative;
     z-index: 2;
 }
 
-/* ── Hover — subtle gold intensification ── */
-.footer-brand-card:hover {
-    border-color: rgba(184, 146, 74, 0.28);
-    box-shadow:
-        inset 0 1px 0 rgba(201, 168, 74, 0.16),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(0, 0, 0, 0.45),
-        0 0 48px rgba(184, 146, 74, 0.055);
+/* ── Ambient Particle Canvas ── */
+.footer-brand-particles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.8;
+    mix-blend-mode: screen;
 }
+
+/* ── Shimmer Sweep — diagonal light that sweeps across on reveal ── */
+.footer-brand-shimmer {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(105deg,
+            transparent 0%,
+            transparent 38%,
+            rgba(240, 201, 107, 0.07) 42%,
+            rgba(255, 255, 255, 0.05) 45%,
+            rgba(240, 201, 107, 0.07) 48%,
+            transparent 52%,
+            transparent 100%);
+    background-size: 300% 100%;
+    animation: shimmer-sweep 4s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+.footer-brand-card.is-revealed .footer-brand-shimmer {
+    animation-play-state: running;
+}
+
+@keyframes shimmer-sweep {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -100% 0;
+    }
+}
+
+/* ── Pulse Ring — softly pulsing perimeter glow ── */
+.footer-brand-pulse-ring {
+    position: absolute;
+    inset: -1px;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0;
+    border: 1px solid transparent;
+    box-shadow:
+        0 0 15px rgba(184, 146, 74, 0.06),
+        0 0 30px rgba(184, 146, 74, 0.03),
+        inset 0 0 15px rgba(184, 146, 74, 0.04);
+    animation: pulse-ring-breathe 4s ease-in-out infinite;
+}
+
+@keyframes pulse-ring-breathe {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 12px rgba(184, 146, 74, 0.04),
+            0 0 24px rgba(184, 146, 74, 0.02),
+            inset 0 0 10px rgba(184, 146, 74, 0.02);
+    }
+
+    50% {
+        box-shadow:
+            0 0 20px rgba(184, 146, 74, 0.09),
+            0 0 40px rgba(184, 146, 74, 0.04),
+            inset 0 0 18px rgba(184, 146, 74, 0.05);
+    }
+}
+
+/* ── Hover — multi-layer gold intensification ── */
+.footer-brand-card:hover {
+    border-color: rgba(184, 146, 74, 0.35);
+    box-shadow:
+        inset 0 1px 0 rgba(201, 168, 74, 0.20),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(184, 146, 74, 0.15),
+        0 0 60px rgba(184, 146, 74, 0.08),
+        0 4px 40px rgba(0, 0, 0, 0.35);
+}
+
 .footer-brand-card:hover .footer-brand-tagline {
     color: rgba(240, 201, 107, 0.7);
+    text-shadow: 0 0 30px rgba(240, 201, 107, 0.08);
 }
+
 .footer-brand-card:hover .footer-brand-watermark {
-    color: rgba(184, 146, 74, 0.055);
-    -webkit-text-stroke: 1px rgba(184, 146, 74, 0.13);
+    color: rgba(184, 146, 74, 0.06);
+    -webkit-text-stroke: 1px rgba(184, 146, 74, 0.14);
+}
+
+.footer-brand-card:hover .footer-brand-pulse-ring {
+    box-shadow:
+        0 0 25px rgba(184, 146, 74, 0.12),
+        0 0 50px rgba(184, 146, 74, 0.06),
+        inset 0 0 20px rgba(184, 146, 74, 0.06);
+}
+
+.footer-brand-card:hover .footer-brand-particles {
+    opacity: 1;
 }
 
 /* ── Watermark — deeper engraved feel ── */
@@ -301,6 +420,7 @@
     user-select: none;
     z-index: 0;
     transition: color 0.8s ease, -webkit-text-stroke 0.8s ease;
+    will-change: transform;
 }
 
 /* ── Tier badge — left accent border ── */
@@ -348,7 +468,7 @@
     border-color: rgba(240, 201, 107, 0.3);
     border-style: solid;
     opacity: 0;
-    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.5s ease;
 }
 
 .footer-brand-corner::before {
@@ -369,6 +489,11 @@
     opacity: 1;
 }
 
+.footer-brand-card:hover .footer-brand-corner::before,
+.footer-brand-card:hover .footer-brand-corner::after {
+    border-color: rgba(240, 201, 107, 0.55);
+}
+
 /* ── Tagline ── */
 .footer-brand-tagline {
     font-family: var(--font-mono);
@@ -383,7 +508,7 @@
     display: block !important;
     white-space: normal;
     line-height: 1.7;
-    transition: color 0.7s ease;
+    transition: color 0.7s ease, text-shadow 0.7s ease;
     text-align: center;
     width: 100%;
 }
@@ -396,12 +521,10 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(
-        90deg,
-        rgba(240, 201, 107, 0.2) 0%,
-        rgba(201, 168, 76, 0.06) 50%,
-        transparent 100%
-    );
+    background: linear-gradient(90deg,
+            rgba(240, 201, 107, 0.2) 0%,
+            rgba(201, 168, 76, 0.06) 50%,
+            transparent 100%);
 }
 
 /* Words hidden — GSAP animates them in */
@@ -415,13 +538,16 @@
 .footer-brand-signature {
     display: block;
     width: 100%;
-    max-width: 280px;
+    max-width: 380px;
     height: auto;
     margin: 0.2rem auto 0.5rem;
     overflow: visible;
-    opacity: 0; /* GSAP sets to 1 after typewriter */
+    opacity: 0;
+    /* GSAP sets to 1 after typewriter */
     flex-shrink: 0;
     filter: drop-shadow(0 2px 22px rgba(240, 201, 107, 0.22)) drop-shadow(0 0 8px rgba(255, 255, 255, 0.06));
+    transition: filter 0.5s ease;
+    cursor: default;
 }
 
 .footer-brand-signature-body {
@@ -434,13 +560,16 @@
     stroke-dasharray: 132;
     stroke-dashoffset: 132;
 }
+
 .footer-brand-sig-c-echo {
     stroke-dasharray: 110;
     stroke-dashoffset: 110;
 }
+
 .footer-brand-sig-c-glow {
     opacity: 0;
 }
+
 .footer-brand-sig-c-dot {
     opacity: 0;
 }
@@ -450,6 +579,7 @@
     stroke-dasharray: 80;
     stroke-dashoffset: 80;
 }
+
 .footer-brand-sig-r-glow {
     opacity: 0;
 }
@@ -466,13 +596,11 @@
     left: 0;
     width: 100%;
     height: 1px;
-    background: linear-gradient(
-        to right,
-        transparent 0%,
-        rgba(184, 146, 74, 0.75) 35%,
-        rgba(201, 168, 76, 0.55) 65%,
-        transparent 100%
-    );
+    background: linear-gradient(to right,
+            transparent 0%,
+            rgba(184, 146, 74, 0.75) 35%,
+            rgba(201, 168, 76, 0.55) 65%,
+            transparent 100%);
     transform: scaleX(0);
     transform-origin: left center;
     z-index: 2;
@@ -488,13 +616,19 @@
     }
 
     .footer-brand-card {
-        padding: 1.25rem 1rem;
-        max-width: 100%;
-        /* Ensure centering on mobile */
+        padding: 1.1rem 0.5rem;
+        max-width: 98vw;
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
+        /* Disable 3D tilt on mobile */
+        transform: none !important;
+        left: 50%;
+        right: auto;
+        position: relative;
+        translate: -50% 0;
     }
 
     .footer-brand-tagline {
@@ -503,6 +637,11 @@
         line-height: 1.75;
         text-align: center;
         width: 100%;
+        white-space: normal;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.2em;
     }
 
     .footer-brand-tier {
@@ -519,6 +658,29 @@
     .footer-brand-signature {
         max-width: 220px;
         margin: 0.2rem auto 0.4rem;
+    }
+
+    /* Disable particle canvas on mobile for performance */
+    .footer-brand-particles {
+        display: none;
+    }
+
+    /* Disable shimmer on mobile */
+    .footer-brand-shimmer {
+        display: none;
+    }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+
+    .footer-brand-shimmer,
+    .footer-brand-pulse-ring {
+        animation: none !important;
+    }
+
+    .footer-brand-card {
+        transform: none !important;
     }
 }
 
@@ -549,3 +711,372 @@
     color: var(--text-secondary);
 }
 
+/* ===================================================
+   FOOTER SHELL — SOVEREIGN SURFACE
+   =================================================== */
+.footer-shell-bg {
+    background:
+        radial-gradient(ellipse 80% 35% at 50% 0%, rgba(184,146,74,0.045) 0%, transparent 65%),
+        linear-gradient(180deg, rgba(10,8,4,0.0) 0%, rgba(5,4,2,1) 100%),
+        #080604;
+    border-top: 1px solid rgba(184,146,74,0.22);
+    box-shadow:
+        inset 0 1px 0 rgba(255,235,160,0.055),
+        inset 0 0 80px rgba(0,0,0,0.40);
+}
+
+/* ===================================================
+   FOOTER NAVIGATION — EDITORIAL v4 FINAL
+   Typographic precision. Spatial rhythm. Restraint = luxury.
+   =================================================== */
+
+/* ── Top Section — Brand + Nav Layout ── */
+.footer-top-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+}
+
+@media (min-width: 1024px) {
+    .footer-top-section {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: clamp(3rem, 5vw, 5.5rem);
+    }
+}
+
+/* ── Brand Wrapper — constrain brand in flex row ── */
+.footer-brand-wrapper {
+    width: 100%;
+    padding-bottom: 2.75rem;
+    border-bottom: 1px solid rgba(184,146,74,0.08);
+}
+
+@media (min-width: 1024px) {
+    .footer-brand-wrapper {
+        width: auto;
+        flex-shrink: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+}
+
+/* ── Navigation Zone Container ── */
+.footer-nav-zone {
+    display: grid;
+    grid-template-columns: 1fr 1fr;      /* fractional — prevents overflow */
+    gap: 0 clamp(2.5rem, 4.5vw, 4.5rem);
+    align-items: start;
+    width: 100%;
+    min-width: 0;                         /* critical — stops flex child overflow */
+}
+
+@media (min-width: 1024px) {
+    .footer-nav-zone {
+        flex: 1 1 auto;
+        min-width: 0;
+        max-width: 480px;
+    }
+}
+
+/* ── Column ── */
+.footer-col {
+    min-width: 0;
+}
+
+/* ── Section Labels — Minimal & Precise ── */
+.footer-col-label {
+    font-family: var(--font-mono, 'Geist Mono', monospace);
+    font-size: 0.52rem;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: rgba(184,146,74,0.38);
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid rgba(184,146,74,0.10);
+}
+
+.footer-col-label--spaced {
+    margin-top: 2.25rem;
+}
+
+/* ── Navigation Links — Underline grow from left ── */
+.footer-col-links {
+    display: flex;
+    flex-direction: column;
+}
+
+.fnl {
+    display: block;
+    font-family: var(--font-body, 'Sora', sans-serif);
+    font-size: clamp(0.82rem, 1.3vw, 0.94rem);
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    color: rgba(148,140,132,0.58);
+    text-decoration: none;
+    padding: 0.60rem 0;
+    position: relative;
+    cursor: pointer;
+    background-image: linear-gradient(to right, rgba(201,168,76,0.70), rgba(184,146,74,0.22));
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    transition: color 0.38s ease, background-size 0.42s cubic-bezier(0.22,1,0.36,1);
+}
+.fnl:hover {
+    color: rgba(248,244,238,0.82);
+    background-size: 100% 1px;
+}
+.fnl--active {
+    color: rgba(240,201,107,0.92);
+    background-size: 28% 1px;
+    background-image: linear-gradient(to right, rgba(240,201,107,0.82), rgba(201,168,76,0.18));
+}
+
+/* ── Corporate Access — Clean Typographic Rows ── */
+.footer-contact-stack {
+    display: flex;
+    flex-direction: column;
+}
+
+.fcs-link {
+    display: block;
+    font-family: var(--font-body, 'Sora', sans-serif);
+    font-size: clamp(0.68rem, 1.1vw, 0.78rem);
+    font-weight: 300;
+    letter-spacing: 0.025em;
+    color: rgba(140,132,124,0.52);
+    text-decoration: none;
+    padding: 0.55rem 0;
+    background-image: linear-gradient(to right, rgba(184,146,74,0.60), rgba(184,146,74,0.18));
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    transition: color 0.38s ease, background-size 0.42s cubic-bezier(0.22,1,0.36,1);
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+.fcs-link:hover {
+    color: rgba(201,168,76,0.88);
+    background-size: 100% 1px;
+}
+
+/* ── Social — Minimal Icon + Text Rows ── */
+.footer-social-stack {
+    display: flex;
+    flex-direction: column;
+}
+
+.fss-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+    padding: 0.54rem 0;
+    background-image: linear-gradient(to right, rgba(184,146,74,0.60), rgba(184,146,74,0.18));
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    transition: background-size 0.42s cubic-bezier(0.22,1,0.36,1);
+}
+.fss-link:hover { background-size: 100% 1px; }
+.fss-link:hover .fss-icon { color: rgba(201,168,76,0.82); }
+.fss-link:hover .fss-text { color: rgba(248,244,238,0.76); }
+
+.fss-icon {
+    color: rgba(184,146,74,0.38);
+    flex-shrink: 0;
+    transition: color 0.35s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.fss-text {
+    font-family: var(--font-body, 'Sora', sans-serif);
+    font-size: clamp(0.80rem, 1.2vw, 0.90rem);
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    color: rgba(148,140,132,0.58);
+    transition: color 0.35s ease;
+}
+
+/* ── Legal Bar — Bottom Meta Row ── */
+.footer-legal-bar {
+    margin-top: 2.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(184,146,74,0.11);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem 2rem;
+}
+
+.footer-legal-copy {
+    font-family: var(--font-mono, 'Geist Mono', monospace);
+    font-size: 0.60rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(130,122,114,0.40);
+    white-space: nowrap;
+    margin: 0;
+}
+
+.footer-legal-credit {
+    display: flex;
+    align-items: center;
+    gap: 0.70rem;
+    order: 2;
+}
+
+.footer-legal-credit-label {
+    font-family: var(--font-mono, 'Geist Mono', monospace);
+    font-size: 0.58rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(130,122,114,0.30);
+    white-space: nowrap;
+}
+
+.footer-legal-credit-sep {
+    display: block;
+    width: 1px;
+    height: 10px;
+    background: rgba(184,146,74,0.18);
+    flex-shrink: 0;
+}
+
+.footer-legal-credit-name {
+    font-family: var(--font-mono, 'Geist Mono', monospace);
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(184,146,74,0.68);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.28s ease;
+}
+.footer-legal-credit-name:hover {
+    color: rgba(240,201,107,0.90);
+}
+
+/* ══════════════════════════════════════════════════════
+   MOBILE — EDITORIAL FOOTER (< 1024px)
+   Two-column editorial grid. Premium spacing. Zero compromise.
+   ══════════════════════════════════════════════════════ */
+@media (max-width: 1023px) {
+
+    /* Brand card — full width, centered */
+    .footer-brand-wrapper {
+        margin-bottom: 0;
+    }
+
+    /* Nav zone — keep two columns on tablet/mobile */
+    .footer-nav-zone {
+        padding-top: 2.5rem;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem clamp(1.5rem, 5vw, 3rem);
+        width: 100%;
+    }
+
+    /* Nav links — premium touch targets */
+    .fnl {
+        font-size: clamp(0.88rem, 2.5vw, 1rem);
+        font-weight: 300;
+        padding: 0.72rem 0;
+        background-size: 8% 1px;
+        -webkit-tap-highlight-color: transparent;
+        letter-spacing: 0.02em;
+    }
+    .fnl:active {
+        color: rgba(248,244,238,0.88);
+        background-size: 100% 1px;
+    }
+    .fnl--active { background-size: 28% 1px; }
+
+    /* Section labels — tablet/mobile */
+    .footer-col-label {
+        font-size: 0.46rem;
+        letter-spacing: 0.40em;
+        margin-bottom: 1.2rem;
+        padding-bottom: 0.75rem;
+    }
+    .footer-col-label--spaced { margin-top: 2rem; }
+
+    /* Contact stack */
+    .fcs-link {
+        font-size: clamp(0.68rem, 2vw, 0.78rem);
+        padding: 0.62rem 0;
+        background-size: 8% 1px;
+    }
+    .fcs-link:active {
+        color: rgba(201,168,76,0.88);
+        background-size: 100% 1px;
+    }
+
+    /* Social — compact column on mobile */
+    .footer-social-stack {
+        flex-direction: column;
+        gap: 0;
+    }
+    .fss-link {
+        background-size: 0 0;
+        padding: 0.58rem 0;
+    }
+    .fss-text { font-size: clamp(0.78rem, 2vw, 0.88rem); }
+    .fss-icon { color: rgba(184,146,74,0.44); }
+    .fss-link:active .fss-icon { color: rgba(201,168,76,0.88); }
+    .fss-link:active .fss-text { color: rgba(248,244,238,0.82); }
+
+    /* Ticker — compact */
+    .live-ticker-wrapper { margin-bottom: 2rem; }
+    .live-ticker-badge { padding: 3px 8px; }
+    .live-ticker-label { font-size: 0.46rem; letter-spacing: 0.28em; }
+    .live-ticker-hub { gap: 5px; padding: 0 12px; }
+    .live-ticker-city { font-size: 0.52rem; letter-spacing: 0.18em; }
+    .live-ticker-time { font-size: 0.52rem; }
+
+    /* Legal bar */
+    .footer-legal-bar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.85rem;
+        margin-top: 2.25rem;
+    }
+    .footer-legal-credit { order: unset; }
+    .footer-location { justify-content: center; }
+}
+
+/* ── Very small phones (< 480px) ── */
+@media (max-width: 479px) {
+
+    /* Single column on tiny screens */
+    .footer-nav-zone {
+        grid-template-columns: 1fr;
+        gap: 2.5rem 0;
+    }
+
+    .fnl { font-size: 0.92rem; padding: 0.78rem 0; }
+
+    .fcs-link {
+        font-size: 0.72rem;
+        word-break: break-all;
+        overflow-wrap: anywhere;
+    }
+
+    .footer-brand-signature {
+        max-width: 240px;
+    }
+
+    /* Social — 3-column icon row on tiny phones */
+    .footer-social-stack {
+        flex-direction: row;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+    .fss-link { padding: 0.5rem 0; }
+}

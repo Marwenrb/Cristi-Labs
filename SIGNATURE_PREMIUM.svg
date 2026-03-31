@@ -1,0 +1,70 @@
+<svg viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- Ultra-premium wet ink gradient -->
+        <linearGradient id="ink" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#FFF8E1" stop-opacity="0.98"/>
+            <stop offset="10%" stop-color="#F0C96B" stop-opacity="0.94"/>
+            <stop offset="30%" stop-color="#D4AA4F" stop-opacity="0.88"/>
+            <stop offset="55%" stop-color="#C9A84C" stop-opacity="0.78"/>
+            <stop offset="75%" stop-color="#B8924A" stop-opacity="0.60"/>
+            <stop offset="92%" stop-color="#9A7530" stop-opacity="0.38"/>
+            <stop offset="100%" stop-color="#7A6230" stop-opacity="0.18"/>
+        </linearGradient>
+        <linearGradient id="flourish" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#D4AA4F" stop-opacity="0.82"/>
+            <stop offset="50%" stop-color="#B8924A" stop-opacity="0.52"/>
+            <stop offset="100%" stop-color="#9A7530" stop-opacity="0.12"/>
+        </linearGradient>
+    </defs>
+
+    <!--
+        ICONIC SIGNATURE: "Cristi"
+        Architecture: Grand sweeping C + flowing lowercase script
+        Inspired by: Karl Lagerfeld (bold), Tom Ford (elegant), Hermès (timeless)
+    -->
+
+    <!-- "C" - BOLD luxury opening with dramatic sweep -->
+    <path
+        d="M 20,50 C 16,46 14,41 16,36 C 19,29 26,23 36,21 C 48,19 60,22 69,29 C 77,36 81,46 80,56 C 79,66 72,75 62,79 C 52,83 40,82 31,77 C 24,73 20,66 23,60 C 25,55 31,53 37,54 C 43,55 47,60 46,66"
+        fill="none" stroke="url(#ink)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- "r" - Connected elegant hump -->
+    <path
+        d="M 78,58 C 82,55 87,53 92,54 C 97,55 100,59 100,64 C 100,67 99,71 96,73 L 95,80 C 95,83 97,84 99,84"
+        fill="none" stroke="url(#ink)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- "i" - Flowing stem with natural curve -->
+    <path
+        d="M 108,80 C 110,76 113,71 116,66 C 119,61 122,56 126,52 C 128,50 131,49 133,50 L 133,80 C 133,83 135,84 138,84"
+        fill="none" stroke="url(#ink)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="127" cy="39" r="2.8" fill="url(#ink)" opacity="0.88"/>
+
+    <!-- "s" - Sophisticated serpentine double curve -->
+    <path
+        d="M 148,71 C 152,67 158,64 164,65 C 171,66 176,71 175,78 C 174,85 167,91 160,91 C 154,91 149,87 150,82 C 151,78 155,76 160,76 C 165,76 169,79 172,83"
+        fill="none" stroke="url(#ink)" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- "t" - Commanding tall ascender (presidential) -->
+    <path
+        d="M 184,80 C 188,74 192,67 196,60 C 200,52 204,43 208,35 C 212,27 216,19 220,13 C 222,10 225,8 227,9 L 227,80 C 227,83 229,84 232,84"
+        fill="none" stroke="url(#ink)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path
+        d="M 207,38 L 230,38"
+        fill="none" stroke="url(#ink)" stroke-width="3.0" stroke-linecap="round"/>
+
+    <!-- "i" final - Graceful exit -->
+    <path
+        d="M 244,80 C 248,75 252,70 256,65 C 260,60 264,55 268,52 C 271,50 274,49 276,50 L 276,80 C 276,83 279,84 282,85 C 286,86 290,84 293,81"
+        fill="none" stroke="url(#ink)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="270" cy="39" r="2.8" fill="url(#ink)" opacity="0.88"/>
+
+    <!-- GRAND FLOURISH - Presidential sweeping underline -->
+    <path
+        d="M 16,82 C 55,80 94,79 133,79 C 172,79 211,79 248,77 C 278,76 306,73 328,68 C 345,64 358,59 365,50 C 371,43 373,34 370,26"
+        fill="none" stroke="url(#flourish)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Exit flourish - Confident upward sweep -->
+    <path
+        d="M 293,78 C 303,75 313,70 321,63 C 328,57 333,49 334,40 C 335,34 333,28 329,25"
+        fill="none" stroke="url(#flourish)" stroke-width="2.2" stroke-linecap="round" opacity="0.75"/>
+</svg>
