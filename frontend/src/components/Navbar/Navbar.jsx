@@ -96,6 +96,7 @@ const MenuButton = ({ isOpen, onClick }) => (
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [nearBottom, setNearBottom] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const location            = useLocation();
     const navigate            = useNavigate();
     const bottomPx            = useFooterBounds();
@@ -139,6 +140,14 @@ const Navbar = () => {
         window.addEventListener('scroll', checkScroll, { passive: true });
         checkScroll();
         return () => window.removeEventListener('scroll', checkScroll);
+    }, []);
+
+    // Track mobile breakpoint to hide button when sheet is open
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < 768);
+        check();
+        window.addEventListener('resize', check, { passive: true });
+        return () => window.removeEventListener('resize', check);
     }, []);
 
     // GSAP entrance animation on open/close
@@ -267,8 +276,8 @@ const Navbar = () => {
                 style={{
                     bottom: '28px',
                     transform: `translateX(-50%) translateY(${-(bottomPx - 28)}px)`,
-                    opacity: nearBottom ? 0 : 1,
-                    pointerEvents: nearBottom ? 'none' : 'auto',
+                    opacity: (nearBottom || (isMobile && isOpen)) ? 0 : 1,
+                    pointerEvents: (nearBottom || (isMobile && isOpen)) ? 'none' : 'auto',
                     transition: 'transform 0.35s ease, opacity 0.4s ease',
                 }}
             >

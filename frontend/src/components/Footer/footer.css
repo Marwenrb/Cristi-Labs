@@ -1048,7 +1048,13 @@
         margin-top: 2.25rem;
     }
     .footer-legal-credit { order: unset; }
-    .footer-location { justify-content: center; }
+    .footer-location {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
 }
 
 /* ── Very small phones (< 480px) ── */
@@ -1070,6 +1076,13 @@
 
     .footer-brand-signature {
         max-width: 240px;
+    }
+
+    /* HQ location — stack label + value on tiny phones */
+    .footer-location {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
     }
 
     /* Social — 3-column icon row on tiny phones */
