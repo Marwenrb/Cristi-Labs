@@ -380,7 +380,7 @@ const FooterBrand = () => {
                 <svg
                     ref={sigRef}
                     className="footer-brand-signature"
-                    viewBox="0 0 430 100"
+                    viewBox="0 0 520 100"
                     xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true"
                     focusable="false"
@@ -562,14 +562,14 @@ const FooterBrand = () => {
                     <text
                         className="footer-brand-sig-text"
                         x="125" y="62"
-                        fontFamily="'Bebas Neue', sans-serif" fontSize="44"
+                        fontFamily="'Bebas Neue', sans-serif" fontSize="48"
                         letterSpacing="10" fill="url(#fbsig-cristi)" opacity="0"
                     >CRISTI</text>
 
                     {/* "LABS" */}
                     <text
                         className="footer-brand-sig-text"
-                        x="295" y="62"
+                        x="370" y="62"
                         fontFamily="'Bebas Neue', sans-serif" fontSize="44"
                         letterSpacing="10" fill="url(#fbsig-cristi)" opacity="0"
                     >LABS</text>
