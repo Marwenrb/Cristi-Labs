@@ -261,7 +261,7 @@ export default function Contact() {
                 {/* Full-bleed video background */}
                 <div className="contact-hero-bg">
                     <video
-                        autoPlay muted loop playsInline preload="auto"
+                        autoPlay muted loop playsInline preload="none"
                         className="contact-hero-bg-video"
                     >
                         <source src={heroVideo} type="video/mp4" />

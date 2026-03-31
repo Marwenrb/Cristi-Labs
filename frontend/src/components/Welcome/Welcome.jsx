@@ -78,7 +78,7 @@ const Welcome = () => {
                     <div style={{ position: 'relative', display: 'inline-block' }}>
                         <video
                             src={portVideo}
-                            autoPlay loop muted playsInline controls={false} preload="auto"
+                            autoPlay loop muted playsInline controls={false} preload="none"
                             aria-hidden="true"
                             className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44 object-cover pointer-events-none"
                             style={{ display: 'block' }}
@@ -92,7 +92,7 @@ const Welcome = () => {
                     <div style={{ position: 'relative', display: 'inline-block' }}>
                         <video
                             src={towerVideo}
-                            autoPlay loop muted playsInline controls={false} preload="auto"
+                            autoPlay loop muted playsInline controls={false} preload="none"
                             aria-hidden="true"
                             className="md:rounded-[8rem] rounded-[9rem] md:w-56 w-44 object-cover pointer-events-none"
                             style={{ display: 'block' }}

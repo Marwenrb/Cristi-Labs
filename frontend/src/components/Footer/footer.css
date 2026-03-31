@@ -1093,3 +1093,96 @@
     }
     .fss-link { padding: 0.5rem 0; }
 }
+
+/* ── FOOTER RESPONSIVE — ALL DEVICES ─── */
+
+/* Tablet 768px - 1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  #footer-nav-block {
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+  .footer-brand-card {
+    width: 100%;
+    max-width: 100%;
+  }
+  .footer-brand-title {
+    font-size: clamp(2.8rem, 8vw, 4rem) !important;
+    white-space: nowrap;
+  }
+  .footer-brand-signature {
+    max-width: 100%;
+    width: 100%;
+  }
+  .grid.grid-cols-2 {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 3rem !important;
+  }
+}
+
+/* Mobile 480px - 767px */
+@media (max-width: 767px) {
+  #footer-nav-block {
+    flex-direction: column !important;
+    gap: 2.5rem !important;
+  }
+  .footer-brand {
+    width: 100%;
+  }
+  .footer-brand-card {
+    width: 100%;
+    padding: 1.5rem 1.25rem;
+    box-sizing: border-box;
+  }
+  .footer-brand-title {
+    font-size: clamp(3.2rem, 18vw, 5rem) !important;
+    white-space: nowrap;
+  }
+  .footer-brand-signature {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+  }
+  .footer-brand-watermark {
+    font-size: clamp(5rem, 30vw, 9rem);
+  }
+  .footer-brand-tagline {
+    font-size: clamp(0.75rem, 3.5vw, 0.95rem);
+  }
+  .live-ticker-wrapper {
+    margin-bottom: 1.25rem;
+  }
+  #footer-copyright {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 0.75rem !important;
+  }
+  #footer-copyright > * {
+    order: unset !important;
+  }
+}
+
+/* Small mobile 320px - 479px */
+@media (max-width: 479px) {
+  .footer-brand-card {
+    padding: 1.25rem 1rem;
+  }
+  .footer-brand-title {
+    font-size: clamp(2.8rem, 19vw, 4rem) !important;
+  }
+  .footer-brand-tier {
+    font-size: 0.4rem;
+    letter-spacing: 0.18em;
+  }
+}
+
+/* Ensure no horizontal overflow on any screen */
+.footer-inner,
+.footer-brand-card,
+#footer-nav-block,
+#footer-copyright {
+  max-width: 100%;
+  overflow-x: hidden;
+}
