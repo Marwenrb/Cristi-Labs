@@ -124,13 +124,14 @@ export default function Contact() {
             opacity: 1, y: 0, duration: 0.85, ease: "expo.out", delay: 0.2,
         });
 
-        // Title — editorial overflow-mask slide up
-        gsap.set(".contact-hero-title-line", { y: "110%" });
+        // Title — slide up + fade, CSS opacity:0 ensures no flash before GSAP
+        gsap.set(".contact-hero-title-line", { y: 55 });
         gsap.to(".contact-hero-title-line", {
-            y: "0%",
+            opacity: 1,
+            y: 0,
             duration: 1.1,
             ease: "expo.out",
-            stagger: 0.13,
+            stagger: 0.14,
             delay: 0.42,
         });
 
@@ -288,13 +289,9 @@ export default function Contact() {
                     </div>
 
                     <h1 className="contact-hero-title">
-                        <span className="contact-hero-title-wrap">
-                            <span className="contact-hero-title-line">ACCESS</span>
-                        </span>
-                        <span className="contact-hero-title-wrap">
-                            <span className="contact-hero-title-line contact-hero-title-line--accent">
-                                GRANTED<span className="contact-hero-title-cursor" aria-hidden="true" />
-                            </span>
+                        <span className="contact-hero-title-line">ACCESS</span>
+                        <span className="contact-hero-title-line contact-hero-title-line--accent">
+                            GRANTED<span className="contact-hero-title-cursor" aria-hidden="true" />
                         </span>
                     </h1>
 
