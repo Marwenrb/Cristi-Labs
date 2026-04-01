@@ -100,6 +100,7 @@ async function submitToNetlifyForms(data) {
 export default function Contact() {
     const btnRef = useRef(null);
     const successRef = useRef(null);
+    const titleRef = useRef(null);
 
     const [formData, setFormData] = useState({
         name: "", email: "", company: "", message: "",
@@ -124,16 +125,14 @@ export default function Contact() {
             opacity: 1, y: 0, duration: 0.85, ease: "expo.out", delay: 0.2,
         });
 
-        // Title — slide up + fade, CSS opacity:0 ensures no flash before GSAP
-        gsap.set(".contact-hero-title-line", { y: 55 });
-        gsap.to(".contact-hero-title-line", {
-            opacity: 1,
-            y: 0,
-            duration: 1.1,
-            ease: "expo.out",
-            stagger: 0.14,
-            delay: 0.42,
-        });
+        // Title — fromTo via direct DOM ref, bypasses any selector scope issues
+        if (titleRef.current) {
+            const lines = titleRef.current.querySelectorAll(".contact-hero-title-line");
+            gsap.fromTo(lines,
+                { opacity: 0, y: 60 },
+                { opacity: 1, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.14, delay: 0.42 }
+            );
+        }
 
         // Access tag — drift in from left
         gsap.set(".contact-hero-access-tag", { x: -16, opacity: 0 });
@@ -288,7 +287,7 @@ export default function Contact() {
                         <span className="contact-hero-eyebrow-text">Cristi Labs LLC</span>
                     </div>
 
-                    <h1 className="contact-hero-title">
+                    <h1 className="contact-hero-title" ref={titleRef}>
                         <span className="contact-hero-title-line">ACCESS</span>
                         <span className="contact-hero-title-line contact-hero-title-line--accent">
                             GRANTED<span className="contact-hero-title-cursor" aria-hidden="true" />

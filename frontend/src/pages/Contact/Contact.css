@@ -102,7 +102,6 @@
   display: block;
   color: var(--text-primary, #F4EFE7);
   opacity: 0;
-  will-change: transform, opacity;
 }
 .contact-hero-title-line--accent {
   background: linear-gradient(95deg, #F0C96B 0%, #C9A84C 35%, #B8924A 70%, #9A7A3E 100%);
