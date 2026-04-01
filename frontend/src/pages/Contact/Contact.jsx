@@ -118,41 +118,43 @@ export default function Contact() {
     useGSAP(() => {
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-        // Hero eyebrow
-        gsap.set(".contact-hero-eyebrow", { y: 14 });
+        // Eyebrow — slide up + fade
+        gsap.set(".contact-hero-eyebrow", { y: 18, opacity: 0 });
         gsap.to(".contact-hero-eyebrow", {
-            opacity: 1, y: 0, duration: 0.7, ease: "power3.out", delay: 0.3,
+            opacity: 1, y: 0, duration: 0.85, ease: "expo.out", delay: 0.2,
         });
 
-        // Hero title lines — clip sweep
+        // Title — editorial overflow-mask slide up
+        gsap.set(".contact-hero-title-line", { y: "110%" });
         gsap.to(".contact-hero-title-line", {
-            clipPath: "inset(0 0% 0 0)",
-            duration: 1.0,
-            ease: "power4.inOut",
-            stagger: 0.12,
-            delay: 0.45,
+            y: "0%",
+            duration: 1.1,
+            ease: "expo.out",
+            stagger: 0.13,
+            delay: 0.42,
         });
 
-        // Hero sub
-        gsap.to(".contact-hero-sub", {
-            opacity: 1, duration: 0.6, ease: "power2.out", delay: 1.1,
-        });
-
-        // Access tag
-        gsap.set(".contact-hero-access-tag", { x: -10 });
+        // Access tag — drift in from left
+        gsap.set(".contact-hero-access-tag", { x: -16, opacity: 0 });
         gsap.to(".contact-hero-access-tag", {
-            opacity: 1, x: 0, duration: 0.6, ease: "power3.out", delay: 1.0,
+            opacity: 1, x: 0, duration: 0.75, ease: "expo.out", delay: 0.9,
+        });
+
+        // Hero sub — slide up + fade
+        gsap.set(".contact-hero-sub", { y: 14, opacity: 0 });
+        gsap.to(".contact-hero-sub", {
+            opacity: 1, y: 0, duration: 0.7, ease: "power3.out", delay: 1.05,
         });
 
         // Scroll indicator
         gsap.to(".contact-hero-scroll", {
-            opacity: 1, duration: 0.5, ease: "power2.out", delay: 1.4,
+            opacity: 1, duration: 0.55, ease: "power2.out", delay: 1.35,
         });
 
-        // HQ Coords
-        gsap.set(".contact-hero-coords", { x: 20 });
+        // HQ Coords — drift in from right
+        gsap.set(".contact-hero-coords", { x: 22, opacity: 0 });
         gsap.to(".contact-hero-coords", {
-            opacity: 1, x: 0, duration: 0.7, ease: "power3.out", delay: 1.0,
+            opacity: 1, x: 0, duration: 0.8, ease: "expo.out", delay: 0.88,
         });
 
         // Image panel reveal
@@ -286,9 +288,13 @@ export default function Contact() {
                     </div>
 
                     <h1 className="contact-hero-title">
-                        <span className="contact-hero-title-line">ACCESS</span>
-                        <span className="contact-hero-title-line contact-hero-title-line--accent">
-                            GRANTED<span className="contact-hero-title-cursor" aria-hidden="true" />
+                        <span className="contact-hero-title-wrap">
+                            <span className="contact-hero-title-line">ACCESS</span>
+                        </span>
+                        <span className="contact-hero-title-wrap">
+                            <span className="contact-hero-title-line contact-hero-title-line--accent">
+                                GRANTED<span className="contact-hero-title-cursor" aria-hidden="true" />
+                            </span>
                         </span>
                     </h1>
 
@@ -520,8 +526,8 @@ export default function Contact() {
                 <div className="contact-success" ref={successRef}>
                     <div className="contact-success-icon">
                         <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="20" cy="20" r="19" stroke="#14b8a6" strokeWidth="1.5"/>
-                            <path d="M11 20.5L17 26.5L29 14.5" stroke="#14b8a6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                            <circle cx="20" cy="20" r="19" stroke="#C9A84C" strokeWidth="1.5"/>
+                            <path d="M11 20.5L17 26.5L29 14.5" stroke="#C9A84C" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </div>
                     <h3 className="contact-success-title">DATA PACKET TRANSMITTED.</h3>
