@@ -608,6 +608,8 @@ const FooterBrand = () => {
 
                 {/* Corner marks */}
                 <div className="footer-brand-corner" aria-hidden="true" />
+                <div className="footer-brand-corner-tr" aria-hidden="true" />
+                <div className="footer-brand-corner-bl" aria-hidden="true" />
             </div>
         </div>
     );

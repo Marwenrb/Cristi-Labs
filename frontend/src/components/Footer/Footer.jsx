@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { useFooterGSAP } from "../../hooks/useFooterGSAP";
 import FooterBrand from "./FooterBrand";
+import footerVideo from "../../assets/Pages Media/footer_videoo_for_our_website_https_cristilabs.net_with_gold_and_dark_f-0.mp4";
 import "./footer.css";
 
 // Global hubs — trading floor + North Africa + HQ
@@ -116,6 +117,17 @@ const Footer = () => {
                 className="footer-inner absolute bottom-0 left-0 right-0 w-full will-change-transform"
             >
                 <div className="footer-shell relative w-full overflow-hidden">
+                    {/* Background video */}
+                    <video
+                        src={footerVideo}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover -z-20 pointer-events-none"
+                    />
+                    {/* Dark overlay for text readability */}
+                    <div className="absolute inset-0 bg-black/60 pointer-events-none -z-10" />
                     {/* Refined dark surface */}
                     <div className="footer-shell-bg absolute inset-0" />
 
