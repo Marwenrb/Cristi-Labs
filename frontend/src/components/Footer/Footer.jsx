@@ -127,7 +127,7 @@ const Footer = () => {
                         className="absolute inset-0 w-full h-full object-cover -z-20 pointer-events-none"
                     />
                     {/* Dark overlay for text readability */}
-                    <div className="absolute inset-0 bg-black/60 pointer-events-none -z-10" />
+                    <div className="absolute inset-0 bg-black/30 pointer-events-none -z-10" />
                     {/* Refined dark surface */}
                     <div className="footer-shell-bg absolute inset-0" />
 
@@ -145,7 +145,7 @@ const Footer = () => {
 
                             <div className="footer-nav-zone">
                                 {/* ── Column 1: Navigation ── */}
-                                <div className="footer-col">
+                                <div className="footer-glass-card footer-col">
                                     <p className="footer-col-label">Navigation</p>
                                     <div className="footer-col-links">
                                         {FOOTER_LINKS.map((item, i) => (
@@ -164,7 +164,7 @@ const Footer = () => {
                                 </div>
 
                                 {/* ── Column 2: Corporate Access + Social ── */}
-                                <div className="footer-col">
+                                <div className="footer-glass-card footer-col">
                                     <p className="footer-col-label">Corporate Access</p>
                                     <div className="footer-contact-stack">
                                         <a

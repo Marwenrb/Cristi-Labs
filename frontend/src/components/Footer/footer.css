@@ -238,7 +238,7 @@
         url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E"),
         radial-gradient(ellipse 85% 40% at 50% -5%, rgba(184,146,74,0.10) 0%, transparent 68%),
         radial-gradient(ellipse 55% 35% at 15% 110%, rgba(184,146,74,0.06) 0%, transparent 65%),
-        #0B0B0B;
+        rgba(11, 11, 11, 0.05);
     box-shadow:
         inset 0 1px 0 rgba(255,235,160,0.10),
         inset 0 -1px 0 rgba(0,0,0,0.65),
@@ -247,9 +247,12 @@
         0 8px 32px rgba(0,0,0,0.60),
         0 20px 60px rgba(0,0,0,0.35),
         0 0 0 rgba(184,146,74,0);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     overflow: hidden;
+    will-change: transform, border-color, box-shadow;
+    transform: translateZ(0);
+    backface-visibility: hidden;
     transition: border-color 0.65s cubic-bezier(0.16,1,0.3,1),
                 border-top-color 0.65s cubic-bezier(0.16,1,0.3,1),
                 box-shadow 0.65s cubic-bezier(0.16,1,0.3,1),
@@ -883,24 +886,94 @@
 /* ── Navigation Zone Container ── */
 .footer-nav-zone {
     display: grid;
-    grid-template-columns: 1fr 1fr;      /* fractional — prevents overflow */
-    gap: 0 clamp(2.5rem, 4.5vw, 4.5rem);
-    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem; /* Tighter gap for compact multi-card view */
+    align-items: stretch; /* Make cards equal height */
     width: 100%;
-    min-width: 0;                         /* critical — stops flex child overflow */
+    min-width: 0;
 }
 
 @media (min-width: 1024px) {
     .footer-nav-zone {
         flex: 1 1 auto;
         min-width: 0;
-        max-width: 480px;
+        max-width: 580px; /* Slightly wider to accommodate padding inside cards */
+        gap: 2rem;
     }
+}
+
+/* ── Next-Gen Glass Card for Navigation Zones ── */
+.footer-glass-card {
+    position: relative;
+    padding: 1.75rem 2rem;
+    isolation: isolate;
+    border: 1px solid rgba(184,146,74,0.12);
+    border-top-color: rgba(240,201,107,0.22);
+    border-radius: 4px;
+    background:
+        repeating-linear-gradient(
+            0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.05) 2px, rgba(0, 0, 0, 0.05) 4px
+        ),
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(184,146,74,0.06) 0%, transparent 70%),
+        rgba(8, 8, 8, 0.05);
+    box-shadow:
+        inset 0 1px 0 rgba(255,235,160,0.08),
+        0 8px 32px rgba(0,0,0,0.4);
+    backdrop-filter: blur(2.5px);
+    -webkit-backdrop-filter: blur(2.5px);
+    will-change: transform, border-color, box-shadow;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease, box-shadow 0.4s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(184,146,74,0.15) 20%,
+            rgba(240,201,107,0.6) 50%,
+            rgba(184,146,74,0.15) 80%,
+            transparent 100%);
+    filter: blur(0.5px);
+    opacity: 0.6;
+    will-change: opacity, transform, box-shadow;
+    transform: translateZ(0);
+    animation: glass-border-glow 4s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.4s ease, box-shadow 0.4s ease;
+}
+
+@keyframes glass-border-glow {
+    0% { opacity: 0.3; transform: scaleX(0.95); }
+    100% { opacity: 0.9; transform: scaleX(1); box-shadow: 0 0 15px rgba(240, 201, 107, 0.25), 0 0 35px rgba(184, 146, 74, 0.1); }
+}
+
+.footer-glass-card:hover {
+    border-color: rgba(184,146,74,0.25);
+    border-top-color: rgba(248,228,165,0.35);
+    box-shadow: inset 0 1px 0 rgba(255,235,160,0.12), 0 15px 40px rgba(0,0,0,0.6), 0 0 30px rgba(184,146,74,0.06);
+    transform: translateY(-2px);
+}
+
+.footer-glass-card:hover::before {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(240, 201, 107, 0.15), 0 0 20px rgba(184, 146, 74, 0.06);
 }
 
 /* ── Column ── */
 .footer-col {
     min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 /* ── Section Labels — Minimal & Precise ── */
@@ -1100,9 +1173,9 @@
 
     /* Nav zone — keep two columns on tablet/mobile */
     .footer-nav-zone {
-        padding-top: 2.5rem;
+        padding-top: 1.5rem;
         grid-template-columns: 1fr 1fr;
-        gap: 2.5rem clamp(1.5rem, 5vw, 3rem);
+        gap: 1.5rem;
         width: 100%;
     }
 
@@ -1187,7 +1260,7 @@
     /* Single column on tiny screens */
     .footer-nav-zone {
         grid-template-columns: 1fr;
-        gap: 2.5rem 0;
+        gap: 1.5rem;
     }
 
     .fnl { font-size: 0.92rem; padding: 0.78rem 0; }
@@ -1247,9 +1320,13 @@
 
 /* Mobile 480px - 767px */
 @media (max-width: 767px) {
+  .footer-nav-zone {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
   #footer-nav-block {
     flex-direction: column !important;
-    gap: 2.5rem !important;
+    gap: 1.5rem !important;
   }
   .footer-brand {
     width: 100%;
