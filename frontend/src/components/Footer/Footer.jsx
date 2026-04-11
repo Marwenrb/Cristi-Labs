@@ -186,8 +186,8 @@ const Footer = () => {
                                     <p className="footer-col-label footer-col-label--spaced">Social</p>
                                     <div className="footer-social-stack">
                                         {[
-                                            { href: "#", icon: <FaFacebookF size={11} />, label: "Facebook" },
-                                            { href: "#", icon: <FaInstagram size={11} />, label: "Instagram" },
+                                            { href: "https://facebook.com/CristiLabs", icon: <FaFacebookF size={11} />, label: "Facebook" },
+                                            { href: "https://instagram.com/CristiLabs", icon: <FaInstagram size={11} />, label: "Instagram" },
                                             { href: "#", icon: <FaLinkedinIn size={11} />, label: "LinkedIn" },
                                         ].map((s, i) => (
                                             <a
