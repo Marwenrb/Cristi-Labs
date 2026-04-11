@@ -188,7 +188,7 @@ const Footer = () => {
                                         {[
                                             { href: "https://facebook.com/CristiLabs", icon: <FaFacebookF size={11} />, label: "Facebook" },
                                             { href: "https://instagram.com/CristiLabs", icon: <FaInstagram size={11} />, label: "Instagram" },
-                                            { href: "#", icon: <FaLinkedinIn size={11} />, label: "LinkedIn" },
+                                            { href: "https://www.linkedin.com/in/cristilabs", icon: <FaLinkedinIn size={11} />, label: "LinkedIn" },
                                         ].map((s, i) => (
                                             <a
                                                 key={s.label}
