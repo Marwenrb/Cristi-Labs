@@ -33,8 +33,12 @@ export default function PreloaderII() {
             { key: "footerLines", selector: ".preloader-footer p", type: "lines" },
         ];
 
-        // Gate SplitText behind font readiness to prevent wrong measurements
-        document.fonts.ready.then(() => {
+        // Wait for cinematic intro to finish, then for fonts
+        const introReady = new Promise((resolve) => {
+            window.addEventListener('cinematic-done', resolve, { once: true });
+        });
+
+        introReady.then(() => document.fonts.ready).then(() => {
             const splits = createSplitTexts(splitElements);
 
             gsap.set(splits.logoChars.chars, { x: "100%" });

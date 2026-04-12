@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { useFooterGSAP } from "../../hooks/useFooterGSAP";
 import FooterBrand from "./FooterBrand";
-import footerVideo from "../../assets/Pages Media/footer_videoo_for_our_website_https_cristilabs.net_with_gold_and_dark_f-0.mp4";
+import footerVideo from "../../assets/Pages Media/Footer_Video.mp4";
 import "./footer.css";
 
 // Global hubs — trading floor + North Africa + HQ
