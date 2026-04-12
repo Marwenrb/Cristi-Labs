@@ -1,8 +1,8 @@
 /* ==========================================================
-   CINEMATIC INTRO v3 — CinematicIntro.css
+   CINEMATIC INTRO v4 — CinematicIntro.css
    Pure photo · Zero text · GPU-only compositing
-   DESKTOP: object-fit cover + zoom-drift Ken Burns
-   MOBILE:  object-fit contain + horizontal tracking pan
+   DESKTOP: cover + zoom-drift Ken Burns
+   MOBILE:  cover + tight-to-wide zoom revealing logo first
    ========================================================== */
 
 /* ── Root ── */
@@ -31,10 +31,6 @@
     inset: 0;
     z-index: 1;
     overflow: hidden;
-    /* Center the image when contain is used (mobile) */
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .ci-image {
@@ -108,7 +104,7 @@
     mix-blend-mode: color;
 }
 
-/* ── Center bloom — radial gold glow over the logo area ── */
+/* ── Center bloom — radial gold glow ── */
 .ci-bloom {
     position: absolute;
     inset: 0;
@@ -147,7 +143,7 @@
     100% { transform: translate3d(8px,7px,0); }
 }
 
-/* ── Anamorphic flares (shared base) ── */
+/* ── Anamorphic flares (shared) ── */
 .ci-flare {
     position: absolute;
     top: 0;
@@ -159,7 +155,6 @@
     -webkit-mask-image: linear-gradient(to bottom, transparent 3%, white 20%, white 80%, transparent 97%);
 }
 
-/* Gold flare */
 .ci-flare--gold {
     left: 0;
     width: 28%;
@@ -176,7 +171,6 @@
     );
 }
 
-/* Cool flare */
 .ci-flare--cool {
     right: 0;
     width: 22%;
@@ -218,7 +212,7 @@
     transform-origin: center bottom;
 }
 
-/* Gold accent line on inner edge */
+/* Gold accent on inner edge */
 .ci-bar--top::after,
 .ci-bar--bot::before {
     content: '';
@@ -271,11 +265,10 @@
 }
 
 /* ═══════════════════════════════════════════
-   MOBILE  — full panoramic image
+   MOBILE — full screen, cover, logo-centered
    ═══════════════════════════════════════════ */
 @media (max-width: 768px) {
-    /* Show the FULL image — black bars top/bottom are the natural
-       letterbox. GSAP handles the horizontal tracking pan. */
+    /* Show the FULL image — black fills top/bottom naturally */
     .ci-image {
         object-fit: contain;
         object-position: center center;
@@ -286,7 +279,7 @@
     .ci-flare--gold { width: 45%; }
     .ci-flare--cool { width: 38%; }
 
-    /* Vignette: wider ellipse to match landscape image in portrait frame */
+    /* Wider vignette matching landscape image in portrait frame */
     .ci-vignette {
         background: radial-gradient(
             ellipse 70% 35% at 50% 50%,
@@ -297,7 +290,6 @@
         );
     }
 
-    /* Bloom: wider for panoramic layout */
     .ci-bloom {
         background: radial-gradient(
             ellipse 50% 30% at 50% 50%,
@@ -307,7 +299,7 @@
         );
     }
 
-    /* Scrim: less top/bottom since image doesn't fill vertically */
+    /* Lighter scrim since image doesn't fill vertically */
     .ci-scrim {
         background:
             linear-gradient(to bottom,

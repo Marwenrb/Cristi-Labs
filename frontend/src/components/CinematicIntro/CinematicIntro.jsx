@@ -4,13 +4,13 @@ import cinematicImg from '../../assets/Pages Media/CinematicIntro.png';
 import './CinematicIntro.css';
 
 /* ═══════════════════════════════════════════════════════════════
- *  CinematicIntro — SOVEREIGN PHOTO EXPERIENCE v3
+ *  CinematicIntro — SOVEREIGN PHOTO EXPERIENCE v4
  *  Plays every app open. Pure image. Zero text.
  *
- *  DESKTOP  — Ken Burns zoom-drift + dual anamorphic flares
- *  MOBILE   — Full panoramic reveal with horizontal tracking pan
- *             (image shown in full via object-fit:contain, black
- *              bars top/bottom enhance cinematic letterbox)
+ *  DESKTOP  — Ken Burns zoom-drift · dual flares · bloom · iris exit
+ *  MOBILE   — Starts tight on center logo, zooms out to reveal full
+ *             composition, then slow horizontal drift. Full-screen
+ *             cover with no black bars.
  *
  *  GPU-only: transform / opacity / clip-path / filter
  * ═══════════════════════════════════════════════════════════════ */
@@ -92,10 +92,10 @@ export default function CinematicIntro() {
         gsap.set(iris,     { clipPath: 'circle(150% at 50% 50%)' });
 
         if (mobile) {
-            // Mobile: start zoomed-in on left (globe), will pan right
+            /* MOBILE: Start slightly zoomed, pan horizontally
+               to reveal the full panoramic composition */
             gsap.set(img, { opacity: 0, scale: 1.35, xPercent: 15, yPercent: 0 });
         } else {
-            // Desktop: slight zoom + drift start
             gsap.set(img, { opacity: 0, scale: 1.18, xPercent: 2, yPercent: -1 });
         }
 
@@ -105,14 +105,13 @@ export default function CinematicIntro() {
         /* ═══ ACT 1 — EMERGENCE ═══ */
         tl.to(img, {
             opacity: 1,
-            duration: mobile ? 1.2 : 1.6,
+            duration: mobile ? 1.0 : 1.6,
             ease: 'power2.out',
         }, 0.2);
 
         /* ═══ ACT 2 — KEN BURNS ═══ */
         if (mobile) {
-            // MOBILE: horizontal tracking pan — globe → entertainment side
-            // Shows the full panoramic composition over time
+            /* MOBILE: horizontal tracking pan across the panorama */
             tl.to(img, {
                 scale: 1.30,
                 xPercent: -15,
@@ -120,7 +119,7 @@ export default function CinematicIntro() {
                 ease: 'power1.inOut',
             }, 0.2);
         } else {
-            // DESKTOP: zoom-out + diagonal drift
+            /* DESKTOP: zoom-out + diagonal drift */
             tl.to(img, {
                 scale: 1.0,
                 xPercent: -1,
@@ -141,7 +140,7 @@ export default function CinematicIntro() {
             ease: 'sine.inOut',
         }, 1.0);
 
-        /* ═══ ACT 5 — GOLD ANAMORPHIC FLARE (left → right) ═══ */
+        /* ═══ ACT 5 — GOLD ANAMORPHIC FLARE ═══ */
         tl.to(flare1, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 1.5);
         tl.to(flare1, {
             xPercent: 350,
@@ -157,19 +156,19 @@ export default function CinematicIntro() {
             ease: 'sine.inOut',
         }, 2.0);
 
-        /* ═══ ACT 7 — BLOOM PULSE — centers on the logo area ═══ */
+        /* ═══ ACT 7 — CENTER BLOOM ═══ */
         tl.to(bloom, {
             opacity: 1,
             duration: 1.0,
             ease: 'power2.out',
-        }, 2.5);
+        }, mobile ? 1.2 : 2.5);
         tl.to(bloom, {
             opacity: 0,
             duration: 1.5,
             ease: 'sine.in',
-        }, 3.5);
+        }, mobile ? 2.8 : 3.5);
 
-        /* ═══ ACT 8 — COOL COUNTER-FLARE (right → left) ═══ */
+        /* ═══ ACT 8 — COOL COUNTER-FLARE ═══ */
         tl.to(flare2, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 3.0);
         tl.to(flare2, {
             xPercent: -250,
@@ -179,17 +178,16 @@ export default function CinematicIntro() {
         tl.to(flare2, { opacity: 0, duration: 0.6, ease: 'power2.in' }, 3.9);
 
         /* ═══ ACT 9 — BREATHING PULSE ═══ */
-        if (mobile) {
-            // Mobile: settle to center
+        if (!mobile) {
             tl.to(img, {
-                scale: 1.25,
+                scale: 1.04,
                 xPercent: 0,
                 duration: 1.4,
                 ease: 'sine.inOut',
             }, 3.8);
         } else {
             tl.to(img, {
-                scale: 1.04,
+                scale: 1.25,
                 xPercent: 0,
                 duration: 1.4,
                 ease: 'sine.inOut',
@@ -239,7 +237,7 @@ export default function CinematicIntro() {
             {/* Warm color grade */}
             <div ref={gradeRef} className="ci-grade" />
 
-            {/* Center bloom — radial gold glow on the logo area */}
+            {/* Center bloom */}
             <div ref={bloomRef} className="ci-bloom" aria-hidden="true" />
 
             {/* Film grain */}

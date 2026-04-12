@@ -33,6 +33,12 @@ export default function PreloaderII() {
             { key: "footerLines", selector: ".preloader-footer p", type: "lines" },
         ];
 
+        // Hide text content until cinematic is done — but keep the dark
+        // background visible so the homepage never flashes through.
+        gsap.set('.preloader-logo h1', { autoAlpha: 0 });
+        gsap.set('.preloader-footer p', { autoAlpha: 0 });
+        gsap.set('.preloader-progress-bar', { scaleX: 0 });
+
         // Wait for cinematic intro to finish, then for fonts
         const introReady = new Promise((resolve) => {
             window.addEventListener('cinematic-done', resolve, { once: true });
@@ -40,6 +46,10 @@ export default function PreloaderII() {
 
         introReady.then(() => document.fonts.ready).then(() => {
             const splits = createSplitTexts(splitElements);
+
+            // Reveal text elements now that we're ready
+            gsap.set('.preloader-logo h1', { autoAlpha: 1 });
+            gsap.set('.preloader-footer p', { autoAlpha: 1 });
 
             gsap.set(splits.logoChars.chars, { x: "100%" });
             gsap.set([splits.footerLines.lines], { y: "100%" });
@@ -72,7 +82,7 @@ export default function PreloaderII() {
                 });
             }
 
-            const tl = gsap.timeline({ delay: 0.3 });
+            const tl = gsap.timeline({ delay: 0.05 });
             tl.to(splits.logoChars.chars, {
                 x: "0%",
                 stagger: 0.05,
