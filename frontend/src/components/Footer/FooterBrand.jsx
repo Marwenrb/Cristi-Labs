@@ -228,6 +228,10 @@ const FooterBrand = () => {
                     watermark && gsap.set(watermark, { opacity: 0 });
                     tier && gsap.set(tier, { opacity: 0 });
                     accent && gsap.set(accent, { scaleX: 0 });
+                    
+                    if (sigText.length) {
+                        gsap.set(sigText, { opacity: 0, y: 12, scale: 0.98, transformOrigin: "0% 50%" });
+                    }
 
                     const tl = gsap.timeline();
 
@@ -278,7 +282,14 @@ const FooterBrand = () => {
 
                         // STAGE 3: Text + flourish
                         if (sigText.length > 0) {
-                            tl.to(sigText, { opacity: 1, duration: 0.7, ease: "power2.out" }, 2.5);
+                            tl.to(sigText, { 
+                                opacity: 1, 
+                                y: 0, 
+                                scale: 1,
+                                duration: 1.4, 
+                                stagger: 0.15,
+                                ease: "power3.out" 
+                            }, 2.0);
                         }
                         if (sigFlourish.length > 0) {
                             tl.to(sigFlourish, { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, 2.1);
@@ -380,7 +391,7 @@ const FooterBrand = () => {
                 <svg
                     ref={sigRef}
                     className="footer-brand-signature"
-                    viewBox="0 0 520 100"
+                    viewBox="0 0 570 100"
                     xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true"
                     focusable="false"
@@ -446,12 +457,12 @@ const FooterBrand = () => {
                             <stop offset="70%"  stopColor="#F5ECD5" stopOpacity="0.88" />
                             <stop offset="100%" stopColor="#E0C880" stopOpacity="0.72" />
                         </linearGradient>
-                        <linearGradient id="fbsig-cristi" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%"   stopColor="#FFFFFF" stopOpacity="1.0" />
-                            <stop offset="25%"  stopColor="#FFF8E8" stopOpacity="0.98" />
-                            <stop offset="50%"  stopColor="#FFE8A0" stopOpacity="0.95" />
-                            <stop offset="80%"  stopColor="#F0C96B" stopOpacity="0.90" />
-                            <stop offset="100%" stopColor="#C9A84C" stopOpacity="0.85" />
+                        <linearGradient id="fbsig-cristi" x1="0%" y1="20%" x2="100%" y2="80%">
+                            <stop offset="0%"   stopColor="#C9A84C" stopOpacity="0.95" />
+                            <stop offset="35%"  stopColor="#F0C96B" stopOpacity="1.0" />
+                            <stop offset="55%"  stopColor="#FFFAF0" stopOpacity="1.0" />
+                            <stop offset="75%"  stopColor="#F0C96B" stopOpacity="1.0" />
+                            <stop offset="100%" stopColor="#8A6B32" stopOpacity="0.90" />
                         </linearGradient>
                     </defs>
 
@@ -558,21 +569,33 @@ const FooterBrand = () => {
                         style={{ strokeDasharray: "12px", strokeDashoffset: "0px" }}
                     />
 
-                    {/* "CRISTI" */}
+                    {/* "CRISTI" — Unified Premium Layout */}
                     <text
                         className="footer-brand-sig-text"
-                        x="125" y="62"
-                        fontFamily="'Bebas Neue', sans-serif" fontSize="48"
-                        letterSpacing="10" fill="url(#fbsig-cristi)" opacity="0"
-                    >CRISTI</text>
+                        x="128" y="60"
+                        fontFamily="var(--font-display, 'Sora', sans-serif)"
+                        fontWeight="300"
+                        fontSize="50"
+                        letterSpacing="0.22em"
+                        fill="url(#fbsig-cristi)"
+                        opacity="0"
+                    >
+                        CRISTI
+                    </text>
 
                     {/* "LABS" */}
                     <text
                         className="footer-brand-sig-text"
-                        x="370" y="62"
-                        fontFamily="'Bebas Neue', sans-serif" fontSize="44"
-                        letterSpacing="10" fill="url(#fbsig-cristi)" opacity="0"
-                    >LABS</text>
+                        x="410" y="60"
+                        fontFamily="var(--font-display, 'Sora', sans-serif)"
+                        fontWeight="200"
+                        fontSize="44"
+                        letterSpacing="0.20em"
+                        fill="url(#fbsig-cristi)"
+                        opacity="0"
+                    >
+                        LABS
+                    </text>
 
                     {/* Vertical divider */}
                     <line
