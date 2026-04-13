@@ -1,9 +1,11 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { useHideNearFooter } from "../../hooks/useHideNearFooter";
 import "./revbtn.css";
 
 const ReserveBtn = () => {
     const linkRef = useRef(null);
+    const hideNearFooter = useHideNearFooter();
 
     const handleMouseMove = (e) => {
         const el = linkRef.current;
@@ -25,6 +27,11 @@ const ReserveBtn = () => {
     return (
         <div
             className="fixed right-4 md:right-6 top-[5vw] md:top-[4vw] z-40"
+            style={{
+                opacity: hideNearFooter ? 0 : 1,
+                pointerEvents: hideNearFooter ? 'none' : 'auto',
+                transition: 'opacity 0.45s cubic-bezier(0.16,1,0.3,1)',
+            }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
         >

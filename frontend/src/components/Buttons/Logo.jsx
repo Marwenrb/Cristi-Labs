@@ -1,8 +1,18 @@
 import { Link } from 'react-router-dom'
+import { useHideNearFooter } from '../../hooks/useHideNearFooter'
 
 const Logo = () => {
+    const hideNearFooter = useHideNearFooter();
+
     return (
-        <div className='fixed top-[5vw] md:top-[4vw] left-7 z-40 flex items-center h-11'>
+        <div
+            className='fixed top-[5vw] md:top-[4vw] left-7 z-40 flex items-center h-11'
+            style={{
+                opacity: hideNearFooter ? 0 : 1,
+                pointerEvents: hideNearFooter ? 'none' : 'auto',
+                transition: 'opacity 0.45s cubic-bezier(0.16,1,0.3,1)',
+            }}
+        >
             <Link
                 to="/"
                 style={{

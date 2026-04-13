@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
+import { FaFacebookF, FaInstagram } from "react-icons/fa6";
 import { useFooterGSAP } from "../../hooks/useFooterGSAP";
 import FooterBrand from "./FooterBrand";
 import footerVideo from "../../assets/Pages Media/Cristi-Labs Utra-realistic_looping_background_video_for_a_high-tech_corporate_w-0.mp4";
@@ -188,7 +188,6 @@ const Footer = () => {
                                         {[
                                             { href: "https://facebook.com/CristiLabs", icon: <FaFacebookF size={11} />, label: "Facebook" },
                                             { href: "https://instagram.com/CristiLabs", icon: <FaInstagram size={11} />, label: "Instagram" },
-                                            { href: "https://www.linkedin.com/in/cristilabs", icon: <FaLinkedinIn size={11} />, label: "LinkedIn" },
                                         ].map((s, i) => (
                                             <a
                                                 key={s.label}
