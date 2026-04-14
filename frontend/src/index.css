@@ -340,7 +340,6 @@ html {
   font-feature-settings: var(--font-features-body);
   scrollbar-width: none;
   scrollbar-color: transparent transparent;
-  overflow: -moz-scrollbars-none;
   font-optical-sizing: auto;
 }
 
@@ -1246,16 +1245,6 @@ blockquote,
   }
 }
 
-/* ================================================================
-   PREFERS REDUCED MOTION
-   ================================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
 
 /* ================================================================
    FOOTER MOBILE SAFETY

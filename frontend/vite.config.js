@@ -16,10 +16,10 @@ export default defineConfig({
       webp: { lossless: false, quality: 75, alphaQuality: 85 },
       avif: { lossless: false, quality: 60 },
       svg: {
-        plugins: [
-          { name: 'preset-default' },
-          'removeViewBox',
-        ],
+        plugins: [{
+          name: 'preset-default',
+          params: { overrides: { removeViewBox: false } },
+        }],
       },
     }),
   ],
@@ -29,18 +29,18 @@ export default defineConfig({
     minify: 'esbuild',
     cssMinify: true,
     sourcemap: false,
+    reportCompressedSize: false,
     chunkSizeWarningLimit: 600,
     assetsInlineLimit: 4096,
 
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules/gsap')) return 'gsap';
+          if (id.includes('node_modules/gsap') || id.includes('@gsap/react')) return 'gsap';
           if (id.includes('node_modules/react-dom')) return 'react-dom';
           if (id.includes('node_modules/react/') || id.includes('react-is')) return 'react-core';
           if (id.includes('react-router') || id.includes('@remix-run')) return 'router';
           if (id.includes('react-icons')) return 'icons';
-          if (id.includes('@gsap/react')) return 'gsap-react';
           if (id.includes('@studio-freight/lenis') || id.includes('node_modules/lenis')) return 'lenis';
           if (id.includes('react-responsive')) return 'react-responsive';
         },

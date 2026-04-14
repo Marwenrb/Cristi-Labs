@@ -15,7 +15,7 @@ export function useHideNearFooter() {
 
         const observer = new IntersectionObserver(
             ([entry]) => setHidden(entry.isIntersecting),
-            { threshold: 0.05 }
+            { threshold: 0, rootMargin: "0px 0px 120px 0px" }
         );
 
         observer.observe(footer);

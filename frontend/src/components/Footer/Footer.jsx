@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaFacebookF, FaInstagram } from "react-icons/fa6";
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { useFooterGSAP } from "../../hooks/useFooterGSAP";
 import FooterBrand from "./FooterBrand";
-import footerVideo from "../../assets/Pages Media/Cristi-Labs Utra-realistic_looping_background_video_for_a_high-tech_corporate_w-0.mp4";
+import footerVideo from "../../assets/Pages Media/Cristi Labs Official Footer 1.mp4";
+import footerVideoMobile from "../../assets/Pages Media/Cristi Labs Footer Mobile.mp4";
 import "./footer.css";
 
 // Global hubs — trading floor + North Africa + HQ
@@ -106,6 +107,7 @@ function LiveDataTicker() {
 
 const Footer = () => {
     const { footerRevealRef, footerInnerRef, linkRefs } = useFooterGSAP();
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
     return (
         <section
@@ -117,17 +119,18 @@ const Footer = () => {
                 className="footer-inner absolute bottom-0 left-0 right-0 w-full will-change-transform"
             >
                 <div className="footer-shell relative w-full overflow-hidden">
-                    {/* Background video */}
+                    {/* Background video — JS picks portrait on mobile, landscape on desktop */}
                     <video
-                        src={footerVideo}
+                        src={isMobile ? footerVideoMobile : footerVideo}
                         autoPlay
                         loop
                         muted
                         playsInline
-                        className="absolute inset-0 w-full h-full object-cover -z-20 pointer-events-none"
+                        disablePictureInPicture
+                        className="footer-video-bg absolute inset-0 w-full h-full object-cover -z-20 pointer-events-none"
                     />
-                    {/* Dark overlay for text readability */}
-                    <div className="absolute inset-0 bg-black/30 pointer-events-none -z-10" />
+                    {/* Dark overlay — lighter on mobile so video stays visible */}
+                    <div className="footer-video-overlay absolute inset-0 -z-10 pointer-events-none" />
                     {/* Refined dark surface */}
                     <div className="footer-shell-bg absolute inset-0" />
 
@@ -186,8 +189,9 @@ const Footer = () => {
                                     <p className="footer-col-label footer-col-label--spaced">Social</p>
                                     <div className="footer-social-stack">
                                         {[
-                                            { href: "https://facebook.com/CristiLabs", icon: <FaFacebookF size={11} />, label: "Facebook" },
-                                            { href: "https://instagram.com/CristiLabs", icon: <FaInstagram size={11} />, label: "Instagram" },
+                                            { href: "https://facebook.com/CristiLabs",              icon: <FaFacebookF   size={11} />, label: "Facebook"  },
+                                            { href: "https://instagram.com/CristiLabs",             icon: <FaInstagram   size={11} />, label: "Instagram" },
+                                            { href: "https://www.linkedin.com/in/cristi-labs/",     icon: <FaLinkedinIn  size={11} />, label: "LinkedIn"  },
                                         ].map((s, i) => (
                                             <a
                                                 key={s.label}
