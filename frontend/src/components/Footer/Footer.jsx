@@ -213,7 +213,7 @@ const Footer = () => {
                         {/* Legal bottom bar */}
                         <div className="footer-legal-bar">
                             <p className="footer-legal-copy">
-                                &copy; 2026 Cristi Labs. All Rights Reserved.
+                                &copy; 2026 Cristi Labs All Rights Reserved
                             </p>
                             <div className="footer-legal-credit">
                                 <span className="footer-legal-credit-label">Engineered by</span>
