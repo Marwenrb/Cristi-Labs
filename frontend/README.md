@@ -73,7 +73,7 @@ All media files are imported using standard ES module syntax, ensuring Vite's as
 
 ## Developer
 
-Designed and developed by **[Marouan Rabai](https://marwen-rabai.netlify.app/)** — Founder & CEO, Cristi Labs LLC.
+Designed and developed by **[Marouan Rabai](https://marwenrabai.com/)** — Founder & CEO, Cristi Labs LLC.
 
 ---
 

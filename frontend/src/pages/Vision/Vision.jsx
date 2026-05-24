@@ -319,7 +319,7 @@ const Vision = () => {
 
                             <div className="flex items-center gap-3 mt-10">
                                 <a
-                                    href="https://marwen-rabai.netlify.app/"
+                                    href="https://marwenrabai.com/"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="terminal-submit"

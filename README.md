@@ -164,8 +164,8 @@ npm run lint      # ESLint
       React applications, GSAP animation systems, and production-grade
       digital experiences.
       <br /><br />
-      <a href="https://marwen-rabai.netlify.app/" target="_blank">
-        <strong>→ marwen-rabai.netlify.app</strong>
+      <a href="https://marwenrabai.com/" target="_blank">
+        <strong>→ marwenrabai.com</strong>
       </a>
       <br /><br />
     </td>
@@ -201,7 +201,7 @@ is strictly prohibited without written consent from Cristi Labs LLC.
 
 <br />
 
-*Designed & engineered by [Marwen Rabai](https://marwen-rabai.netlify.app/)*
+*Designed & engineered by [Marwen Rabai](https://marwenrabai.com/)*
 
 <br />
 
@@ -368,7 +368,7 @@ Cristi Labs Digital Official/
       <br />
       Founder & CEO — Cristi Labs LLC
       <br />
-      <a href="https://marwen-rabai.netlify.app/">Portfolio</a>
+      <a href="https://marwenrabai.com/">Portfolio</a>
     </td>
   </tr>
 </table>

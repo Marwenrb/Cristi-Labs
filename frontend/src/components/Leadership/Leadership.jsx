@@ -21,7 +21,7 @@ const Leadership = () => {
 
                         <div className="flex items-center gap-3 mt-10">
                             <a
-                                href="https://marwen-rabai.netlify.app/"
+                                href="https://marwenrabai.com/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="group relative inline-flex items-center gap-2 px-8 py-4 border border-[var(--border-strong)] text-sm tracking-[0.2em] uppercase overflow-hidden transition-all duration-300 hover:bg-[var(--accent)] hover:text-[var(--bg-void)] hover:border-[var(--accent)]"

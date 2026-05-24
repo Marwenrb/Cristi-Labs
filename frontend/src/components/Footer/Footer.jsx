@@ -4,7 +4,9 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { useFooterGSAP } from "../../hooks/useFooterGSAP";
 import FooterBrand from "./FooterBrand";
 import footerVideo from "../../assets/Pages Media/Cristi Labs Official Footer 1.mp4";
-import footerVideoMobile from "../../assets/Pages Media/Cristi Labs Footer Mobile.mp4";
+// NOTE: until a true 9:16 vertical asset is generated (see VEO prompt in docs),
+// we intentionally REUSE the landscape master on mobile and frame it cinematically
+// via CSS letterbox + premium vertical gradient mask. No more 3-layer stack hack.
 import "./footer.css";
 
 // Global hubs — trading floor + North Africa + HQ
@@ -107,7 +109,6 @@ function LiveDataTicker() {
 
 const Footer = () => {
     const { footerRevealRef, footerInnerRef, linkRefs } = useFooterGSAP();
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
     return (
         <section
@@ -119,17 +120,25 @@ const Footer = () => {
                 className="footer-inner absolute bottom-0 left-0 right-0 w-full will-change-transform"
             >
                 <div className="footer-shell relative w-full overflow-hidden">
-                    {/* Background video — JS picks portrait on mobile, landscape on desktop */}
+                    {/*
+                      Background video — SINGLE source of truth.
+                      Desktop (≥768px): renders edge-to-edge via `object-cover` (untouched).
+                      Mobile (<768px) : framed by CSS `.footer-video-bg` rules — letterboxed
+                      with a luxurious vertical gradient mask. No 3-layer hack, no awkward crop.
+                    */}
                     <video
-                        src={isMobile ? footerVideoMobile : footerVideo}
+                        src={footerVideo}
                         autoPlay
                         loop
                         muted
                         playsInline
+                        preload="auto"
                         disablePictureInPicture
                         className="footer-video-bg absolute inset-0 w-full h-full object-cover -z-20 pointer-events-none"
                     />
-                    {/* Dark overlay — lighter on mobile so video stays visible */}
+                    {/* Cinematic vertical gradient mask — invisible on desktop, premium on mobile */}
+                    <div className="footer-video-mask absolute inset-0 -z-10 pointer-events-none" aria-hidden="true" />
+                    {/* Dark overlay — desktop 62% · mobile 50% */}
                     <div className="footer-video-overlay absolute inset-0 -z-10 pointer-events-none" />
                     {/* Refined dark surface */}
                     <div className="footer-shell-bg absolute inset-0" />
@@ -219,7 +228,7 @@ const Footer = () => {
                                 <span className="footer-legal-credit-label">Engineered by</span>
                                 <span className="footer-legal-credit-sep" />
                                 <a
-                                    href="https://marwen-rabai.netlify.app/"
+                                    href="https://marwenrabai.com/"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="footer-legal-credit-name"
