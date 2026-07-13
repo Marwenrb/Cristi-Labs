@@ -1440,7 +1440,20 @@
   overflow-x: hidden;
 }
 
-/* ── Footer background video — GPU compositing for iOS Safari ── */
+/* ════════════════════════════════════════════════════════════════════
+   FOOTER BACKGROUND VIDEO — RESPONSIVE CINEMATIC ARCHITECTURE
+   ────────────────────────────────────────────────────────────────────
+   DESKTOP (≥ 768 px) : 16:9 master fills edge-to-edge via object-cover.
+                        UNTOUCHED. Flawless as approved.
+   MOBILE  (< 768 px) : Same master is centered, letterboxed at its
+                        native 16:9 ratio, framed with a luxurious
+                        vertical gold-tinted gradient mask + obsidian
+                        bleed. No 3-layer hack. No awkward face-crop.
+                        Reads as a cinematic widescreen plate sitting
+                        inside an obsidian portrait frame.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* GPU compositing — iOS Safari safety net (all viewports) */
 .footer-video-bg {
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
@@ -1449,29 +1462,90 @@
     -webkit-backface-visibility: hidden;
 }
 
-/* ── Video overlay — desktop 62% · mobile 50% — text stays crisp above video ── */
+/* Desktop dark overlay — text stays crisp above the plate */
 .footer-video-overlay {
     background: rgba(0, 0, 0, 0.62);
 }
 
+/* Cinematic vertical mask — invisible on desktop (zero cost layer) */
+.footer-video-mask {
+    opacity: 0;
+    background: transparent;
+    transition: opacity 0.5s ease;
+}
+
+/* ── MOBILE: < 768 px ─────────────────────────────────────────────── */
 @media (max-width: 767px) {
-    .footer-video-overlay {
-        background: rgba(0, 0, 0, 0.50);
+
+    /*
+       1) Force the landscape video to keep its native 16:9 ratio inside
+          a portrait viewport. `object-fit: contain` letterboxes — but we
+          PIN it vertically centered and scale it to fill the full width.
+          Result: a clean widescreen ribbon centered in the footer,
+          identical to a Netflix-style cinemascope plate.
+    */
+    .footer-video-bg {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: auto;            /* let aspect ratio breathe */
+        aspect-ratio: 16 / 9;
+        max-height: 100%;
+        transform: translate3d(0, -50%, 0);
+        -webkit-transform: translate3d(0, -50%, 0);
+        object-fit: cover;       /* fill the 16:9 ribbon perfectly */
+        object-position: center center;
     }
 
     /*
-     * Mobile: browser loads the portrait 540×960 <source> — object-cover
-     * now works perfectly since video and container share a portrait ratio.
-     */
+       2) Lift the dark overlay slightly so the cinematic plate reads
+          richer above the obsidian frame.
+    */
+    .footer-video-overlay {
+        background: rgba(0, 0, 0, 0.55);
+    }
+
+    /*
+       3) Premium vertical gradient mask — bleeds the obsidian void into
+          the top and bottom letterbox bands so they NEVER read as flat
+          black bars. Subtle gold inner glow seals the seam with the
+          cinematic plate. This is the difference between "letterbox"
+          and "cinema".
+    */
+    .footer-video-mask {
+        opacity: 1;
+        background:
+            /* top obsidian bleed → gold seam → plate */
+            linear-gradient(
+                to bottom,
+                #0B0B0B 0%,
+                rgba(11, 11, 11, 0.96) 14%,
+                rgba(11, 11, 11, 0.40) 26%,
+                rgba(184, 146, 74, 0.06) 30%,
+                transparent 34%,
+                transparent 66%,
+                rgba(184, 146, 74, 0.06) 70%,
+                rgba(11, 11, 11, 0.40) 74%,
+                rgba(11, 11, 11, 0.96) 86%,
+                #0B0B0B 100%
+            ),
+            /* subtle side vignette — locks the eye to center */
+            radial-gradient(
+                ellipse 130% 60% at 50% 50%,
+                transparent 35%,
+                rgba(11, 11, 11, 0.35) 75%,
+                rgba(11, 11, 11, 0.55) 100%
+            );
+    }
+}
+
+/* ── REDUCED MOTION / ULTRA-SMALL (< 360 px) — safety floor ───────── */
+@media (max-width: 359px) {
     .footer-video-bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center center;
-        transform: translateZ(0);
-        -webkit-transform: translateZ(0);
+        /* On ultra-narrow devices the ribbon becomes too thin —
+           soft-zoom to 115% to preserve cinematic density. */
+        width: 115%;
+        left: -7.5%;
     }
 }

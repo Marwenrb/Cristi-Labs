@@ -12,7 +12,6 @@ import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 import BackToTop from "../components/BackToTop/BackToTop";
 import Cursor from "../components/Cursor/Cursor";
 import { initLenis } from "../lib/lenis";
-import CinematicIntro from "../components/CinematicIntro/CinematicIntro";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
@@ -68,7 +67,6 @@ const MainLayout = () => {
 
     return (
         <>
-            <CinematicIntro />
             <ScrollToTop />
             <Cursor />
             <PreloaderII />

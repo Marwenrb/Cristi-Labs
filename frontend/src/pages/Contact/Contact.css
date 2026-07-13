@@ -620,6 +620,86 @@
   border-color: rgba(184,146,74,0.6);
 }
 
+/* ── LEGAL & COMPLIANCE SECTION ────────────────────────────────── */
+.contact-legal-section {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(11,11,11,0) 0%, rgba(11,11,11,0.5) 100%);
+  padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 6vw, 6rem);
+}
+
+.contact-legal-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.contact-legal-divider {
+  width: 100%;
+  max-width: 300px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(184,146,74,0.25) 20%,
+    rgba(184,146,74,0.25) 80%,
+    transparent 100%
+  );
+}
+
+.contact-legal-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.contact-legal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono, 'Geist Mono', monospace);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(184,146,74,0.65);
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 1px solid transparent;
+}
+
+.contact-legal-link:hover {
+  color: rgba(184,146,74,1);
+  border-bottom-color: rgba(184,146,74,0.4);
+}
+
+.contact-legal-link-icon {
+  display: inline-block;
+  font-size: 0.35rem;
+  opacity: 0.5;
+}
+
+.contact-legal-separator {
+  color: rgba(184,146,74,0.25);
+  font-size: 0.5rem;
+}
+
+.contact-legal-disclaimer {
+  font-family: var(--font-mono, 'Geist Mono', monospace);
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(184,146,74,0.4);
+  margin: 0;
+  text-align: center;
+  line-height: 1.6;
+}
+
 /* ── MOBILE RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 768px) {
   .contact-hero {
@@ -655,6 +735,24 @@
   /* Z-index safety */
   .contact-split { z-index: 1; position: relative; }
   .contact-form  { z-index: 1; position: relative; }
+
+  /* Legal section mobile adjustments */
+  .contact-legal-section {
+    padding: 2rem 1rem;
+  }
+
+  .contact-legal-wrapper {
+    gap: 1.5rem;
+  }
+
+  .contact-legal-links {
+    gap: 1rem;
+    font-size: 0.5rem;
+  }
+
+  .contact-legal-link {
+    font-size: 0.5rem;
+  }
 }
 
 @media (min-width: 480px) and (max-width: 768px) {

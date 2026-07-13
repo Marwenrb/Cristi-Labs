@@ -39,12 +39,8 @@ export default function PreloaderII() {
         gsap.set('.preloader-footer p', { autoAlpha: 0 });
         gsap.set('.preloader-progress-bar', { scaleX: 0 });
 
-        // Wait for cinematic intro to finish, then for fonts
-        const introReady = new Promise((resolve) => {
-            window.addEventListener('cinematic-done', resolve, { once: true });
-        });
-
-        introReady.then(() => document.fonts.ready).then(() => {
+        // Wait for fonts
+        document.fonts.ready.then(() => {
             const splits = createSplitTexts(splitElements);
 
             // Reveal text elements now that we're ready

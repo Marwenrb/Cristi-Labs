@@ -10,6 +10,7 @@ const GlobalTrade = lazy(() => import('../pages/GlobalTrade/GlobalTrade'));
 const Vision      = lazy(() => import('../pages/Vision/Vision'));
 const Store       = lazy(() => import('../pages/Store/Store'));
 const Contact     = lazy(() => import('../pages/Contact/Contact'));
+const Privacy     = lazy(() => import('../pages/Privacy/Privacy'));
 
 const PageLoader = () => (
   <div style={{
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
             { path: 'vision',      element: <Suspense fallback={<PageLoader />}><Vision /></Suspense> },
             { path: 'store',       element: <Suspense fallback={<PageLoader />}><Store /></Suspense> },
             { path: 'contact',     element: <Suspense fallback={<PageLoader />}><Contact /></Suspense> },
+            { path: 'privacy',     element: <Suspense fallback={<PageLoader />}><Privacy /></Suspense> },
             { path: '*',           element: <Suspense fallback={<PageLoader />}><Home /></Suspense> },
         ],
     },

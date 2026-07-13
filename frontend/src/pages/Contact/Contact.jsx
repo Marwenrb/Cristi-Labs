@@ -536,6 +536,32 @@ export default function Contact() {
                 </div>
             )}
 
+            {/* ═══ LEGAL & COMPLIANCE SECTION ════════════════════════ */}
+            <section className="contact-legal-section">
+                <div className="contact-legal-wrapper">
+                    <div className="contact-legal-divider" />
+                    <div className="contact-legal-links">
+                        <a href="/privacy" className="contact-legal-link">
+                            <span className="contact-legal-link-icon">◆</span>
+                            <span>Privacy Policy</span>
+                        </a>
+                        <span className="contact-legal-separator">·</span>
+                        <a href="#" className="contact-legal-link">
+                            <span className="contact-legal-link-icon">◆</span>
+                            <span>Terms of Service</span>
+                        </a>
+                        <span className="contact-legal-separator">·</span>
+                        <a href="mailto:legal@cristilabs.net" className="contact-legal-link">
+                            <span className="contact-legal-link-icon">◆</span>
+                            <span>Legal Inquiries</span>
+                        </a>
+                    </div>
+                    <p className="contact-legal-disclaimer">
+                        © 2026 Cristi Labs LLC. All rights reserved. | EIN: 37-2221468
+                    </p>
+                </div>
+            </section>
+
             <Footer />
         </div>
     );
