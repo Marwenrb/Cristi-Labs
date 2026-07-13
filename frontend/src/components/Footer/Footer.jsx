@@ -3,10 +3,9 @@ import { NavLink } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { useFooterGSAP } from "../../hooks/useFooterGSAP";
 import FooterBrand from "./FooterBrand";
-import footerVideo from "../../assets/Pages Media/Cristi Labs Official Footer 1.mp4";
 // NOTE: until a true 9:16 vertical asset is generated (see VEO prompt in docs),
 // we intentionally REUSE the landscape master on mobile and frame it cinematically
-// via CSS letterbox + premium vertical gradient mask. No more 3-layer stack hack.
+// via CSS letterbox + premium vertical gradient mask. No more 3-layer hack.
 import "./footer.css";
 
 // Global hubs — trading floor + North Africa + HQ
@@ -120,28 +119,8 @@ const Footer = () => {
                 className="footer-inner absolute bottom-0 left-0 right-0 w-full will-change-transform"
             >
                 <div className="footer-shell relative w-full overflow-hidden">
-                    {/*
-                      Background video — SINGLE source of truth.
-                      Desktop (≥768px): renders edge-to-edge via `object-cover` (untouched).
-                      Mobile (<768px) : framed by CSS `.footer-video-bg` rules — letterboxed
-                      with a luxurious vertical gradient mask. No 3-layer hack, no awkward crop.
-                    */}
-                    <video
-                        src={footerVideo}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="auto"
-                        disablePictureInPicture
-                        className="footer-video-bg absolute inset-0 w-full h-full object-cover -z-20 pointer-events-none"
-                    />
-                    {/* Cinematic vertical gradient mask — invisible on desktop, premium on mobile */}
-                    <div className="footer-video-mask absolute inset-0 -z-10 pointer-events-none" aria-hidden="true" />
-                    {/* Dark overlay — desktop 62% · mobile 50% */}
-                    <div className="footer-video-overlay absolute inset-0 -z-10 pointer-events-none" />
                     {/* Refined dark surface */}
-                    <div className="footer-shell-bg absolute inset-0" />
+                    <div className="footer-shell-bg absolute inset-0 bg-[#050507]" />
 
                     <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pt-6 pb-10 md:pt-8 md:pb-12">
                         {/* Live Data Ticker */}
